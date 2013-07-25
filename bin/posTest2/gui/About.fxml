@@ -39,11 +39,7 @@
                     <Font size="14.0" />
                   </font>
                 </Label>
-<<<<<<< HEAD
                 <TableView fx:id="deviceTable" editable="true" layoutX="14.0" layoutY="47.0" prefHeight="655.0" prefWidth="972.0">
-=======
-                <TableView fx:id="deviceTable" id="deviceTable" editable="true" layoutX="14.0" layoutY="47.0" prefHeight="708.0" prefWidth="972.0">
->>>>>>> JposService method
                   <columns>
                     <TableColumn prefWidth="150.0" resizable="false" text="Category" fx:id="category" />
                     <TableColumn prefWidth="200.0" text="Logical Name" fx:id="logicalName" />
@@ -415,6 +411,27 @@
                 <Button layoutX="402.0" layoutY="66.0" mnemonicParsing="false" text="Statistics" />
                 <Button layoutX="344.0" layoutY="66.0" mnemonicParsing="false" text="Close" />
                 <Button layoutX="483.0" layoutY="66.0" mnemonicParsing="false" text="Firmware" />
+                <CheckBox fx:id="lineDisplay_deviceEnabled" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" text="Device enabled" />
+                <CheckBox fx:id="lineDisplay_freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
+                <TabPane layoutX="135.0" layoutY="102.0" prefHeight="420.0" prefWidth="548.0" tabClosingPolicy="UNAVAILABLE" visible="${lineDisplay_deviceEnabled.selected}">
+                  <tabs>
+                    <Tab text="Display Text">
+                      <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      </content>
+                    </Tab>
+                    <Tab text="Window Controls">
+                      <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      </content>
+                    </Tab>
+                    <Tab text="Misc Control">
+                      <content>
+                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      </content>
+                    </Tab>
+                  </tabs>
+                </TabPane>
               </children>
             </AnchorPane>
           </content>
@@ -676,10 +693,5 @@
         </Tab>
       </tabs>
     </TabPane>
-    <Label layoutX="500.0" layoutY="400.0" text="asdfjasfsadkflkasdlöfklöaskf">
-      <font>
-        <Font size="25.0" />
-      </font>
-    </Label>
   </children>
 </AnchorPane>

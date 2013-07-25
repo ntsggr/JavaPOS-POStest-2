@@ -232,6 +232,12 @@
        
 	</JposEntry>
 	
+<<<<<<< HEAD
+=======
+	
+	
+	
+>>>>>>> JposService method
 	<JposEntry logicalName="ESC/POS DigiPOS Solenoid EC410"> 			
 		<creation
 			factoryClass="nts.infrastructure.device.escpos.EscPosServiceInstanceFactory"
@@ -271,6 +277,10 @@
         <prop name="capStatus" type="Boolean" value="true"/> 
         <prop name="capStatusMultiDrawerDetect" type="Boolean" value="false"/> 	
         
+<<<<<<< HEAD
+=======
+        
+>>>>>>> JposService method
 	</JposEntry>
 
 </JposEntries>

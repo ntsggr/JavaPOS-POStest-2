@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JposEntries PUBLIC "-//JavaPOS//DTD//EN"
+                             "jpos/res/jcl.dtd">
+<JposEntries>
+	<JposEntry logicalName="ESC/POS Epson-TM-T88V">
+		<creation
+			factoryClass="nts.infrastructure.device.escpos.EscPosServiceInstanceFactory"
+			serviceClass="nts.infrastructure.device.escpos.EscPosPrinterService" />
+		<vendor name="NTS New Technology Systems GmbH" url="www.ntswincash.com" />
+		<jpos category="POSPrinter" version="1.1" />
+		<product description="ESC/POS NTS driver" name="ESC/POS NTS" url="" />
+        
+        
+        <prop name="nts.port.RS232" type="Boolean" value="true"/>
+        <prop name="nts.port.RS232.port" type="String" value="COM${device_port}"/>
+        
+        
+        
+        <!-- My Properties -->
+        <!-- Timer how often the Status will be checked -->
+        <prop name="StatusEventTimerSleep" type="Integer" value="10000"/>
+        
+        <!-- Allowed Values for XXXLineHeight -->
+        <prop name="recLineHeightList" type="String" value= "24,17"/>
+        <prop name="slpLineHeightList" type="String" value= ""/>
+        <prop name="jrnLineHeightList" type="String" value= ""/>
+        
+        <!-- Resolution to convert to other Units -->
+        <prop name="resolution" type="Integer" value="180"/>
+        
+    	<!--Common Properties-->
+    	
+        <prop name="capCompareFirmwareVersion" type="Boolean" value="false"/>
+        <prop name="capPowerReporting" type="Integer" value="0"/>
+        <prop name="capStatisticsReporting" type="Boolean" value="true"/>
+        <prop name="capUpdateStatistics" type="Boolean" value="false"/>     
+        <prop name="capUpdateFirmware" type="Boolean" value="false"/>    
+        <prop name="deviceControlDescription" type="String" value="POS Printer UnifiedPOS Compatible Control"/>        
+        <prop name="deviceControlVersion" type="Integer" value="1000000" /> 
+        <prop name="deviceServiceDescription" type="String" value="TM-T88V" />        
+        <prop name="deviceServiceVersion" type="Integer" value="1000000" />       
+        <prop name="physicalDeviceName" type="String" value="TM-T88V"/>
+        <prop name="physicalDeviceDescription" type="String" value="EPSON TM-T88V POS Printer" />
+        
+        
+        <!--  Device open() Properties -->  
+             
+        <prop name="capTransaction" type="Boolean" value="true"/>
+        <prop name="capCharacterSet" type="Integer" value="1" />
+        <prop name="capConcurrentJrnRec" type="Boolean" value="false"/>         
+        <prop name="capConcurrentJrnSlp" type="Boolean" value="false"/>
+        <prop name="capConcurrentPageMode" type="Boolean" value="false" />
+        <prop name="capConcurrentRecSlp" type="Boolean" value="false"/>
+        <prop name="capCoverSensor" type="Boolean" value="true" />
+        <prop name="capMapCharacterSet" type="Boolean" value="false"/>
+        
+        <prop name="capJrn2Color" type="Boolean" value="false" />
+        <prop name="capJrnBold" type="Boolean" value="false" />
+        <prop name="capJrnDhigh" type="Boolean" value="false"/>       
+        <prop name="capJrnDwide" type="Boolean" value="false"/>
+        <prop name="capJrnDwideDhigh" type="Boolean" value="false" />
+        <prop name="capJrnEmptySensor" type="Boolean" value="false" />
+        <prop name="capJrnItalic" type="Boolean" value="false"/>
+        <prop name="capJrnNearEndSensor" type="Boolean" value="false"/>
+        <prop name="capJrnPresent" type="Boolean" value="false"/>
+        <prop name="capJrnUnderline" type="Boolean" value="false"/>
+        <prop name="capJrnCartridgeSensor" type="Integer" value="0"/>
+        <prop name="capJrnColor" type="Integer" value="0x00000001"/>
+        
+        
+        <prop name="capRec2Color" type="Boolean" value="false" />
+        <prop name="capRecBarCode" type="Boolean"  value="true" />
+        <prop name="capRecBitmap" type="Boolean"  value="true" />
+        <prop name="capRecBold" type="Boolean"  value="true" />
+		<prop name="capRecDhigh" type="Boolean" value="true" />
+        <prop name="capRecDwide" type="Boolean" value="true"  />
+        <prop name="capRecDwideDhigh" type="Boolean" value="true" />
+        <prop name="capRecEmptySensor" type="Boolean" value="true"/>
+        <prop name="capRecLeft90" type="Boolean" value="false" />
+        <prop name="capRecMarkFeed" type="Integer" value="0"/>
+        <prop name="capRecNearEndSensor" type="Boolean" value="true"/>
+        <prop name="capRecPageMode" type="Boolean" value="false"/>
+        <prop name="capRecPapercut" type="Boolean" value="true" />
+        <prop name="capRecPresent" type="Boolean" value="true"/>
+        <prop name="capRecRight90" type="Boolean" value="true"/>
+        <prop name="capRecRotate180" type="Boolean" value="false"/>
+        <prop name="capRecStamp" type="Boolean" value="false"/>
+        <prop name="capRecUnderline" type="Boolean"  value="true"  />
+        <prop name="capRecItalic" type="Boolean" value="false"/>
+        <prop name="capRecRuledLine" type="Integer" value="0"/>
+        <prop name="capRecCartridgeSensor" type="Integer" value="0"/>
+        <prop name="capRecColor" type="Integer" value="0x00000001"/>
+        
+        <prop name="capSlp2Color" type="Boolean" value="false"/>
+        <prop name="capSlpBarCode" type="Boolean" value="false" />
+        <prop name="capSlpBitmap" type="Boolean" value="false"/>
+        <prop name="capSlpBold" type="Boolean" value="false"/>
+        <prop name="capSlpBothSidesPrint" type="Boolean" value="false"/>
+        <prop name="capSlpDhigh" type="Boolean" value="false"/>
+        <prop name="capSlpDwide" type="Boolean" value="false"/>
+        <prop name="capSlpDwideDhigh" type="Boolean" value="false"/>
+        <prop name="capSlpEmptySensor" type="Boolean" value="false"/>
+        <prop name="capSlpFullslip" type="Boolean" value="false"/>
+        <prop name="capSlpItalic" type="Boolean" value="false"/>
+        <prop name="capSlpLeft90" type="Boolean" value="false"/>
+        <prop name="capSlpNearEndSensor" type="Boolean" value="false"/>
+        <prop name="capSlpPageMode" type="Boolean" value="false"/>
+        <prop name="capSlpPresent" type="Boolean" value="false"/>
+        <prop name="capSlpRight90" type="Boolean" value="false"/>
+        <prop name="capSlpRotate180" type="Boolean" value="false"/>
+        <prop name="capSlpUnderline" type="Boolean" value="false"/>
+        <prop name="capSlpCartridgeSensor" type="Integer" value="0"/>
+        <prop name="capSlpColor" type="Integer" value="0x00000001" />
+        <prop name="capSlpRuledLine" type="Integer" value="0"/>
+        
+        <prop name="characterSetList" type="String" value="255,437,850,852,858,860,863,865,866,998,999,1252"/>
+        <prop name="fontTypefaceList" type="String" value=""/>
+        <prop name="mapCharacterSet" type="Boolean" value="false"/>
+        
+        <prop name="jrnLineCharsList" type="String" value=""/>
+        
+        <prop name="recBarCodeRotationList" type="String" value="0"/>
+        <prop name="recBitmapRotationList" type="String" value="0"/>        
+        <prop name="recLineCharsList" type="String" value="42,56"/>
+        
+        <prop name="slpBarCodeRotationList" type="String" value="" />
+        <prop name="slpBitmapRotationList" type="String" value=""/>
+        <prop name="slpLineCharsList" type="String" value=""/>
+        
+        <prop name="rotateSpecial" type="Integer" value="0x0001"/>   
+        <prop name="fontTypefaceList" type="String" value=""/>   
+        
+        <!-- Device SetDeviceEnabled Properties -->   
+        
+        <prop name="characterSet" type="Integer" value="998"/>
+        
+        <prop name="jrnCurrentCartridge" type="Integer" value="0x00000001"/>
+        <prop name="jrnLineChars" type="Integer" value="0"/>
+        <prop name="jrnLineHeight" type="Integer" value="0"/>
+        <prop name="jrnLineSpacing" type="Integer" value="0" />
+        <prop name="jrnLineWidth" type="Integer" value="0"/>
+        
+        <prop name="recCurrentCartridge" type="Integer" value="0x00000001"/>
+        <prop name="recLineChars" type="Integer" value="42"/>
+        <prop name="recLineHeight" type="Integer" value="24"/>
+        <prop name="recLineSpacing" type="Integer"  value="30" />
+        <prop name="recLinesToPaperCut" type="Integer" value="5"/>
+        <prop name="recLineWidth" type="Integer" value="512"/>
+        <prop name="recSidewaysMaxChars" type="Integer" value="69"/>
+        <prop name="recSidewaysMaxLines" type="Integer" value="17"/>
+        
+        <prop name="slpCurrentCartridge" type="Integer" value="0x00000001"/>
+        <prop name="slpLineChars" type="Integer" value="0"/>
+        <prop name="slpLineHeight" type="Integer" value="0" />
+        <prop name="slpLinesNearEndToEnd" type="Integer" value="0" />
+        <prop name="slpLineSpacing" type="Integer" value="0"/>
+        <prop name="slpLineWidth" type="Integer" value="0"/>
+        <prop name="slpMaxLines" type="Integer" value="0"/>
+        <prop name="slpSidewaysMaxChars" type="Integer" value="0"/>
+        <prop name="slpSidewaysMaxLines" type="Integer" value="0"/>
+        
+	</JposEntry>
+	
+	
+	<JposEntry logicalName="ESC/POS Epson-DM-110-111">
+		<creation
+			factoryClass="nts.infrastructure.device.escpos.EscPosServiceInstanceFactory"
+			serviceClass="nts.infrastructure.device.escpos.LineDisplayService" />
+		<vendor name="NTS New Technology Systems GmbH" url="www.ntswincash.com" />
+		<jpos category="LineDisplay" version="1.1" />
+		<product description="ESC/POS NTS driver" name="ESC/POS NTS" url="" />
+        <prop name="nts.port.RS232" type="Boolean" value="true"/>
+        
+        <!-- value wurde von value="${device_port}" auf value="COM1" geändert! -->
+        
+        <prop name="nts.port.RS232.port" type="String" value="COM${device_port}"/>
+        
+        <!--  My Properties -->
+        
+        <!-- Specifies how many pixels one character has -->
+        <prop name="characterFontX" type="Integer" value="5"/>
+        <prop name="characterFontY" type="Integer" value="7"/>
+        
+        
+        
+        <!--Common Properties-->
+        
+        <prop name="capCompareFirmwareVersion" type="Boolean" value="false"/>
+        <prop name="capPowerReporting" type="Integer" value="0"/>
+        <prop name="capStatisticsReporting" type="Boolean" value="false"/>
+        <prop name="capUpdateStatistics" type="Boolean" value="false"/>     
+        <prop name="capUpdateFirmware" type="Boolean" value="false"/>    
+        <prop name="deviceControlDescription" type="String" value="Line Display UnifiedPOS Compatible Control" />        
+        <prop name="deviceControlVersion" type="Integer" value="1000000" /> 
+        <prop name="deviceServiceDescription" type="String" value="DM-D110-111" />        
+        <prop name="deviceServiceVersion" type="Integer" value="1000000" />       
+        <prop name="physicalDeviceName" type="String" value="DM-D110-111"/>
+        <prop name="physicalDeviceDescription" type="String" value="Epson DM-D110-111 Line Display" />
+        
+        <!-- Device open() Properties -->
+        
+        <prop name="capBitmap" type="Boolean" value="false"/> 
+        <prop name="capBlink" type="Integer" value="1"/>    					
+        <prop name="capBlinkRate" type="Boolean" value="true"/> 	
+        <prop name="capBrightness" type="Boolean" value="true"/>
+        <prop name="capCharacterSet" type="Integer" value="998"/>	
+        <prop name="capCursorType" type="Integer" value="0x00000008"/>					
+        <prop name="capCustomGlyph" type="Boolean" value="false"/>
+        <prop name="capDescriptor" type="Boolean" value="false"/>
+        <prop name="capHMarquee" type="Boolean" value="true"/>
+        <prop name="capICharWait" type="Boolean" value="true"/>
+        <prop name="capMapCharacterSet" type="Boolean" value="false"/>
+        <prop name="capReadBack" type="Integer" value="0x00000000"/>
+        <prop name="capReverse" type="Integer" value="0x00000001"/>	
+        <prop name="capScreenMode" type="Boolean" value="false"/>
+        <prop name="capVMarquee" type="Boolean" value="true"/>
+        <prop name="characterSetList" type="String" value="998,999"/>
+        <prop name="customGlyphList" type="String" value=""/>
+        <prop name="deviceColumns" type="Integer" value="20"/>  
+        <prop name="deviceDescriptors" type="Integer" value="0"/>  
+        <prop name="deviceRows" type="Integer" value="2"/>     
+        <prop name="deviceWindows" type="Integer" value="4"/>     
+        <prop name="glyphHeight" type="Integer" value="7"/>     
+        <prop name="glyphWidth" type="Integer" value="5"/>     
+        <prop name="mapCharacterSet" type="Boolean" value="false"/>  
+        <prop name="maximumX" type="Integer" value="100"/>      
+        <prop name="maximumY" type="Integer" value="14"/>      
+        <prop name="screenMode" type="Integer" value="0"/>      
+        <prop name="screenModeList" type="String" value="2x20"/>     
+        <prop name="characterSet" type="Integer" value="998"/>    
+        <prop name="capScrollText" type="Boolean" value="true"/>
+       
+	</JposEntry>
+	
+<<<<<<< HEAD
+=======
+	
+	
+	
+>>>>>>> JposService method
+	<JposEntry logicalName="ESC/POS DigiPOS Solenoid EC410"> 			
+		<creation
+			factoryClass="nts.infrastructure.device.escpos.EscPosServiceInstanceFactory"
+			serviceClass="nts.infrastructure.device.escpos.CashDrawerService" />
+		<vendor name="NTS New Technology Systems GmbH" url="www.ntswincash.com" />
+		<jpos category="CashDrawer" version="1.1" />
+		<product description="ESC/POS NTS driver" name="ESC/POS NTS" url="" />
+        <prop name="nts.port.RS232" type="Boolean" value="true"/>
+        
+        <!-- value wurde von value="${device_port}" auf value="COM1" geändert! -->
+        
+        <prop name="nts.port.RS232.port" type="String" value="COM${device_port}"/>
+        
+        <!-- My Properties -->
+        
+        <!-- Timer how often the Status will be checked -->
+        <prop name="StatusEventTimerSleep" type="Integer" value="5000"/>
+        
+        <!-- Corresponding Escape Sequence to open the drawer -->
+        <prop name="cashDrawerOpenEscapeSequence" type="String" value="27,112,0,50,250"/>
+        
+         <!--Common Properties-->
+        <prop name="capCompareFirmwareVersion" type="Boolean" value="false"/>
+        <prop name="capPowerReporting" type="Integer" value="0"/>
+        <prop name="capStatisticsReporting" type="Boolean" value="false"/>
+        <prop name="capUpdateStatistics" type="Boolean" value="false"/>     
+        <prop name="capUpdateFirmware" type="Boolean" value="false"/>   
+        <prop name="deviceControlDescription" type="String" value="Cash Drawer UnifiedPOS Compatible Control" />        
+        <prop name="deviceControlVersion" type="Integer" value="1000000" /> 
+        <prop name="deviceServiceDescription" type="String" value="Solenoid EC410" />
+        <prop name="deviceServiceVersion" type="Integer" value="1000000" />       
+        <prop name="physicalDeviceName" type="String" value="DigiPOS Solenoid EC410"/>
+        <prop name="physicalDeviceDescription" type="String" value="Epson Line Display" />
+        
+        <!-- Device open() Properties -->
+        
+        <prop name="capStatus" type="Boolean" value="true"/> 
+        <prop name="capStatusMultiDrawerDetect" type="Boolean" value="false"/> 	
+        
+<<<<<<< HEAD
+=======
+        
+>>>>>>> JposService method
+	</JposEntry>
+
+</JposEntries>
