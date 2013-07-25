@@ -12,6 +12,7 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import jpos.config.JposEntry;
 import jpos.config.simple.xml.SimpleXmlRegPopulator;
+import jpos.loader.JposServiceInstance;
 import jpos.profile.JposDevCats;
 
 public class POSTest2Controller implements Initializable {
@@ -72,6 +74,44 @@ public class POSTest2Controller implements Initializable {
     //List for the ConfiguredDevices Page
     ObservableList<Device> devicesList;
     
+    
+    //Services for all 
+    private JposServiceInstance beltService;
+    private JposServiceInstance billAcceptorService;
+    private JposServiceInstance billDispenserService;
+    private JposServiceInstance biometricsService;
+    private JposServiceInstance bumpBarService;
+    private JposServiceInstance cashChangerService;
+    private JposServiceInstance cashDrawerService;
+    private JposServiceInstance CATService;
+    private JposServiceInstance checkScannerService;
+    private JposServiceInstance coinAcceptorService;
+    private JposServiceInstance coinDispenserService;
+    private JposServiceInstance electronicJournalService;
+    private JposServiceInstance electronicValueRWService;
+    private JposServiceInstance fiscalPrinterService;
+    private JposServiceInstance gateService;
+    private JposServiceInstance hardTotalsService;
+    private JposServiceInstance imageScannerService;
+    private JposServiceInstance itemDispenserService;
+    private JposServiceInstance keylockService;
+    private JposServiceInstance lightsService;
+    private JposServiceInstance lineDisplayService;
+    private JposServiceInstance MICRService;
+    private JposServiceInstance motionSensorService;
+    private JposServiceInstance MSRService;
+    private JposServiceInstance PINPadService;
+    private JposServiceInstance pointCardRWService;
+    private JposServiceInstance POSKeyboardService;
+    private JposServiceInstance POSPowerService;
+    private JposServiceInstance POSPrinterService;
+    private JposServiceInstance remoteOrderDisplayService;
+    private JposServiceInstance RFIDScannerService;
+    private JposServiceInstance scaleService;
+    private JposServiceInstance scannerService;
+    private JposServiceInstance signatureCaptureService;
+    private JposServiceInstance smartCardRWService;
+    private JposServiceInstance toneIndicatorService;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -325,6 +365,17 @@ public class POSTest2Controller implements Initializable {
 		logicalName_toneIndicator.setItems(getLogicalNames(JposDevCats.TONEINDICATOR_DEVCAT.toString()));
 	}
 	
+	/* ************************************************************************
+	 ************************* Action Handler**********************************
+	 *************************************************************************/
+	
+	/*
+	 * LineDiplay Action Handler
+	 */
+	public void lineDisplayOpenHandle(ActionEvent e) {
+		//JposServiceInstance service = 
+        //label.setText("Accepted");
+    }
 	
 	
 }
