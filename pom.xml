@@ -10,13 +10,13 @@
 
 	
 	<dependencies>
-	
+	<!-- Look if wenn really need it.
 		<dependency>
 			<groupId>javapos</groupId>
 			<artifactId>jpos</artifactId>
 			<version>1.13.0</version>
 		</dependency>
-		<!-- Look if wenn really need it.
+		
 		<dependency>
 	        <groupId>it.tidalwave.betterbeansbinding</groupId>
 	        <artifactId>betterbeansbinding-core</artifactId>
