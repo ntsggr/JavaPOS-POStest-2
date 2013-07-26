@@ -6,23 +6,25 @@
  */
 package posTest2;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import jpos.config.JposEntry;
 import jpos.config.simple.xml.SimpleXmlRegPopulator;
-import jpos.loader.JposServiceInstance;
-import jpos.profile.JposDevCats;
 
 public class POSTest2Controller implements Initializable {
 
@@ -32,49 +34,51 @@ public class POSTest2Controller implements Initializable {
     @FXML private TableColumn<Device, String> vendor;
     @FXML private TableColumn<Device, String> productName;
     
-    /*The logicalName checkBoxes */
-    @FXML private ComboBox<String> logicalName_belt;
-    @FXML private ComboBox<String> logicalName_billAcceptor;
-    @FXML private ComboBox<String> logicalName_billDispenser;
-    @FXML private ComboBox<String> logicalName_biometrics;
-    @FXML private ComboBox<String> logicalName_bumpBar;
-    @FXML private ComboBox<String> logicalName_cashChanger;
-    @FXML private ComboBox<String> logicalName_cashDrawer;
-    @FXML private ComboBox<String> logicalName_CAT;
-    @FXML private ComboBox<String> logicalName_checkScanner;
-    @FXML private ComboBox<String> logicalName_coinAcceptor;
-    @FXML private ComboBox<String> logicalName_coinDispenser;
-    @FXML private ComboBox<String> logicalName_electronicJournal;
-    @FXML private ComboBox<String> logicalName_electronicValueRW;
-    @FXML private ComboBox<String> logicalName_fiscalPrinter;
-    @FXML private ComboBox<String> logicalName_gate;
-    @FXML private ComboBox<String> logicalName_hardTotals;
-    @FXML private ComboBox<String> logicalName_imageScanner;
-    @FXML private ComboBox<String> logicalName_itemDispenser;
-    @FXML private ComboBox<String> logicalName_keylock;
-    @FXML private ComboBox<String> logicalName_lights;
-    @FXML private ComboBox<String> logicalName_LineDisplay;
-    @FXML private ComboBox<String> logicalName_MICR;
-    @FXML private ComboBox<String> logicalName_motionSensor;
-    @FXML private ComboBox<String> logicalName_MSR;
-    @FXML private ComboBox<String> logicalName_PINPad;
-    @FXML private ComboBox<String> logicalName_pointCardRW;
-    @FXML private ComboBox<String> logicalName_POSKeyboard;
-    @FXML private ComboBox<String> logicalName_POSPower;
-    @FXML private ComboBox<String> logicalName_POSPrinter;
-    @FXML private ComboBox<String> logicalName_remoteOrderDisplay;
-    @FXML private ComboBox<String> logicalName_RFIDScanner;
-    @FXML private ComboBox<String> logicalName_scale;
-    @FXML private ComboBox<String> logicalName_scanner;
-    @FXML private ComboBox<String> logicalName_signatureCapture;
-    @FXML private ComboBox<String> logicalName_smartCardRW;
-    @FXML private ComboBox<String> logicalName_toneIndicator;
+    /*The Devices Pane */
+    @FXML private AnchorPane beltPane;
+    @FXML private AnchorPane billAcceptorPane;
+    @FXML private AnchorPane billDispenserPane;
+    @FXML private AnchorPane biometricsPane;
+    @FXML private AnchorPane bumpBarPane;
+    @FXML private AnchorPane cashChangerPane;
+    @FXML private AnchorPane cashDrawerPane;
+    @FXML private AnchorPane CATPane;
+    @FXML private AnchorPane checkScannerPane;
+    @FXML private AnchorPane coinAcceptorPane;
+    @FXML private AnchorPane coinDispenserPane;
+    @FXML private AnchorPane electronicJournalPane;
+    @FXML private AnchorPane electronicValueRWPane;
+    @FXML private AnchorPane fiscalPrinterPane;
+    @FXML private AnchorPane gatePane;
+    @FXML private AnchorPane hardTotalsPane;
+    @FXML private AnchorPane imageScannerPane;
+    @FXML private AnchorPane itemDispenserPane;
+    @FXML private AnchorPane keylockPane;
+    @FXML private AnchorPane lightsPane;
+    @FXML private AnchorPane lineDisplayPane;
+    @FXML private AnchorPane MICRPane;
+    @FXML private AnchorPane motionSensorPane;
+    @FXML private AnchorPane MSRPane;
+    @FXML private AnchorPane PINPadPane;
+    @FXML private AnchorPane pointCardRWPane;
+    @FXML private AnchorPane POSKeyboardPane;
+    @FXML private AnchorPane POSPowerPane;
+    @FXML private AnchorPane POSPrinterPane;
+    @FXML private AnchorPane remoteOrderDisplayPane;
+    @FXML private AnchorPane RFIDPane;
+    @FXML private AnchorPane scalePane;
+    @FXML private AnchorPane scannerPane;
+    @FXML private AnchorPane signatureCapturePane;
+    @FXML private AnchorPane smartCardRWPane;
+    @FXML private AnchorPane toneIndicatorPane;
+    
+    //@FXML private AnchorPane aPane;
     
     
     //List for the ConfiguredDevices Page
     ObservableList<Device> devicesList;
     
-    
+    /*
     //Services for all 
     private JposServiceInstance beltService;
     private JposServiceInstance billAcceptorService;
@@ -112,6 +116,7 @@ public class POSTest2Controller implements Initializable {
     private JposServiceInstance signatureCaptureService;
     private JposServiceInstance smartCardRWService;
     private JposServiceInstance toneIndicatorService;
+    */
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -164,206 +169,447 @@ public class POSTest2Controller implements Initializable {
 	private void setUpApplication(){
 		setUpLists();
 		setUpDeviceTable();
+		//Init all Device Tabs
 		
-		//Init all logicalName Comboboxes
-		
-		setUpBeltComboBox();
-		setUpBillAcceptorComboBox();
-		setUpBillDispenserComboBox();
-		setUpBiometricsComboBox();
-		setUpBumpBarComboBox();
-		setUpCashChangerComboBox();
-		setUpCashDrawerComboBox();
-		setUpCATrComboBox();
-		setUpCheckScannerComboBox();
-		setUpCoinAcceptorComboBox();
-		setUpCoinDispenserComboBox();
-		setUpElectronicJournalComboBox();
-		setUpElectronicValueRWComboBox();
-		setUpFiscalPrinterComboBox();
-		setUpGateComboBox();
-		setUpHardTotalsComboBox();
-		setUpImageScannerComboBox();
-		setUpItemDispenserComboBox();
-		setUpKeylockComboBox();
-		setUpLightsComboBox();
-		setUpLineDisplayComboBox();
-		setUpMICRComboBox();
-		setUpMotionSensorComboBox();
-		setUpMSRComboBox();
-		setUpPINPadComboBox();
-		setUpPointCardRWComboBox();
-		setUpPOSKeyboardComboBox();
-		setUpPOSPowerComboBox();
-		setUpPOSPrinterComboBox();
-		setUpRemoteOrderDisplayComboBox();
-		setUpRFIDScannerComboBox();
-		setUpScaleComboBox();
-		setUpScannerComboBox();
-		setUpSignatureCaptureComboBox();
-		setUpSmartCardRWComboBox();
-		setUpToneIndicatorComboBox();
+		setUpBeltPane();
+		setUpBillAcceptorPane();
+		setUpBillDispenserPane();
+		setUpBiometricsPane();
+		setUpBumpBarPane();
+		setUpCashChangerPane();
+		setUpCashDrawerPane();
+		setUpCATPane();
+		setUpCheckScannerPane();
+		setUpCoinAcceptorPane();
+		setUpCoinDispenserPane();
+		setUpElectronicJournalPane();
+		setUpElectronicValueRWPane();
+		setUpFiscalPrinterPane();
+		setUpGatePane();
+		setUpHardTotalsPane();
+		setUpImageScannerPane();
+		setUpItemDispenserPane();
+		setUpKeylockPane();
+		setUpLightsPane();
+		setUpLineDisplayPane();
+		setUpMICRPane();
+		setUpMotionSensorPane();
+		setUpMSRPane();
+		setUpPINPadPane();
+		setUpPointCardRWPane();
+		setUpPOSKeyboardPane();
+		setUpPOSPowerPane();
+		setUpPOSPrinterPane();
+		setUpRemoteOrderDisplayPane();
+		setUpRFIDScannerPane();
+		setUpScalePane();
+		setUpScannerPane();
+		setUpSignatureCapturePane();
+		setUpSmartCardRWPane();
+		setUpToneIndicatorPane();
 	}
 	
 	/*
 	 * 
-	 * Configure the LogicalName ComboBoxes
+	 * Configure the Device Tabs
 	 * 
 	 */
-	private ObservableList<String> getLogicalNames(String category){
-		ArrayList<String> logicalNames = new ArrayList<String>();
-		for (Device d : devicesList){
-			if (d.getCategory().equals(category)){
-				logicalNames.add(d.getLogicalName());
-			}
+	
+	private void setUpBeltPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Belt.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		return FXCollections.observableArrayList(logicalNames);
-		
+		beltPane.getChildren().clear();
+		beltPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpBeltComboBox(){
-		logicalName_belt.setItems(getLogicalNames("Belt"));
+	private void setUpBillAcceptorPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/BillAcceptor.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		billAcceptorPane.getChildren().clear();
+		billAcceptorPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpBillAcceptorComboBox(){
-		logicalName_billAcceptor.setItems(getLogicalNames("BillAcceptor"));
+	private void setUpBillDispenserPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/BillDispenser.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		billDispenserPane.getChildren().clear();
+		billDispenserPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpBillDispenserComboBox(){
-		logicalName_billDispenser.setItems(getLogicalNames("BillDispenser"));
+	private void setUpBiometricsPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Biometrics.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		biometricsPane.getChildren().clear();
+		biometricsPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpBiometricsComboBox(){
-		logicalName_biometrics.setItems(getLogicalNames("Biometrics"));
+	private void setUpBumpBarPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/BumpBar.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		bumpBarPane.getChildren().clear();
+		bumpBarPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpBumpBarComboBox(){
-		logicalName_bumpBar.setItems(getLogicalNames(JposDevCats.BUMPBAR_DEVCAT.toString()));
+	private void setUpCashChangerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/CashChanger.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		cashChangerPane.getChildren().clear();
+		cashChangerPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpCashChangerComboBox(){
-		logicalName_cashChanger.setItems(getLogicalNames(JposDevCats.CASHCHANGER_DEVCAT.toString()));
+	private void setUpCashDrawerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/CashDrawer.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		cashDrawerPane.getChildren().clear();
+		cashDrawerPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpCashDrawerComboBox(){
-		logicalName_cashDrawer.setItems(getLogicalNames(JposDevCats.CASHDRAWER_DEVCAT.toString()));
+	private void setUpCATPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/CAT.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		CATPane.getChildren().clear();
+		CATPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpCATrComboBox(){
-		logicalName_CAT.setItems(getLogicalNames(JposDevCats.CAT_DEVCAT.toString()));
-	}
-	
-	private void setUpCheckScannerComboBox(){
-		logicalName_checkScanner.setItems(getLogicalNames(JposDevCats.CHECKSCANNER_DEVCAT.toString()));
+	private void setUpCheckScannerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/CheckScanner.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		checkScannerPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 
-	private void setUpCoinAcceptorComboBox(){
-		logicalName_coinAcceptor.setItems(getLogicalNames("CoinAcceptor"));
+	private void setUpCoinAcceptorPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/CoinAcceptor.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		coinAcceptorPane.getChildren().clear();
+		coinAcceptorPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpCoinDispenserComboBox(){
-		logicalName_coinDispenser.setItems(getLogicalNames(JposDevCats.COINDISPENSER_DEVCAT.toString()));
+	private void setUpCoinDispenserPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/CoinDispenser.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		coinDispenserPane.getChildren().clear();
+		coinDispenserPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpElectronicJournalComboBox(){
-		logicalName_electronicJournal.setItems(getLogicalNames("ElectronicJournal"));
+	private void setUpElectronicJournalPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/ElectronicJournal.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		electronicJournalPane.getChildren().clear();
+		electronicJournalPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpElectronicValueRWComboBox(){
-		logicalName_electronicValueRW.setItems(getLogicalNames("ElectronicValueRW"));
+	private void setUpElectronicValueRWPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/ElectronicValueRW.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		electronicValueRWPane.getChildren().clear();
+		electronicValueRWPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpFiscalPrinterComboBox(){
-		logicalName_fiscalPrinter.setItems(getLogicalNames(JposDevCats.FISCALPRINTER_DEVCAT.toString()));
+	private void setUpFiscalPrinterPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/FiscalPrinter.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		fiscalPrinterPane.getChildren().clear();
+		fiscalPrinterPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 
-	private void setUpGateComboBox(){
-		logicalName_gate.setItems(getLogicalNames("Gate"));
+	private void setUpGatePane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Gate.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		gatePane.getChildren().clear();
+		gatePane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpHardTotalsComboBox(){
-		logicalName_hardTotals.setItems(getLogicalNames(JposDevCats.HARDTOTALS_DEVCAT.toString()));
+	private void setUpHardTotalsPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/HardTotals.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		hardTotalsPane.getChildren().clear();
+		hardTotalsPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 
-	private void setUpImageScannerComboBox(){
-		logicalName_imageScanner.setItems(getLogicalNames("ImageScanner"));
+	private void setUpImageScannerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/ImageScanner.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		imageScannerPane.getChildren().clear();
+		imageScannerPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 
-	private void setUpItemDispenserComboBox(){
-		logicalName_itemDispenser.setItems(getLogicalNames("ItemDispenser"));
+	private void setUpItemDispenserPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/ItemDispenser.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		itemDispenserPane.getChildren().clear();
+		itemDispenserPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpKeylockComboBox(){
-		logicalName_keylock.setItems(getLogicalNames(JposDevCats.KEYLOCK_DEVCAT.toString()));
+	private void setUpKeylockPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Keylock.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		keylockPane.getChildren().clear();
+		keylockPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 
-	private void setUpLightsComboBox(){
-		logicalName_lights.setItems(getLogicalNames("Lights"));
+	private void setUpLightsPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Lights.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		lightsPane.getChildren().clear();
+		lightsPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpLineDisplayComboBox(){
-		logicalName_LineDisplay.setItems(getLogicalNames(JposDevCats.LINEDISPLAY_DEVCAT.toString()));
+	private void setUpLineDisplayPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/LineDisplay.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		lineDisplayPane.getChildren().clear();
+		lineDisplayPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpMICRComboBox(){
-		logicalName_MICR.setItems(getLogicalNames(JposDevCats.MICR_DEVCAT.toString()));
+	private void setUpMICRPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/MICR.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		MICRPane.getChildren().clear();
+		MICRPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpMotionSensorComboBox(){
-		logicalName_motionSensor.setItems(getLogicalNames(JposDevCats.MOTIONSENSOR_DEVCAT.toString()));
+	private void setUpMotionSensorPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/MotionSensor.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		motionSensorPane.getChildren().clear();
+		motionSensorPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpMSRComboBox(){
-		logicalName_MSR.setItems(getLogicalNames(JposDevCats.MSR_DEVCAT.toString()));
+	private void setUpMSRPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/MSR.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		MSRPane.getChildren().clear();
+		MSRPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpPINPadComboBox(){
-		logicalName_PINPad.setItems(getLogicalNames(JposDevCats.PINPAD_DEVCAT.toString()));
+	private void setUpPINPadPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/PINPad.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		PINPadPane.getChildren().clear();
+		PINPadPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpPointCardRWComboBox(){
-		logicalName_pointCardRW.setItems(getLogicalNames(JposDevCats.POINTCARDRW_DEVCAT.toString()));
+	private void setUpPointCardRWPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/PointCardRW.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		pointCardRWPane.getChildren().clear();
+		pointCardRWPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpPOSKeyboardComboBox(){
-		logicalName_POSKeyboard.setItems(getLogicalNames(JposDevCats.POSKEYBOARD_DEVCAT.toString()));
+	private void setUpPOSKeyboardPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/POSKeyboard.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		POSKeyboardPane.getChildren().clear();
+		POSKeyboardPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpPOSPowerComboBox(){
-		logicalName_POSPower.setItems(getLogicalNames(JposDevCats.POSPOWER_DEVCAT.toString()));
+	private void setUpPOSPowerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/POSPower.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		POSPowerPane.getChildren().clear();
+		POSPowerPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 
-	private void setUpPOSPrinterComboBox(){
-		logicalName_POSPrinter.setItems(getLogicalNames(JposDevCats.POSPRINTER_DEVCAT.toString()));
+	private void setUpPOSPrinterPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/POSPrinter.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		POSPrinterPane.getChildren().clear();
+		POSPrinterPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpRemoteOrderDisplayComboBox(){
-		logicalName_remoteOrderDisplay.setItems(getLogicalNames(JposDevCats.REMOTEORDERDISPLAY_DEVCAT.toString()));
+	private void setUpRemoteOrderDisplayPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/RemoteOrderDisplay.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		remoteOrderDisplayPane.getChildren().clear();
+		remoteOrderDisplayPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpRFIDScannerComboBox(){
-		logicalName_RFIDScanner.setItems(getLogicalNames("RFIDScanner"));
+	private void setUpRFIDScannerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/RFIDScanner.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		RFIDPane.getChildren().clear();
+		RFIDPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpScaleComboBox(){
-		logicalName_scale.setItems(getLogicalNames(JposDevCats.SCALE_DEVCAT.toString()));
+	private void setUpScalePane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Scale.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		scalePane.getChildren().clear();
+		scalePane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpScannerComboBox(){
-		logicalName_scanner.setItems(getLogicalNames(JposDevCats.SCANNER_DEVCAT.toString()));
+	private void setUpScannerPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/Scanner.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		scannerPane.getChildren().clear();
+		scannerPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpSignatureCaptureComboBox(){
-		logicalName_signatureCapture.setItems(getLogicalNames(JposDevCats.SIGNATURECAPTURE_DEVCAT.toString()));
+	private void setUpSignatureCapturePane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/SignatureCapture.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		signatureCapturePane.getChildren().clear();
+		signatureCapturePane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpSmartCardRWComboBox(){
-		logicalName_smartCardRW.setItems(getLogicalNames("SmartCardRW"));
+	private void setUpSmartCardRWPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/SmartCardRW.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		smartCardRWPane.getChildren().clear();
+		smartCardRWPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
 	
-	private void setUpToneIndicatorComboBox(){
-		logicalName_toneIndicator.setItems(getLogicalNames(JposDevCats.TONEINDICATOR_DEVCAT.toString()));
+	private void setUpToneIndicatorPane(){
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/ToneIndicator.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		toneIndicatorPane.getChildren().clear();
+		toneIndicatorPane.getChildren().addAll(root.getChildrenUnmodifiable());
 	}
+	
 	
 	/* ************************************************************************
 	 ************************* Action Handler**********************************
@@ -372,11 +618,23 @@ public class POSTest2Controller implements Initializable {
 	/*
 	 * LineDiplay Action Handler
 	 */
-	public void lineDisplayOpenHandle(ActionEvent e) {
-		//JposServiceInstance service = 
-        //label.setText("Accepted");
+	@FXML
+	public void handle(ActionEvent e) {
+		/*
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/testpage.fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		ObservableList<Node> e2 = root.getChildrenUnmodifiable();
+		aPane.getChildren().clear();
+		aPane.getChildren().addAll(root.getChildrenUnmodifiable());
+		*/
     }
 	
-	//dhbipdsfiuvguigviufvipu
+	
+	
 	
 }

@@ -10,11 +10,11 @@
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="posTest2.POSTest2Controller">
   <!-- TODO Add Nodes -->
   <children>
-    <TabPane id="" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <TabPane id="" focusTraversable="false" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <tabs>
         <Tab text="About">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="632.0" prefWidth="1000.0">
+            <AnchorPane minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="970.0" prefWidth="1000.0">
               <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="178.0" layoutY="102.0" prefHeight="172.0" prefWidth="611.0" text="JavaPOS POStest 2" textAlignment="CENTER" textOverrun="CLIP">
                   <font>
@@ -53,641 +53,252 @@
         </Tab>
         <Tab text="Belt">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_belt" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="beltPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="BillAcceptor">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_billAcceptor" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="billAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Bill Dispenser">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_billDispenser" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="billDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Biometrics">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_biometrics" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="biometricsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="BumpBar">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_bumpBar" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="bumpBarPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="CashChanger">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_cashChanger" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="cashChangerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="CashDrawer">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_cashDrawer" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="cashDrawerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="CAT">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_CAT" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="CATPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="CheckScanner">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_checkScanner" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="checkScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="CoinAcceptor">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_coinAcceptor" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="coinAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="CoinDispenser">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_coinDispenser" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="coinDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="ElectronicJournal">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_electronicJournal" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="electronicJournalPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="ElectronicValueRW">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_electronicValueRW" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="electronicValueRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="FiscalPrinter">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_fiscalPrinter" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="fiscalPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Gate">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_gate" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="gatePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="HardTotals">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_hardTotals" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="hardTotalsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="ImageScanner">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_imageScanner" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="imageScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="ItemDispenser">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_itemDispenser" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="itemDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Keylock">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_keylock" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="keylockPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Lights">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_lights" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="lightsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="LineDisplay">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_LineDisplay" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-                <Label fx:id="lineDisplay_StatusLabel" layoutX="623.0" layoutY="30.0" prefHeight="23.0" prefWidth="154.0" text="JPOS_S_CLOSED" />
-                <Button layoutX="135.0" layoutY="66.0" mnemonicParsing="false" text="Open" />
-                <Button layoutX="203.0" layoutY="66.0" mnemonicParsing="false" text="Claim" />
-                <Button layoutX="267.0" layoutY="66.0" mnemonicParsing="false" text="Release" />
-                <Button layoutX="402.0" layoutY="66.0" mnemonicParsing="false" text="Statistics" />
-                <Button layoutX="344.0" layoutY="66.0" mnemonicParsing="false" text="Close" />
-                <Button layoutX="483.0" layoutY="66.0" mnemonicParsing="false" text="Firmware" />
-                <CheckBox fx:id="lineDisplay_deviceEnabled" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" text="Device enabled" />
-                <CheckBox fx:id="lineDisplay_freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
-                <TabPane layoutX="135.0" layoutY="102.0" prefHeight="420.0" prefWidth="548.0" tabClosingPolicy="UNAVAILABLE" visible="${lineDisplay_deviceEnabled.selected}">
-                  <tabs>
-                    <Tab text="Display Text">
-                      <content>
-                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                      </content>
-                    </Tab>
-                    <Tab text="Window Controls">
-                      <content>
-                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                      </content>
-                    </Tab>
-                    <Tab text="Misc Control">
-                      <content>
-                        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                      </content>
-                    </Tab>
-                  </tabs>
-                </TabPane>
-              </children>
+            <AnchorPane id="Content" fx:id="lineDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+           
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="MICR">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_MICR" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="MICRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="MotionSensor">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_motionSensor" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="motionSensorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="MSR">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_MSR" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="MSRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="PINPad">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_PINPad" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="PINPadPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="PointCardRW">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_pointCardRW" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="pointCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="POSKeyboard">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_POSKeyboard" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="POSKeyboardPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="POSPower">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_POSPower" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="POSPowerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="POSPrinter">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_POSPrinter" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="POSPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="RemoteOrderDisplay">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_remoteOrderDisplay" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="remoteOrderDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="RFIDScanner">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_RFIDScanner" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="RFIDPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Scale">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_scale" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="scalePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="Scanner">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_scanner" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="scannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="SignatureCapture">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_signatureCapture" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="signatureCapturePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="SmartCardRW">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_smartCardRW" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="smartCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              
             </AnchorPane>
           </content>
         </Tab>
         <Tab text="ToneIndicator">
           <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <ComboBox fx:id="logicalName_toneIndicator" layoutX="217.0" layoutY="30.0" prefHeight="21.0" prefWidth="317.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item1" />
-                      <String fx:value="Item2" />
-                    </FXCollections>
-                  </items>
-                </ComboBox>
-                <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-              </children>
+            <AnchorPane id="Content" fx:id="toneIndicatorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+             
             </AnchorPane>
           </content>
         </Tab>
