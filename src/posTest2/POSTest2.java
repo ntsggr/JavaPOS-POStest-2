@@ -7,37 +7,24 @@
 package posTest2;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.Enumeration;
-import java.util.List;
-
-import nts.infrastructure.device.escpos.CashDrawerService;
-import nts.infrastructure.device.escpos.EscPosPrinterDemo;
-import nts.infrastructure.device.escpos.EscPosPrinterService;
-import nts.infrastructure.device.escpos.EscPosServiceInstanceFactory;
-import nts.infrastructure.device.escpos.LineDisplayService;
-import nts.infrastructure.device.escpos.POSDeviceBean;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import jpos.JposException;
-import jpos.POSPrinter;
-import jpos.config.*;
-import jpos.config.simple.xml.SimpleXmlRegPopulator;
+import jpos.config.JposEntry;
 import jpos.config.simple.SimpleEntryRegistry;
+import jpos.config.simple.xml.SimpleXmlRegPopulator;
 import jpos.loader.JposServiceInstance;
-import jpos.services.BaseService;
+import nts.infrastructure.device.escpos.CashDrawerService;
+import nts.infrastructure.device.escpos.EscPosPrinterService;
+import nts.infrastructure.device.escpos.LineDisplayService;
 
-public class Controller extends Application {
+public class POSTest2 extends Application {
 
 	
 	@Override
