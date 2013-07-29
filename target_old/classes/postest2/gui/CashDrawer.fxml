@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="posTest2.CashDrawerController">
+  <children>
+    <!-- logicalName_LineDisplay -->
+    <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
+    <Label fx:id="statusLabel" layoutX="623.0" layoutY="30.0" prefHeight="23.0" prefWidth="154.0" text="JPOS_S_CLOSED" />
+    <Button fx:id="buttonOpen" layoutX="135.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleOpen" text="Open" />
+    <Button fx:id="buttonClaim" disable="true" layoutX="203.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleClaim" text="Claim" />
+    <Button fx:id="buttonRelease" disable="true" layoutX="267.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleRelease" text="Release" />
+    <Button fx:id="buttonStatistics" layoutX="402.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
+    <Button fx:id="buttonClose" layoutX="344.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
+    <Button fx:id="buttonFirmware" layoutX="483.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
+    <CheckBox fx:id="deviceEnabled" disable="true" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
+    <CheckBox fx:id="freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
+    <ComboBox fx:id="logicalName" layoutX="232.0" layoutY="31.0" prefHeight="21.0" prefWidth="223.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <Button fx:id="buttonOpenCash" disable="true" layoutX="164.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleOpenCash" text="Open Cash Drawer" />
+    <Button fx:id="buttonGetDrawer" disable="true" layoutX="298.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleGetDrawer" text="Get Drawer Opened" />
+    <Button fx:id="buttonWaitForDrawer" disable="true" layoutX="436.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleWaitForDrawer" text="Wait For Drawer Close" />
+    <TextArea fx:id="textAreaActionLog" layoutX="73.0" layoutY="187.0" prefHeight="263.0" prefWidth="517.0" wrapText="true" />
+    <Text layoutX="292.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" />
+  </children>
+</AnchorPane>
