@@ -405,7 +405,7 @@ public class LineDisplayController implements Initializable {
 					}
 				}
 				
-				System.out.println("" + num);
+				//System.out.println("" + num);
 				
 				windowList.add("" + num);
 
