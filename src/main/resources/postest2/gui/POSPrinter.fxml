@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSPrinterController">
   <children>
-    <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-    <Label fx:id="statusLabel" layoutX="623.0" layoutY="30.0" prefHeight="23.0" prefWidth="154.0" text="JPOS_S_CLOSED" />
-    <Button layoutX="135.0" layoutY="66.0" mnemonicParsing="false" text="Open" />
-    <Button layoutX="203.0" layoutY="66.0" mnemonicParsing="false" text="Claim" />
-    <Button layoutX="267.0" layoutY="66.0" mnemonicParsing="false" text="Release" />
-    <Button layoutX="402.0" layoutY="66.0" mnemonicParsing="false" text="Statistics" />
-    <Button layoutX="344.0" layoutY="66.0" mnemonicParsing="false" text="Close" />
-    <Button layoutX="483.0" layoutY="66.0" mnemonicParsing="false" text="Firmware" />
-    <CheckBox fx:id="deviceEnabled" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" text="Device enabled" />
-    <CheckBox fx:id="freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
-    
-    <ComboBox fx:id="logicalName" layoutX="232.0" layoutY="31.0" prefHeight="21.0" prefWidth="223.0">
+    <Label layoutX="152.0" layoutY="31.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
+    <Label fx:id="statusLabel" layoutX="605.0" layoutY="30.0" prefHeight="23.0" prefWidth="156.0" text="JPOS_S_CLOSED" />
+    <Button fx:id="buttonOpen" layoutX="152.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleOpen" text="Open" />
+    <Button fx:id="buttonClaim" layoutX="215.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleClaim" text="Claim" />
+    <Button fx:id="buttonRelease" layoutX="282.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleRelease" text="Release" />
+    <Button fx:id="buttonStatistics" layoutX="419.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
+    <Button fx:id="buttonClose" layoutX="358.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
+    <Button fx:id="buttonFirmware" layoutX="500.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
+    <CheckBox fx:id="checkDeviceEnabled" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleDeviceEnabled" text="Device enabled" />
+    <CheckBox fx:id="checkFreezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
+    <ComboBox fx:id="logicalName" layoutX="249.0" layoutY="32.0" prefHeight="21.0" prefWidth="223.0">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Item 1" />
@@ -28,5 +31,63 @@
         </FXCollections>
       </items>
     </ComboBox>
+    <CheckBox fx:id="checkAsyncMode" layoutX="23.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
+    <CheckBox fx:id="checkFlagWhenIdle" layoutX="23.0" layoutY="174.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
+    <ComboBox fx:id="rotationMode" layoutX="23.0" layoutY="224.0" prefHeight="21.0" prefWidth="129.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="No rotation" />
+          <String fx:value="Rotate right 90" />
+          <String fx:value="Rotate left 90" />
+          <String fx:value="Rotate 180" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <ComboBox fx:id="mapMode" layoutX="23.0" layoutY="269.0" prefHeight="21.0" prefWidth="129.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Dots" />
+          <String fx:value="Metric" />
+          <String fx:value="English" />
+          <String fx:value="Twips" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <RadioButton fx:id="rbReceipt" layoutX="202.0" layoutY="102.0" mnemonicParsing="false" text="Receipt" />
+    <RadioButton fx:id="rbJournal" layoutX="282.0" layoutY="102.0" mnemonicParsing="false" text="Journal" />
+    <RadioButton fx:id="rbSlip" layoutX="365.0" layoutY="102.0" mnemonicParsing="false" text="Slip" />
+    <TabPane fx:id="tabPane" layoutX="196.0" layoutY="135.0" prefHeight="411.0" prefWidth="519.0" tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+        <Tab text="General Printing">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <children>
+                <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send to printer:" />
+                <TextArea layoutX="14.0" layoutY="22.0" prefHeight="181.0" prefWidth="209.0" wrapText="true" />
+                <Button layoutX="232.0" layoutY="22.0" mnemonicParsing="false" text="Begin Insertion" />
+                <Button layoutX="343.0" layoutY="22.0" mnemonicParsing="false" prefWidth="100.0" text="End Insertion" />
+                <Button layoutX="232.0" layoutY="53.0" mnemonicParsing="false" prefWidth="99.9998779296875" text="Begin Removal" />
+                <Button layoutX="343.0" layoutY="53.0" mnemonicParsing="false" prefWidth="100.0" text="End Removal" />
+                <Button layoutX="14.0" layoutY="214.0" mnemonicParsing="false" text="Add Escape Seq." />
+                <Button fx:id="buttonPrintNormal" layoutX="232.0" layoutY="114.0" mnemonicParsing="false" onAction="#handlePrintNormal" prefWidth="105.0" text="Print Normal" />
+                <Button fx:id="buttonPrintImmediate" layoutX="232.0" layoutY="141.0" mnemonicParsing="false" onAction="#handlePrintImmediate" text="Print Immediate" />
+                <Button layoutX="380.0" layoutY="114.0" mnemonicParsing="false" prefWidth="110.0" text="Set Top Logo" />
+                <Button layoutX="380.0" layoutY="141.0" mnemonicParsing="false" text="Set Bottom Logo" />
+                <Button layoutX="232.0" layoutY="214.0" mnemonicParsing="false" text="Letter Quality" />
+                <Button layoutX="337.0" layoutY="214.0" mnemonicParsing="false" text="Cut Paper" />
+                <TextArea layoutX="69.0" layoutY="275.0" prefHeight="91.0" prefWidth="382.0" wrapText="true" />
+                <Text layoutX="214.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Device Messages" />
+                <Button layoutX="421.0" layoutY="214.0" mnemonicParsing="false" text="Validate Data" />
+              </children>
+            </AnchorPane>
+          </content>
+        </Tab>
+        <Tab text="Barcode">
+          <content>
+            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          </content>
+        </Tab>
+      </tabs>
+    </TabPane>
   </children>
 </AnchorPane>

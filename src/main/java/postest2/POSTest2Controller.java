@@ -19,9 +19,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import jpos.config.JposEntry;
 import jpos.config.simple.xml.SimpleXmlRegPopulator;
@@ -114,6 +116,18 @@ public class POSTest2Controller implements Initializable {
 	private AnchorPane toneIndicatorPane;
 
 	// @FXML private AnchorPane aPane;
+	
+	//TODO Delete
+	/*
+	@FXML
+	private TableView<String> testTable;
+	
+	@FXML
+	private ListView<String> testView;
+	
+	@FXML
+	private TableColumn<LineDisplayWindow, Integer> testColumn;
+	*/
 
 	// List for the ConfiguredDevices Page
 	ObservableList<Device> devicesList;
@@ -122,7 +136,30 @@ public class POSTest2Controller implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		setUpApplication();
-
+		/*
+		ArrayList<String> aList = new ArrayList<String>();
+		aList.add("Hello World!");
+		aList.add("Test2");
+		ObservableList<String> list = FXCollections.observableList(aList);
+		
+		ArrayList<LineDisplayWindow> aList2 = new ArrayList<LineDisplayWindow>();
+		aList2.add(new LineDisplayWindow(1));
+		aList2.add(new LineDisplayWindow(1));
+		ObservableList<LineDisplayWindow> list2 = FXCollections.observableList(aList2);
+		
+		
+		testColumn = new TableColumn<LineDisplayWindow, Integer>("Window Number");
+		testColumn.setCellValueFactory(new PropertyValueFactory<LineDisplayWindow, Integer>("windowNumber"));
+		
+		
+		//TableColumn<String, String> newTC = new TableColumn<String, String>("Window Number2");
+		//testTable.getColumns().add(testColumn);
+		
+		testTable.setItems(list);
+		
+		//testTable.setItems(list2);
+		testView.setItems(list);
+		*/
 	}
 
 	/**

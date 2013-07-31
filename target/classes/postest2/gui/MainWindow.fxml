@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSTest2Controller" >
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSTest2Controller">
   <!-- TODO Add Nodes -->
   <children>
     <TabPane id="" focusTraversable="false" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -53,253 +53,182 @@
         </Tab>
         <Tab text="Belt">
           <content>
-            <AnchorPane id="Content" fx:id="beltPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="beltPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="BillAcceptor">
           <content>
-            <AnchorPane id="Content" fx:id="billAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="billAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Bill Dispenser">
           <content>
-            <AnchorPane id="Content" fx:id="billDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="billDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Biometrics">
           <content>
-            <AnchorPane id="Content" fx:id="biometricsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="biometricsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="BumpBar">
           <content>
-            <AnchorPane id="Content" fx:id="bumpBarPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="bumpBarPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="CashChanger">
           <content>
-            <AnchorPane id="Content" fx:id="cashChangerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="cashChangerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="CashDrawer">
           <content>
-            <AnchorPane id="Content" fx:id="cashDrawerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="cashDrawerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="CAT">
           <content>
-            <AnchorPane id="Content" fx:id="CATPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="CATPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="CheckScanner">
           <content>
-            <AnchorPane id="Content" fx:id="checkScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="checkScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="CoinAcceptor">
           <content>
-            <AnchorPane id="Content" fx:id="coinAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="coinAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="CoinDispenser">
           <content>
-            <AnchorPane id="Content" fx:id="coinDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="coinDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="ElectronicJournal">
           <content>
-            <AnchorPane id="Content" fx:id="electronicJournalPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="electronicJournalPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="ElectronicValueRW">
           <content>
-            <AnchorPane id="Content" fx:id="electronicValueRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="electronicValueRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="FiscalPrinter">
           <content>
-            <AnchorPane id="Content" fx:id="fiscalPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="fiscalPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Gate">
           <content>
-            <AnchorPane id="Content" fx:id="gatePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="gatePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="HardTotals">
           <content>
-            <AnchorPane id="Content" fx:id="hardTotalsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="hardTotalsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="ImageScanner">
           <content>
-            <AnchorPane id="Content" fx:id="imageScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="imageScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="ItemDispenser">
           <content>
-            <AnchorPane id="Content" fx:id="itemDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="itemDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Keylock">
           <content>
-            <AnchorPane id="Content" fx:id="keylockPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="keylockPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Lights">
           <content>
-            <AnchorPane id="Content" fx:id="lightsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="lightsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="LineDisplay">
           <content>
-            <AnchorPane id="Content" fx:id="lineDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-           
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="lineDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="MICR">
           <content>
-            <AnchorPane id="Content" fx:id="MICRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="MICRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="MotionSensor">
           <content>
-            <AnchorPane id="Content" fx:id="motionSensorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="motionSensorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="MSR">
           <content>
-            <AnchorPane id="Content" fx:id="MSRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="MSRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="PINPad">
           <content>
-            <AnchorPane id="Content" fx:id="PINPadPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="PINPadPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="PointCardRW">
           <content>
-            <AnchorPane id="Content" fx:id="pointCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="pointCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="POSKeyboard">
           <content>
-            <AnchorPane id="Content" fx:id="POSKeyboardPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="POSKeyboardPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="POSPower">
           <content>
-            <AnchorPane id="Content" fx:id="POSPowerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="POSPowerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="POSPrinter">
           <content>
-            <AnchorPane id="Content" fx:id="POSPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="POSPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="RemoteOrderDisplay">
           <content>
-            <AnchorPane id="Content" fx:id="remoteOrderDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="remoteOrderDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="RFIDScanner">
           <content>
-            <AnchorPane id="Content" fx:id="RFIDPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="RFIDPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Scale">
           <content>
-            <AnchorPane id="Content" fx:id="scalePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="scalePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="Scanner">
           <content>
-            <AnchorPane id="Content" fx:id="scannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="scannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="SignatureCapture">
           <content>
-            <AnchorPane id="Content" fx:id="signatureCapturePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="signatureCapturePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="SmartCardRW">
           <content>
-            <AnchorPane id="Content" fx:id="smartCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="smartCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
         <Tab text="ToneIndicator">
           <content>
-            <AnchorPane id="Content" fx:id="toneIndicatorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
+            <AnchorPane id="Content" fx:id="toneIndicatorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
           </content>
         </Tab>
       </tabs>

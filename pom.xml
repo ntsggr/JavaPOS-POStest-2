@@ -15,12 +15,18 @@
 			<groupId>javapos</groupId>
 			<artifactId>jpos</artifactId>
 			<version>1.13.0</version>
-			
 		</dependency>
+		
 		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xerces</artifactId>
 			<version>2.4.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>javafx</artifactId>
+			<version>2.0</version>
 		</dependency>
  
 		<!-- Look if we really need it. <dependency> <groupId>it.tidalwave.betterbeansbinding</groupId> 

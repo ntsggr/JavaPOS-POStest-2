@@ -12,7 +12,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import jpos.LineDisplayConst;
+import jpos.POSPrinterConst;
 
 public class POSTest2 extends Application {
 
@@ -24,9 +27,8 @@ public class POSTest2 extends Application {
 		primaryStage.setTitle("JavaPOS POStest 2");
 
 		primaryStage.setScene(scene);
-
+		LineDisplayConst c;
 		primaryStage.show();
-
 	}
 
 	@Override

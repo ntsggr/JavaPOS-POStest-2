@@ -13,7 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,15 +22,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-
 import jpos.JposException;
 import jpos.LineDisplay;
 import jpos.profile.JposDevCats;
@@ -63,9 +62,9 @@ public class LineDisplayController implements Initializable {
 
 	// Display Text
 	@FXML
-	private ComboBox<String> row;
+	private ComboBox<Integer> row;
 	@FXML
-	private ComboBox<String> column;
+	private ComboBox<Integer> column;
 	@FXML
 	private ComboBox<String> attribute;
 	@FXML
@@ -80,7 +79,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	private ComboBox<Integer> descriptors;
 	@FXML
-	private ComboBox<Integer> descriptor_attribute;
+	private ComboBox<String> descriptor_attribute;
 	@FXML
 	private ComboBox<String> scrollText_direction;
 	@FXML
@@ -92,9 +91,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	private TextField glyphBinaryPath;
 	@FXML
-	private ComboBox<String> characterSet;
-	@FXML
-	private ComboBox<String> screenMode;
+	private ComboBox<Integer> characterSet;
 	@FXML
 	private Slider deviceBrightness;
 
@@ -112,7 +109,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	private TextField windowWidth;
 	@FXML
-	private TableView<String> openWindows;
+	private ListView<String> openWindowsListView;
 
 	// Display Marquee
 	@FXML
@@ -126,21 +123,32 @@ public class LineDisplayController implements Initializable {
 
 	// Display Bitmap
 	@FXML
-	private TextField alignmentX;
+	private ComboBox<String> alignmentX;
 	@FXML
-	private TextField alignmentY;
+	private ComboBox<String> alignmentY;
 	@FXML
 	private ComboBox<String> bitmapWidth;
 	@FXML
 	private TextField bitmapPath;
+	
+	//Screen Mode
+	@FXML
+	private TabPane setScreenModeTab;
+	@FXML
+	private ComboBox<String> screenMode;
 
-	public LineDisplay display;
+	private int currentWindow = 0;
+	
+	private LineDisplay display;
+	//private int openWindowCount = 0;
+	private ObservableList<String> windowList = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpLogicalNameComboBox();
+		setUpAttribute();
 		display = new LineDisplay();
-
+		//setScreenModeTab.setDisable(true);
 	}
 
 	private void setUpLogicalNameComboBox() {
@@ -171,7 +179,7 @@ public class LineDisplayController implements Initializable {
 
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + "display" + "\"\nException: " + je.getMessage(), "Failed",
+					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(), "Failed",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -183,9 +191,11 @@ public class LineDisplayController implements Initializable {
 			display.claim(0);
 			deviceEnabled.setDisable(false);
 			buttonRelease.setDisable(false);
+			setScreenModeTab.setDisable(false);
+			setUpScreenMode();
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + "display" + "\"\nException: " + je.getMessage(), "Failed",
+					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(), "Failed",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -195,10 +205,39 @@ public class LineDisplayController implements Initializable {
 		try {
 			if (deviceEnabled.isSelected()) {
 				display.setDeviceEnabled(true);
-				functionTab.setVisible(true);
+				setUpRow();
+				setUpColumns();
+				setUpDescriptors();
+				setUpDescriptorAttribute();
+				setUpScrollTextDirection();
+				setUpCharacterSet();
+				setUpMarqueeType();
+				setUpMarqueeFormat();
+				setUpBitmapWidth();
+				setUpAlignmentX();
+				setUpAlignmentY();
+				
+				/*
+				openWindows.getColumns().clear();
+				openWindows.getColumns().add(windows);
+				openWindows.setItems(windowList);
+				*/
+				windowList.clear();
+
+				windowList.add("0");
+				//openWindowCount = 0;
+				//windowList.add("" + openWindowCount);
+				openWindowsListView.setItems(windowList);
+				
+				/*
+				windows.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("windows"));
+				openWindows.getItems().clear();
+				openWindows.getItems().add(openWindowCount);
+				*/
+				// functionTab.setVisible(true);
 			} else {
 				display.setDeviceEnabled(false);
-				functionTab.setVisible(false);
+				// functionTab.setVisible(false);
 			}
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
@@ -213,11 +252,13 @@ public class LineDisplayController implements Initializable {
 			if (deviceEnabled.isSelected()) {
 				deviceEnabled.setSelected(false);
 				functionTab.setVisible(false);
+
 			}
 			deviceEnabled.setDisable(true);
+			setScreenModeTab.setDisable(true);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
-					"Failed to release \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed",
+					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(), "Failed",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -231,12 +272,13 @@ public class LineDisplayController implements Initializable {
 				deviceEnabled.setSelected(false);
 				functionTab.setVisible(false);
 			}
+			setScreenModeTab.setDisable(true);
 			buttonClaim.setDisable(true);
 			deviceEnabled.setDisable(true);
 			buttonRelease.setDisable(true);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
-					"Failed to close \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed",
+					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(), "Failed",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -253,13 +295,19 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleDisplayTextAt(ActionEvent e) {
+		if (row.getSelectionModel().getSelectedItem() == null){
+			JOptionPane.showMessageDialog(null, "Row is not selected!", "Logical name is empty",
+					JOptionPane.WARNING_MESSAGE);
+		}
 		try {
-			display.displayTextAt(Integer.parseInt(row.getSelectionModel().getSelectedItem()),
-					Integer.parseInt(column.getSelectionModel().getSelectedItem()), displayText.getText(),
-					Integer.parseInt(attribute.getSelectionModel().getSelectedItem()));
+			display.displayTextAt(row.getSelectionModel().getSelectedIndex(), column.getSelectionModel()
+					.getSelectedItem(), displayText.getText(), attribute.getSelectionModel()
+					.getSelectedIndex());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -268,11 +316,12 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleDisplayText(ActionEvent e) {
 		try {
-			display.displayText(displayText.getText(),
-					Integer.parseInt(attribute.getSelectionModel().getSelectedItem()));
+			display.displayText(displayText.getText(), attribute.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -283,6 +332,7 @@ public class LineDisplayController implements Initializable {
 		try {
 			display.clearText();
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -291,11 +341,13 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleMoveCursor(ActionEvent e) {
 		try {
-			display.setCursorColumn(Integer.parseInt(column.getSelectionModel().getSelectedItem()));
-			display.setCursorRow(Integer.parseInt(row.getSelectionModel().getSelectedItem()));
+			display.setCursorColumn(column.getSelectionModel().getSelectedIndex());
+			display.setCursorRow(row.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -303,59 +355,142 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleSetBlinkRate(ActionEvent e) {
-		try {
-			display.setBlinkRate(Integer.parseInt(blinkRate.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if(blinkRate.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param blinkRate is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.setBlinkRate(Integer.parseInt(blinkRate.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
-
 	}
 
 	@FXML
 	public void handleSetICharWait(ActionEvent e) {
-		try {
-			display.setInterCharacterWait(Integer.parseInt(intercharacterWait.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (intercharacterWait.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param ICharWait is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.setInterCharacterWait(Integer.parseInt(intercharacterWait.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
-
 	}
-
+	
 	@FXML
 	public void handleAddWindow(ActionEvent e) {
-		try {
-			display.createWindow(Integer.parseInt(viewportRow.getText()),
-					Integer.parseInt(viewportColumn.getText()), Integer.parseInt(viewportHeight.getText()),
-					Integer.parseInt(viewportWidth.getText()), Integer.parseInt(windowHeight.getText()),
-					Integer.parseInt(windowWidth.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
+		if(viewportRow.getText().equals("")||viewportColumn.getText().equals("")||viewportHeight.getText().equals("")||viewportWidth.getText().equals("")||windowHeight.getText().equals("")||windowWidth.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "One of the params is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				FXCollections.sort(windowList);
+				int num = 0;
+				for (String s : windowList){
+					if(s.equals(""+num)){
+						num++;
+					}
+					if(num == 4){
+						JOptionPane.showMessageDialog(null, "Too many open Windows!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+				
+				System.out.println("" + num);
+				
+				windowList.add("" + num);
 
+				FXCollections.sort(windowList);
+				display.createWindow(Integer.parseInt(viewportRow.getText()),
+						Integer.parseInt(viewportColumn.getText()), Integer.parseInt(viewportHeight.getText()),
+						Integer.parseInt(viewportWidth.getText()), Integer.parseInt(windowHeight.getText()),
+						Integer.parseInt(windowWidth.getText()));
+				
+				
+				/*
+				openWindowCount++;
+				openWindows.getItems().add(Integer.valueOf(openWindowCount));
+				*/
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+			
+		}
 	}
 
+	
+	/*
+	@FXML
+	public void handleAddWindow(ActionEvent e) {
+		if(viewportRow.getText().equals("")||viewportColumn.getText().equals("")||viewportHeight.getText().equals("")||viewportWidth.getText().equals("")||windowHeight.getText().equals("")||windowWidth.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "One of the params is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.createWindow(Integer.parseInt(viewportRow.getText()),
+						Integer.parseInt(viewportColumn.getText()), Integer.parseInt(viewportHeight.getText()),
+						Integer.parseInt(viewportWidth.getText()), Integer.parseInt(windowHeight.getText()),
+						Integer.parseInt(windowWidth.getText()));
+				
+				openWindowCount++;
+				windowList.add("" + openWindowCount);
+				/*
+				openWindowCount++;
+				openWindows.getItems().add(Integer.valueOf(openWindowCount));
+				*/
+	/*
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+			
+		}
+	}
+	*/
 	@FXML
 	public void handleDeleteWindow(ActionEvent e) {
 		try {
 			display.destroyWindow();
+			//System.out.println("\n\n\n\n" + openWindowsListView.getSelectionModel().getSelectedItem() + "\n\n\n\n");
+			windowList.remove("" + currentWindow);
+
+			FXCollections.sort(windowList);
+			//windowList.remove(openWindowsListView.getSelectionModel().getSelectedItem());
+			//openWindowCount = Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem());
+			
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
+		
+		
 	}
 
 	@FXML
 	public void handleRefreshWindow(ActionEvent e) {
 		try {
-			display.refreshWindow(Integer.parseInt(openWindows.getSelectionModel().getSelectedItem()));
+			display.refreshWindow(Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem()));
+			currentWindow = Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -363,15 +498,24 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleScrollText(ActionEvent e) {
-		try {
-			display.scrollText(Integer.parseInt(scrollText_direction.getSelectionModel().getSelectedItem()),
-					Integer.parseInt(scrollText_Units.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (scrollText_direction.getSelectionModel().getSelectedItem().equals("")){
+			JOptionPane.showMessageDialog(null, "Choose a valid scroll direction!", "Invalid Parameter",
+					JOptionPane.WARNING_MESSAGE);
+		} else if (scrollText_Units.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Choose a valid unit!", "Invalid Parameter",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.scrollText(scrollText_direction.getSelectionModel().getSelectedIndex(),
+						Integer.parseInt(scrollText_Units.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
-
 	}
 
 	@FXML
@@ -379,6 +523,7 @@ public class LineDisplayController implements Initializable {
 		try {
 			display.setDeviceBrightness((int) (deviceBrightness.getValue()));
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -388,10 +533,12 @@ public class LineDisplayController implements Initializable {
 	public void handleSetDescriptor(ActionEvent e) {
 		try {
 			display.setDescriptor(descriptors.getSelectionModel().getSelectedIndex(), descriptor_attribute
-					.getSelectionModel().getSelectedItem());
+					.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -402,8 +549,10 @@ public class LineDisplayController implements Initializable {
 		try {
 			display.clearDescriptors();
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -415,6 +564,7 @@ public class LineDisplayController implements Initializable {
 		try {
 			display.readCharacterAtCursor(help);
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 		readCharacterField.setText("" + help[0]);
@@ -423,9 +573,16 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleDefineGlyph(ActionEvent e) throws JposException {
-		byte[] bytes = getBytesFromFile(glyphBinaryPath.getText());
-		display.defineGlyph(Integer.parseInt(glypeCode.getText()), bytes);
-
+		if (glyphBinaryPath.getText() == ""){
+			JOptionPane.showMessageDialog(null, "Choose a valid glyph path", "Invalid Parameter",
+					JOptionPane.WARNING_MESSAGE);
+		} else if (glypeCode.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Choose a valid Glyph Code", "Invalid Parameter",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			byte[] bytes = getBytesFromFile(glyphBinaryPath.getText());
+			display.defineGlyph(Integer.parseInt(glypeCode.getText()), bytes);
+		}
 	}
 
 	@FXML
@@ -433,17 +590,20 @@ public class LineDisplayController implements Initializable {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Choose Glyph Binary");
 		File f = chooser.showOpenDialog(null);
-		glyphBinaryPath.setText(f.getAbsolutePath());
-
+		if (f != null) {
+			glyphBinaryPath.setText(f.getAbsolutePath());
+		}
 	}
 
 	@FXML
 	public void handleSetCharacterSet(ActionEvent e) {
 		try {
-			display.setCharacterSet(Integer.parseInt(characterSet.getSelectionModel().getSelectedItem()));
+			display.setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -454,6 +614,7 @@ public class LineDisplayController implements Initializable {
 		try {
 			display.setScreenMode(screenMode.getSelectionModel().getSelectedIndex());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
@@ -461,10 +622,12 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetMarqueeType(ActionEvent e) {
 		try {
-			display.setMarqueeType(Integer.parseInt(marqueeType.getSelectionModel().getSelectedItem()));
+			display.setMarqueeType(marqueeType.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
@@ -473,35 +636,51 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetMarqueeFormat(ActionEvent e) {
 		try {
-			display.setMarqueeFormat(Integer.parseInt(marqueeFormat.getSelectionModel().getSelectedItem()));
+			display.setMarqueeFormat(marqueeFormat.getSelectionModel().getSelectedIndex());
+			
 		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
+		//System.out.println("" + marqueeFormat.getSelectionModel().getSelectedIndex());
 	}
 
 	@FXML
 	public void handleSetMarqueeRepeatWait(ActionEvent e) {
-		try {
-			display.setMarqueeRepeatWait(Integer.parseInt(marqueeRepeatWait.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if(marqueeRepeatWait.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param marqueeRepeatWait is false", "Invalid Parameter!",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.setMarqueeRepeatWait(Integer.parseInt(marqueeRepeatWait.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
-
 	}
 
 	@FXML
 	public void handleSetMarqueeUnitWait(ActionEvent e) {
-		try {
-			display.setMarqueeUnitWait(Integer.parseInt(marqueeUnitWait.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if(marqueeUnitWait.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param marqueeUnitWait is false", "Invalid Parameter!",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.setMarqueeUnitWait(Integer.parseInt(marqueeUnitWait.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
@@ -511,20 +690,72 @@ public class LineDisplayController implements Initializable {
 		FileChooser chooser = new FileChooser();
 		chooser.setTitle("Choose Bitmap Path");
 		File f = chooser.showOpenDialog(null);
-		bitmapPath.setText(f.getAbsolutePath());
-
+		if (f != null) {
+			bitmapPath.setText(f.getAbsolutePath());
+		}
 	}
 
 	@FXML
 	public void handleDisplayBitmap(ActionEvent e) {
-		try {
-			display.displayBitmap(bitmapPath.getText(),
-					Integer.parseInt(bitmapWidth.getSelectionModel().getSelectedItem()),
-					Integer.parseInt(alignmentX.getText()), Integer.parseInt(alignmentY.getText()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (bitmapPath.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param bitmapPath is not set");
+		} else {
+			// Calculate Bitmap Width
+			int newBitmapWidth = 0;
+			if (bitmapWidth.getSelectionModel().getSelectedItem().equals(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant())) {
+				newBitmapWidth = LineDisplayConstantMapper.DISP_BM_ASIS.getContantNumber();
+			} else {
+				newBitmapWidth = Integer.parseInt(bitmapWidth.getSelectionModel().getSelectedItem());
+			}
+	
+			// Calculate AlignmentX
+			int newAlignmentX = 0;
+			if (alignmentX.getSelectionModel().getSelectedItem().equals(LineDisplayConstantMapper.DISP_BM_LEFT.getConstant())) {
+				newAlignmentX = LineDisplayConstantMapper.DISP_BM_LEFT.getContantNumber();
+	
+			} else if (alignmentX.getSelectionModel().getSelectedItem()
+					.equals(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant())) {
+	
+				newAlignmentX = LineDisplayConstantMapper.DISP_BM_CENTER.getContantNumber();
+			} else if (alignmentX.getSelectionModel().getSelectedItem()
+					.equals(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant())) {
+	
+				newAlignmentX = LineDisplayConstantMapper.DISP_BM_RIGHT.getContantNumber();
+			} else {
+				newAlignmentX = Integer.parseInt(alignmentX.getSelectionModel().getSelectedItem());
+			}
+	
+			// Calculate AlignmentX
+			int newAlignmentY = 0;
+			if (alignmentY.getSelectionModel().getSelectedItem().equals(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant())) {
+	
+				newAlignmentY = LineDisplayConstantMapper.DISP_BM_BOTTOM.getContantNumber();
+	
+			} else if (alignmentY.getSelectionModel().getSelectedItem()
+					.equals(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant())) {
+	
+				newAlignmentY = LineDisplayConstantMapper.DISP_BM_CENTER.getContantNumber();
+	
+			} else if (alignmentY.getSelectionModel().getSelectedItem()
+					.equals(LineDisplayConstantMapper.DISP_BM_TOP.getConstant())) {
+	
+				newAlignmentY = LineDisplayConstantMapper.DISP_BM_TOP.getContantNumber();
+	
+			} else {
+	
+				newAlignmentY = Integer.parseInt(alignmentY.getSelectionModel().getSelectedItem());
+	
+			}
+	
+			try {
+				display.displayBitmap(bitmapPath.getText(), newBitmapWidth, newAlignmentX, newAlignmentY);
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
@@ -534,6 +765,7 @@ public class LineDisplayController implements Initializable {
 		try {
 			originalImage = ImageIO.read(new File(path));
 		} catch (IOException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 		if (originalImage == null) {
@@ -556,10 +788,185 @@ public class LineDisplayController implements Initializable {
 			bytes = baos.toByteArray();
 			baos.close();
 		} catch (IOException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 
 		return bytes;
 	}
 
+	/* ************************************************************************
+	 * ************************ Set all ComboBox Values ***********************
+	 * ***********************************************************************
+	 */
+
+	private void setUpAttribute() {
+		attribute.getItems().clear();
+		attribute.getItems().add(LineDisplayConstantMapper.DISP_DT_NORMAL.getContantNumber(),
+				LineDisplayConstantMapper.DISP_DT_NORMAL.getConstant());
+		attribute.getItems().add(LineDisplayConstantMapper.DISP_DT_BLINK.getContantNumber(),
+				LineDisplayConstantMapper.DISP_DT_BLINK.getConstant());
+		attribute.getItems().add(LineDisplayConstantMapper.DISP_DT_REVERSE.getContantNumber(),
+				LineDisplayConstantMapper.DISP_DT_REVERSE.getConstant());
+		attribute.getItems().add(LineDisplayConstantMapper.DISP_DT_BLINK_REVERSE.getContantNumber(),
+				LineDisplayConstantMapper.DISP_DT_BLINK_REVERSE.getConstant());
+		attribute.setValue(LineDisplayConstantMapper.DISP_DT_NORMAL.getConstant());
+
+	}
+
+	private void setUpRow() {
+		row.getItems().clear();
+		try {
+			for (int i = 0; i < display.getRows(); i++) {
+				row.getItems().add(i);
+			}
+		} catch (JposException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error occured when getting Rows", "Error occured!",
+					JOptionPane.WARNING_MESSAGE);
+		}
+		row.setValue(0);
+	}
+
+	private void setUpColumns() {
+		column.getItems().clear();
+		try {
+			for (int i = 0; i < display.getColumns(); i++) {
+				column.getItems().add(i);
+			}
+		} catch (JposException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error occured when getting Columns", "Error occured!",
+					JOptionPane.WARNING_MESSAGE);
+		}
+		column.setValue(0);
+	}
+
+	private void setUpDescriptors() {
+		descriptors.getItems().clear();
+		try {
+			descriptors.getItems().add(display.getDeviceDescriptors());
+			descriptors.setValue(display.getDeviceDescriptors());
+		} catch (JposException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error occured when getting Descriptors", "Error occured!",
+					JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	private void setUpDescriptorAttribute() {
+		descriptor_attribute.getItems().clear();
+		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_OFF.getContantNumber(),
+				LineDisplayConstantMapper.DISP_SD_OFF.getConstant());
+		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_ON.getContantNumber(),
+				LineDisplayConstantMapper.DISP_SD_ON.getConstant());
+		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_BLINK.getContantNumber(),
+				LineDisplayConstantMapper.DISP_SD_BLINK.getConstant());
+		descriptor_attribute.setValue(LineDisplayConstantMapper.DISP_SD_OFF.getConstant());
+	}
+
+	private void setUpScrollTextDirection() {
+		scrollText_direction.getItems().clear();
+		
+		//Need for correct Index
+		scrollText_direction.getItems().add(0, "");
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_UP.getContantNumber(),
+				LineDisplayConstantMapper.DISP_ST_UP.getConstant());
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_DOWN.getContantNumber(),
+				LineDisplayConstantMapper.DISP_ST_DOWN.getConstant());
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_LEFT.getContantNumber(),
+				LineDisplayConstantMapper.DISP_ST_LEFT.getConstant());
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_RIGHT.getContantNumber(),
+				LineDisplayConstantMapper.DISP_ST_RIGHT.getConstant());
+		
+		scrollText_direction.setValue(LineDisplayConstantMapper.DISP_ST_UP.getConstant());
+
+	}
+
+	private void setUpCharacterSet() {
+		characterSet.getItems().clear();
+		try {
+			for (int i = 0; i < display.getCharacterSetList().split(",").length; i++) {
+				characterSet.getItems().add(Integer.parseInt((display.getCharacterSetList().split(","))[i]));
+				if(i == 0) {
+					characterSet.setValue(Integer.parseInt((display.getCharacterSetList().split(","))[i]));
+				}
+			}
+			
+		} catch (JposException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error occured when getting the CharacterSetList",
+					"Error occured!", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	private void setUpScreenMode() {
+		screenMode.getItems().clear();
+		try {
+			for (int i = 0; i < display.getScreenModeList().split(",").length; i++) {
+				screenMode.getItems().add((display.getScreenModeList().split(","))[i]);
+				if (i == 0){
+					screenMode.setValue((display.getScreenModeList().split(","))[i]);
+				}
+			}
+		} catch (JposException e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error occured when getting the ScreenModeList",
+					"Error occured!", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	private void setUpMarqueeType() {
+		marqueeType.getItems().clear();
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_NONE.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MT_NONE.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_UP.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MT_UP.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_DOWN.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MT_DOWN.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_LEFT.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MT_LEFT.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_RIGHT.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MT_RIGHT.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_INIT.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MT_INIT.getConstant());
+		
+		marqueeType.setValue(LineDisplayConstantMapper.DISP_MT_NONE.getConstant());
+	}
+
+	private void setUpMarqueeFormat() {
+		marqueeFormat.getItems().clear();
+		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_WALK.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
+		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_PLACE.getContantNumber(),
+				LineDisplayConstantMapper.DISP_MF_PLACE.getConstant());
+		
+		marqueeFormat.setValue(LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
+
+	}
+
+	private void setUpBitmapWidth() {
+		bitmapWidth.getItems().clear();
+		bitmapWidth.getItems().add(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant());
+		
+		bitmapWidth.setValue(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant());
+	}
+
+	private void setUpAlignmentX() {
+		alignmentX.getItems().clear();
+		alignmentX.getItems().add(LineDisplayConstantMapper.DISP_BM_LEFT.getConstant());
+		alignmentX.getItems().add(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant());
+		alignmentX.getItems().add(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant());
+		
+		alignmentX.setValue(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant());
+	}
+
+	private void setUpAlignmentY() {
+		alignmentY.getItems().clear();
+		alignmentY.getItems().add(LineDisplayConstantMapper.DISP_BM_TOP.getConstant());
+		alignmentY.getItems().add(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant());
+		alignmentY.getItems().add(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant());
+		
+		alignmentY.setValue(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant());
+	}
 }
