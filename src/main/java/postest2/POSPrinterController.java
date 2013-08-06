@@ -1369,7 +1369,7 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
-	/* Print 2 Normal First */
+	/* Print 2 Normal Second */
 
 	private String addEscSequencesToPrint2NormalDataSecond() {
 		String ret = print2NormalSecondData.getText();

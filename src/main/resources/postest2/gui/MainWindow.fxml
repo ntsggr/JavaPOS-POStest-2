@@ -9,10 +9,10 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSTest2Controller">
+<AnchorPane prefHeight="700.0" prefWidth="900.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSTest2Controller">
   <!-- TODO Add Nodes -->
   <children>
-    <SplitPane dividerPositions="0.217" focusTraversable="true" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="1.0">
+    <SplitPane dividerPositions="0.21679197994987467" focusTraversable="true" prefHeight="600.0" prefWidth="800.0" styleClass="root" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="1.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
@@ -69,12 +69,15 @@
             </ToolBar>
           </children>
         </AnchorPane>
-        <AnchorPane id="content" fx:id="anchorPaneRight" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+        <AnchorPane id="content" fx:id="anchorPaneRight" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="root">
           <stylesheets>
             <URL value="@win7glass.css" />
           </stylesheets>
         </AnchorPane>
       </items>
+      <stylesheets>
+        <URL value="@win7glass.css" />
+      </stylesheets>
     </SplitPane>
   </children>
   <stylesheets>
