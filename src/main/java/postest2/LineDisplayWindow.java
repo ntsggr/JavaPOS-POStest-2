@@ -5,7 +5,6 @@ public class LineDisplayWindow {
 	int windowNumber;
 
 	public LineDisplayWindow(int windowNumber) {
-		super();
 		this.windowNumber = windowNumber;
 	}
 	

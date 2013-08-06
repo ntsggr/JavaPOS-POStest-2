@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.net.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="616.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.LineDisplayController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.LineDisplayController">
   <children>
-<<<<<<< HEAD
     <ComboBox fx:id="logicalName" layoutX="232.0" layoutY="31.0" prefHeight="21.0" prefWidth="223.0">
       <items>
         <FXCollections fx:factory="observableArrayList">
@@ -30,7 +27,7 @@
     <Button fx:id="buttonClose" layoutX="344.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
     <Button fx:id="buttonFirmware" disable="true" layoutX="483.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
     <CheckBox fx:id="deviceEnabled" disable="true" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
-    <CheckBox fx:id="freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
+    <CheckBox fx:id="freezeEvents" disable="${!deviceEnabled.selected}" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
     <TabPane fx:id="functionTab" layoutX="135.0" layoutY="102.0" prefHeight="569.0" prefWidth="721.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
       <tabs>
         <Tab text="Display Text">
@@ -287,105 +284,5 @@
         </Tab>
       </tabs>
     </TabPane>
-=======
-    <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <center>
-        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="root">
-          <children>
-            <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
-            <CheckBox layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
-            <TabPane layoutX="76.0" layoutY="60.0" prefHeight="322.0" prefWidth="463.1" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="Display Text">
-                  <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="445.0">
-                      <children>
-                        <ComboBox layoutX="12.0" layoutY="62.0" prefHeight="21.0" prefWidth="100.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Row">
-                          <font>
-                            <Font name="System Bold" size="12.0" fx:id="x1" />
-                          </font>
-                        </Text>
-                        <Text font="$x1" fontSmoothingType="LCD" layoutX="15.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Column" />
-                        <ComboBox layoutX="12.0" layoutY="123.0" prefHeight="21.0" prefWidth="99.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <Text font="$x1" fontSmoothingType="LCD" layoutX="13.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attribute" />
-                        <ComboBox layoutX="12.0" layoutY="182.0" prefHeight="21.0" prefWidth="99.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <Button layoutX="138.0" layoutY="44.0" mnemonicParsing="false" text="Display Text At" />
-                        <Button layoutX="245.0" layoutY="44.0" mnemonicParsing="false" prefWidth="99.0" text="Display Text" />
-                        <Button layoutX="351.0" layoutY="44.0" mnemonicParsing="false" prefWidth="99.0" text="Clear Text" />
-                        <Button layoutX="245.0" layoutY="80.0" mnemonicParsing="false" prefWidth="99.0" text="Move Cursor" />
-                        <TextField layoutX="137.0" layoutY="181.0" prefWidth="313.0" />
-                        <Text fontSmoothingType="LCD" layoutX="138.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send to line display" />
-                      </children>
-                    </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="Window Control">
-                  <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-                <Tab text="Misc Controls">
-                  <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-          </children>
-        </Pane>
-      </center>
-      <top>
-        <Pane prefHeight="92.0" prefWidth="622.0">
-          <children>
-            <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text font="$x1" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED" />
-            <Button layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" />
-            <Button layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" />
-            <Button layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" />
-            <Button layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" />
-            <Button layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
-            <Button layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
-            <Button layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
-            <Button layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
-          </children>
-        </Pane>
-      </top>
-    </BorderPane>
->>>>>>> c44a58f063ba2cef74d88d32062cfab268c51ba4
   </children>
 </AnchorPane>

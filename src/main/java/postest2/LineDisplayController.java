@@ -1,3 +1,9 @@
+/*
+ * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
+ * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
+ * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
+ * Homepage: www.ntswincash.com
+ */
 package postest2;
 
 import java.awt.Color;
@@ -12,7 +18,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -22,9 +35,9 @@ import jpos.profile.JposDevCats;
 
 public class LineDisplayController implements Initializable {
 
+	// Common
 	@FXML
 	private ComboBox<String> logicalName;
-
 	@FXML
 	private CheckBox deviceEnabled;
 	@FXML
@@ -127,17 +140,27 @@ public class LineDisplayController implements Initializable {
 	private int currentWindow = 0;
 	
 	private LineDisplay display;
-	//private int openWindowCount = 0;
 	private ObservableList<String> windowList = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox();
 		setUpAttribute();
 		display = new LineDisplay();
 		//setScreenModeTab.setDisable(true);
 	}
-	
+
+	private void setUpLogicalNameComboBox() {
+		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.LINEDISPLAY_DEVCAT
+				.toString()));
+	}
+
+	/* ************************************************************************
+	 * ************************ Action Handler *********************************
+	 * ***********************************************************************
+	 */
+
+
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		try {
@@ -189,27 +212,13 @@ public class LineDisplayController implements Initializable {
 				setUpAlignmentX();
 				setUpAlignmentY();
 				
-				/*
-				openWindows.getColumns().clear();
-				openWindows.getColumns().add(windows);
-				openWindows.setItems(windowList);
-				*/
 				windowList.clear();
 
 				windowList.add("0");
-				//openWindowCount = 0;
-				//windowList.add("" + openWindowCount);
 				openWindowsListView.setItems(windowList);
 				
-				/*
-				windows.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("windows"));
-				openWindows.getItems().clear();
-				openWindows.getItems().add(openWindowCount);
-				*/
-				// functionTab.setVisible(true);
 			} else {
 				display.setDeviceEnabled(false);
-				// functionTab.setVisible(false);
 			}
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
@@ -257,12 +266,12 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleStatistics(ActionEvent e) {
-
+		//TODO implement
 	}
 
 	@FXML
 	public void handleFirmware(ActionEvent e) {
-
+		//TODO implement
 	}
 
 	@FXML
@@ -377,8 +386,6 @@ public class LineDisplayController implements Initializable {
 					}
 				}
 				
-				//System.out.println("" + num);
-				
 				windowList.add("" + num);
 
 				FXCollections.sort(windowList);
@@ -386,12 +393,7 @@ public class LineDisplayController implements Initializable {
 						Integer.parseInt(viewportColumn.getText()), Integer.parseInt(viewportHeight.getText()),
 						Integer.parseInt(viewportWidth.getText()), Integer.parseInt(windowHeight.getText()),
 						Integer.parseInt(windowWidth.getText()));
-				
-				
-				/*
-				openWindowCount++;
-				openWindows.getItems().add(Integer.valueOf(openWindowCount));
-				*/
+		
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -438,34 +440,33 @@ public class LineDisplayController implements Initializable {
 	public void handleDeleteWindow(ActionEvent e) {
 		try {
 			display.destroyWindow();
-			//System.out.println("\n\n\n\n" + openWindowsListView.getSelectionModel().getSelectedItem() + "\n\n\n\n");
 			windowList.remove("" + currentWindow);
 
 			FXCollections.sort(windowList);
-			//windowList.remove(openWindowsListView.getSelectionModel().getSelectedItem());
-			//openWindowCount = Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem());
-			
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-		
 		
 	}
 
 	@FXML
 	public void handleRefreshWindow(ActionEvent e) {
-		try {
-			display.refreshWindow(Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem()));
-			currentWindow = Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem());
-		} catch (NumberFormatException e1) {
-			e1.printStackTrace();
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			e1.printStackTrace();
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if(openWindowsListView.getSelectionModel().getSelectedItem() == null){
+			JOptionPane.showMessageDialog(null, "Choose a valid window!", "Invalid Parameter",
+					JOptionPane.WARNING_MESSAGE);
+		} else {
+			try {
+				display.refreshWindow(Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem()));
+				currentWindow = Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem());
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
-
 	}
 
 	@FXML
@@ -617,7 +618,6 @@ public class LineDisplayController implements Initializable {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-		//System.out.println("" + marqueeFormat.getSelectionModel().getSelectedIndex());
 	}
 
 	@FXML
@@ -914,7 +914,6 @@ public class LineDisplayController implements Initializable {
 				LineDisplayConstantMapper.DISP_MF_PLACE.getConstant());
 		
 		marqueeFormat.setValue(LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
-
 	}
 
 	private void setUpBitmapWidth() {

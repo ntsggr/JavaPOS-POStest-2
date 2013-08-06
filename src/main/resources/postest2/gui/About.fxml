@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane >
-<AnchorPane prefHeight="600.0" prefWidth="620.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" >
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" >
   <!-- TODO Add Nodes -->
   <children>
     <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POSTest">
