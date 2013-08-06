@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -31,35 +32,69 @@ import javafx.util.Callback;
 
 public class POSTest2Controller implements Initializable {
 
-	@FXML
-	private ListView<String> listAllDevices;
-	@FXML
-	transient private ListView<String> listFavorites;
-
-	@FXML
-	private ToggleButton toggleButtonAllDevices;
-	@FXML
-	private ToggleButton toggleButtonFavorites;
-
-	@FXML
-	private AnchorPane anchorPaneRight;
-
-	@FXML
-	private ObservableList<String> favoriteDevices; // contains the favorites devices
+	// Device panels
+	private Parent About = null;
+	private Parent ConfiguredDevices = null;
+	private Parent Belt = null;
+	private Parent BillAcceptor = null;
+	private Parent BillDispenser = null;
+	private Parent Biometrics = null;
+	private Parent BumpBar = null;
+	private Parent CashChanger = null;
+	private Parent CashDrawer = null;
+	private Parent CAT = null;
+	private Parent CheckScanner = null;
+	private Parent CoinAcceptor = null;
+	private Parent CoinDispenser = null;
+	private Parent ElectronicJournal = null;
+	private Parent ElectronicValueRW = null;
+	private Parent FiscalPrinter = null;
+	private Parent Gate = null;
+	private Parent HardTotals = null;
+	private Parent ImageScanner = null;
+	private Parent ItemDispenser = null;
+	private Parent Keylock = null;
+	private Parent Lights = null;
+	private Parent LineDisplay = null;
+	private Parent MICR = null;
+	private Parent MotionSensor = null;
+	private Parent MSR = null;
+	private Parent PINPad = null;
+	private Parent PointCardRW = null;
+	private Parent POSKeyboard = null;
+	private Parent POSPower = null;
+	private Parent POSPrinter = null;
+	private Parent RemoteOrderDisplay = null;
+	private Parent RFIDScanner = null;
+	private Parent Scale = null;
+	private Parent Scanner = null;
+	private Parent SignatureCapture = null;
+	private Parent SmartCardRW = null;
+	private Parent ToneIndicator = null;
 	
-	//private FileOutputStream fileOut;
+	@FXML // contains and shows the available devices
+	private ListView<String> listAllDevices; 
+	
+	@FXML // using the "favoriteDevices" it contains and shows the favorite devices
+	transient private ListView<String> listFavorites; 
+
+	@FXML // button to select All Devices list
+	private ToggleButton toggleButtonAllDevices;
+	
+	@FXML // button to select Favorite Devices list
+	private ToggleButton toggleButtonFavorites; 
+
+	@FXML // the main window is divided into two panels. The right panel holds the panel of each clicked device
+	private AnchorPane anchorPaneRight; 
+
+	@FXML // contains and shows the available devices
+	private ObservableList<String> favoriteDevices;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		//System.out.println(listAllDevices.getItems().get(1));
-//		File f = new File("favorites.txt");
-//		if (f.exists()) {
-			favoriteDevices = FXCollections.observableArrayList();
-//		} else {
-//			System.out.println("file doesnt exist");
-//			favoriteDevices = FXCollections.observableArrayList();
-//		}
+		loadDevicePanels();
+		favoriteDevices = FXCollections.observableArrayList();
 		
 		// group for the toggles buttons
 		final ToggleGroup toggleGroup = new ToggleGroup();
@@ -83,7 +118,7 @@ public class POSTest2Controller implements Initializable {
 		// Show the respective device panel for each selected item from the list "All devices"
 		listAllDevices.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-				System.out.println(old_val + ", " + new_val);
+				//System.out.println(old_val + ", " + new_val);
 				setPanel(new_val);
 			}
 		});
@@ -91,8 +126,11 @@ public class POSTest2Controller implements Initializable {
 		// Show the respective device panel for each selected item from the list "Favorites"
 		listFavorites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-				System.out.println(old_val + ", " + new_val);
-				setPanel(new_val);
+				//System.out.println(old_val + ", " + new_val);
+				if (new_val != null)
+					setPanel(new_val);
+				else
+					setPanel(old_val);
 			}
 		});
 		
@@ -111,47 +149,6 @@ public class POSTest2Controller implements Initializable {
 			}
 		});
 	}
-
-	// Set the panel for each clicked device
-	private void setPanel(String panel) {
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("gui/" + panel + ".fxml"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		anchorPaneRight.getChildren().clear();
-		anchorPaneRight.getChildren().addAll(root.getChildrenUnmodifiable());
-	}
-	
-	/*private void saveFavorites(String favName) {
-		try {
-		    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("favorites.txt", true)));
-		    out.println(favName);
-		    out.close();
-		} catch (IOException e) {
-		}
-	}*/
-	
-	/*private void retrieveFavorites() {
-		BufferedReader br = null;
-		try {
-			String sCurrentLine;
-			br = new BufferedReader(new FileReader("favorites.txt"));
-			while ((sCurrentLine = br.readLine()) != null) {
-				favoriteDevices.add(sCurrentLine);
-				System.out.println(sCurrentLine);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (br != null)br.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-	}*/
 	
 	// Add a checkbox for each ListView item.
 	class XCell extends ListCell<String> {
@@ -169,7 +166,7 @@ public class POSTest2Controller implements Initializable {
 			checkBox.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					System.out.println(favoriteDevices.size());
+					//System.out.println(favoriteDevices.size());
 					if (favoriteDevices.contains(lastItem)) {
 						favoriteDevices.remove(lastItem);
 						listFavorites.setItems(favoriteDevices);
@@ -177,7 +174,7 @@ public class POSTest2Controller implements Initializable {
 						favoriteDevices.add(lastItem);
 						listFavorites.setItems(favoriteDevices);
 					}
-					System.out.println(lastItem + " : " + event);
+					//System.out.println(lastItem + " : " + event);
 				}
 			});
 		}
@@ -197,6 +194,170 @@ public class POSTest2Controller implements Initializable {
 		}
 		
 	} // end of XCell class
-
+	
+	private void loadDevicePanels() {
+		try {
+			About = FXMLLoader.load(getClass().getResource("gui/About.fxml"));
+			ConfiguredDevices = FXMLLoader.load(getClass().getResource("gui/ConfiguredDevices.fxml"));
+			Belt = FXMLLoader.load(getClass().getResource("gui/Belt.fxml"));
+			BillAcceptor = FXMLLoader.load(getClass().getResource("gui/BillAcceptor.fxml"));
+			BillDispenser = FXMLLoader.load(getClass().getResource("gui/BillDispenser.fxml"));
+			Biometrics = FXMLLoader.load(getClass().getResource("gui/Biometrics.fxml"));
+			BumpBar = FXMLLoader.load(getClass().getResource("gui/BumpBar.fxml"));
+			CashChanger = FXMLLoader.load(getClass().getResource("gui/CashChanger.fxml"));
+			CashDrawer = FXMLLoader.load(getClass().getResource("gui/CashDrawer.fxml"));
+			CAT = FXMLLoader.load(getClass().getResource("gui/CAT.fxml"));
+			CheckScanner = FXMLLoader.load(getClass().getResource("gui/CheckScanner.fxml"));
+			CoinAcceptor = FXMLLoader.load(getClass().getResource("gui/CoinAcceptor.fxml"));
+			CoinDispenser = FXMLLoader.load(getClass().getResource("gui/CoinDispenser.fxml"));
+			ElectronicJournal = FXMLLoader.load(getClass().getResource("gui/ElectronicJournal.fxml"));
+			ElectronicValueRW = FXMLLoader.load(getClass().getResource("gui/ElectronicValueRW.fxml"));
+			FiscalPrinter = FXMLLoader.load(getClass().getResource("gui/FiscalPrinter.fxml"));
+			Gate = FXMLLoader.load(getClass().getResource("gui/Gate.fxml"));
+			HardTotals = FXMLLoader.load(getClass().getResource("gui/HardTotals.fxml"));
+			ImageScanner = FXMLLoader.load(getClass().getResource("gui/ImageScanner.fxml"));
+			ItemDispenser = FXMLLoader.load(getClass().getResource("gui/ItemDispenser.fxml"));
+			Keylock = FXMLLoader.load(getClass().getResource("gui/Keylock.fxml"));
+			Lights = FXMLLoader.load(getClass().getResource("gui/Lights.fxml"));
+			LineDisplay = FXMLLoader.load(getClass().getResource("gui/LineDisplay.fxml"));
+			MICR = FXMLLoader.load(getClass().getResource("gui/MICR.fxml"));
+			MotionSensor = FXMLLoader.load(getClass().getResource("gui/MotionSensor.fxml"));
+			MSR = FXMLLoader.load(getClass().getResource("gui/MSR.fxml"));
+			PINPad = FXMLLoader.load(getClass().getResource("gui/PINPad.fxml"));
+			PointCardRW = FXMLLoader.load(getClass().getResource("gui/PointCardRW.fxml"));
+			POSKeyboard = FXMLLoader.load(getClass().getResource("gui/POSKeyboard.fxml"));
+			POSPower = FXMLLoader.load(getClass().getResource("gui/POSPower.fxml"));
+			POSPrinter = FXMLLoader.load(getClass().getResource("gui/POSPrinter.fxml"));
+			RemoteOrderDisplay = FXMLLoader.load(getClass().getResource("gui/RemoteOrderDisplay.fxml"));
+			RFIDScanner = FXMLLoader.load(getClass().getResource("gui/RFIDScanner.fxml"));
+			Scale = FXMLLoader.load(getClass().getResource("gui/Scale.fxml"));
+			Scanner = FXMLLoader.load(getClass().getResource("gui/Scanner.fxml"));
+			SignatureCapture = FXMLLoader.load(getClass().getResource("gui/SignatureCapture.fxml"));
+			SmartCardRW = FXMLLoader.load(getClass().getResource("gui/SmartCardRW.fxml"));
+			ToneIndicator = FXMLLoader.load(getClass().getResource("gui/ToneIndicator.fxml"));
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+	
+	// Set the panel for each clicked device
+		private void setPanel(String panel) {
+			if (panel.equals("About")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(About);
+			} else if (panel.equals("ConfiguredDevices")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(ConfiguredDevices);
+			} else if (panel.equals("Belt")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Belt);
+			}  else if (panel.equals("BillAcceptor")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(BillAcceptor);
+			}  else if (panel.equals("BillDispenser")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(BillDispenser);
+			}  else if (panel.equals("Biometrics")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Biometrics);
+			}  else if (panel.equals("BumpBar")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(BumpBar);
+			}  else if (panel.equals("CashChanger")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(CashChanger);
+			}  else if (panel.equals("CashDrawer")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(CashDrawer);
+			}  else if (panel.equals("CAT")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(CAT);
+			}  else if (panel.equals("CheckScanner")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(CheckScanner);
+			}  else if (panel.equals("CoinAcceptor")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(CoinAcceptor);
+			}  else if (panel.equals("CoinDispenser")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(CoinDispenser);
+			}  else if (panel.equals("ElectronicJournal")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(ElectronicJournal);
+			}  else if (panel.equals("ElectronicValueRW")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(ElectronicValueRW);
+			}  else if (panel.equals("FiscalPrinter")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(FiscalPrinter);
+			}  else if (panel.equals("Gate")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Gate);
+			}  else if (panel.equals("HardTotals")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(HardTotals);
+			}  else if (panel.equals("ImageScanner")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(ImageScanner);
+			}  else if (panel.equals("ItemDispenser")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(ItemDispenser);
+			}  else if (panel.equals("Keylock")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Keylock);
+			}  else if (panel.equals("Lights")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Lights);
+			}  else if (panel.equals("LineDisplay")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(LineDisplay);
+			}  else if (panel.equals("MICR")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(MICR);
+			}  else if (panel.equals("MotionSensor")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(MotionSensor);
+			}  else if (panel.equals("MSR")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(MSR);
+			}  else if (panel.equals("PINPad")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(PINPad);
+			}  else if (panel.equals("PointCardRW")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(PointCardRW);
+			}  else if (panel.equals("POSKeyboard")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(POSKeyboard);
+			}  else if (panel.equals("POSPower")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(POSPower);
+			}  else if (panel.equals("POSPrinter")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(POSPrinter);
+			}  else if (panel.equals("RemoteOrderDisplay")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(RemoteOrderDisplay);
+			}  else if (panel.equals("RFIDScanner")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(RFIDScanner);
+			}  else if (panel.equals("Scale")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Scale);
+			}  else if (panel.equals("Scanner")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(Scanner);
+			}  else if (panel.equals("SignatureCapture")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(SignatureCapture);
+			}  else if (panel.equals("SmartCardRW")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(SmartCardRW);
+			}  else if (panel.equals("ToneIndicator")) {
+				anchorPaneRight.getChildren().clear();
+				anchorPaneRight.getChildren().addAll(ToneIndicator);
+			}  
+		}
+		
 }
 
