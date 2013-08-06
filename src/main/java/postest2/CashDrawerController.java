@@ -1,13 +1,9 @@
-/*
- * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
- * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
- * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
- * Homepage: www.ntswincash.com
- */
 package postest2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-
-import javax.swing.JOptionPane;
 
 import jpos.CashDrawer;
 import jpos.CashDrawerConst;
@@ -46,29 +41,29 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 	private Button buttonGetDrawer;
 	@FXML
 	private Button buttonWaitForDrawer;
+	@FXML
+	private Label statusLabel;
 
 	private CashDrawer cashDrawer;
 	private String defaultLogicalName = "defaultCashDrawer";
-	private boolean ver_19_complient = false;
-	private boolean ver_18_complient = false;
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpLogicalNameComboBox();
 		cashDrawer = new CashDrawer();
 		cashDrawer.addStatusUpdateListener(this);
 	}
-
+	
 	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT
-				.toString()));
+		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT.toString()));
 	}
-
+	
+	
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
-
+	
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		try {
@@ -76,22 +71,13 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 				cashDrawer.open(logicalName.getValue());
 				buttonClaim.setDisable(false);
 				int version = cashDrawer.getDeviceServiceVersion();
-				if (version >= 1009000) {
-					ver_19_complient = true;
-					ver_18_complient = true;
-				}
-				if (version >= 1008000) {
-					ver_18_complient = true;
-				}
+				statusLabel.setText("JPOS_S_IDLE");
 			} else {
-				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty",
-						JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty", JOptionPane.WARNING_MESSAGE);
 			}
 
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -103,9 +89,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			deviceEnabled.setDisable(false);
 			buttonRelease.setDisable(false);
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -141,9 +125,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			}
 			deviceEnabled.setDisable(true);
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to release \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to release \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -152,6 +134,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 	public void handleClose(ActionEvent e) {
 		try {
 			cashDrawer.close();
+			statusLabel.setText("JPOS_S_CLOSED");
 			if (!deviceEnabled.isDisable()) {
 				deviceEnabled.setSelected(false);
 				buttonOpenCash.setDisable(true);
@@ -162,31 +145,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			deviceEnabled.setDisable(true);
 			buttonRelease.setDisable(true);
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to close \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		try {
-			// StatisticsDialog dlg = new StatisticsDialog(cashDrawer);
-			// dlg.setVisible(true);
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "Exception: " + ex.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	@FXML
-	public void handleFirmware(ActionEvent e) {
-		try {
-			// FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(cashDrawer);
-			// dlg.setVisible(true);
-		} catch (Exception ex) {
-			JOptionPane.showMessageDialog(null, "Exception: " + ex.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to close \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -195,8 +154,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 		try {
 			cashDrawer.openDrawer();
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Exception in openDrawer: " + je.getMessage(), "Exception",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in openDrawer: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -209,8 +167,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 				textAreaActionLog.appendText("Cash drawer is closed.\n");
 			}
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Exception in getDrawerOpened: " + je.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in getDrawerOpened: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -221,14 +178,14 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			textAreaActionLog.appendText("Cash drawer is closed.\n");
 		} catch (JposException je) {
 			textAreaActionLog.appendText("Jpos exception " + je + "\n");
-			JOptionPane.showMessageDialog(null, "Exception in waitForDrawerClose: " + je.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in waitForDrawerClose: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	@Override
 	public void statusUpdateOccurred(StatusUpdateEvent sue) {
 		String msg = "Status Update Event: ";
+		statusLabel.setText(""+sue.getStatus());
 		switch (sue.getStatus()) {
 		case CashDrawerConst.CASH_SUE_DRAWERCLOSED:
 			msg += "Drawer Closed\n";
@@ -241,4 +198,5 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			break;
 		}
 	}
+	
 }

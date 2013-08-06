@@ -1,9 +1,3 @@
-/*
- * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
- * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
- * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
- * Homepage: www.ntswincash.com
- */
 package postest2;
 
 import java.awt.Color;
@@ -18,14 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -35,9 +22,9 @@ import jpos.profile.JposDevCats;
 
 public class LineDisplayController implements Initializable {
 
-	// Common
 	@FXML
 	private ComboBox<String> logicalName;
+
 	@FXML
 	private CheckBox deviceEnabled;
 	@FXML
@@ -145,27 +132,12 @@ public class LineDisplayController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		setUpLogicalNameComboBox();
+		//setUpLogicalNameComboBox();
 		setUpAttribute();
 		display = new LineDisplay();
 		//setScreenModeTab.setDisable(true);
 	}
-
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.LINEDISPLAY_DEVCAT
-				.toString()));
-	}
-
-	/* ************************************************************************
-	 * ************************ Action Handler *********************************
-	 * ***********************************************************************
-	 */
-
-	@FXML
-	public void handle(ActionEvent e) {
-
-	}
-
+	
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		try {

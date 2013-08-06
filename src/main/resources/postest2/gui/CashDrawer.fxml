@@ -1,38 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+<?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CashDrawerController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="616.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CashDrawerController">
   <children>
-    <!-- logicalName_LineDisplay -->
-    <Label layoutX="135.0" layoutY="30.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
-    <Label fx:id="statusLabel" layoutX="623.0" layoutY="30.0" prefHeight="23.0" prefWidth="154.0" text="JPOS_S_CLOSED" />
-    <Button fx:id="buttonOpen" layoutX="135.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleOpen" text="Open" />
-    <Button fx:id="buttonClaim" disable="true" layoutX="203.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleClaim" text="Claim" />
-    <Button fx:id="buttonRelease" disable="true" layoutX="267.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleRelease" text="Release" />
-    <Button fx:id="buttonStatistics" layoutX="402.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
-    <Button fx:id="buttonClose" layoutX="344.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleClose" text="Close" />
-    <Button fx:id="buttonFirmware" layoutX="483.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
-    <CheckBox fx:id="deviceEnabled" disable="true" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
-    <CheckBox fx:id="freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
-    <ComboBox fx:id="logicalName" layoutX="232.0" layoutY="31.0" prefHeight="21.0" prefWidth="223.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="Item 1" />
-          <String fx:value="Item 2" />
-          <String fx:value="Item 3" />
-        </FXCollections>
-      </items>
-    </ComboBox>
-    <Button fx:id="buttonOpenCash" disable="true" layoutX="164.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleOpenCash" text="Open Cash Drawer" />
-    <Button fx:id="buttonGetDrawer" disable="true" layoutX="298.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleGetDrawer" text="Get Drawer Opened" />
-    <Button fx:id="buttonWaitForDrawer" disable="true" layoutX="436.0" layoutY="119.0" mnemonicParsing="false" onAction="#handleWaitForDrawer" text="Wait For Drawer Close" />
-    <TextArea fx:id="textAreaActionLog" layoutX="73.0" layoutY="187.0" prefHeight="263.0" prefWidth="517.0" wrapText="true" />
-    <Text layoutX="292.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" />
+    <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="root">
+          <children>
+            <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" onAction="#handleDeviceEnable" />
+            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <Button fx:id="buttonGetDrawer" layoutX="248.0" layoutY="78.0" mnemonicParsing="false" text="Get Drawer Opened" onAction="#handleGetDrawer" />
+            <Button fx:id="buttonWaitForDrawer" layoutX="398.0" layoutY="78.0" mnemonicParsing="false" text="Wait For Drawer Close" onAction="#handleWaitForDrawer" />
+            <Button fx:id="buttonOpenCash" layoutX="106.0" layoutY="78.0" mnemonicParsing="false" text="Open Cash Drawer" onAction="#handleOpenCash" />
+            <Text layoutX="282.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" />
+            <TextArea layoutX="106.0" layoutY="160.0" prefHeight="214.0" prefWidth="430.0" wrapText="true" />
+          </children>
+        </Pane>
+      </center>
+      <top>
+        <Pane prefHeight="92.0" prefWidth="622.0">
+          <children>
+            <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
+            <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
+              <font>
+                <Font name="System Bold" size="12.0" />
+              </font>
+            </Text>
+            <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" onAction="#handleOpen" />
+            <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" onAction="#handleClaim" />
+            <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" onAction="#handleRelease" />
+            <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" onAction="#handleClose" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
+            <Button fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
+            <Button fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
+          </children>
+        </Pane>
+      </top>
+    </BorderPane>
   </children>
 </AnchorPane>

@@ -9,9 +9,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+<<<<<<< HEAD
+=======
+<?scenebuilder-stylesheet win7glass.css?>
+>>>>>>> c44a58f063ba2cef74d88d32062cfab268c51ba4
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSPrinterController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="540.0" prefWidth="640.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSPrinterController">
   <children>
+<<<<<<< HEAD
     <Label layoutX="152.0" layoutY="31.0" prefHeight="21.0" prefWidth="88.0" text="Logical Name:" />
     <Label fx:id="statusLabel" layoutX="605.0" layoutY="30.0" prefHeight="23.0" prefWidth="156.0" text="JPOS_S_CLOSED" />
     <Button fx:id="buttonOpen" layoutX="152.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleOpen" text="Open" />
@@ -89,5 +94,71 @@
         </Tab>
       </tabs>
     </TabPane>
+=======
+    <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="root">
+          <children>
+            <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
+            <CheckBox layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <TabPane layoutX="22.0" layoutY="54.0" prefHeight="335.0" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="General Printing">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Barcode">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Bitmap">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Page Mode">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </children>
+        </Pane>
+      </center>
+      <top>
+        <Pane prefHeight="92.0" prefWidth="622.0">
+          <children>
+            <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
+            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
+            <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
+              <font>
+                <Font name="System Bold" size="12.0" />
+              </font>
+            </Text>
+            <Button layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" />
+            <Button layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" />
+            <Button layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" />
+            <Button layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" />
+            <Button layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
+            <Button layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
+            <Button layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
+            <Button layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
+          </children>
+        </Pane>
+      </top>
+    </BorderPane>
+>>>>>>> c44a58f063ba2cef74d88d32062cfab268c51ba4
   </children>
 </AnchorPane>

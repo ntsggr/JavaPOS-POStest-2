@@ -1,9 +1,3 @@
-/*
- * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
- * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
- * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
- * Homepage: www.ntswincash.com
- */
 package postest2;
 
 import java.io.IOException;
@@ -12,9 +6,12 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,11 +21,24 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.util.Callback;
 import jpos.config.JposEntry;
 import jpos.config.simple.xml.SimpleXmlRegPopulator;
 
 public class POSTest2Controller implements Initializable {
+
 
 	@FXML
 	private TableView<Device> deviceTable;
@@ -40,6 +50,12 @@ public class POSTest2Controller implements Initializable {
 	private TableColumn<Device, String> vendor;
 	@FXML
 	private TableColumn<Device, String> productName;
+
+	
+	@FXML
+	private ListView<String> listAllDevices;
+	@FXML
+	transient private ListView<String> listFavorites;
 
 	/* The Devices Pane */
 	@FXML
@@ -115,23 +131,24 @@ public class POSTest2Controller implements Initializable {
 	@FXML
 	private AnchorPane toneIndicatorPane;
 
-	// @FXML private AnchorPane aPane;
 	
-	//TODO Delete
-	/*
-	@FXML
-	private TableView<String> testTable;
+	private ToggleButton toggleButtonFavorites;
+
 	
-	@FXML
-	private ListView<String> testView;
 	
-	@FXML
-	private TableColumn<LineDisplayWindow, Integer> testColumn;
-	*/
 
 	// List for the ConfiguredDevices Page
 	ObservableList<Device> devicesList;
+	
 
+	@FXML
+	private AnchorPane anchorPaneRight;
+
+	@FXML
+	private ObservableList<String> favoriteDevices; // contains the favorites devices
+	
+	//private FileOutputStream fileOut;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -669,5 +686,94 @@ public class POSTest2Controller implements Initializable {
 		 * aPane.getChildren().addAll(root.getChildrenUnmodifiable());
 		 */
 	}
+		
+		
+
+	// Set the panel for each clicked device
+	private void setPanel(String panel) {
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("gui/" + panel + ".fxml"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		anchorPaneRight.getChildren().clear();
+		anchorPaneRight.getChildren().addAll(root.getChildrenUnmodifiable());
+	}
+	
+	/*private void saveFavorites(String favName) {
+		try {
+		    PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("favorites.txt", true)));
+		    out.println(favName);
+		    out.close();
+		} catch (IOException e) {
+		}
+	}*/
+	
+	/*private void retrieveFavorites() {
+		BufferedReader br = null;
+		try {
+			String sCurrentLine;
+			br = new BufferedReader(new FileReader("favorites.txt"));
+			while ((sCurrentLine = br.readLine()) != null) {
+				favoriteDevices.add(sCurrentLine);
+				System.out.println(sCurrentLine);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (br != null)br.close();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+	}*/
+	
+	// Add a checkbox for each ListView item.
+	class XCell extends ListCell<String> {
+		
+		HBox hbox = new HBox();
+		Label label = new Label("(empty)");
+		Pane pane = new Pane();
+		CheckBox checkBox = new CheckBox();
+		String lastItem;
+		
+		public XCell() {
+			super();
+			hbox.getChildren().addAll(label, pane, checkBox);
+			HBox.setHgrow(pane, Priority.ALWAYS);
+			checkBox.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					System.out.println(favoriteDevices.size());
+					if (favoriteDevices.contains(lastItem)) {
+						favoriteDevices.remove(lastItem);
+						listFavorites.setItems(favoriteDevices);
+					} else {
+						favoriteDevices.add(lastItem);
+						listFavorites.setItems(favoriteDevices);
+					}
+					System.out.println(lastItem + " : " + event);
+				}
+			});
+		}
+		
+		@Override
+		protected void updateItem(String item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null); // No text in label of super class
+			if (empty) {
+				lastItem = null;
+				setGraphic(null);
+			} else {
+				lastItem = item;
+				label.setText(item != null ? item : "<null>");
+				setGraphic(hbox);
+			}
+		}
+		
+	} // end of XCell class
 
 }
+
