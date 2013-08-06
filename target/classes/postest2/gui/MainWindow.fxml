@@ -1,308 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
 <?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
+<?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSTest2Controller" >
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.POSTest2Controller">
   <!-- TODO Add Nodes -->
   <children>
-    <TabPane id="" focusTraversable="false" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="24.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <tabs>
-        <Tab text="About">
-          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="970.0" prefWidth="1000.0">
-              <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="178.0" layoutY="102.0" prefHeight="172.0" prefWidth="611.0" text="JavaPOS POStest 2" textAlignment="CENTER" textOverrun="CLIP">
-                  <font>
-                    <Font name="Arial Bold" size="20.0" />
-                  </font>
-                </Label>
-                <Label alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="156.0" layoutY="134.0" prefHeight="215.0" prefWidth="643.0" text="The new JavaPOS Device Tester" textAlignment="CENTER" textOverrun="CLIP">
-                  <font>
-                    <Font name="Arial Bold" size="14.0" />
-                  </font>
-                </Label>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Configured Devices">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                <Label layoutX="14.0" layoutY="14.0" prefHeight="33.0" prefWidth="965.0" text="Below is a list of the devices fount in your jpos.xml file.">
-                  <font>
-                    <Font size="14.0" />
-                  </font>
-                </Label>
-                <TableView fx:id="deviceTable" editable="true" layoutX="14.0" layoutY="47.0" prefHeight="655.0" prefWidth="972.0">
-                  <columns>
-                    <TableColumn prefWidth="150.0" resizable="false" text="Category" fx:id="category" />
-                    <TableColumn prefWidth="200.0" text="Logical Name" fx:id="logicalName" />
-                    <TableColumn prefWidth="300.0" text="Vendor" fx:id="vendor" />
-                    <TableColumn prefWidth="321.0" text="Product Name" fx:id="productName" />
-                  </columns>
-                </TableView>
-              </children>
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Belt">
-          <content>
-            <AnchorPane id="Content" fx:id="beltPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="BillAcceptor">
-          <content>
-            <AnchorPane id="Content" fx:id="billAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Bill Dispenser">
-          <content>
-            <AnchorPane id="Content" fx:id="billDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Biometrics">
-          <content>
-            <AnchorPane id="Content" fx:id="biometricsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="BumpBar">
-          <content>
-            <AnchorPane id="Content" fx:id="bumpBarPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="CashChanger">
-          <content>
-            <AnchorPane id="Content" fx:id="cashChangerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="CashDrawer">
-          <content>
-            <AnchorPane id="Content" fx:id="cashDrawerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="CAT">
-          <content>
-            <AnchorPane id="Content" fx:id="CATPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="CheckScanner">
-          <content>
-            <AnchorPane id="Content" fx:id="checkScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="CoinAcceptor">
-          <content>
-            <AnchorPane id="Content" fx:id="coinAcceptorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="CoinDispenser">
-          <content>
-            <AnchorPane id="Content" fx:id="coinDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="ElectronicJournal">
-          <content>
-            <AnchorPane id="Content" fx:id="electronicJournalPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="ElectronicValueRW">
-          <content>
-            <AnchorPane id="Content" fx:id="electronicValueRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="FiscalPrinter">
-          <content>
-            <AnchorPane id="Content" fx:id="fiscalPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Gate">
-          <content>
-            <AnchorPane id="Content" fx:id="gatePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="HardTotals">
-          <content>
-            <AnchorPane id="Content" fx:id="hardTotalsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="ImageScanner">
-          <content>
-            <AnchorPane id="Content" fx:id="imageScannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="ItemDispenser">
-          <content>
-            <AnchorPane id="Content" fx:id="itemDispenserPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Keylock">
-          <content>
-            <AnchorPane id="Content" fx:id="keylockPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Lights">
-          <content>
-            <AnchorPane id="Content" fx:id="lightsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="LineDisplay">
-          <content>
-            <AnchorPane id="Content" fx:id="lineDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-           
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="MICR">
-          <content>
-            <AnchorPane id="Content" fx:id="MICRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="MotionSensor">
-          <content>
-            <AnchorPane id="Content" fx:id="motionSensorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="MSR">
-          <content>
-            <AnchorPane id="Content" fx:id="MSRPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="PINPad">
-          <content>
-            <AnchorPane id="Content" fx:id="PINPadPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="PointCardRW">
-          <content>
-            <AnchorPane id="Content" fx:id="pointCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="POSKeyboard">
-          <content>
-            <AnchorPane id="Content" fx:id="POSKeyboardPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="POSPower">
-          <content>
-            <AnchorPane id="Content" fx:id="POSPowerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="POSPrinter">
-          <content>
-            <AnchorPane id="Content" fx:id="POSPrinterPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="RemoteOrderDisplay">
-          <content>
-            <AnchorPane id="Content" fx:id="remoteOrderDisplayPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="RFIDScanner">
-          <content>
-            <AnchorPane id="Content" fx:id="RFIDPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Scale">
-          <content>
-            <AnchorPane id="Content" fx:id="scalePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="Scanner">
-          <content>
-            <AnchorPane id="Content" fx:id="scannerPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="SignatureCapture">
-          <content>
-            <AnchorPane id="Content" fx:id="signatureCapturePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="SmartCardRW">
-          <content>
-            <AnchorPane id="Content" fx:id="smartCardRWPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              
-            </AnchorPane>
-          </content>
-        </Tab>
-        <Tab text="ToneIndicator">
-          <content>
-            <AnchorPane id="Content" fx:id="toneIndicatorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-             
-            </AnchorPane>
-          </content>
-        </Tab>
-      </tabs>
-    </TabPane>
+    <SplitPane dividerPositions="0.217" focusTraversable="true" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="1.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <ListView fx:id="listAllDevices" prefHeight="573.0" prefWidth="285.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="About" />
+                  <String fx:value="ConfiguredDevices" />
+                  <String fx:value="Belt" />
+                  <String fx:value="BillAcceptor" />
+                  <String fx:value="BillDispenser" />
+                  <String fx:value="Biometrics" />
+                  <String fx:value="BumpBar" />
+                  <String fx:value="CashChanger" />
+                  <String fx:value="CashDrawer" />
+                  <String fx:value="CAT" />
+                  <String fx:value="CheckScanner" />
+                  <String fx:value="CoinAcceptor" />
+                  <String fx:value="CoinDispenser" />
+                  <String fx:value="ElectronicJournal" />
+                  <String fx:value="ElectronicValueRW" />
+                  <String fx:value="FiscalPrinter" />
+                  <String fx:value="Gate" />
+                  <String fx:value="HardTotals" />
+                  <String fx:value="ImageScanner" />
+                  <String fx:value="ItemDispenser" />
+                  <String fx:value="Keylock" />
+                  <String fx:value="Lights" />
+                  <String fx:value="LineDisplay" />
+                  <String fx:value="MICR" />
+                  <String fx:value="MotionSensor" />
+                  <String fx:value="MSR" />
+                  <String fx:value="PINPad" />
+                  <String fx:value="PointCardRW" />
+                  <String fx:value="POSKeyboard" />
+                  <String fx:value="POSPower" />
+                  <String fx:value="POSPrinter" />
+                  <String fx:value="RemoteOrderDisplay" />
+                  <String fx:value="RFIDScanner" />
+                  <String fx:value="Scale" />
+                  <String fx:value="Scanner" />
+                  <String fx:value="SignatureCapture" />
+                  <String fx:value="SmartCardRW" />
+                  <String fx:value="ToneIndicator" />
+                </FXCollections>
+              </items>
+            </ListView>
+            <ListView fx:id="listFavorites" prefHeight="544.0" prefWidth="181.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
+            <ToolBar minHeight="25.0" prefHeight="25.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+              <items>
+                <ToggleButton fx:id="toggleButtonAllDevices" mnemonicParsing="false" text="All Devices" />
+                <ToggleButton fx:id="toggleButtonFavorites" mnemonicParsing="false" text="Favorites" />
+              </items>
+            </ToolBar>
+          </children>
+        </AnchorPane>
+        <AnchorPane id="content" fx:id="anchorPaneRight" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <stylesheets>
+            <URL value="@win7glass.css" />
+          </stylesheets>
+        </AnchorPane>
+      </items>
+    </SplitPane>
   </children>
+  <stylesheets>
+    <URL value="@win7glass.css" />
+  </stylesheets>
 </AnchorPane>
