@@ -137,9 +137,13 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	private ComboBox<String> screenMode;
 
+	//OpenWindow-Counter
 	private int currentWindow = 0;
 	
+	//Driver
 	private LineDisplay display;
+	
+	//List for ListView openWindowsListView
 	private ObservableList<String> windowList = FXCollections.observableArrayList();
 
 	@Override
@@ -156,8 +160,8 @@ public class LineDisplayController implements Initializable {
 	}
 
 	/* ************************************************************************
-	 * ************************ Action Handler *********************************
-	 * ***********************************************************************
+	 * ************************ Action Handler ********************************
+	 * ************************************************************************
 	 */
 
 
@@ -179,7 +183,6 @@ public class LineDisplayController implements Initializable {
 		}
 	}
 
-	// Requests exclusive access to the device
 	@FXML
 	public void handleClaim(ActionEvent e) {
 		try {
@@ -225,7 +228,6 @@ public class LineDisplayController implements Initializable {
 		}
 	}
 
-	// Releases exclusive access to the device. The device is also disabled.
 	@FXML
 	public void handleRelease(ActionEvent e) {
 		try {
@@ -244,7 +246,6 @@ public class LineDisplayController implements Initializable {
 		}
 	}
 
-	// Releases the device and its resources. Also the device is released.
 	@FXML
 	public void handleClose(ActionEvent e) {
 		try {
@@ -262,6 +263,16 @@ public class LineDisplayController implements Initializable {
 					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(), "Failed",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		// TODO implement
+	}
+
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		// TODO implement
 	}
 
 	@FXML
@@ -405,49 +416,16 @@ public class LineDisplayController implements Initializable {
 		}
 	}
 
-	
-	/*
-	@FXML
-	public void handleAddWindow(ActionEvent e) {
-		if(viewportRow.getText().equals("")||viewportColumn.getText().equals("")||viewportHeight.getText().equals("")||viewportWidth.getText().equals("")||windowHeight.getText().equals("")||windowWidth.getText().equals("")){
-			JOptionPane.showMessageDialog(null, "One of the params is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
-		} else {
-			try {
-				display.createWindow(Integer.parseInt(viewportRow.getText()),
-						Integer.parseInt(viewportColumn.getText()), Integer.parseInt(viewportHeight.getText()),
-						Integer.parseInt(viewportWidth.getText()), Integer.parseInt(windowHeight.getText()),
-						Integer.parseInt(windowWidth.getText()));
-				
-				openWindowCount++;
-				windowList.add("" + openWindowCount);
-				/*
-				openWindowCount++;
-				openWindows.getItems().add(Integer.valueOf(openWindowCount));
-				*/
-	/*
-			} catch (NumberFormatException e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			} catch (JposException e1) {
-				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			
-		}
-	}
-	*/
 	@FXML
 	public void handleDeleteWindow(ActionEvent e) {
 		try {
 			display.destroyWindow();
 			windowList.remove("" + currentWindow);
-
 			FXCollections.sort(windowList);
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-		
 	}
 
 	@FXML
@@ -514,7 +492,6 @@ public class LineDisplayController implements Initializable {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
@@ -528,7 +505,6 @@ public class LineDisplayController implements Initializable {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
@@ -716,7 +692,6 @@ public class LineDisplayController implements Initializable {
 			} else {
 	
 				newAlignmentY = Integer.parseInt(alignmentY.getSelectionModel().getSelectedItem());
-	
 			}
 	
 			try {
@@ -731,6 +706,11 @@ public class LineDisplayController implements Initializable {
 		}
 	}
 
+	/**
+	 * This Method gets a Byte Array from a File to print it with displayMemoryBitmap
+	 * @param path to Binary File
+	 * @return byte[] containing the data from the File
+	 */
 	private byte[] getBytesFromFile(String path) {
 		byte[] bytes = null;
 		BufferedImage originalImage = null;
@@ -769,7 +749,7 @@ public class LineDisplayController implements Initializable {
 
 	/* ************************************************************************
 	 * ************************ Set all ComboBox Values ***********************
-	 * ***********************************************************************
+	 * ************************************************************************
 	 */
 
 	private void setUpAttribute() {

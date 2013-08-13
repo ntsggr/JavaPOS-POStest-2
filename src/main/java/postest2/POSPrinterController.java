@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -27,6 +28,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -36,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
 import jpos.LineDisplayConst;
@@ -43,168 +46,172 @@ import jpos.POSPrinter;
 import jpos.POSPrinterConst;
 import jpos.config.JposConfigException;
 import jpos.profile.JposDevCats;
+import jpos.services.BaseService;
 
 public class POSPrinterController implements Initializable {
-
+	
 	// Common
 	@FXML
-	private ComboBox<String> logicalName;
+	public ComboBox<String> logicalName;
+	@FXML @RequiredState(JposState.CLAIMED)
+	public CheckBox deviceEnabled;
 	@FXML
-	private CheckBox deviceEnabled;
+	public Button buttonOpen;
+	@FXML  @RequiredState(JposState.OPENED)
+	public Button buttonClaim;
+	@FXML @RequiredState(JposState.OPENED)
+	public Button buttonRelease;
+	@FXML @RequiredState(JposState.OPENED)
+	public Button buttonStatistics;
+	@FXML @RequiredState(JposState.OPENED)
+	public Button buttonClose;
+	@FXML @RequiredState(JposState.OPENED)
+	public Button buttonFirmware;
 	@FXML
-	private Button buttonOpen;
-	@FXML
-	private Button buttonClaim;
-	@FXML
-	private Button buttonRelease;
-	@FXML
-	private Button buttonStatistics;
-	@FXML
-	private Button buttonClose;
-	@FXML
-	private Button buttonFirmware;
-	@FXML
-	private Text statusLabel;
-	@FXML
-	private CheckBox freezeEvents;
-	@FXML
-	private ComboBox<String> rotationMode;
-	@FXML
-	private ComboBox<String> mapMode;
-	@FXML
-	private CheckBox asyncMode;
-	@FXML
-	private CheckBox flagWhenIdle;
-	@FXML
-	private TextArea deviceMessages;
+	public Text statusLabel;
+	@FXML @RequiredState(JposState.ENABLED)
+	public CheckBox freezeEvents;
+	@FXML @RequiredState(JposState.ENABLED)
+	public ComboBox<String> rotationMode;
+	@FXML @RequiredState(JposState.ENABLED)
+	public ComboBox<String> mapMode;
+	@FXML @RequiredState(JposState.ENABLED)
+	public CheckBox asyncMode;
+	@FXML @RequiredState(JposState.ENABLED)
+	public CheckBox flagWhenIdle;
+	@FXML @RequiredState(JposState.ENABLED)
+	public TextArea deviceMessages;
 
 	// Stations
-	@FXML
-	private RadioButton rbReceipt;
-	@FXML
-	private RadioButton rbJournal;
-	@FXML
-	private RadioButton rbSlip;
+	@FXML @RequiredState(JposState.ENABLED)
+	public RadioButton rbReceipt;
+	@FXML @RequiredState(JposState.ENABLED)
+	public RadioButton rbJournal;
+	@FXML @RequiredState(JposState.ENABLED)
+	public RadioButton rbSlip;
 
 	// Group for the radiobuttons
 	@FXML
-	private final ToggleGroup group = new ToggleGroup();
+	public final ToggleGroup group = new ToggleGroup();
 
 	// TabPane
-	@FXML
-	private TabPane functionTab;
+	@FXML @RequiredState(JposState.ENABLED)
+	public TabPane functionTab;
 
 	// General Printing
 	@FXML
-	private ComboBox<String> transactionPrint;
+	public ComboBox<String> transactionPrint;
 	@FXML
-	private TextArea printNormalData;
+	public TextArea printNormalData;
 
 	@FXML
-	private Slider cutPaperPercentage;
+	public Slider cutPaperPercentage;
 
 	// Barcode
 	@FXML
-	private TextField barcodeHeight;
+	public TextField barcodeHeight;
 	@FXML
-	private TextField barcodeWidth;
+	public TextField barcodeWidth;
 	@FXML
-	private TextField barcodeData;
+	public TextField barcodeData;
 	@FXML
-	private ComboBox<String> barcodeSymbology;
+	public ComboBox<String> barcodeSymbology;
 	@FXML
-	private ComboBox<String> barcodeTextPosition;
+	public ComboBox<String> barcodeTextPosition;
 	@FXML
-	private ComboBox<String> barcodeAlignment;
+	public ComboBox<String> barcodeAlignment;
 
 	// Bitmap
 	@FXML
-	private TextField bitmapPath;
+	public TextField bitmapPath;
 	@FXML
-	private ComboBox<String> bitmapWidth;
+	public ComboBox<String> bitmapWidth;
 	@FXML
-	private ComboBox<String> bitmapAlignment;
+	public ComboBox<String> bitmapAlignment;
 	@FXML
-	private ComboBox<Integer> bitmapNumber;
+	public ComboBox<Integer> bitmapNumber;
 
 	// Draw Line
 	@FXML
-	private TextField drawLineStartPosX;
+	public TextField drawLineStartPosX;
 	@FXML
-	private TextField drawLineStartPosY;
+	public TextField drawLineStartPosY;
 	@FXML
-	private TextField drawLineEndPosX;
+	public TextField drawLineEndPosX;
 	@FXML
-	private TextField drawLineEndPosY;
+	public TextField drawLineEndPosY;
 	@FXML
-	private TextField drawLineWidth;
+	public TextField drawLineWidth;
 	@FXML
-	private ComboBox<String> drawLineDirection;
+	public ComboBox<String> drawLineDirection;
 	@FXML
-	private ComboBox<String> drawLineStyle;
+	public ComboBox<String> drawLineStyle;
 	@FXML
-	private ComboBox<String> drawLineColor;
+	public ComboBox<String> drawLineColor;
 
 	// Print2Normal
 	@FXML
-	private TextArea print2NormalFirstData;
+	public TextArea print2NormalFirstData;
 	@FXML
-	private TextArea print2NormalSecondData;
+	public TextArea print2NormalSecondData;
 	@FXML
-	private ComboBox<String> print2NormalStation;
+	public ComboBox<String> print2NormalStation;
 
 	// PageMode
 	@FXML
-	private TextField pageModeHorizontalPosition;
+	public TextField pageModeHorizontalPosition;
 	@FXML
-	private TextField pageModeVerticalPosition;
+	public TextField pageModeVerticalPosition;
 	@FXML
-	private TextField pageModePrintAreaStartPosX;
+	public TextField pageModePrintAreaStartPosX;
 	@FXML
-	private TextField pageModePrintAreaStartPosY;
+	public TextField pageModePrintAreaStartPosY;
 	@FXML
-	private TextField pageModePrintAreaEndPosX;
+	public TextField pageModePrintAreaEndPosX;
 	@FXML
-	private TextField pageModePrintAreaEndPosY;
+	public TextField pageModePrintAreaEndPosY;
 	@FXML
-	private ComboBox<String> pageModePrintDirection;
+	public ComboBox<String> pageModePrintDirection;
 	@FXML
-	private ComboBox<String> pageModePrintStation;
+	public ComboBox<String> pageModePrintStation;
 	@FXML
-	private ComboBox<String> pageModePrint;
+	public ComboBox<String> pageModePrint;
 	@FXML
-	private Label pageModeArea;
+	public Label pageModeArea;
 	@FXML
-	private Label pageModeDescriptor;
+	public Label pageModeDescriptor;
 
 	// Misc
 	@FXML
-	private TextField lineChars;
+	public TextField lineChars;
 	@FXML
-	private TextField lineHeight;
+	public TextField lineHeight;
 	@FXML
-	private ComboBox<String> printSide;
+	public ComboBox<String> printSide;
 	@FXML
-	private ComboBox<String> markFeed;
+	public ComboBox<String> markFeed;
 	@FXML
-	private ComboBox<Integer> characterSet;
+	public ComboBox<Integer> characterSet;
 	@FXML
-	private ComboBox<Boolean> mapCharacterSet;
+	public ComboBox<Boolean> mapCharacterSet;
 	@FXML
-	private ComboBox<String> currentCartridge;
-	@FXML
-	private TextField lineSpacing;
+	public ComboBox<String> currentCartridge;
+	@FXML 
+	public TextField lineSpacing;
 
+	//Holds position of ESC-Characters.
+	//Need because Textarea delete ESC everytime it changes
 	private ArrayList<Integer> printNormalEscapeSequenceList;
 	private ArrayList<Integer> print2NormalFirstEscapeSequenceList;
 	private ArrayList<Integer> print2NormalSecondEscapeSequenceList;
 
-	// Service
+	//Driver
 	private POSPrinter printer;
-
+	
+	//Escape-Character
 	final char ESC = (char) 0x1B;
 
-	// Letter Quality
+	//Letter Quality
 	private boolean jrnLetterQuality = false;
 	private boolean recLetterQuality = false;
 	private boolean slpLetterQuality = false;
@@ -212,7 +219,9 @@ public class POSPrinterController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		printer = new POSPrinter();
-
+		
+		RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+		
 		printNormalEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();
@@ -224,6 +233,9 @@ public class POSPrinterController implements Initializable {
 		rbSlip.setToggleGroup(group);
 		rbReceipt.setSelected(true);
 
+		/*
+		 * Add ChangeListener to update EscCharacterPosititon List
+		 */
 		printNormalData.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -262,14 +274,10 @@ public class POSPrinterController implements Initializable {
 		});
 	}
 
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.POSPRINTER_DEVCAT
-				.toString()));
-	}
 
 	/* ************************************************************************
-	 * ************************ Action Handler *********************************
-	 * ***********************************************************************
+	 * ************************ Action Handler ********************************
+	 * ************************************************************************
 	 */
 
 	@FXML
@@ -277,7 +285,8 @@ public class POSPrinterController implements Initializable {
 		try {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				printer.open(logicalName.getValue());
-				buttonClaim.setDisable(false);
+				RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+				//buttonClaim.setDisable(false);
 				System.out.println(printer.getState());
 				setStatusLabel();
 			} else {
@@ -292,13 +301,14 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
-	// Requests exclusive access to the device
 	@FXML
 	public void handleClaim(ActionEvent e) {
 		try {
 			printer.claim(0);
-			deviceEnabled.setDisable(false);
-			buttonRelease.setDisable(false);
+
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+			//deviceEnabled.setDisable(false);
+			//buttonRelease.setDisable(false);
 			
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
@@ -318,21 +328,23 @@ public class POSPrinterController implements Initializable {
 			} else {
 				printer.setDeviceEnabled(false);
 			}
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 	}
 
-	// Releases exclusive access to the device. The device is also disabled.
 	@FXML
 	public void handleRelease(ActionEvent e) {
 		try {
 			printer.release();
 			if (deviceEnabled.isSelected()) {
 				deviceEnabled.setSelected(false);
-				functionTab.setVisible(false);
+				//functionTab.setVisible(false);
 			}
-			deviceEnabled.setDisable(true);
+
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+			//deviceEnabled.setDisable(true);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
 					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
@@ -340,18 +352,19 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
-	// Releases the device and its resources. Also the device is released.
 	@FXML
 	public void handleClose(ActionEvent e) {
 		try {
 			printer.close();
 			if (!deviceEnabled.isDisable()) {
 				deviceEnabled.setSelected(false);
-				functionTab.setVisible(false);
+				//functionTab.setVisible(false);
 			}
-			buttonClaim.setDisable(true);
-			deviceEnabled.setDisable(true);
-			buttonRelease.setDisable(true);
+
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+			//buttonClaim.setDisable(true);
+			//deviceEnabled.setDisable(true);
+			//buttonRelease.setDisable(true);
 			setStatusLabel();
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
@@ -360,6 +373,16 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		// TODO implement
+	}
+
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		// TODO implement
+	}
+	
 	@FXML
 	public void handleStatistics(ActionEvent e) {
 		// TODO implement
@@ -995,6 +1018,11 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	/**
+	 * This Method gets a Byte Array from a File to print it with printMemoryBitmap
+	 * @param path to Binary File
+	 * @return byte[] containing the data from the File
+	 */
 	private byte[] getBytesFromFile(String path) {
 		byte[] bytes = null;
 		BufferedImage originalImage = null;
@@ -1031,6 +1059,12 @@ public class POSPrinterController implements Initializable {
 		return bytes;
 	}
 
+	/**
+	 * This Method returns the Type of the selected file and returns it, if it is a valid type. Otherwise an Exception is thrown 
+	 * @param path to File
+	 * @return
+	 * @throws IOException
+	 */
 	private int getTypeFromFile(String path) throws IOException {
 		String extension = "";
 
@@ -1060,6 +1094,12 @@ public class POSPrinterController implements Initializable {
 	/*
 	 * Initialize ComboBoxes
 	 */
+
+	
+	private void setUpLogicalNameComboBox() {
+		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.POSPRINTER_DEVCAT
+				.toString()));
+	}
 
 	private void setUpRotationMode() {
 		rotationMode.getItems().clear();
@@ -1251,6 +1291,9 @@ public class POSPrinterController implements Initializable {
 		markFeed.setValue(POSPrinterConstantMapper.PTR_MF_TO_TAKEUP.getConstant());
 	}
 
+	/**
+	 * Sets the CharacterSetComboBox Values corresponding to the allowed Values for this device.
+	 */
 	private void setUpCharacterSet() {
 		characterSet.getItems().clear();
 		try {
@@ -1314,6 +1357,11 @@ public class POSPrinterController implements Initializable {
 		setUpMapCharacterSet();
 	}
 
+	/**
+	 * Gets the Constant for the currently selected station
+	 * @return
+	 * @throws JposException
+	 */
 	private int getSelectedStation() throws JposException {
 		if (rbJournal.isSelected()) {
 			return POSPrinterConst.PTR_S_JOURNAL;
@@ -1329,6 +1377,9 @@ public class POSPrinterController implements Initializable {
 		throw new JposException(JposConst.JPOS_E_FAILURE, "No Station is selected!");
 	}
 
+	/**
+	 * Initialize the PageMode Properties PageModeArea and PageModeDescriptor 
+	 */
 	private void setUpPageModeLabels() {
 		try {
 			pageModeArea.setText(printer.getPageModeArea());
@@ -1338,6 +1389,11 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	/**
+	 * Adds the ESC-Character to the printNormal-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * @return the Correct String containing the ESC-characters
+	 */
 	private String addEscSequencesToPrintNormalData() {
 		String ret = printNormalData.getText();
 		if (!printNormalEscapeSequenceList.isEmpty()) {
@@ -1352,7 +1408,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if something was added to printNormalData
 	 */
 	private void updateInsertsEscSequencesToPrintNormalData(int diff) {
 		int cursorPos = printNormalData.getCaretPosition();
@@ -1367,8 +1423,9 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+
 	/**
-	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if something was deleted from printNormalData
 	 */
 	private void updateDeletesEscSequencesToPrintNormalData(int diff) {
 		// Compare Length with ArrayList pos
@@ -1399,8 +1456,13 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	
 	/* Print 2 Normal First */
-
+	/**
+	 * Adds the ESC-Character to the print2NormalFirst-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * @return the Correct String containing the ESC-characters
+	 */
 	private String addEscSequencesToPrint2NormalDataFirst() {
 
 		String ret = print2NormalFirstData.getText();
@@ -1416,7 +1478,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if something was added to print2NormalDataFirst
 	 */
 	private void updateInsertsEscSequencesToPrint2NormalDataFirst(int diff) {
 		int cursorPos = print2NormalFirstData.getCaretPosition();
@@ -1432,7 +1494,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if something was deleted from print2NormalDataFirst
 	 */
 	private void updateDeletesEscSequencesToPrint2NormalDataFirst(int diff) {
 		// Compare Length with ArrayList pos
@@ -1464,7 +1526,12 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/* Print 2 Normal Second */
-
+	
+	/**
+	 * Adds the ESC-Character to the print2NormalSecond-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * @return the Correct String containing the ESC-characters
+	 */
 	private String addEscSequencesToPrint2NormalDataSecond() {
 		String ret = print2NormalSecondData.getText();
 		if (!print2NormalSecondEscapeSequenceList.isEmpty()) {
@@ -1479,7 +1546,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if something was added to print2NormalDataSecond
 	 */
 	private void updateInsertsEscSequencesToPrint2NormalDataSecond(int diff) {
 		int cursorPos = print2NormalSecondData.getCaretPosition();
@@ -1495,7 +1562,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if something was deleted from print2NormalDataSecond
 	 */
 	private void updateDeletesEscSequencesToPrint2NormalDataSecond(int diff) {
 		// Compare Length with ArrayList pos
@@ -1530,7 +1597,7 @@ public class POSPrinterController implements Initializable {
 	}
 	
 	/**
-	 * Set StatusLabel
+	 * Set StatusLabel corresponding to the Devicestatus
 	 */
 	private void setStatusLabel(){
 		if(printer.getState() == JposConst.JPOS_S_IDLE){

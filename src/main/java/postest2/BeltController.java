@@ -1,3 +1,9 @@
+/*
+ * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
+ * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
+ * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
+ * Homepage: www.ntswincash.com
+ */
 package postest2;
 
 import java.net.URL;
@@ -64,18 +70,13 @@ public class BeltController implements Initializable {
 	@FXML
 	private Pane functionPane;
 
+	//Driver
 	private Belt belt;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		belt = new Belt();
 		setUpLogicalNameComboBox();
-	}
-
-	private void setUpLogicalNameComboBox() {
-		if(!LogicalNameGetter.getLogicalNamesByCategory("Belt").isEmpty()){
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("Belt"));
-		}
 	}
 
 	/* ************************************************************************
@@ -421,5 +422,12 @@ public class BeltController implements Initializable {
 			statusLabel.setText("JPOS_S_ERROR");
 		}
 	}
+
+	private void setUpLogicalNameComboBox() {
+		if(!LogicalNameGetter.getLogicalNamesByCategory("Belt").isEmpty()){
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("Belt"));
+		}
+	}
+
 	
 }

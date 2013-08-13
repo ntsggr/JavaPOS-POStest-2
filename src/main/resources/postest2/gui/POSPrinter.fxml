@@ -17,11 +17,11 @@
       <center>
         <Pane prefHeight="637.0" prefWidth="853.0" styleClass="root">
           <children>
-            <CheckBox fx:id="deviceEnabled" disable="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
-            <CheckBox fx:id="freezeEvents" disable="${!deviceEnabled.selected}" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <CheckBox fx:id="asyncMode" disable="${!deviceEnabled.selected}" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <CheckBox fx:id="flagWhenIdle" disable="${!deviceEnabled.selected}" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
-            <ComboBox fx:id="rotationMode" disable="${!deviceEnabled.selected}" layoutX="23.0" layoutY="145.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
+            <CheckBox fx:id="deviceEnabled"  layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
+            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
+            <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
+            <CheckBox fx:id="flagWhenIdle" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
+            <ComboBox fx:id="rotationMode" layoutX="23.0" layoutY="145.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />
@@ -30,7 +30,7 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <ComboBox fx:id="mapMode" disable="${!deviceEnabled.selected}" layoutX="23.0" layoutY="190.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
+            <ComboBox fx:id="mapMode" layoutX="23.0" layoutY="190.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />
@@ -39,10 +39,10 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <RadioButton fx:id="rbReceipt" disable="${!deviceEnabled.selected}" layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
-            <RadioButton fx:id="rbJournal" disable="${!deviceEnabled.selected}" layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
-            <RadioButton fx:id="rbSlip" disable="${!deviceEnabled.selected}" layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
-            <TabPane fx:id="functionTab" layoutX="196.0" layoutY="70.0" prefHeight="417.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
+            <RadioButton fx:id="rbReceipt"  layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
+            <RadioButton fx:id="rbJournal"  layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
+            <RadioButton fx:id="rbSlip"  layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
+            <TabPane fx:id="functionTab" layoutX="196.0" layoutY="70.0" prefHeight="417.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General Printing">
                   <content>

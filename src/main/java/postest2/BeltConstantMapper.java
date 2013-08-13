@@ -3,16 +3,6 @@ package postest2;
 public class BeltConstantMapper {
 
 	// ///////////////////////////////////////////////////////////////////
-	// "MotionStatus" Property Constants
-	// ///////////////////////////////////////////////////////////////////
-
-	public static final ConstantConverter BELT_MT_FORWARD = new ConstantConverter(1, "BELT_MT_FORWARD");
-	public static final ConstantConverter BELT_MT_BACKWARD = new ConstantConverter(2, "BELT_MT_BACKWARD");
-	public static final ConstantConverter BELT_MT_STOPPED = new ConstantConverter(3, "BELT_MT_STOPPED");
-	public static final ConstantConverter BELT_MT_EMERGENCY = new ConstantConverter(4, "BELT_MT_EMERGENCY");
-	public static final ConstantConverter BELT_MT_MOTOR_FAULT = new ConstantConverter(5, "BELT_MT_MOTOR_FAULT");
-
-	// ///////////////////////////////////////////////////////////////////
 	// "adjustItemCount" Method: "Direction" Parameter Constants
 	// ///////////////////////////////////////////////////////////////////
 

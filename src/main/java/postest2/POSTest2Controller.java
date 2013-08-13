@@ -241,123 +241,123 @@ public class POSTest2Controller implements Initializable {
 	}
 	
 	// Set the panel for each clicked device
-		private void setPanel(String panel) {
-			if (panel.equals("About")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(About);
-			} else if (panel.equals("ConfiguredDevices")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(ConfiguredDevices);
-			} else if (panel.equals("Belt")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Belt);
-			}  else if (panel.equals("BillAcceptor")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(BillAcceptor);
-			}  else if (panel.equals("BillDispenser")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(BillDispenser);
-			}  else if (panel.equals("Biometrics")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Biometrics);
-			}  else if (panel.equals("BumpBar")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(BumpBar);
-			}  else if (panel.equals("CashChanger")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(CashChanger);
-			}  else if (panel.equals("CashDrawer")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(CashDrawer);
-			}  else if (panel.equals("CAT")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(CAT);
-			}  else if (panel.equals("CheckScanner")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(CheckScanner);
-			}  else if (panel.equals("CoinAcceptor")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(CoinAcceptor);
-			}  else if (panel.equals("CoinDispenser")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(CoinDispenser);
-			}  else if (panel.equals("ElectronicJournal")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(ElectronicJournal);
-			}  else if (panel.equals("ElectronicValueRW")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(ElectronicValueRW);
-			}  else if (panel.equals("FiscalPrinter")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(FiscalPrinter);
-			}  else if (panel.equals("Gate")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Gate);
-			}  else if (panel.equals("HardTotals")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(HardTotals);
-			}  else if (panel.equals("ImageScanner")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(ImageScanner);
-			}  else if (panel.equals("ItemDispenser")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(ItemDispenser);
-			}  else if (panel.equals("Keylock")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Keylock);
-			}  else if (panel.equals("Lights")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Lights);
-			}  else if (panel.equals("LineDisplay")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(LineDisplay);
-			}  else if (panel.equals("MICR")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(MICR);
-			}  else if (panel.equals("MotionSensor")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(MotionSensor);
-			}  else if (panel.equals("MSR")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(MSR);
-			}  else if (panel.equals("PINPad")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(PINPad);
-			}  else if (panel.equals("PointCardRW")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(PointCardRW);
-			}  else if (panel.equals("POSKeyboard")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(POSKeyboard);
-			}  else if (panel.equals("POSPower")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(POSPower);
-			}  else if (panel.equals("POSPrinter")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(POSPrinter);
-			}  else if (panel.equals("RemoteOrderDisplay")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(RemoteOrderDisplay);
-			}  else if (panel.equals("RFIDScanner")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(RFIDScanner);
-			}  else if (panel.equals("Scale")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Scale);
-			}  else if (panel.equals("Scanner")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(Scanner);
-			}  else if (panel.equals("SignatureCapture")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(SignatureCapture);
-			}  else if (panel.equals("SmartCardRW")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(SmartCardRW);
-			}  else if (panel.equals("ToneIndicator")) {
-				anchorPaneRight.getChildren().clear();
-				anchorPaneRight.getChildren().addAll(ToneIndicator);
-			}  
-		}
+	private void setPanel(String panel) {
+		if (panel.equals("About")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(About);
+		} else if (panel.equals("ConfiguredDevices")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(ConfiguredDevices);
+		} else if (panel.equals("Belt")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Belt);
+		}  else if (panel.equals("BillAcceptor")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(BillAcceptor);
+		}  else if (panel.equals("BillDispenser")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(BillDispenser);
+		}  else if (panel.equals("Biometrics")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Biometrics);
+		}  else if (panel.equals("BumpBar")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(BumpBar);
+		}  else if (panel.equals("CashChanger")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(CashChanger);
+		}  else if (panel.equals("CashDrawer")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(CashDrawer);
+		}  else if (panel.equals("CAT")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(CAT);
+		}  else if (panel.equals("CheckScanner")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(CheckScanner);
+		}  else if (panel.equals("CoinAcceptor")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(CoinAcceptor);
+		}  else if (panel.equals("CoinDispenser")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(CoinDispenser);
+		}  else if (panel.equals("ElectronicJournal")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(ElectronicJournal);
+		}  else if (panel.equals("ElectronicValueRW")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(ElectronicValueRW);
+		}  else if (panel.equals("FiscalPrinter")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(FiscalPrinter);
+		}  else if (panel.equals("Gate")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Gate);
+		}  else if (panel.equals("HardTotals")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(HardTotals);
+		}  else if (panel.equals("ImageScanner")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(ImageScanner);
+		}  else if (panel.equals("ItemDispenser")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(ItemDispenser);
+		}  else if (panel.equals("Keylock")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Keylock);
+		}  else if (panel.equals("Lights")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Lights);
+		}  else if (panel.equals("LineDisplay")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(LineDisplay);
+		}  else if (panel.equals("MICR")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(MICR);
+		}  else if (panel.equals("MotionSensor")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(MotionSensor);
+		}  else if (panel.equals("MSR")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(MSR);
+		}  else if (panel.equals("PINPad")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(PINPad);
+		}  else if (panel.equals("PointCardRW")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(PointCardRW);
+		}  else if (panel.equals("POSKeyboard")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(POSKeyboard);
+		}  else if (panel.equals("POSPower")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(POSPower);
+		}  else if (panel.equals("POSPrinter")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(POSPrinter);
+		}  else if (panel.equals("RemoteOrderDisplay")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(RemoteOrderDisplay);
+		}  else if (panel.equals("RFIDScanner")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(RFIDScanner);
+		}  else if (panel.equals("Scale")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Scale);
+		}  else if (panel.equals("Scanner")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(Scanner);
+		}  else if (panel.equals("SignatureCapture")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(SignatureCapture);
+		}  else if (panel.equals("SmartCardRW")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(SmartCardRW);
+		}  else if (panel.equals("ToneIndicator")) {
+			anchorPaneRight.getChildren().clear();
+			anchorPaneRight.getChildren().addAll(ToneIndicator);
+		}  
+	}
 		
 }
 
