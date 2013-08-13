@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-public class HardTotalsController implements Initializable {
+public class HardTotalsController extends CommonController implements Initializable {
 
 	@FXML
 	private ComboBox<String> logicalName;

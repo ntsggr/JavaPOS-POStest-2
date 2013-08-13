@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-public class RemoteOrderDisplayController implements Initializable {
+public class RemoteOrderDisplayController extends CommonController implements Initializable {
 
 	@FXML
 	private ComboBox<String> logicalName;

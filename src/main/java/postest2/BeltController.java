@@ -22,190 +22,79 @@ import jpos.Belt;
 import jpos.JposConst;
 import jpos.JposException;
 
-public class BeltController implements Initializable {
+public class BeltController extends CommonController implements Initializable {
 
 	@FXML
-	private ComboBox<String> logicalName;
+	public ComboBox<String> logicalName;
 	@FXML
-	private CheckBox deviceEnabled;
+	public CheckBox deviceEnabled;
 	@FXML
-	private Button buttonOpen;
+	public Button buttonOpen;
 	@FXML
-	private Button buttonClaim;
+	public Button buttonClaim;
 	@FXML
-	private Button buttonRelease;
+	public Button buttonRelease;
 	@FXML
-	private Button buttonStatistics;
+	public Button buttonStatistics;
 	@FXML
-	private Button buttonClose;
+	public Button buttonClose;
 	@FXML
-	private Button buttonOCE;
+	public Button buttonOCE;
 	@FXML
-	private Button buttonFirmware;
+	public Button buttonFirmware;
 	@FXML
-	private Text statusLabel;
+	public Text statusLabel;
 	@FXML
-	private CheckBox freezeEvents;
+	public CheckBox freezeEvents;
 
 	@FXML
-	private ComboBox<Boolean> autoStopBackward;
+	public ComboBox<Boolean> autoStopBackward;
 	@FXML
-	private ComboBox<Boolean> autoStopForward;
+	public ComboBox<Boolean> autoStopForward;
 	@FXML
-	private ComboBox<Integer> moveBackward_speed;
+	public ComboBox<Integer> moveBackward_speed;
 	@FXML
-	private ComboBox<Integer> moveForward_speed;
+	public ComboBox<Integer> moveForward_speed;
 	@FXML
-	private ComboBox<String> resetitemCount_direction;
+	public ComboBox<String> resetitemCount_direction;
 	@FXML
-	private ComboBox<String> adjustItemCount_direction;
+	public ComboBox<String> adjustItemCount_direction;
 
 	@FXML
-	private TextField autoStopBackwardDelayTime;
+	public TextField autoStopBackwardDelayTime;
 	@FXML
-	private TextField autoStopForwardDelayTime;
+	public TextField autoStopForwardDelayTime;
 	@FXML
-	private TextField adjustItemCount_Count;
+	public TextField adjustItemCount_Count;
 	
-	@FXML
-	private Pane functionPane;
-
-	//Driver
-	private Belt belt;
+	@FXML @RequiredState(JposState.ENABLED)
+	public Pane functionPane;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		belt = new Belt();
+		service = new Belt();
 		setUpLogicalNameComboBox();
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
-	@FXML
-	public void handleOpen(ActionEvent e) {
-		System.out.println("Open");
-		try {
-			if (logicalName != null && logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
-				belt.open(logicalName.getValue());
-				buttonClaim.setDisable(false);
-				setStatusLabel();
-			} else {
-				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty",
-						JOptionPane.WARNING_MESSAGE);
-			}
-
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	// Requests exclusive access to the device
-	@FXML
-	public void handleClaim(ActionEvent e) {
-		System.out.println("Claim");
-		try {
-			belt.claim(0);
-			deviceEnabled.setDisable(false);
-			buttonRelease.setDisable(false);
-			
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
-				belt.setDeviceEnabled(true);
+				((Belt)service).setDeviceEnabled(true);
 				setUpCheckboxes();
 				
 			} else {
-				belt.setDeviceEnabled(false);
+				((Belt)service).setDeviceEnabled(false);
 			}
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
-		}
-	}
-
-	// Releases exclusive access to the device. The device is also disabled.
-	@FXML
-	public void handleRelease(ActionEvent e) {
-		System.out.println("Release");
-		try {
-			belt.release();
-			if (deviceEnabled.isSelected()) {
-				deviceEnabled.setSelected(false);
-				functionPane.setVisible(false);
-			}
-			deviceEnabled.setDisable(true);
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	// Releases the device and its resources. Also the device is released.
-	@FXML
-	public void handleClose(ActionEvent e) {
-		System.out.println("Close");
-		try {
-			belt.close();
-			if (!deviceEnabled.isDisable()) {
-				deviceEnabled.setSelected(false);
-				functionPane.setVisible(false);
-			}
-			buttonClaim.setDisable(true);
-			deviceEnabled.setDisable(true);
-			buttonRelease.setDisable(true);
-			setStatusLabel();
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	@FXML
-	public void handleOCE(ActionEvent e) {
-		System.out.println("OCE");
-		// TODO implement
-	}
-
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		System.out.println("Info");
-		// TODO implement
-	}
-	
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		System.out.println("Statistics");
-		// TODO implement
-
-	}
-
-	@FXML
-	public void handleFirmware(ActionEvent e) {
-		System.out.println("Firmware");
-		// TODO implement
-	}
-
-	@FXML
-	public void handleFreezeEvents(ActionEvent e) {
-		System.out.println("Freeze");
-		try {
-			belt.setFreezeEvents(freezeEvents.selectedProperty().getValue());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
 
@@ -214,7 +103,7 @@ public class BeltController implements Initializable {
 		System.out.println("AutoStopBackward");
 		if(autoStopBackward.getSelectionModel().getSelectedItem() != null){
 			try {
-				belt.setAutoStopBackward(autoStopBackward.getSelectionModel().getSelectedItem());
+				((Belt)service).setAutoStopBackward(autoStopBackward.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -226,7 +115,7 @@ public class BeltController implements Initializable {
 		System.out.println("AutoStopBWDT");
 		if(!autoStopBackwardDelayTime.getText().isEmpty()){
 			try {
-				belt.setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime.getText()));
+				((Belt)service).setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime.getText()));
 			} catch (NumberFormatException e1){
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
@@ -240,7 +129,7 @@ public class BeltController implements Initializable {
 		System.out.println("ASW");
 		if(autoStopForward.getSelectionModel().getSelectedItem() != null){
 			try {
-				belt.setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
+				((Belt)service).setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -252,7 +141,7 @@ public class BeltController implements Initializable {
 		System.out.println("ASFDT");
 		if(!autoStopForwardDelayTime.getText().isEmpty()){
 			try {
-				belt.setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime.getText()));
+				((Belt)service).setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime.getText()));
 			} catch (NumberFormatException e1){
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
@@ -267,7 +156,7 @@ public class BeltController implements Initializable {
 		if(adjustItemCount_direction.getSelectionModel().getSelectedItem() != null){
 	
 			try {
-				belt.adjustItemCount(BeltConstantMapper.getConstantNumberFromString(adjustItemCount_direction
+				((Belt)service).adjustItemCount(BeltConstantMapper.getConstantNumberFromString(adjustItemCount_direction
 						.getSelectionModel().getSelectedItem()),
 						Integer.parseInt(adjustItemCount_Count.getText()));
 			} catch (NumberFormatException e1){
@@ -283,7 +172,7 @@ public class BeltController implements Initializable {
 		System.out.println("MB");
 		if(moveBackward_speed.getSelectionModel().getSelectedItem() != null){
 			try {
-				belt.moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
+				((Belt)service).moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -295,7 +184,7 @@ public class BeltController implements Initializable {
 		System.out.println("MF");
 		if(moveForward_speed.getSelectionModel().getSelectedItem() != null){
 			try {
-				belt.moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
+				((Belt)service).moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -306,7 +195,7 @@ public class BeltController implements Initializable {
 	public void handleResetBelt(ActionEvent e) {
 		System.out.println("RB");
 		try {
-			belt.resetBelt();
+			((Belt)service).resetBelt();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -317,7 +206,7 @@ public class BeltController implements Initializable {
 		System.out.println("RIC");
 		if(resetitemCount_direction.getSelectionModel().getSelectedItem() != null){
 			try {
-				belt.resetItemCount(BeltConstantMapper.getConstantNumberFromString(resetitemCount_direction
+				((Belt)service).resetItemCount(BeltConstantMapper.getConstantNumberFromString(resetitemCount_direction
 						.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -329,7 +218,7 @@ public class BeltController implements Initializable {
 	public void handleStopBelt(ActionEvent e) {
 		System.out.println("SB");
 		try {
-			belt.stopBelt();
+			((Belt)service).stopBelt();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -403,24 +292,6 @@ public class BeltController implements Initializable {
 		setUpMoveForwardSpeed();
 		setUpResetItemCount();
 
-	}
-
-	private void setStatusLabel(){
-		if(belt.getState() == JposConst.JPOS_S_IDLE){
-			statusLabel.setText("JPOS_S_IDLE");
-		}
-		
-		if(belt.getState() == JposConst.JPOS_S_CLOSED){
-			statusLabel.setText("JPOS_S_CLOSED");
-		}
-		
-		if(belt.getState() == JposConst.JPOS_S_BUSY){
-			statusLabel.setText("JPOS_S_BUSY");
-		}
-		
-		if(belt.getState() == JposConst.JPOS_S_ERROR){
-			statusLabel.setText("JPOS_S_ERROR");
-		}
 	}
 
 	private void setUpLogicalNameComboBox() {

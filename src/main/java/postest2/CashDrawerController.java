@@ -11,9 +11,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 
+import jpos.BaseJposControl;
 import jpos.CashDrawer;
 import jpos.CashDrawerConst;
 import jpos.JposException;
@@ -21,10 +24,12 @@ import jpos.events.StatusUpdateEvent;
 import jpos.events.StatusUpdateListener;
 import jpos.profile.JposDevCats;
 
-public class CashDrawerController implements Initializable, StatusUpdateListener {
+public class CashDrawerController extends CommonController implements Initializable, StatusUpdateListener {
 
+	/*
 	@FXML
 	private ComboBox<String> logicalName;
+	
 	@FXML
 	private Button buttonOpen;
 	@FXML
@@ -33,37 +38,38 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 	private Button buttonRelease;
 	@FXML
 	private CheckBox deviceEnabled;
-	@FXML
-	private TextArea textAreaActionLog;
-	@FXML
-	private Button buttonOpenCash;
-	@FXML
-	private Button buttonGetDrawer;
-	@FXML
-	private Button buttonWaitForDrawer;
+	*/
+	@FXML @RequiredState(JposState.ENABLED)
+	public TextArea textAreaActionLog;
+	@FXML @RequiredState(JposState.ENABLED)
+	public Button buttonOpenCash;
+	@FXML @RequiredState(JposState.ENABLED)
+	public Button buttonGetDrawer;
+	@FXML @RequiredState(JposState.ENABLED)
+	public Button buttonWaitForDrawer;
+	
+	/*
 	@FXML
 	private Label statusLabel;
 
 	private CashDrawer cashDrawer;
 	private String defaultLogicalName = "defaultCashDrawer";
-	
+	*/
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		setUpLogicalNameComboBox();
-		cashDrawer = new CashDrawer();
-		cashDrawer.addStatusUpdateListener(this);
+		service = new CashDrawer();
+		((CashDrawer)service).addStatusUpdateListener(this);
+
+		RequiredStateChecker.invokeThis(this, service);
 	}
-	
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT.toString()));
-	}
-	
 	
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
-	
+	/*
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		try {
@@ -92,31 +98,32 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			JOptionPane.showMessageDialog(null, "Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	*/
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		try {
 			if (deviceEnabled.isSelected()) {
-				cashDrawer.setDeviceEnabled(true);
+				((CashDrawer)service).setDeviceEnabled(true);
 				buttonOpenCash.setDisable(false);
 				buttonGetDrawer.setDisable(false);
 				buttonWaitForDrawer.setDisable(false);
 			} else {
-				cashDrawer.setDeviceEnabled(false);
+				((CashDrawer)service).setDeviceEnabled(false);
 				buttonOpenCash.setDisable(true);
 				buttonGetDrawer.setDisable(true);
 				buttonWaitForDrawer.setDisable(true);
 			}
+			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			System.err.println("CashDrawerPanel: CheckBoxListener: Jpos Exception" + je);
 		}
 	}
-
+	/*
 	// Releases exclusive access to the device. The device is also disabled.
 	@FXML
 	public void handleRelease(ActionEvent e) {
 		try {
-			cashDrawer.release();
+			((CashDrawer)service).release();
 			if (deviceEnabled.isSelected()) {
 				deviceEnabled.setSelected(false);
 				buttonOpenCash.setDisable(true);
@@ -133,7 +140,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 	@FXML
 	public void handleClose(ActionEvent e) {
 		try {
-			cashDrawer.close();
+			((CashDrawer)service).close();
 			statusLabel.setText("JPOS_S_CLOSED");
 			if (!deviceEnabled.isDisable()) {
 				deviceEnabled.setSelected(false);
@@ -148,11 +155,12 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			JOptionPane.showMessageDialog(null, "Failed to close \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	*/
 
 	@FXML
 	public void handleOpenCash(ActionEvent e) {
 		try {
-			cashDrawer.openDrawer();
+			((CashDrawer)service).openDrawer();
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, "Exception in openDrawer: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
 		}
@@ -161,7 +169,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 	@FXML
 	public void handleGetDrawer(ActionEvent e) {
 		try {
-			if (cashDrawer.getDrawerOpened()) {
+			if (((CashDrawer)service).getDrawerOpened()) {
 				textAreaActionLog.appendText("Cash drawer is open.\n");
 			} else {
 				textAreaActionLog.appendText("Cash drawer is closed.\n");
@@ -174,7 +182,7 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 	@FXML
 	public void handleWaitForDrawer(ActionEvent e) {
 		try {
-			cashDrawer.waitForDrawerClose(100, 500, 100, 200);
+			((CashDrawer)service).waitForDrawerClose(100, 500, 100, 200);
 			textAreaActionLog.appendText("Cash drawer is closed.\n");
 		} catch (JposException je) {
 			textAreaActionLog.appendText("Jpos exception " + je + "\n");
@@ -197,6 +205,9 @@ public class CashDrawerController implements Initializable, StatusUpdateListener
 			msg += "Unknown Status: " + Integer.toString(sue.getStatus()) + "\n";
 			break;
 		}
+	}
+	private void setUpLogicalNameComboBox() {
+		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT.toString()));
 	}
 	
 }

@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-public class POSKeyboardController implements Initializable {
+public class POSKeyboardController extends CommonController implements Initializable {
 
 	@FXML
 	private ComboBox<String> logicalName;

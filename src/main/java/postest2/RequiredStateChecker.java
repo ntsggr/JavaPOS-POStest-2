@@ -1,3 +1,9 @@
+/*
+ * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
+ * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
+ * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
+ * Homepage: www.ntswincash.com
+ */
 package postest2;
 
 import java.lang.reflect.Field;
@@ -5,25 +11,32 @@ import java.lang.reflect.Field;
 import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
+/**
+ * This Class provides the functionality that a Field with the RequiredState-Annotation is disabled/enabled 
+ * corresponding to the given Value (CLOSED, OPENED, CLAIMED, ENABLED) of the Variable
+ *
+ */
 public class RequiredStateChecker {
 	public static void invokeThis(Object theObject, BaseJposControl service){
 		try {
+			//get all Fields from the Class
 			Field[] fields = Class.forName(theObject.getClass().getName()).getFields();
 			JposState deviceState = null;
-			Control control = new Control() {};
 			deviceState = getDeviceState(service);
-			System.out.println("Field len: " + fields.length);
+			//parse through all fields
 			for (int i = 0; i < fields.length; i++) {
-				System.out.println("Field len: " + fields.length);
-				RequiredState requiredState = fields[i].getAnnotation(RequiredState.class);
-				//mit getType arbeiten
-				
-				if(Control.class.isAssignableFrom(fields[i].getType())){
-					Control c = (Control) fields[i].get(theObject);
+				//get the Annotation from each Field
+				RequiredState requiredState = fields[i].getAnnotation(RequiredState.class);				
+				//Get only those fields which are a JavaFX Node
+				if(Node.class.isAssignableFrom(fields[i].getType())){
+					Node c = (Node) fields[i].get(theObject);
 					if(requiredState != null){
+						//get the Value of each Annotation
 						JposState componentState = requiredState.value();
+						//Disable/Enable corresponding to the current deviceState and the requiredState
 						if(componentState == JposState.OPENED){
 							if(deviceState == JposState.OPENED || deviceState == JposState.CLAIMED || deviceState == JposState.ENABLED){
 								c.setDisable(false);
@@ -44,9 +57,8 @@ public class RequiredStateChecker {
 							} else {
 								c.setDisable(true);
 							}
-						} 
+						}
 					}
-					
 				}
 			}
 		} catch (Exception e) {
@@ -78,7 +90,6 @@ public class RequiredStateChecker {
 				deviceState= JposState.CLOSED;
 			}
 		}
-		System.out.println(deviceState.toString());
 		return deviceState;
 		
 	}

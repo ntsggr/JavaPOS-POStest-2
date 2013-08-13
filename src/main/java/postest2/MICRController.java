@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-public class MICRController implements Initializable {
+public class MICRController extends CommonController implements Initializable {
 
 	@FXML
 	private ComboBox<String> logicalName;

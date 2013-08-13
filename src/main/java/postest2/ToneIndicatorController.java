@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 
-public class ToneIndicatorController implements Initializable {
+public class ToneIndicatorController extends CommonController implements Initializable {
 
 	@FXML
 	private ComboBox<String> logicalName;
