@@ -141,6 +141,16 @@ public class LineDisplayController extends CommonController implements Initializ
 	 * ************************ Action Handler ********************************
 	 * ************************************************************************
 	 */
+	
+	/**
+	 * Need this to set the ComboBox for Screen mode. (only available if device is claimed but not enabled)
+	 */
+	@FXML
+	@Override
+	public void handleClaim(ActionEvent e) {
+		setUpScreenMode();
+		super.handleClaim(e);
+	}
 
 	
 
