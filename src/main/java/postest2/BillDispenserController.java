@@ -9,8 +9,6 @@ package postest2;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,8 +17,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+
+import javax.swing.JOptionPane;
+
 import jpos.BillDispenser;
-import jpos.Biometrics;
 import jpos.JposException;
 
 public class BillDispenserController extends CommonController implements Initializable {
@@ -30,15 +30,15 @@ public class BillDispenserController extends CommonController implements Initial
 	public Pane functionPane;
 
 	// Controls
-	@FXML @RequiredState(JposState.OPENED)
+	@FXML
+	@RequiredState(JposState.OPENED)
 	public CheckBox asyncMode;
-	
+
 	@FXML
 	public ComboBox<String> currencyCode;
 	@FXML
 	public ComboBox<Integer> currentExit;
 
-	Biometrics b;
 	@FXML
 	public Label readCashCount_cashCount;
 	@FXML
@@ -49,7 +49,6 @@ public class BillDispenserController extends CommonController implements Initial
 	@FXML
 	public TextField dispenseCash_cashCounts;
 
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.service = new BillDispenser();
@@ -78,18 +77,17 @@ public class BillDispenserController extends CommonController implements Initial
 		}
 		RequiredStateChecker.invokeThis(this, service);
 	}
-	
+
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
 		System.out.println("asyncMode");
 		try {
-			((BillDispenser)service).setAsyncMode(asyncMode.isSelected());
+			((BillDispenser) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 	}
-	
-	
+
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
 		System.out.println("currencyCode");
@@ -100,7 +98,7 @@ public class BillDispenserController extends CommonController implements Initial
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void handleSetCurrentExit(ActionEvent e) {
 		System.out.println("currenctExit");
@@ -111,12 +109,11 @@ public class BillDispenserController extends CommonController implements Initial
 			e1.printStackTrace();
 		}
 	}
-	
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
 		System.out.println("adjust");
-		if(!adjustCashCounts.getText().isEmpty()){
+		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillDispenser) service).adjustCashCounts(adjustCashCounts.getText());
 			} catch (JposException e1) {
@@ -125,11 +122,11 @@ public class BillDispenserController extends CommonController implements Initial
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
 		System.out.println("dispenseCash");
-		if(!adjustCashCounts.getText().isEmpty()){
+		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillDispenser) service).adjustCashCounts(adjustCashCounts.getText());
 			} catch (JposException e1) {
@@ -138,7 +135,7 @@ public class BillDispenserController extends CommonController implements Initial
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
 		System.out.println("readCashCount");
@@ -153,11 +150,11 @@ public class BillDispenserController extends CommonController implements Initial
 		this.readCashCount_cashCount.setText(cashCounts[0]);
 		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
 	}
-	
+
 	/*
 	 * Set Up all ComboBoxes
 	 */
-	
+
 	private void setUpCurrencyCode() {
 		String[] currencies = null;
 		try {
@@ -166,19 +163,19 @@ public class BillDispenserController extends CommonController implements Initial
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			e.printStackTrace();
 		}
-	
+
 		currencyCode.getItems().clear();
-		for(int i = 0; i < currencies.length; i++){
+		for (int i = 0; i < currencies.length; i++) {
 			currencyCode.getItems().add(currencies[i]);
 		}
 		currencyCode.setValue(currencies[0]);
-		
+
 	}
-	
+
 	private void setUpCurrentExit() {
 		currentExit.getItems().clear();
 		try {
-			for(int i = 1; i <= ((BillDispenser)service).getDeviceExits(); i++){
+			for (int i = 1; i <= ((BillDispenser) service).getDeviceExits(); i++) {
 				currentExit.getItems().add(i);
 			}
 		} catch (JposException e) {
@@ -186,9 +183,9 @@ public class BillDispenserController extends CommonController implements Initial
 			e.printStackTrace();
 		}
 		currentExit.setValue(1);
-		
+
 	}
-	
+
 	private void setUpComboBoxes() {
 		setUpLogicalNameComboBox();
 		setUpCurrencyCode();
@@ -201,5 +198,4 @@ public class BillDispenserController extends CommonController implements Initial
 		}
 	}
 
-	
 }

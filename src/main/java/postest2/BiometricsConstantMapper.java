@@ -19,7 +19,7 @@ public class BiometricsConstantMapper {
 			"BIO_ST_FACIAL_FEATURES");
 	public static final ConstantConverter BIO_ST_VOICE = new ConstantConverter(2, "BIO_ST_VOICE");
 	public static final ConstantConverter BIO_ST_FINGERPRINT = new ConstantConverter(3,
-			"BIO_ST_FINGERPRConstantConverter");
+			"BIO_ST_FINGERPRINT");
 	public static final ConstantConverter BIO_ST_IRIS = new ConstantConverter(4, "BIO_ST_IRIS");
 	public static final ConstantConverter BIO_ST_RETINA = new ConstantConverter(5, "BIO_ST_RETINA");
 	public static final ConstantConverter BIO_ST_HAND_GEOMETRY = new ConstantConverter(6,

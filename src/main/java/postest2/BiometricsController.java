@@ -1,19 +1,16 @@
 package postest2;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-import java.io.FileInputStream;
-
-import sun.misc.IOUtils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,14 +21,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-import jpos.BillDispenser;
+
+import javax.swing.JOptionPane;
+
 import jpos.Biometrics;
 import jpos.JposException;
 
 public class BiometricsController extends CommonController implements Initializable {
 
 	@FXML
-	@RequiredState(JposState.ENABLED)
+	@RequiredState(JposState.CLOSED)
 	public TabPane functionPane;
 
 	@FXML
@@ -142,11 +141,11 @@ public class BiometricsController extends CommonController implements Initializa
 		System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
-				((BillDispenser) service).setDeviceEnabled(true);
+				((Biometrics) service).setDeviceEnabled(true);
 				setUpComboBoxes();
 
 			} else {
-				((BillDispenser) service).setDeviceEnabled(false);
+				((Biometrics) service).setDeviceEnabled(false);
 			}
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
@@ -156,6 +155,7 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetAlgorithm(ActionEvent e) {
+		System.out.println("algorithm");
 		try {
 			((Biometrics) service).setAlgorithm(algorithm.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -166,6 +166,7 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
+		System.out.println("realtimedat");
 		try {
 			((Biometrics) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
 					.getSelectedItem());
@@ -177,6 +178,7 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetSensorOrientation(ActionEvent e) {
+		System.out.println("sensoror");
 		try {
 			((Biometrics) service).setSensorOrientation(BiometricsConstantMapper
 					.getConstantNumberFromString(sensorOrientation.getSelectionModel().getSelectedItem()));
@@ -188,8 +190,10 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetSensorType(ActionEvent e) {
+		System.out.println("sensorty");
 		try {
-			((Biometrics)service).setSensorType(BiometricsConstantMapper.getConstantNumberFromString(sensorType.getSelectionModel().getSelectedItem()));
+			((Biometrics) service).setSensorType(BiometricsConstantMapper
+					.getConstantNumberFromString(sensorType.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -215,28 +219,46 @@ public class BiometricsController extends CommonController implements Initializa
 			this.beginEnrollCapture_payload.setText(f.getAbsolutePath());
 		}
 	}
-	
-	
-	//TODO go further!!! 
-	
-	
+
 	@FXML
 	public void handleBeginEnrollCapture(ActionEvent e) {
-		byte[] referenceBIR = readBytesFromFile(beginEnrollCapture_referenceBIR.getText());
-		
-		
-
-		//((Biometrics)service).beginEnrollCapture(referenceBIR, payload)
+		System.out.println("beginenrollcaprute");
+		if (beginEnrollCapture_referenceBIR.getText().isEmpty()
+				|| beginEnrollCapture_payload.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			byte[] referenceBIR = readBytesFromFile(beginEnrollCapture_referenceBIR.getText());
+			byte[] payload = readBytesFromFile(beginEnrollCapture_payload.getText());
+			try {
+				((Biometrics) service).beginEnrollCapture(referenceBIR, payload);
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@FXML
 	public void handleBeginVerifyCapture(ActionEvent e) {
+		System.out.println("beginverifycap");
+		try {
+			((Biometrics) service).beginVerifyCapture();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
 
 	}
 
 	@FXML
 	public void handleEndCapture(ActionEvent e) {
-
+		System.out.println("endcapt");
+		try {
+			((Biometrics) service).endCapture();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -245,18 +267,62 @@ public class BiometricsController extends CommonController implements Initializa
 		chooser.setTitle("Choose Binary");
 		File f = chooser.showOpenDialog(null);
 		if (f != null) {
-			this.identify_referenceBIRPopulation.getItems().add(f.getAbsolutePath());
+			this.identify_newReferenceBIR.setText(f.getAbsolutePath());
 		}
 	}
 
 	@FXML
 	public void handleIdentifyAddReferenceBIR(ActionEvent e) {
-
+		System.out.println("identifyaddrefBIR");
+		if (identify_newReferenceBIR.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			identify_referenceBIRPopulation.getItems().add(identify_newReferenceBIR.getText());
+		}
 	}
 
 	@FXML
 	public void handleIdentify(ActionEvent e) {
+		System.out.println("identify");
+		if (identify_maxFARRequested.getText().isEmpty() || identify_maxFRRRequested.getText().isEmpty()
+				|| identify_referenceBIRPopulation.getItems().isEmpty()
+				|| identify_timeout.getText().isEmpty()) {
 
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				int maxFARRequested = Integer.parseInt(identify_maxFARRequested.getText());
+				int maxFRRRequested = Integer.parseInt(identify_maxFRRRequested.getText());
+				boolean FARPrecedence = identify_FARPrecedence.getSelectionModel().getSelectedItem();
+				byte[][] referenceBIRPopulation = new byte[identify_referenceBIRPopulation.getItems().size()][];
+
+				for (int i = 0; i < identify_referenceBIRPopulation.getItems().size(); i++) {
+					referenceBIRPopulation[i] = readBytesFromFile(identify_referenceBIRPopulation.getItems()
+							.get(i));
+				}
+				int[][] candidateRanking = null;
+				int timeout = Integer.parseInt(identify_timeout.getText());
+
+				((Biometrics) service).identify(maxFARRequested, maxFRRRequested, FARPrecedence,
+						referenceBIRPopulation, candidateRanking, timeout);
+
+				identify_candidateRanking.getItems().clear();
+				try {
+					for (int i = 0; i < candidateRanking.length; i++) {
+						identify_candidateRanking.getItems().add("" + candidateRanking[i][0]);
+					}
+				} catch (NullPointerException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
+				}
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@FXML
@@ -265,18 +331,65 @@ public class BiometricsController extends CommonController implements Initializa
 		chooser.setTitle("Choose Binary");
 		File f = chooser.showOpenDialog(null);
 		if (f != null) {
-			this.identifyMatch_referenceBIRPopulation.getItems().add(f.getAbsolutePath());
+			this.identifyMatch_newReferenceBIR.setText(f.getAbsolutePath());
 		}
 	}
 
 	@FXML
 	public void handleIdentifyMatchAddReferenceBIR(ActionEvent e) {
+		System.out.println("idenmatchaddrefbir");
+		if (identifyMatch_newReferenceBIR.getText().isEmpty()) {
 
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			identifyMatch_referenceBIRPopulation.getItems().add(identifyMatch_newReferenceBIR.getText());
+		}
 	}
 
 	@FXML
 	public void handleIdentifyMatch(ActionEvent e) {
+		System.out.println("identifyMatch");
+		if (identifyMatch_maxFARRequested.getText().isEmpty()
+				|| identifyMatch_maxFRRRequested.getText().isEmpty()
+				|| identifyMatch_referenceBIRPopulation.getItems().isEmpty()
+				|| identifyMatch_sampleBIR.getText().isEmpty()) {
 
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				int maxFARRequested = Integer.parseInt(identifyMatch_maxFARRequested.getText());
+				int maxFRRRequested = Integer.parseInt(identifyMatch_maxFRRRequested.getText());
+				boolean FARPrecedence = identifyMatch_FARPrecedence.getSelectionModel().getSelectedItem();
+				byte[][] referenceBIRPopulation = new byte[identifyMatch_referenceBIRPopulation.getItems()
+						.size()][];
+
+				for (int i = 0; i < identifyMatch_referenceBIRPopulation.getItems().size(); i++) {
+					referenceBIRPopulation[i] = readBytesFromFile(identifyMatch_referenceBIRPopulation
+							.getItems().get(i));
+				}
+				int[][] candidateRanking = null;
+				byte[] sampleBIR = readBytesFromFile(identifyMatch_sampleBIR.getText());
+
+				((Biometrics) service).identifyMatch(maxFARRequested, maxFRRRequested, FARPrecedence,
+						sampleBIR, referenceBIRPopulation, candidateRanking);
+				identifyMatch_candidateRanking.getItems().clear();
+				try {
+					for (int i = 0; i < candidateRanking.length; i++) {
+						identifyMatch_candidateRanking.getItems().add("" + candidateRanking[i][0]);
+					}
+				} catch (NullPointerException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
+				}
+
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@FXML
@@ -301,6 +414,26 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleProcessPrematchData(ActionEvent e) {
+		System.out.println("processpremachdata");
+		if (processPrematchData_sampleBIR.getText().isEmpty()
+				|| processPrematchData_prematchDataBIR.getText().isEmpty()) {
+
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			byte[] sampleBIR = readBytesFromFile(processPrematchData_sampleBIR.getText());
+			byte[] prematchDataBIR = readBytesFromFile(processPrematchData_prematchDataBIR.getText());
+			byte[][] processedBIR = null;
+
+			try {
+				((Biometrics) service).processPrematchData(sampleBIR, prematchDataBIR, processedBIR);
+				writeBytesToFile(processedBIR, "ProcessPrematchData_ProcessedBIR.bin");
+				processPrematchData_ProcessedBIR
+						.setText("$POSTEST_HOME/ProcessPrematchData_ProcessedBIR.bin");
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 
 	}
 
@@ -326,7 +459,44 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleVerify(ActionEvent e) {
+		System.out.println("verify");
+		if (verify_maxFARRequested.getText().isEmpty() || verify_maxFRRRequested.getText().isEmpty()
+				|| verify_referenceBIR.getText().isEmpty() || verify_adaptedBIR.getText().isEmpty()
+				|| verify_payload.getText().isEmpty() || verify_timeout.getText().isEmpty()) {
 
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				int maxFARRequested = Integer.parseInt(verify_maxFARRequested.getText());
+				int maxFRRRequested = Integer.parseInt(verify_maxFRRRequested.getText());
+				boolean FARPrecedence = verify_FARPrecedence.getSelectionModel().getSelectedItem();
+				byte[] referenceBIR = readBytesFromFile(verify_referenceBIR.getText());
+				byte[][] adaptedBIR = new byte[1][];
+				adaptedBIR[0] = readBytesFromFile(verify_adaptedBIR.getText());
+				boolean[] result = new boolean[1];
+				int[] FARAchieved = new int[1];
+				int[] FRRAchieved = new int[1];
+				byte[][] payload = new byte[1][];
+				payload[0] = readBytesFromFile(verify_payload.getText());
+				int timeout = Integer.parseInt(verify_timeout.getText());
+
+				((Biometrics) service).verify(maxFARRequested, maxFRRRequested, FARPrecedence, referenceBIR,
+						adaptedBIR, result, FARAchieved, FRRAchieved, payload, timeout);
+				verify_result.setText("" + result[0]);
+				verify_FARAchieved.setText("" + FARAchieved[0]);
+				verify_FRRAchieved.setText("" + FRRAchieved[0]);
+
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NullPointerException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@FXML
@@ -361,7 +531,45 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleVerifyMatch(ActionEvent e) {
+		System.out.println("verifymatch");
+		if (verifyMatch_maxFARRequested.getText().isEmpty()
+				|| verifyMatch_maxFRRRequested.getText().isEmpty()
+				|| verifyMatch_referenceBIR.getText().isEmpty() || verifyMatch_adaptedBIR.getText().isEmpty()
+				|| verifyMatch_payload.getText().isEmpty() || verifyMatch_sampleBIR.getText().isEmpty()) {
 
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				int maxFARRequested = Integer.parseInt(verifyMatch_maxFARRequested.getText());
+				int maxFRRRequested = Integer.parseInt(verifyMatch_maxFRRRequested.getText());
+				boolean FARPrecedence = verifyMatch_FARPrecedence.getSelectionModel().getSelectedItem();
+				byte[] sampleBIR = readBytesFromFile(verifyMatch_sampleBIR.getText());
+				byte[] referenceBIR = readBytesFromFile(verifyMatch_referenceBIR.getText());
+				byte[][] adaptedBIR = new byte[1][];
+				adaptedBIR[0] = readBytesFromFile(verifyMatch_adaptedBIR.getText());
+				boolean[] result = new boolean[1];
+				int[] FARAchieved = new int[1];
+				int[] FRRAchieved = new int[1];
+				byte[][] payload = new byte[1][];
+				payload[0] = readBytesFromFile(verifyMatch_payload.getText());
+
+				((Biometrics) service).verifyMatch(maxFARRequested, maxFRRRequested, FARPrecedence,
+						sampleBIR, referenceBIR, adaptedBIR, result, FARAchieved, FRRAchieved, payload);
+				verifyMatch_result.setText("" + result[0]);
+				verifyMatch_FARAchieved.setText("" + FARAchieved[0]);
+				verifyMatch_FRRAchieved.setText("" + FRRAchieved[0]);
+
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NullPointerException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 	@FXML
@@ -488,58 +696,71 @@ public class BiometricsController extends CommonController implements Initializa
 		setUpSensorType();
 		setUpIdentifyFARPrecedence();
 		setUpIdentifyMatchFARPrecedence();
-		setUpVerifyFARPrecedence();
 		setUpVerifyMatchFARPrecedence();
+		setUpVerifyFARPrecedence();
 	}
 
 	private void setUpLogicalNameComboBox() {
-		if (!LogicalNameGetter.getLogicalNamesByCategory("BillDispenser").isEmpty()) {
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BillDispenser"));
+		if (!LogicalNameGetter.getLogicalNamesByCategory("Biometrics").isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("Biometrics"));
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Read the given binary file, and return its contents as a byte array.
 	 * 
-	 */ 
-	private static byte[] readBytesFromFile(String aInputFileName){
-	    File file = new File(aInputFileName);
-	    byte[] result = new byte[(int)file.length()];
-	    try {
-	      InputStream input = null;
-	      try {
-	        int totalBytesRead = 0;
-	        input = new BufferedInputStream(new FileInputStream(file));
-	        while(totalBytesRead < result.length){
-	          int bytesRemaining = result.length - totalBytesRead;
-	          //input.read() returns -1, 0, or more :
-	          int bytesRead = input.read(result, totalBytesRead, bytesRemaining); 
-	          if (bytesRead > 0){
-	            totalBytesRead = totalBytesRead + bytesRead;
-	          }
-	        }
-	        /*
-	         the above style is a bit tricky: it places bytes into the 'result' array; 
-	         'result' is an output parameter;
-	         the while loop usually has a single iteration only.
-	        */
-	      }
-	      finally {
-	        input.close();
-	      }
-	    }
-	    catch (FileNotFoundException ex) {
+	 */
+	private static byte[] readBytesFromFile(String aInputFileName) {
+		File file = new File(aInputFileName);
+		byte[] result = new byte[(int) file.length()];
+		try {
+			InputStream input = null;
+			try {
+				int totalBytesRead = 0;
+				input = new BufferedInputStream(new FileInputStream(file));
+				while (totalBytesRead < result.length) {
+					int bytesRemaining = result.length - totalBytesRead;
+					// input.read() returns -1, 0, or more :
+					int bytesRead = input.read(result, totalBytesRead, bytesRemaining);
+					if (bytesRead > 0) {
+						totalBytesRead = totalBytesRead + bytesRead;
+					}
+				}
+			} finally {
+				input.close();
+			}
+		} catch (FileNotFoundException ex) {
 
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 			ex.printStackTrace();
-	    }
-	    catch (IOException ex) {
+		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 			ex.printStackTrace();
-	    	
-	    }
-	    return result;
-	  }
-	
+
+		}
+		return result;
+	}
+
+	/**
+	 * Write a byte array to the given file. Writing binary data is
+	 * significantly simpler than reading it.
+	 */
+	private static void writeBytesToFile(byte[][] aInput, String aOutputFileName) {
+		try {
+			OutputStream output = null;
+			try {
+				output = new BufferedOutputStream(new FileOutputStream(aOutputFileName));
+				output.write(aInput[0]);
+			} finally {
+				output.close();
+			}
+		} catch (FileNotFoundException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			ex.printStackTrace();
+		}
+	}
 
 }
