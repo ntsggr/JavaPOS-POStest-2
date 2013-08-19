@@ -17,6 +17,54 @@
           <children>
             <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
             <CheckBox layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
+            <Pane fx:id="functionPane" layoutX="41.0" layoutY="61.0" prefHeight="579.0" prefWidth="885.0">
+              <children>
+                <ComboBox fx:id="currencyCode" layoutX="131.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="130.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleSetCurrencyCode" text="Set Currency Code" />
+                <Label layoutX="35.0" layoutY="50.0" text="Currency Code:" />
+                <ComboBox id="currencyCode" fx:id="currentExit" layoutX="388.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="388.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleSetCurrentExit" text="Set Current Exit" />
+                <Label layoutX="306.0" layoutY="49.0" text="Current Exit:" />
+                <Button layoutX="402.0" layoutY="220.0" mnemonicParsing="false" onAction="#handleAdjustCashCounts" text="AdjustCashCounts" />
+                <Label layoutX="306.0" layoutY="185.0" text="Cash Counts:" />
+                <Label alignment="CENTER" layoutX="306.0" layoutY="160.0" prefWidth="215.0" text="Adjust Cash Counts" underline="true">
+                  <font>
+                    <Font size="14.0" fx:id="x1" />
+                  </font>
+                </Label>
+                <TextField fx:id="adjustCashCounts" layoutX="402.0" layoutY="185.0" prefWidth="119.0" />
+                <Button layoutX="609.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleDispenseCash" prefWidth="122.0" text="Dispense Cash" />
+                <Label layoutX="38.0" layoutY="440.0" text="Cash Counts:" />
+                <Label alignment="CENTER" font="$x1" layoutX="557.0" layoutY="163.0" prefWidth="215.0" text="Dispense Cash" underline="true" />
+                <Button layoutX="610.0" layoutY="372.0" mnemonicParsing="false" onAction="#handleReadCashCount" prefWidth="122.0" text="Read Cash Count" />
+                <Label alignment="CENTER" font="$x1" layoutX="557.0" layoutY="288.0" prefWidth="215.0" text="Read Cash Count" underline="true" />
+                <Label layoutX="557.0" layoutY="318.0" text="Cash Count:" />
+                <Label layoutX="557.0" layoutY="342.0" text="Discrepancy:" />
+                <Label fx:id="readCashCount_cashCount" layoutX="643.0" layoutY="317.0" prefWidth="91.0" />
+                <Label fx:id="readCashCount_discrepancy" layoutX="643.0" layoutY="342.0" prefWidth="91.0" />
+                <TextField id="adjustCashCounts" layoutX="122.0" layoutY="440.0" prefWidth="122.0" />
+                <ComboBox id="currencyCode" fx:id="realTimeDataEnabled" layoutX="680.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="636.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleSetRealTimeDataEnabled" text="Set Real Time Data Enabled" />
+                <Label layoutX="540.0" layoutY="49.0" text="Real Time Data Enabled:" />
+                <Button layoutX="95.0" layoutY="475.0" mnemonicParsing="false" onAction="#handleBeginDeposit" text="Begin Deposit" />
+                <Label alignment="CENTER" font="$x1" layoutX="38.0" layoutY="415.0" prefWidth="215.0" text="Begin Deposit" underline="true" />
+                <Button layoutX="358.0" layoutY="475.0" mnemonicParsing="false" onAction="#handleEndDeposit" prefWidth="122.0" text="End Deposit" />
+                <Label layoutX="297.0" layoutY="440.0" text="Success:" />
+                <Label alignment="CENTER" font="$x1" layoutX="297.0" layoutY="415.0" prefWidth="215.0" text="End Deposit" underline="true" />
+                <ComboBox id="endDeposit_Success" fx:id="endDeposit_success" layoutX="358.0" layoutY="437.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="100.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleFixDeposit" text="Fix Deposit" />
+                <Label alignment="CENTER" font="$x1" layoutX="35.0" layoutY="288.0" prefWidth="215.0" text="Fix Deposit" underline="true" />
+                <Button layoutX="367.0" layoutY="347.0" mnemonicParsing="false" onAction="#handlePauseDeposit" prefWidth="122.0" text="Pause Deposit" />
+                <Label layoutX="306.0" layoutY="312.0" text="Control:" />
+                <Label alignment="CENTER" font="$x1" layoutX="306.0" layoutY="287.0" prefWidth="215.0" text="Pause Deposit" underline="true" />
+                <ComboBox id="endDeposit_Success" fx:id="pauseDeposit_control" layoutX="367.0" layoutY="309.0" prefHeight="21.0" prefWidth="122.0" />
+                <ComboBox id="currencyCode" fx:id="currentService" layoutX="131.0" layoutY="167.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="131.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleSetCurrentService" text="Set Currency Code" />
+                <Label layoutX="35.0" layoutY="171.0" text="Current Service:" />
+              </children>
+            </Pane>
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -24,15 +72,7 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
             <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>

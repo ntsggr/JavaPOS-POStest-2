@@ -60,7 +60,7 @@
                 <Label alignment="CENTER" font="$x1" layoutX="306.0" layoutY="287.0" prefWidth="215.0" text="Pause Deposit" underline="true" />
                 <ComboBox id="endDeposit_Success" fx:id="pauseDeposit_control" layoutX="367.0" layoutY="309.0" prefHeight="21.0" prefWidth="122.0" />
                 <ComboBox id="currencyCode" fx:id="currentService" layoutX="131.0" layoutY="167.0" prefHeight="21.0" prefWidth="122.0" />
-                <Button layoutX="131.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleSetCurrentService" text="Set Currency Code" />
+                <Button layoutX="131.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleSetCurrencyCode" text="Set Currency Code" />
                 <Label layoutX="35.0" layoutY="171.0" text="Current Service:" />
               </children>
             </Pane>

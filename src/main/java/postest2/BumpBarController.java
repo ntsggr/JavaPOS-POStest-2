@@ -58,6 +58,7 @@ public class BumpBarController extends CommonController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new BumpBar();
+		setUpLogicalNameComboBox();
 		RequiredStateChecker.invokeThis(this, service);
 	}
 
@@ -231,6 +232,13 @@ public class BumpBarController extends CommonController implements Initializable
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_EXTERNAL.getConstant());
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_INTERACTIVE.getConstant());
 		checkHealth_level.setValue(CommonConstantMapper.JPOS_CH_INTERNAL.getConstant());
+	}
+	
+
+	private void setUpLogicalNameComboBox() {
+		if (!LogicalNameGetter.getLogicalNamesByCategory("BumpBar").isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BumpBar"));
+		}
 	}
 	
 
