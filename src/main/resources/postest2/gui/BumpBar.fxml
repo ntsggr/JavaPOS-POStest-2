@@ -15,8 +15,85 @@
       <center>
         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="root">
           <children>
-            <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
-            <CheckBox layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
+            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
+            <TabPane fx:id="functionPane" layoutX="64.0" layoutY="74.0" prefHeight="572.0" prefWidth="853.0" tabClosingPolicy="UNAVAILABLE">
+              <stylesheets>
+                <URL value="@win7glass.css" />
+              </stylesheets>
+              <tabs>
+                <Tab text="General">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label layoutX="34.0" layoutY="41.0" text="Set AutoToneDuration:" />
+                        <TextField fx:id="autoToneDuration" layoutX="165.0" layoutY="38.0" prefWidth="200.0" />
+                        <Button layoutX="380.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleSetAutoToneDuration" prefWidth="155.0" text="Set AutoToneDuration" />
+                        <Label layoutX="34.0" layoutY="77.0" text="Set AutoToneFrequency:" />
+                        <TextField id="autoToneDuration" fx:id="autoToneFrequency" layoutX="165.0" layoutY="74.0" prefWidth="200.0" />
+                        <Button layoutX="380.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleSetAutoToneFrequency" prefWidth="155.0" text="Set AutoToneFrequency" />
+                        <Label layoutX="34.0" layoutY="112.0" text="Set CurrentUnitID" />
+                        <TextField id="autoToneDuration" fx:id="currentUnitID" layoutX="165.0" layoutY="109.0" prefWidth="200.0" />
+                        <Button layoutX="380.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleSetCurrentUnitID" prefWidth="155.0" text="Set CurrentUnitID" />
+                        <Label layoutX="34.0" layoutY="148.0" text="Set Timeout:" />
+                        <TextField id="autoToneDuration" fx:id="timeout" layoutX="165.0" layoutY="145.0" prefWidth="200.0" />
+                        <Button layoutX="380.0" layoutY="143.0" mnemonicParsing="false" onAction="#handleSetTimeout" prefWidth="155.0" text="Set Timeout" />
+                        <Label alignment="CENTER" layoutX="34.0" layoutY="191.0" prefWidth="189.0" text="Check Health" underline="true">
+                          <font>
+                            <Font size="14.0" />
+                          </font>
+                        </Label>
+                        <Button layoutX="380.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleCheckHealth" prefWidth="155.0" text="CheckHealth" />
+                        <Label layoutX="34.0" layoutY="232.0" text="Level:" />
+                        <Label alignment="CENTER" layoutX="34.0" layoutY="275.0" prefWidth="189.0" text="Clear Input" underline="true" />
+                        <Button layoutX="44.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearInput" prefWidth="155.0" text="Clear Input" />
+                        <Label alignment="CENTER" layoutX="252.0" layoutY="275.0" prefWidth="189.0" text="Clear Output" underline="true" />
+                        <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearOutput" prefWidth="155.0" text="Clear Output" />
+                        <ComboBox fx:id="checkHealth_level" layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Methods">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Button layoutX="230.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleBumpBarSound" text="BumpBar Sound" />
+                        <Label layoutX="28.0" layoutY="61.0" text="Units:" />
+                        <TextField fx:id="bumpBarSound_units" layoutX="136.0" layoutY="58.0" prefWidth="200.0" />
+                        <Label layoutX="28.0" layoutY="94.0" text="Frequency:" />
+                        <TextField fx:id="bumpBarSound_frequency" layoutX="136.0" layoutY="91.0" prefWidth="200.0" />
+                        <Label layoutX="28.0" layoutY="128.0" text="Duration:" />
+                        <TextField fx:id="bumpbarSound_duration" layoutX="136.0" layoutY="125.0" prefWidth="200.0" />
+                        <Label layoutX="28.0" layoutY="165.0" text="Number of Cycles:" />
+                        <TextField fx:id="bumpBarSound_numberOfCycles" layoutX="136.0" layoutY="162.0" prefWidth="200.0" />
+                        <Label layoutX="28.0" layoutY="199.0" text="InterSoundWait:" />
+                        <TextField fx:id="bumpBarSound_interSoundWait" layoutX="136.0" layoutY="196.0" prefWidth="200.0" />
+                        <Label layoutX="448.0" layoutY="61.0" text="Units:" />
+                        <TextField id="bumpBarSound_units" fx:id="setKeyTranslation_units" layoutX="556.0" layoutY="58.0" prefWidth="200.0" />
+                        <Label layoutX="448.0" layoutY="95.0" text="Scan Code:" />
+                        <TextField id="bumpBarSound_frequency" fx:id="setKeyTranslation_scanCode" layoutX="556.0" layoutY="91.0" prefWidth="200.0" />
+                        <Label layoutX="448.0" layoutY="129.0" text="Logical Key:" />
+                        <TextField id="bumpbarSound_duration" fx:id="setKeyTranslation_logicalKey" layoutX="556.0" layoutY="125.0" prefWidth="200.0" />
+                        <Label alignment="CENTER" layoutX="25.0" layoutY="33.0" prefWidth="311.0" text="BumpBar Sound" underline="true" />
+                        <Label alignment="CENTER" layoutX="448.0" layoutY="33.0" prefWidth="311.0" text="Set Key Translation" underline="true" />
+                        <Button layoutX="638.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleSetKeyTranslation" text="Set KeyTranslation" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+			<Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -24,29 +101,21 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
             <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>
                 <Font name="System Bold" size="12.0" />
               </font>
             </Text>
-            <Button layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" />
-            <Button layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" />
-            <Button layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" />
-            <Button layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" />
-            <Button layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
-            <Button layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
-            <Button layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
-            <Button layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
+            <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" />
+            <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" />
+            <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" />
+            <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
+            <Button fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
+            <Button fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
           </children>
         </Pane>
       </top>

@@ -30,7 +30,7 @@ import jpos.JposException;
 public class BiometricsController extends CommonController implements Initializable {
 
 	@FXML
-	@RequiredState(JposState.CLOSED)
+	@RequiredState(JposState.ENABLED)
 	public TabPane functionPane;
 
 	@FXML

@@ -50,7 +50,7 @@
                         <Button layoutX="44.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearInput" prefWidth="155.0" text="Clear Input" />
                         <Label alignment="CENTER" layoutX="252.0" layoutY="275.0" prefWidth="189.0" text="Clear Output" underline="true" />
                         <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearOutput" prefWidth="155.0" text="Clear Output" />
-                        <ComboBox fx:id="checkHealth_level" layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0">
+                        <ComboBox layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -93,7 +93,6 @@
                 </Tab>
               </tabs>
             </TabPane>
-			<Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
