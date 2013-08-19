@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.LineDisplayController">
+<AnchorPane prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.LineDisplayController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -298,10 +298,11 @@
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
-            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
-            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
-            <Button fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
-            <Button fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
+
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
+            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
+            <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
           </children>
         </Pane>
       </top>

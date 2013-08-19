@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import jpos.BumpBar;
 import jpos.JposException;
 
+
 public class BumpBarController extends CommonController implements Initializable {
 
 	@FXML

@@ -33,6 +33,7 @@
         
         <!-- Print Bitmap ESC/POS command () -->
         <prop name="bitmapCommand" type="String" value="actual"/>
+
     	<!--Common Properties-->
     	
         <prop name="capCompareFirmwareVersion" type="Boolean" value="false"/>
