@@ -1,40 +1,59 @@
+/*
+ * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
+ * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
+ * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
+ * Homepage: www.ntswincash.com
+ */
 package postest2;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+
+import javax.swing.JOptionPane;
+
 import jpos.BillDispenser;
-import jpos.JposConst;
 import jpos.JposException;
 
-public class BillDispenserController implements Initializable {
+public class BillDispenserController extends CommonController implements Initializable {
 
 	@FXML
-	private ComboBox<String> logicalName;
-	private BillDispenser billDispenser;
-	private static String statistics = "";
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	// Controls
+	@FXML
+	@RequiredState(JposState.OPENED)
+	public CheckBox asyncMode;
+
+	@FXML
+	public ComboBox<String> currencyCode;
+	@FXML
+	public ComboBox<Integer> currentExit;
+
+	@FXML
+	public Label readCashCount_cashCount;
+	@FXML
+	public Label readCashCount_discrepancy;
+
+	@FXML
+	public TextField adjustCashCounts;
+	@FXML
+	public TextField dispenseCash_cashCounts;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		billDispenser = new BillDispenser();
+		this.service = new BillDispenser();
+		RequiredStateChecker.invokeThis(this, service);
+
 	}
 
 	/* ************************************************************************
@@ -42,111 +61,141 @@ public class BillDispenserController implements Initializable {
 	 * ***********************************************************************
 	 */
 
-	// Shows information of device
 	@FXML
-	public void handleInfo(ActionEvent e) {
+	public void handleDeviceEnable(ActionEvent e) {
+		System.out.println("DevEnable");
 		try {
-			String ver = new Integer(billDispenser.getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + billDispenser.getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(billDispenser.getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + billDispenser.getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + billDispenser.getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + billDispenser.getPhysicalDeviceDescription();
+			if (deviceEnabled.isSelected()) {
+				((BillDispenser) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 
-			msg += "\n\nProperties:\n------------------------";
+			} else {
+				((BillDispenser) service).setDeviceEnabled(false);
+			}
+		} catch (JposException je) {
+			JOptionPane.showMessageDialog(null, je.getMessage());
+		}
+		RequiredStateChecker.invokeThis(this, service);
+	}
 
-			msg += "\nCapStatisticsReporting: " + (billDispenser.getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (billDispenser.getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (billDispenser.getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (billDispenser.getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (billDispenser.getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapDiscrepancy: " + billDispenser.getCapDiscrepancy();
-			msg = msg + "\nCapEmptySensor: " + billDispenser.getCapEmptySensor();
-			msg = msg + "\nCapJamSensor: " + billDispenser.getCapJamSensor();
-			msg = msg + "\nCapNearEmptySensor: " + billDispenser.getCapNearEmptySensor();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
+	@FXML
+	public void handleAsyncMode(ActionEvent e) {
+		System.out.println("asyncMode");
+		try {
+			((BillDispenser) service).setAsyncMode(asyncMode.isSelected());
+		} catch (JposException je) {
+			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 	}
 
-	// Shows statistics of device
 	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
+	public void handleSetCurrencyCode(ActionEvent e) {
+		System.out.println("currencyCode");
 		try {
-			billDispenser.retrieveStatistics(stats);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
-
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
+			((BillDispenser) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
-
-		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		statistics = "";
 	}
 
-	// Method to parse the String XML and print the data
-	private static void printStatistics(Node e, String tab) {
-		if (e.getNodeType() == Node.TEXT_NODE) {
-			statistics += tab + e.getNodeValue() + "\n";
-			return;
-		}
-
-		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
-				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
-				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
-			statistics += tab + e.getNodeName();
-
-		if (e.getNodeValue() != null) {
-			statistics += tab + " " + e.getNodeValue();
-		}
-
-		NodeList childs = e.getChildNodes();
-		for (int i = 0; i < childs.getLength(); i++) {
-			printStatistics(childs.item(i), " ");
-		}
-	}
-	
 	@FXML
-	public void handleFirmware(ActionEvent e) {
+	public void handleSetCurrentExit(ActionEvent e) {
+		System.out.println("currenctExit");
 		try {
-			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(billDispenser);
-			dlg.setVisible(true);
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			((BillDispenser) service).setCurrentExit(currentExit.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
-	
+
+	@FXML
+	public void handleAdjustCashCounts(ActionEvent e) {
+		System.out.println("adjust");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((BillDispenser) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleDispenseCash(ActionEvent e) {
+		System.out.println("dispenseCash");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((BillDispenser) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleReadCashCount(ActionEvent e) {
+		System.out.println("readCashCount");
+		String[] cashCounts = new String[1];
+		boolean[] discrepancy = new boolean[1];
+		try {
+			((BillDispenser) service).readCashCounts(cashCounts, discrepancy);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+		this.readCashCount_cashCount.setText(cashCounts[0]);
+		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
+	}
+
+	/*
+	 * Set Up all ComboBoxes
+	 */
+
+	private void setUpCurrencyCode() {
+		String[] currencies = null;
+		try {
+			currencies = ((BillDispenser) service).getCurrencyCodeList().split(",");
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+
+		currencyCode.getItems().clear();
+		for (int i = 0; i < currencies.length; i++) {
+			currencyCode.getItems().add(currencies[i]);
+		}
+		currencyCode.setValue(currencies[0]);
+
+	}
+
+	private void setUpCurrentExit() {
+		currentExit.getItems().clear();
+		try {
+			for (int i = 1; i <= ((BillDispenser) service).getDeviceExits(); i++) {
+				currentExit.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		currentExit.setValue(1);
+
+	}
+
+	private void setUpComboBoxes() {
+		setUpLogicalNameComboBox();
+		setUpCurrencyCode();
+		setUpCurrentExit();
+	}
+
+	private void setUpLogicalNameComboBox() {
+		if (!LogicalNameGetter.getLogicalNamesByCategory("BillDispenser").isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BillDispenser"));
+		}
+	}
+
 }

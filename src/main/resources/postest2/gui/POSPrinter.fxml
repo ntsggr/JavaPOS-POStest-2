@@ -17,11 +17,11 @@
       <center>
         <Pane prefHeight="637.0" prefWidth="853.0" styleClass="root">
           <children>
-            <CheckBox fx:id="deviceEnabled" disable="true" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
-            <CheckBox fx:id="freezeEvents" disable="${!deviceEnabled.selected}" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <CheckBox fx:id="asyncMode" disable="${!deviceEnabled.selected}" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <CheckBox fx:id="flagWhenIdle" disable="${!deviceEnabled.selected}" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
-            <ComboBox fx:id="rotationMode" disable="${!deviceEnabled.selected}" layoutX="14.0" layoutY="145.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
+            <CheckBox fx:id="deviceEnabled"  layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
+            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
+            <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
+            <CheckBox fx:id="flagWhenIdle" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
+            <ComboBox fx:id="rotationMode" layoutX="23.0" layoutY="145.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />
@@ -30,7 +30,7 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <ComboBox fx:id="mapMode" disable="${!deviceEnabled.selected}" layoutX="14.0" layoutY="190.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
+            <ComboBox fx:id="mapMode" layoutX="23.0" layoutY="190.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />
@@ -39,10 +39,10 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <RadioButton fx:id="rbReceipt" disable="${!deviceEnabled.selected}" layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
-            <RadioButton fx:id="rbJournal" disable="${!deviceEnabled.selected}" layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
-            <RadioButton fx:id="rbSlip" disable="${!deviceEnabled.selected}" layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
-            <TabPane fx:id="functionTab" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}" layoutX="155.0" layoutY="70.0" prefHeight="417.0" prefWidth="715.0">
+            <RadioButton fx:id="rbReceipt"  layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
+            <RadioButton fx:id="rbJournal"  layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
+            <RadioButton fx:id="rbSlip"  layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
+            <TabPane fx:id="functionTab" layoutX="196.0" layoutY="70.0" prefHeight="417.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General Printing">
                   <content>
@@ -314,7 +314,7 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                        <ComboBox fx:id="printSide" layoutX="106.0" layoutY="50.0" prefWidth="110.0">
+                        <ComboBox fx:id="printSide" layoutX="107.0" layoutY="66.0" prefWidth="110.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -323,10 +323,10 @@
                             </FXCollections>
                           </items>
                         </ComboBox>
-                        <Button layoutX="26.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleChangePrintSide" text="Change Print Side" />
-                        <Label layoutX="26.0" layoutY="52.0" text="Print Side:" />
-                        <Label layoutX="26.0" layoutY="23.0" text="Change Print Side" underline="true" />
-                        <ComboBox fx:id="markFeed" layoutX="353.0" layoutY="50.0" prefWidth="110.0">
+                        <Button layoutX="27.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleChangePrintSide" text="Change Print Side" />
+                        <Label layoutX="27.0" layoutY="68.0" text="Print Side:" />
+                        <Label layoutX="27.0" layoutY="39.0" text="Change Print Side" underline="true" />
+                        <ComboBox fx:id="markFeed" layoutX="354.0" layoutY="66.0" prefWidth="110.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -335,10 +335,10 @@
                             </FXCollections>
                           </items>
                         </ComboBox>
-                        <Button layoutX="277.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleMarkFeed" text="Mark Feed" />
-                        <Label layoutX="277.0" layoutY="52.0" text="Mark Feed:" />
-                        <Label layoutX="277.0" layoutY="23.0" text="Mark Feed" underline="true" />
-                        <ComboBox fx:id="characterSet" layoutX="584.0" layoutY="50.0" prefWidth="110.0">
+                        <Button layoutX="278.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleMarkFeed" text="Mark Feed" />
+                        <Label layoutX="278.0" layoutY="68.0" text="Mark Feed:" />
+                        <Label layoutX="278.0" layoutY="39.0" text="Mark Feed" underline="true" />
+                        <ComboBox fx:id="characterSet" layoutX="585.0" layoutY="66.0" prefWidth="110.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -347,10 +347,10 @@
                             </FXCollections>
                           </items>
                         </ComboBox>
-                        <Button layoutX="504.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleSetCharacterSet" text="Set Character Set" />
-                        <Label layoutX="504.0" layoutY="51.0" text="Character Set:" />
-                        <Label layoutX="504.0" layoutY="22.0" text="Set Character Set" underline="true" />
-                        <ComboBox fx:id="mapCharacterSet" layoutX="136.0" layoutY="302.0" prefWidth="110.0">
+                        <Button layoutX="505.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleSetCharacterSet" text="Set Character Set" />
+                        <Label layoutX="505.0" layoutY="67.0" text="Character Set:" />
+                        <Label layoutX="505.0" layoutY="38.0" text="Set Character Set" underline="true" />
+                        <ComboBox fx:id="mapCharacterSet" layoutX="137.0" layoutY="318.0" prefWidth="110.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -359,25 +359,25 @@
                             </FXCollections>
                           </items>
                         </ComboBox>
-                        <Button layoutX="26.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleSetMapCharacterSet" text="Set Map Character Set" />
-                        <Label layoutX="26.0" layoutY="304.0" text="Map Character Set:" />
-                        <Label layoutX="26.0" layoutY="275.0" text="Set Map Character Set" underline="true" />
-                        <Label layoutX="277.0" layoutY="145.0" text="Set Line Chars for selected Device" underline="true" />
-                        <Label layoutX="277.0" layoutY="174.0" text="Line Chars" />
-                        <Button layoutX="277.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleSetLineChars" text="Set Line Chars" />
-                        <TextField id="lineWidth" fx:id="lineChars" layoutX="353.0" layoutY="171.0" prefWidth="110.0" />
-                        <TextField id="lineWidth" fx:id="lineHeight" layoutX="580.0" layoutY="171.0" prefWidth="110.0" />
-                        <Label layoutX="504.0" layoutY="145.0" text="Set Line Height for selected Device" underline="true" />
-                        <Label layoutX="504.0" layoutY="174.0" text="Line Height:" />
-                        <Button layoutX="504.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleSetLineHeight" text="Set Line Height" />
-                        <Label layoutX="26.0" layoutY="145.0" text="Set Line Spacing for selected Device" underline="true" />
-                        <Label layoutX="26.0" layoutY="174.0" text="Line Spacing:" />
-                        <TextField id="lineWidth" fx:id="lineSpacing" layoutX="102.0" layoutY="171.0" prefWidth="110.0" />
-                        <Button layoutX="25.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleSetLineSpacing" text="Set Line Spacing" />
-                        <Button layoutX="277.0" layoutY="333.0" mnemonicParsing="false" text="Set Cartridge" />
-                        <Label layoutX="277.0" layoutY="304.0" text="Cartridge:" />
-                        <Label layoutX="277.0" layoutY="275.0" text="Set Current Cartridge for selected Device" underline="true" />
-                        <ComboBox fx:id="currentCartridge" layoutX="353.0" layoutY="302.0" prefHeight="21.0" prefWidth="110.0">
+                        <Button layoutX="27.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleSetMapCharacterSet" text="Set Map Character Set" />
+                        <Label layoutX="27.0" layoutY="320.0" text="Map Character Set:" />
+                        <Label layoutX="27.0" layoutY="291.0" text="Set Map Character Set" underline="true" />
+                        <Label layoutX="278.0" layoutY="161.0" text="Set Line Chars for selected Device" underline="true" />
+                        <Label layoutX="278.0" layoutY="190.0" text="Line Chars" />
+                        <Button layoutX="278.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleSetLineChars" text="Set Line Chars" />
+                        <TextField id="lineWidth" fx:id="lineChars" layoutX="354.0" layoutY="187.0" prefWidth="110.0" />
+                        <TextField id="lineWidth" fx:id="lineHeight" layoutX="581.0" layoutY="187.0" prefWidth="110.0" />
+                        <Label layoutX="505.0" layoutY="161.0" text="Set Line Height for selected Device" underline="true" />
+                        <Label layoutX="505.0" layoutY="190.0" text="Line Height:" />
+                        <Button layoutX="505.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleSetLineHeight" text="Set Line Height" />
+                        <Label layoutX="27.0" layoutY="161.0" text="Set Line Spacing for selected Device" underline="true" />
+                        <Label layoutX="27.0" layoutY="190.0" text="Line Spacing:" />
+                        <TextField id="lineWidth" fx:id="lineSpacing" layoutX="103.0" layoutY="187.0" prefWidth="110.0" />
+                        <Button layoutX="26.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleSetLineSpacing" text="Set Line Spacing" />
+                        <Button layoutX="278.0" layoutY="349.0" mnemonicParsing="false" text="Set Cartridge" />
+                        <Label layoutX="278.0" layoutY="320.0" text="Cartridge:" />
+                        <Label layoutX="278.0" layoutY="291.0" text="Set Current Cartridge for selected Device" underline="true" />
+                        <ComboBox fx:id="currentCartridge" layoutX="354.0" layoutY="318.0" prefHeight="21.0" prefWidth="110.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Item 1" />
@@ -392,10 +392,10 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Label layoutX="14.0" layoutY="129.0" text="Rotation:" />
-            <Label layoutX="14.0" layoutY="174.0" text="Map Mode:" />
-            <TextArea fx:id="deviceMessages" editable="false" layoutX="155.0" layoutY="515.0" prefHeight="150.0" prefWidth="715.0" wrapText="true" />
-            <Label alignment="CENTER" layoutX="155.0" layoutY="492.0" prefWidth="715.0" text="Device Messages:" />
+            <Label layoutX="23.0" layoutY="129.0" text="Rotation:" />
+            <Label layoutX="23.0" layoutY="174.0" text="Map Mode:" />
+            <TextArea fx:id="deviceMessages" editable="false" layoutX="196.0" layoutY="515.0" prefHeight="171.0" prefWidth="741.0" wrapText="true" />
+            <Label alignment="CENTER" layoutX="196.0" layoutY="492.0" prefWidth="741.0" text="Device Messages:" />
           </children>
         </Pane>
       </center>
@@ -422,10 +422,10 @@
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
-            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
-            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" onAction="#handleInfo" />
-            <Button fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" onAction="#handleStatistics"  />
-            <Button fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" onAction="#handleFirmware" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
+            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
+            <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
           </children>
         </Pane>
       </top>

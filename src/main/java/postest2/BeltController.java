@@ -1,154 +1,284 @@
+/*
+ * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
+ * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
+ * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
+ * Homepage: www.ntswincash.com
+ */
 package postest2;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import jpos.Belt;
-import jpos.JposConst;
-import jpos.JposException;
-import jpos.LineDisplayConst;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
-public class BeltController implements Initializable {
+import javax.swing.JOptionPane;
+
+import jpos.Belt;
+import jpos.JposException;
+
+public class BeltController extends CommonController implements Initializable {
+
 
 	@FXML
-	private ComboBox<String> logicalName;
-	private Belt belt;
-	private static String statistics = "";
+	public ComboBox<Boolean> autoStopBackward;
+	@FXML
+	public ComboBox<Boolean> autoStopForward;
+	@FXML
+	public ComboBox<Integer> moveBackward_speed;
+	@FXML
+	public ComboBox<Integer> moveForward_speed;
+	@FXML
+	public ComboBox<String> resetitemCount_direction;
+	@FXML
+	public ComboBox<String> adjustItemCount_direction;
+
+	@FXML
+	public TextField autoStopBackwardDelayTime;
+	@FXML
+	public TextField autoStopForwardDelayTime;
+	@FXML
+	public TextField adjustItemCount_Count;
+	
+	@FXML @RequiredState(JposState.ENABLED)
+	public Pane functionPane;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		belt = new Belt();
+		service = new Belt();
+		setUpLogicalNameComboBox();
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
+
+	@FXML
+	public void handleDeviceEnable(ActionEvent e) {
+		System.out.println("DevEnable");
+		try {
+			if (deviceEnabled.isSelected()) {
+				((Belt)service).setDeviceEnabled(true);
+				setUpComboBoxes();
+				
+			} else {
+				((Belt)service).setDeviceEnabled(false);
+			}
+		} catch (JposException je) {
+			JOptionPane.showMessageDialog(null, je.getMessage());
+		}
+	}
+
+	@FXML
+	public void handleAutoStopBackward(ActionEvent e) {
+		System.out.println("AutoStopBackward");
+		if(autoStopBackward.getSelectionModel().getSelectedItem() != null){
+			try {
+				((Belt)service).setAutoStopBackward(autoStopBackward.getSelectionModel().getSelectedItem());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+
+	@FXML
+	public void handleAutoStopBackwardDelayTime(ActionEvent e) {
+		System.out.println("AutoStopBWDT");
+		if(!autoStopBackwardDelayTime.getText().isEmpty()){
+			try {
+				((Belt)service).setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime.getText()));
+			} catch (NumberFormatException e1){
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+
+	@FXML
+	public void handleAutoStopForward(ActionEvent e) {
+		System.out.println("ASW");
+		if(autoStopForward.getSelectionModel().getSelectedItem() != null){
+			try {
+				((Belt)service).setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+
+	@FXML
+	public void handleAutoStopForwardDelayTime(ActionEvent e) {
+		System.out.println("ASFDT");
+		if(!autoStopForwardDelayTime.getText().isEmpty()){
+			try {
+				((Belt)service).setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime.getText()));
+			} catch (NumberFormatException e1){
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} 
+		}
+	}
+
+	@FXML
+	public void handleAdjustItemCount(ActionEvent e) {
+		System.out.println("AIC");
+		if(adjustItemCount_direction.getSelectionModel().getSelectedItem() != null){
 	
-	// Shows information of device
+			try {
+				((Belt)service).adjustItemCount(BeltConstantMapper.getConstantNumberFromString(adjustItemCount_direction
+						.getSelectionModel().getSelectedItem()),
+						Integer.parseInt(adjustItemCount_Count.getText()));
+			} catch (NumberFormatException e1){
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+
 	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String ver = new Integer(belt.getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + belt.getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(belt.getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + belt.getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + belt.getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + belt.getPhysicalDeviceDescription();
-
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (belt.getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (belt.getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (belt.getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (belt.getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced" : (belt
-							.getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard" : "None"));
-
-			msg = msg + "\nCapLightBarrierBackward: " + belt.getCapLightBarrierBackward();
-			msg = msg + "\nCapLightBarrierForward: " + belt.getCapLightBarrierForward();
-			msg = msg + "\nCapMoveBackward: " + belt.getCapMoveBackward();
-			msg = msg + "\nCapRealTimeDat: " + belt.getCapRealTimeData();
-			msg = msg + "\nCapSecurityFlapBackward: " + belt.getCapSecurityFlapBackward();
-			msg = msg + "\nCapSecurityFlapForward: " + belt.getCapSecurityFlapForward();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
+	public void handleMoveBackward(ActionEvent e) {
+		System.out.println("MB");
+		if(moveBackward_speed.getSelectionModel().getSelectedItem() != null){
+			try {
+				((Belt)service).moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
-	// Shows statistics of device
 	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			belt.retrieveStatistics(stats);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
-
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		}
-
-		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		statistics = "";
-	}
-
-	// Method to parse the String XML and print the data
-	private static void printStatistics(Node e, String tab) {
-		if (e.getNodeType() == Node.TEXT_NODE) {
-			statistics += tab + e.getNodeValue() + "\n";
-			return;
-		}
-
-		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
-				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
-				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
-			statistics += tab + e.getNodeName();
-
-		if (e.getNodeValue() != null) {
-			statistics += tab + " " + e.getNodeValue();
-		}
-
-		NodeList childs = e.getChildNodes();
-		for (int i = 0; i < childs.getLength(); i++) {
-			printStatistics(childs.item(i), " ");
+	public void handleMoveForward(ActionEvent e) {
+		System.out.println("MF");
+		if(moveForward_speed.getSelectionModel().getSelectedItem() != null){
+			try {
+				((Belt)service).moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
-	
+
 	@FXML
-	public void handleFirmware(ActionEvent e) {
+	public void handleResetBelt(ActionEvent e) {
+		System.out.println("RB");
 		try {
-			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(belt);
-			dlg.setVisible(true);
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			((Belt)service).resetBelt();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
+
+	@FXML
+	public void handleResetItemCount(ActionEvent e) {
+		System.out.println("RIC");
+		if(resetitemCount_direction.getSelectionModel().getSelectedItem() != null){
+			try {
+				((Belt)service).resetItemCount(BeltConstantMapper.getConstantNumberFromString(resetitemCount_direction
+						.getSelectionModel().getSelectedItem()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+
+	@FXML
+	public void handleStopBelt(ActionEvent e) {
+		System.out.println("SB");
+		try {
+			((Belt)service).stopBelt();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+	}
+
+	/*
+	 * Initialize ComboBoxes
+	 */
+
+	private void setUpAutoStopBackward() {
+		autoStopBackward.getItems().clear();
+		autoStopBackward.getItems().add(true);
+		autoStopBackward.getItems().add(false);
+		autoStopBackward.setValue(true);
+	}
+
+	private void setUpAutoStopForward() {
+		autoStopForward.getItems().clear();
+		autoStopForward.getItems().add(true);
+		autoStopForward.getItems().add(false);
+		autoStopForward.setValue(true);
+	}
+
+	private void setUpAdjustItemCountDirection() {
+		adjustItemCount_direction.getItems().clear();
+		adjustItemCount_direction.getItems().add(BeltConstantMapper.BELT_AIC_BACKWARD.getConstant());
+		adjustItemCount_direction.getItems().add(BeltConstantMapper.BELT_AIC_FORWARD.getConstant());
+		adjustItemCount_direction.setValue(BeltConstantMapper.BELT_AIC_FORWARD.getConstant());
+	}
+
+
+	// Cannot implement correctly because the Variable CapSpeedStepsBackward of
+	// the JPOS Class Belt is not implemented correctly
+	// Wrong Datatype (boolean instead of int)
+	private void setUpMoveBackwardSpeed() {
+		// int speedSteps;
+		// for(int i = 0; i < belt.getcaps.getCapSpeedStepsBackward();i++){
+		// }
+		moveBackward_speed.getItems().clear();
+		moveBackward_speed.getItems().add(1);
+		moveBackward_speed.getItems().add(2);
+		moveBackward_speed.setValue(1);
+
+	}
+
+	// Cannot implement correctly because the Variable CapSpeedStepsBackward of
+	// the JPOS Class Belt is not implemented correctly
+	// Wrong Datatype (boolean instead of int)
+	private void setUpMoveForwardSpeed() {
+		// int speedSteps;
+		// for(int i = 0; i < belt.getCapSpeedStepsBackward();i++){
+		// }
+		moveForward_speed.getItems().clear();
+		moveForward_speed.getItems().add(1);
+		moveForward_speed.getItems().add(2);
+		moveForward_speed.setValue(1);
+	}
+
+	private void setUpResetItemCount() {
+		resetitemCount_direction.getItems().clear();
+		resetitemCount_direction.getItems().add(BeltConstantMapper.BELT_RIC_BACKWARD.getConstant());
+		resetitemCount_direction.getItems().add(BeltConstantMapper.BELT_RIC_FORWARD.getConstant());
+		resetitemCount_direction.setValue(BeltConstantMapper.BELT_RIC_FORWARD.getConstant());
+	}
+
+	private void setUpComboBoxes() {
+		setUpAutoStopBackward();
+		setUpAutoStopForward();
+		setUpAdjustItemCountDirection();
+		setUpMoveBackwardSpeed();
+		setUpMoveForwardSpeed();
+		setUpResetItemCount();
+
+	}
+
+	private void setUpLogicalNameComboBox() {
+		if(!LogicalNameGetter.getLogicalNamesByCategory("Belt").isEmpty()){
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("Belt"));
+		}
+	}
+
 	
 }

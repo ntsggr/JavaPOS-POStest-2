@@ -8,160 +8,126 @@ package postest2;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.LineDisplay;
-import jpos.LineDisplayConst;
 import jpos.profile.JposDevCats;
 
-public class LineDisplayController implements Initializable {
+public class LineDisplayController extends CommonController implements Initializable {
 
-	// Common
-	@FXML
-	private ComboBox<String> logicalName;
-	@FXML
-	private CheckBox deviceEnabled;
-	@FXML
-	private Button buttonOpen;
-	@FXML
-	private Button buttonClaim;
-	@FXML
-	private Button buttonRelease;
-	@FXML
-	private Button buttonInfo;
-	@FXML
-	private Button buttonStatistics;
-	@FXML
-	private Button buttonClose;
-	@FXML
-	private Button buttonFirmware;
-	@FXML
-	private Label statusLabel;
-	@FXML
-	private CheckBox freezeEvents;
-
-	@FXML
-	private TabPane functionTab;
+	
+	@FXML @RequiredState(JposState.ENABLED)
+	public TabPane functionTab;
 
 	// Display Text
 	@FXML
-	private ComboBox<Integer> row;
+	public ComboBox<Integer> row;
 	@FXML
-	private ComboBox<Integer> column;
+	public ComboBox<Integer> column;
 	@FXML
-	private ComboBox<String> attribute;
+	public ComboBox<String> attribute;
 	@FXML
-	private TextField displayText;
+	public TextField displayText;
 
 	@FXML
-	private TextField blinkRate;
+	public TextField blinkRate;
 	@FXML
-	private TextField intercharacterWait;
+	public TextField intercharacterWait;
 
 	// Misc
 	@FXML
-	private ComboBox<Integer> descriptors;
+	public ComboBox<Integer> descriptors;
 	@FXML
-	private ComboBox<String> descriptor_attribute;
+	public ComboBox<String> descriptor_attribute;
 	@FXML
-	private ComboBox<String> scrollText_direction;
+	public ComboBox<String> scrollText_direction;
 	@FXML
-	private TextField scrollText_Units;
+	public TextField scrollText_Units;
 	@FXML
-	private TextField readCharacterField;
+	public TextField readCharacterField;
 	@FXML
-	private TextField glypeCode;
+	public TextField glypeCode;
 	@FXML
-	private TextField glyphBinaryPath;
+	public TextField glyphBinaryPath;
 	@FXML
-	private ComboBox<Integer> characterSet;
+	public ComboBox<Integer> characterSet;
 	@FXML
-	private Slider deviceBrightness;
+	public Slider deviceBrightness;
 
 	// Window
 	@FXML
-	private TextField viewportRow;
+	public TextField viewportRow;
 	@FXML
-	private TextField viewportColumn;
+	public TextField viewportColumn;
 	@FXML
-	private TextField viewportHeight;
+	public TextField viewportHeight;
 	@FXML
-	private TextField viewportWidth;
+	public TextField viewportWidth;
 	@FXML
-	private TextField windowHeight;
+	public TextField windowHeight;
 	@FXML
-	private TextField windowWidth;
+	public TextField windowWidth;
 	@FXML
-	private ListView<String> openWindowsListView;
+	public ListView<String> openWindowsListView;
 
 	// Display Marquee
 	@FXML
-	private TextField marqueeRepeatWait;
+	public TextField marqueeRepeatWait;
 	@FXML
-	private TextField marqueeUnitWait;
+	public TextField marqueeUnitWait;
 	@FXML
-	private ComboBox<String> marqueeType;
+	public ComboBox<String> marqueeType;
 	@FXML
-	private ComboBox<String> marqueeFormat;
+	public ComboBox<String> marqueeFormat;
 
 	// Display Bitmap
 	@FXML
-	private ComboBox<String> alignmentX;
+	public ComboBox<String> alignmentX;
 	@FXML
-	private ComboBox<String> alignmentY;
+	public ComboBox<String> alignmentY;
 	@FXML
-	private ComboBox<String> bitmapWidth;
+	public ComboBox<String> bitmapWidth;
 	@FXML
-	private TextField bitmapPath;
+	public TextField bitmapPath;
+	
+	//Screen Mode
+	@FXML @RequiredState(JposState.CLAIMED)
+	public TabPane setScreenModeTab;
+	@FXML
+	public ComboBox<String> screenMode;
 
-	// Screen Mode
-	@FXML
-	private ComboBox<String> screenMode;
-
+	//OpenWindow-Counter
 	private int currentWindow = 0;
-
-	private LineDisplay display;
+	
+	//List for ListView openWindowsListView
 	private ObservableList<String> windowList = FXCollections.observableArrayList();
-	private static String statistics = "";
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpLogicalNameComboBox();
 		setUpAttribute();
-		display = new LineDisplay();
+		service = new LineDisplay();
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	private void setUpLogicalNameComboBox() {
@@ -170,51 +136,25 @@ public class LineDisplayController implements Initializable {
 	}
 
 	/* ************************************************************************
-	 * ************************ Action Handler *********************************
-	 * ***********************************************************************
+	 * ************************ Action Handler ********************************
+	 * ************************************************************************
 	 */
-
+	
+	/**
+	 * Need this to set the ComboBox for Screen mode. (only available if device is claimed but not enabled)
+	 */
 	@FXML
-	public void handleOpen(ActionEvent e) {
-		try {
-			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
-				display.open(logicalName.getValue());
-				buttonClaim.setDisable(false);
-				buttonInfo.setDisable(false);
-				buttonStatistics.setDisable(false);
-				buttonFirmware.setDisable(false);
-			} else {
-				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty",
-						JOptionPane.WARNING_MESSAGE);
-			}
-
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	// Requests exclusive access to the device
-	@FXML
+	@Override
 	public void handleClaim(ActionEvent e) {
-		try {
-			display.claim(0);
-			deviceEnabled.setDisable(false);
-			buttonRelease.setDisable(false);
-			setUpScreenMode();
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
+		setUpScreenMode();
+		super.handleClaim(e);
 	}
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		try {
 			if (deviceEnabled.isSelected()) {
-				display.setDeviceEnabled(true);
+				((LineDisplay) service).setDeviceEnabled(true);
 				setUpRow();
 				setUpColumns();
 				setUpDescriptors();
@@ -226,260 +166,30 @@ public class LineDisplayController implements Initializable {
 				setUpBitmapWidth();
 				setUpAlignmentX();
 				setUpAlignmentY();
-
+				
 				windowList.clear();
 
 				windowList.add("0");
 				openWindowsListView.setItems(windowList);
-
+				
 			} else {
-				display.setDeviceEnabled(false);
+				((LineDisplay) service).setDeviceEnabled(false);
 			}
+			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 	}
-
-	// Releases exclusive access to the device. The device is also disabled.
-	@FXML
-	public void handleRelease(ActionEvent e) {
-		try {
-			display.release();
-			if (deviceEnabled.isSelected()) {
-				deviceEnabled.setSelected(false);
-				functionTab.setVisible(false);
-
-			}
-			deviceEnabled.setDisable(true);
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	// Releases the device and its resources. Also the device is released.
-	@FXML
-	public void handleClose(ActionEvent e) {
-		try {
-			display.close();
-			if (!deviceEnabled.isDisable()) {
-				deviceEnabled.setSelected(false);
-				functionTab.setVisible(false);
-			}
-			buttonClaim.setDisable(true);
-			deviceEnabled.setDisable(true);
-			buttonRelease.setDisable(true);
-			buttonInfo.setDisable(true);
-			buttonStatistics.setDisable(true);
-			buttonFirmware.setDisable(true);
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null,
-					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
-
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String ver = new Integer(display.getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + display.getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(display.getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + display.getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + display.getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + display.getPhysicalDeviceDescription();
-
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (display.getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (display.getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (display.getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (display.getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced" : (display
-							.getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard" : "None"));
-
-			msg = msg + "\nCapBitmap: " + display.getCapBitmap();
-			int blink = display.getCapBlink();
-			msg = msg
-					+ "\nCapBlink: "
-					+ (blink == LineDisplayConst.DISP_CB_BLINKEACH ? "DISP_CB_BLINK_EACH"
-							: (blink == LineDisplayConst.DISP_CB_BLINKALL ? "DISP_CB_BLINKALL"
-									: "DISP_CB_NOBLINK"));
-			msg = msg + "\nCapBlinkRate: " + display.getCapBlinkRate();
-			msg = msg + "\nCapBrightness: " + display.getCapBrightness();
-
-			msg = msg + "\nCapCharacterSet: ";
-			int charSet = display.getCapCharacterSet();
-			switch (charSet) {
-			case LineDisplayConst.DISP_CCS_NUMERIC:
-				msg = msg + "DISP_CCS_NUMERIC";
-				break;
-			case LineDisplayConst.DISP_CCS_ALPHA:
-				msg = msg + "DISP_CCS_ALPHA";
-				break;
-			case LineDisplayConst.DISP_CCS_ASCII:
-				msg = msg + "DISP_CCS_ASCII";
-				break;
-			case LineDisplayConst.DISP_CCS_KANA:
-				msg = msg + "DISP_CCS_KANA";
-				break;
-			case LineDisplayConst.DISP_CCS_KANJI:
-				msg = msg + "DISP_CCS_KANJI";
-				break;
-			case LineDisplayConst.DISP_CCS_UNICODE:
-				msg = msg + "DISP_CCS_UNICODE";
-				break;
-			}
-
-			msg = msg + "\nCapCursorType: ";
-			int cursorType = display.getCapCursorType();
-			if (cursorType == 0) { // should be DISP_CCT_NONE
-				msg = msg + "DISP_CCT_NONE ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_FIXED) > 0) {
-				msg = msg + "DISP_CCT_FIXED ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_BLOCK) > 0) {
-				msg = msg + "DISP_CCT_BLOCK ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_HALFBLOCK) > 0) {
-				msg = msg + "DISP_CCT_HALFBLOCK ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_UNDERLINE) > 0) {
-				msg = msg + "DISP_CCT_UNDERLINE ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_REVERSE) > 0) {
-				msg = msg + "DISP_CCT_REVERSE ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_OTHER) > 0) {
-				msg = msg + "DISP_CCT_OTHER ";
-			}
-			if ((cursorType & LineDisplayConst.DISP_CCT_FIXED) > 0) {
-				msg = msg + "DISP_CCT_FIXED ";
-			}
-
-			msg = msg + "\nCapCustomGlyph: " + display.getCapCustomGlyph();
-			msg = msg + "\nCapDescriptors: " + display.getCapDescriptors();
-			msg = msg + "\nCapHMarquee: " + display.getCapHMarquee();
-			msg = msg + "\nCapICharWait: " + display.getCapICharWait();
-			msg = msg + "\nCapMapCharacterSet: " + display.getCapMapCharacterSet();
-			msg = msg + "\nCapReadBack: ";
-			int readback = display.getCapReadBack();
-			switch (readback) {
-			case LineDisplayConst.DISP_CRB_NONE:
-				msg = msg + "DISP_CRB_NONE";
-				break;
-			case LineDisplayConst.DISP_CRB_SINGLE:
-				msg = msg + "DISP_CRB_SINGLE";
-				break;
-			}
-			msg = msg + "\nCapReverse: ";
-			int reverse = display.getCapReverse();
-			switch (reverse) {
-			case LineDisplayConst.DISP_CR_NONE:
-				msg = msg + "DISP_CR_NONE";
-				break;
-			case LineDisplayConst.DISP_CR_REVERSEALL:
-				msg = msg + "DISP_CR_REVERSEALL";
-				break;
-			case LineDisplayConst.DISP_CR_REVERSEEACH:
-				msg = msg + "DISP_CR_REVERSEEACH";
-				break;
-			}
-
-			msg = msg + "\nCapScreenMode: " + display.getCapScreenMode();
-			msg = msg + "\nCapVMarquee: " + display.getCapVMarquee();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			display.retrieveStatistics(stats);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
-
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		}
-
-		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		statistics = "";
-	}
-
-	// Method to parse the String XML and print the data
-	private static void printStatistics(Node e, String tab) {
-		if (e.getNodeType() == Node.TEXT_NODE) {
-			statistics += tab + e.getNodeValue() + "\n";
-			return;
-		}
-
-		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
-				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
-				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
-			statistics += tab + e.getNodeName();
-
-		if (e.getNodeValue() != null) {
-			statistics += tab + " " + e.getNodeValue();
-		}
-
-		NodeList childs = e.getChildNodes();
-		for (int i = 0; i < childs.getLength(); i++) {
-			printStatistics(childs.item(i), " ");
-		}
-	}
-
-	@FXML
-	public void handleFirmware(ActionEvent e) {
-		try {
-			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(display);
-			dlg.setVisible(true);
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
+	
 
 	@FXML
 	public void handleDisplayTextAt(ActionEvent e) {
-		if (row.getSelectionModel().getSelectedItem() == null) {
+		if (row.getSelectionModel().getSelectedItem() == null){
 			JOptionPane.showMessageDialog(null, "Row is not selected!", "Logical name is empty",
 					JOptionPane.WARNING_MESSAGE);
 		}
 		try {
-			display.displayTextAt(row.getSelectionModel().getSelectedIndex(), column.getSelectionModel()
+			((LineDisplay) service).displayTextAt(row.getSelectionModel().getSelectedIndex(), column.getSelectionModel()
 					.getSelectedItem(), displayText.getText(), attribute.getSelectionModel()
 					.getSelectedIndex());
 		} catch (NumberFormatException e1) {
@@ -495,7 +205,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleDisplayText(ActionEvent e) {
 		try {
-			display.displayText(displayText.getText(), attribute.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).displayText(displayText.getText(), attribute.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -509,7 +219,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleClearText(ActionEvent e) {
 		try {
-			display.clearText();
+			((LineDisplay) service).clearText();
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -520,8 +230,8 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleMoveCursor(ActionEvent e) {
 		try {
-			display.setCursorColumn(column.getSelectionModel().getSelectedIndex());
-			display.setCursorRow(row.getSelectionModel().getSelectedIndex());
+			((LineDisplay)service).setCursorColumn(column.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setCursorRow(row.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -534,12 +244,11 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleSetBlinkRate(ActionEvent e) {
-		if (blinkRate.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Param blinkRate is not set!", "Invalid Parameter",
-					JOptionPane.WARNING_MESSAGE);
+		if(blinkRate.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param blinkRate is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				display.setBlinkRate(Integer.parseInt(blinkRate.getText()));
+				((LineDisplay) service).setBlinkRate(Integer.parseInt(blinkRate.getText()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -552,12 +261,11 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleSetICharWait(ActionEvent e) {
-		if (intercharacterWait.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "Param ICharWait is not set!", "Invalid Parameter",
-					JOptionPane.WARNING_MESSAGE);
+		if (intercharacterWait.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "Param ICharWait is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				display.setInterCharacterWait(Integer.parseInt(intercharacterWait.getText()));
+				((LineDisplay) service).setInterCharacterWait(Integer.parseInt(intercharacterWait.getText()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -567,38 +275,33 @@ public class LineDisplayController implements Initializable {
 			}
 		}
 	}
-
+	
 	@FXML
 	public void handleAddWindow(ActionEvent e) {
-		if (viewportRow.getText().equals("") || viewportColumn.getText().equals("")
-				|| viewportHeight.getText().equals("") || viewportWidth.getText().equals("")
-				|| windowHeight.getText().equals("") || windowWidth.getText().equals("")) {
-			JOptionPane.showMessageDialog(null, "One of the params is not set!", "Invalid Parameter",
-					JOptionPane.WARNING_MESSAGE);
+		if(viewportRow.getText().equals("")||viewportColumn.getText().equals("")||viewportHeight.getText().equals("")||viewportWidth.getText().equals("")||windowHeight.getText().equals("")||windowWidth.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "One of the params is not set!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
 				FXCollections.sort(windowList);
 				int num = 0;
-				for (String s : windowList) {
-					if (s.equals("" + num)) {
+				for (String s : windowList){
+					if(s.equals(""+num)){
 						num++;
 					}
-					if (num == 4) {
-						JOptionPane.showMessageDialog(null, "Too many open Windows!", "Invalid Parameter",
-								JOptionPane.WARNING_MESSAGE);
+					if(num == 4){
+						JOptionPane.showMessageDialog(null, "Too many open Windows!", "Invalid Parameter", JOptionPane.WARNING_MESSAGE);
 						return;
 					}
 				}
-
+				
 				windowList.add("" + num);
 
 				FXCollections.sort(windowList);
-				display.createWindow(Integer.parseInt(viewportRow.getText()),
-						Integer.parseInt(viewportColumn.getText()),
-						Integer.parseInt(viewportHeight.getText()),
+				((LineDisplay) service).createWindow(Integer.parseInt(viewportRow.getText()),
+						Integer.parseInt(viewportColumn.getText()), Integer.parseInt(viewportHeight.getText()),
 						Integer.parseInt(viewportWidth.getText()), Integer.parseInt(windowHeight.getText()),
 						Integer.parseInt(windowWidth.getText()));
-
+		
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -606,61 +309,30 @@ public class LineDisplayController implements Initializable {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
-
+			
 		}
 	}
 
-	/*
-	 * @FXML public void handleAddWindow(ActionEvent e) {
-	 * if(viewportRow.getText(
-	 * ).equals("")||viewportColumn.getText().equals("")||
-	 * viewportHeight.getText(
-	 * ).equals("")||viewportWidth.getText().equals("")||windowHeight
-	 * .getText().equals("")||windowWidth.getText().equals("")){
-	 * JOptionPane.showMessageDialog(null, "One of the params is not set!",
-	 * "Invalid Parameter", JOptionPane.WARNING_MESSAGE); } else { try {
-	 * display.createWindow(Integer.parseInt(viewportRow.getText()),
-	 * Integer.parseInt(viewportColumn.getText()),
-	 * Integer.parseInt(viewportHeight.getText()),
-	 * Integer.parseInt(viewportWidth.getText()),
-	 * Integer.parseInt(windowHeight.getText()),
-	 * Integer.parseInt(windowWidth.getText()));
-	 * 
-	 * openWindowCount++; windowList.add("" + openWindowCount); /*
-	 * openWindowCount++;
-	 * openWindows.getItems().add(Integer.valueOf(openWindowCount));
-	 */
-	/*
-	 * } catch (NumberFormatException e1) { e1.printStackTrace();
-	 * JOptionPane.showMessageDialog(null, e1.getMessage()); } catch
-	 * (JposException e1) { e1.printStackTrace();
-	 * JOptionPane.showMessageDialog(null, e1.getMessage()); }
-	 * 
-	 * } }
-	 */
 	@FXML
 	public void handleDeleteWindow(ActionEvent e) {
 		try {
-			display.destroyWindow();
+			((LineDisplay) service).destroyWindow();
 			windowList.remove("" + currentWindow);
-
 			FXCollections.sort(windowList);
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
 	public void handleRefreshWindow(ActionEvent e) {
-		if (openWindowsListView.getSelectionModel().getSelectedItem() == null) {
+		if(openWindowsListView.getSelectionModel().getSelectedItem() == null){
 			JOptionPane.showMessageDialog(null, "Choose a valid window!", "Invalid Parameter",
 					JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				display.refreshWindow(Integer.parseInt(openWindowsListView.getSelectionModel()
-						.getSelectedItem()));
+				((LineDisplay) service).refreshWindow(Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem()));
 				currentWindow = Integer.parseInt(openWindowsListView.getSelectionModel().getSelectedItem());
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
@@ -674,15 +346,15 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleScrollText(ActionEvent e) {
-		if (scrollText_direction.getSelectionModel().getSelectedItem().equals("")) {
+		if (scrollText_direction.getSelectionModel().getSelectedItem().equals("")){
 			JOptionPane.showMessageDialog(null, "Choose a valid scroll direction!", "Invalid Parameter",
 					JOptionPane.WARNING_MESSAGE);
-		} else if (scrollText_Units.getText().equals("")) {
+		} else if (scrollText_Units.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Choose a valid unit!", "Invalid Parameter",
 					JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				display.scrollText(scrollText_direction.getSelectionModel().getSelectedIndex(),
+				((LineDisplay) service).scrollText(scrollText_direction.getSelectionModel().getSelectedIndex(),
 						Integer.parseInt(scrollText_Units.getText()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
@@ -697,7 +369,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetDeviceBrightness(ActionEvent e) {
 		try {
-			display.setDeviceBrightness((int) (deviceBrightness.getValue()));
+			((LineDisplay) service).setDeviceBrightness((int) (deviceBrightness.getValue()));
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -708,7 +380,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetDescriptor(ActionEvent e) {
 		try {
-			display.setDescriptor(descriptors.getSelectionModel().getSelectedIndex(), descriptor_attribute
+			((LineDisplay) service).setDescriptor(descriptors.getSelectionModel().getSelectedIndex(), descriptor_attribute
 					.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
@@ -717,13 +389,12 @@ public class LineDisplayController implements Initializable {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
 	public void handleClearAllDescriptors(ActionEvent e) {
 		try {
-			display.clearDescriptors();
+			((LineDisplay) service).clearDescriptors();
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -731,14 +402,13 @@ public class LineDisplayController implements Initializable {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
 	public void handleReadCharacter(ActionEvent e) {
 		int[] help = new int[1];
 		try {
-			display.readCharacterAtCursor(help);
+			((LineDisplay) service).readCharacterAtCursor(help);
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -749,15 +419,15 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleDefineGlyph(ActionEvent e) throws JposException {
-		if (glyphBinaryPath.getText() == "") {
+		if (glyphBinaryPath.getText() == ""){
 			JOptionPane.showMessageDialog(null, "Choose a valid glyph path", "Invalid Parameter",
 					JOptionPane.WARNING_MESSAGE);
-		} else if (glypeCode.getText().equals("")) {
+		} else if (glypeCode.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Choose a valid Glyph Code", "Invalid Parameter",
 					JOptionPane.WARNING_MESSAGE);
 		} else {
 			byte[] bytes = getBytesFromFile(glyphBinaryPath.getText());
-			display.defineGlyph(Integer.parseInt(glypeCode.getText()), bytes);
+			((LineDisplay) service).defineGlyph(Integer.parseInt(glypeCode.getText()), bytes);
 		}
 	}
 
@@ -774,7 +444,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetCharacterSet(ActionEvent e) {
 		try {
-			display.setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
+			((LineDisplay) service).setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -788,7 +458,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetScreenMode(ActionEvent e) {
 		try {
-			display.setScreenMode(screenMode.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setScreenMode(screenMode.getSelectionModel().getSelectedIndex());
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -798,7 +468,7 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetMarqueeType(ActionEvent e) {
 		try {
-			display.setMarqueeType(marqueeType.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setMarqueeType(marqueeType.getSelectionModel().getSelectedIndex());
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -812,8 +482,8 @@ public class LineDisplayController implements Initializable {
 	@FXML
 	public void handleSetMarqueeFormat(ActionEvent e) {
 		try {
-			display.setMarqueeFormat(marqueeFormat.getSelectionModel().getSelectedIndex());
-
+			((LineDisplay) service).setMarqueeFormat(marqueeFormat.getSelectionModel().getSelectedIndex());
+			
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -825,12 +495,12 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleSetMarqueeRepeatWait(ActionEvent e) {
-		if (marqueeRepeatWait.getText().equals("")) {
+		if(marqueeRepeatWait.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Param marqueeRepeatWait is false", "Invalid Parameter!",
 					JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				display.setMarqueeRepeatWait(Integer.parseInt(marqueeRepeatWait.getText()));
+				((LineDisplay) service).setMarqueeRepeatWait(Integer.parseInt(marqueeRepeatWait.getText()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -843,12 +513,12 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleSetMarqueeUnitWait(ActionEvent e) {
-		if (marqueeUnitWait.getText().equals("")) {
+		if(marqueeUnitWait.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Param marqueeUnitWait is false", "Invalid Parameter!",
 					JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				display.setMarqueeUnitWait(Integer.parseInt(marqueeUnitWait.getText()));
+				((LineDisplay) service).setMarqueeUnitWait(Integer.parseInt(marqueeUnitWait.getText()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -872,61 +542,57 @@ public class LineDisplayController implements Initializable {
 
 	@FXML
 	public void handleDisplayBitmap(ActionEvent e) {
-		if (bitmapPath.getText().equals("")) {
+		if (bitmapPath.getText().equals("")){
 			JOptionPane.showMessageDialog(null, "Param bitmapPath is not set");
 		} else {
 			// Calculate Bitmap Width
 			int newBitmapWidth = 0;
-			if (bitmapWidth.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant())) {
+			if (bitmapWidth.getSelectionModel().getSelectedItem().equals(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant())) {
 				newBitmapWidth = LineDisplayConstantMapper.DISP_BM_ASIS.getContantNumber();
 			} else {
 				newBitmapWidth = Integer.parseInt(bitmapWidth.getSelectionModel().getSelectedItem());
 			}
-
+	
 			// Calculate AlignmentX
 			int newAlignmentX = 0;
-			if (alignmentX.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_LEFT.getConstant())) {
+			if (alignmentX.getSelectionModel().getSelectedItem().equals(LineDisplayConstantMapper.DISP_BM_LEFT.getConstant())) {
 				newAlignmentX = LineDisplayConstantMapper.DISP_BM_LEFT.getContantNumber();
-
+	
 			} else if (alignmentX.getSelectionModel().getSelectedItem()
 					.equals(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant())) {
-
+	
 				newAlignmentX = LineDisplayConstantMapper.DISP_BM_CENTER.getContantNumber();
 			} else if (alignmentX.getSelectionModel().getSelectedItem()
 					.equals(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant())) {
-
+	
 				newAlignmentX = LineDisplayConstantMapper.DISP_BM_RIGHT.getContantNumber();
 			} else {
 				newAlignmentX = Integer.parseInt(alignmentX.getSelectionModel().getSelectedItem());
 			}
-
+	
 			// Calculate AlignmentX
 			int newAlignmentY = 0;
-			if (alignmentY.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant())) {
-
+			if (alignmentY.getSelectionModel().getSelectedItem().equals(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant())) {
+	
 				newAlignmentY = LineDisplayConstantMapper.DISP_BM_BOTTOM.getContantNumber();
-
+	
 			} else if (alignmentY.getSelectionModel().getSelectedItem()
 					.equals(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant())) {
-
+	
 				newAlignmentY = LineDisplayConstantMapper.DISP_BM_CENTER.getContantNumber();
-
+	
 			} else if (alignmentY.getSelectionModel().getSelectedItem()
 					.equals(LineDisplayConstantMapper.DISP_BM_TOP.getConstant())) {
-
+	
 				newAlignmentY = LineDisplayConstantMapper.DISP_BM_TOP.getContantNumber();
-
+	
 			} else {
-
+	
 				newAlignmentY = Integer.parseInt(alignmentY.getSelectionModel().getSelectedItem());
-
 			}
-
+	
 			try {
-				display.displayBitmap(bitmapPath.getText(), newBitmapWidth, newAlignmentX, newAlignmentY);
+				((LineDisplay) service).displayBitmap(bitmapPath.getText(), newBitmapWidth, newAlignmentX, newAlignmentY);
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -937,6 +603,11 @@ public class LineDisplayController implements Initializable {
 		}
 	}
 
+	/**
+	 * This Method gets a Byte Array from a File to print it with displayMemoryBitmap
+	 * @param path to Binary File
+	 * @return byte[] containing the data from the File
+	 */
 	private byte[] getBytesFromFile(String path) {
 		byte[] bytes = null;
 		BufferedImage originalImage = null;
@@ -975,7 +646,7 @@ public class LineDisplayController implements Initializable {
 
 	/* ************************************************************************
 	 * ************************ Set all ComboBox Values ***********************
-	 * ***********************************************************************
+	 * ************************************************************************
 	 */
 
 	private void setUpAttribute() {
@@ -995,7 +666,7 @@ public class LineDisplayController implements Initializable {
 	private void setUpRow() {
 		row.getItems().clear();
 		try {
-			for (int i = 0; i < display.getRows(); i++) {
+			for (int i = 0; i < ((LineDisplay) service).getRows(); i++) {
 				row.getItems().add(i);
 			}
 		} catch (JposException e) {
@@ -1009,7 +680,7 @@ public class LineDisplayController implements Initializable {
 	private void setUpColumns() {
 		column.getItems().clear();
 		try {
-			for (int i = 0; i < display.getColumns(); i++) {
+			for (int i = 0; i < ((LineDisplay) service).getColumns(); i++) {
 				column.getItems().add(i);
 			}
 		} catch (JposException e) {
@@ -1023,8 +694,8 @@ public class LineDisplayController implements Initializable {
 	private void setUpDescriptors() {
 		descriptors.getItems().clear();
 		try {
-			descriptors.getItems().add(display.getDeviceDescriptors());
-			descriptors.setValue(display.getDeviceDescriptors());
+			descriptors.getItems().add(((LineDisplay) service).getDeviceDescriptors());
+			descriptors.setValue(((LineDisplay) service).getDeviceDescriptors());
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Error occured when getting Descriptors", "Error occured!",
@@ -1045,8 +716,8 @@ public class LineDisplayController implements Initializable {
 
 	private void setUpScrollTextDirection() {
 		scrollText_direction.getItems().clear();
-
-		// Need for correct Index
+		
+		//Need for correct Index
 		scrollText_direction.getItems().add(0, "");
 		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_UP.getContantNumber(),
 				LineDisplayConstantMapper.DISP_ST_UP.getConstant());
@@ -1056,7 +727,7 @@ public class LineDisplayController implements Initializable {
 				LineDisplayConstantMapper.DISP_ST_LEFT.getConstant());
 		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_RIGHT.getContantNumber(),
 				LineDisplayConstantMapper.DISP_ST_RIGHT.getConstant());
-
+		
 		scrollText_direction.setValue(LineDisplayConstantMapper.DISP_ST_UP.getConstant());
 
 	}
@@ -1064,13 +735,13 @@ public class LineDisplayController implements Initializable {
 	private void setUpCharacterSet() {
 		characterSet.getItems().clear();
 		try {
-			for (int i = 0; i < display.getCharacterSetList().split(",").length; i++) {
-				characterSet.getItems().add(Integer.parseInt((display.getCharacterSetList().split(","))[i]));
-				if (i == 0) {
-					characterSet.setValue(Integer.parseInt((display.getCharacterSetList().split(","))[i]));
+			for (int i = 0; i < ((LineDisplay) service).getCharacterSetList().split(",").length; i++) {
+				characterSet.getItems().add(Integer.parseInt((((LineDisplay) service).getCharacterSetList().split(","))[i]));
+				if(i == 0) {
+					characterSet.setValue(Integer.parseInt((((LineDisplay) service).getCharacterSetList().split(","))[i]));
 				}
 			}
-
+			
 		} catch (JposException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Error occured when getting the CharacterSetList",
@@ -1081,10 +752,10 @@ public class LineDisplayController implements Initializable {
 	private void setUpScreenMode() {
 		screenMode.getItems().clear();
 		try {
-			for (int i = 0; i < display.getScreenModeList().split(",").length; i++) {
-				screenMode.getItems().add((display.getScreenModeList().split(","))[i]);
-				if (i == 0) {
-					screenMode.setValue((display.getScreenModeList().split(","))[i]);
+			for (int i = 0; i < ((LineDisplay) service).getScreenModeList().split(",").length; i++) {
+				screenMode.getItems().add((((LineDisplay) service).getScreenModeList().split(","))[i]);
+				if (i == 0){
+					screenMode.setValue((((LineDisplay) service).getScreenModeList().split(","))[i]);
 				}
 			}
 		} catch (JposException e) {
@@ -1108,7 +779,7 @@ public class LineDisplayController implements Initializable {
 				LineDisplayConstantMapper.DISP_MT_RIGHT.getConstant());
 		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_INIT.getContantNumber(),
 				LineDisplayConstantMapper.DISP_MT_INIT.getConstant());
-
+		
 		marqueeType.setValue(LineDisplayConstantMapper.DISP_MT_NONE.getConstant());
 	}
 
@@ -1118,14 +789,14 @@ public class LineDisplayController implements Initializable {
 				LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
 		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_PLACE.getContantNumber(),
 				LineDisplayConstantMapper.DISP_MF_PLACE.getConstant());
-
+		
 		marqueeFormat.setValue(LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
 	}
 
 	private void setUpBitmapWidth() {
 		bitmapWidth.getItems().clear();
 		bitmapWidth.getItems().add(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant());
-
+		
 		bitmapWidth.setValue(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant());
 	}
 
@@ -1134,7 +805,7 @@ public class LineDisplayController implements Initializable {
 		alignmentX.getItems().add(LineDisplayConstantMapper.DISP_BM_LEFT.getConstant());
 		alignmentX.getItems().add(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant());
 		alignmentX.getItems().add(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant());
-
+		
 		alignmentX.setValue(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant());
 	}
 
@@ -1143,7 +814,7 @@ public class LineDisplayController implements Initializable {
 		alignmentY.getItems().add(LineDisplayConstantMapper.DISP_BM_TOP.getConstant());
 		alignmentY.getItems().add(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant());
 		alignmentY.getItems().add(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant());
-
+		
 		alignmentY.setValue(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant());
 	}
 }

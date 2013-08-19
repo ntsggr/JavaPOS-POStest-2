@@ -1,40 +1,64 @@
 package postest2;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import jpos.BumpBar;
-import jpos.JposConst;
 import jpos.JposException;
 
-public class BumpBarController implements Initializable {
+public class BumpBarController extends CommonController implements Initializable {
 
 	@FXML
-	private ComboBox<String> logicalName;
-	private BumpBar bumpBar;
-	private static String statistics = "";
+	@RequiredState(JposState.ENABLED)
+	public TabPane functionPane;
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public CheckBox asyncMode;
+	@FXML
+	public TextField autoToneDuration;
+	@FXML
+	public TextField autoToneFrequency;
+	@FXML
+	public TextField currentUnitID;
+	@FXML
+	public TextField timeout;
+	@FXML
+	public TextField bumpBarSound_units;
+	@FXML
+	public TextField bumpBarSound_frequency;
+	@FXML
+	public TextField bumpbarSound_duration;
+	@FXML
+	public TextField bumpBarSound_numberOfCycles;
+	@FXML
+	public TextField bumpBarSound_interSoundWait;
+	@FXML
+	public TextField setKeyTranslation_units;
+	@FXML
+	public TextField setKeyTranslation_scanCode;
+	@FXML
+	public TextField setKeyTranslation_logicalKey;
+	
+
+	@FXML
+	public ComboBox<String> checkHealth_level;
+	
+	
+	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		bumpBar = new BumpBar();
+		service = new BumpBar();
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	/* ************************************************************************
@@ -42,108 +66,172 @@ public class BumpBarController implements Initializable {
 	 * ***********************************************************************
 	 */
 
-	// Shows information of device
 	@FXML
-	public void handleInfo(ActionEvent e) {
+	public void handleDeviceEnable(ActionEvent e) {
+		System.out.println("DevEnable");
 		try {
-			String ver = new Integer(bumpBar.getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + bumpBar.getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(bumpBar.getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + bumpBar.getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + bumpBar.getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + bumpBar.getPhysicalDeviceDescription();
-
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (bumpBar.getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (bumpBar.getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (bumpBar.getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (bumpBar.getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (bumpBar.getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapTone: " + bumpBar.getCapTone();
-			
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
+			((BumpBar) service).setDeviceEnabled(deviceEnabled.isSelected());
+		} catch (JposException je) {
+			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
+		setUpCheckHealthLevel();
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
-	// Shows statistics of device
 	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
+	public void handleAsyncMode(ActionEvent e) {
+		System.out.println("async");
 		try {
-			bumpBar.retrieveStatistics(stats);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
-
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
+			((BumpBar) service).setAsyncMode(asyncMode.isSelected());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
-
-		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		statistics = "";
 	}
 
-	// Method to parse the String XML and print the data
-	private static void printStatistics(Node e, String tab) {
-		if (e.getNodeType() == Node.TEXT_NODE) {
-			statistics += tab + e.getNodeValue() + "\n";
-			return;
+	@FXML
+	public void handleSetAutoToneDuration(ActionEvent e) {
+		System.out.println("setAutoDur");
+		if (autoToneDuration.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Field is empty!");
+		} else {
+			try {
+				((BumpBar) service).setAutoToneDuration(Integer.parseInt(autoToneDuration.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
 		}
+	}
 
-		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
-				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
-				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
-			statistics += tab + e.getNodeName();
-
-		if (e.getNodeValue() != null) {
-			statistics += tab + " " + e.getNodeValue();
+	@FXML
+	public void handleSetAutoToneFrequency(ActionEvent e) {
+		System.out.println("setautoFre");
+		if (autoToneFrequency.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Field is empty!");
+		} else {
+			try {
+				((BumpBar) service).setAutoToneFrequency(Integer.parseInt(autoToneFrequency.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
 		}
+	}
 
-		NodeList childs = e.getChildNodes();
-		for (int i = 0; i < childs.getLength(); i++) {
-			printStatistics(childs.item(i), " ");
+	@FXML
+	public void handleSetCurrentUnitID(ActionEvent e) {
+		System.out.println("setCurrentID");
+		if (currentUnitID.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Field is empty!");
+		} else {
+			try {
+				((BumpBar) service).setCurrentUnitID(Integer.parseInt(currentUnitID.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleSetTimeout(ActionEvent e) {
+		System.out.println("setTimeout");
+		if (timeout.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Field is empty!");
+		} else {
+			try {
+				((BumpBar) service).setTimeout(Integer.parseInt(timeout.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleCheckHealth(ActionEvent e) {
+		System.out.println("checkhealt");
+		
+		try {
+			((BumpBar) service).checkHealth(CommonConstantMapper.getConstantNumberFromString(checkHealth_level.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+		
+	}
+
+	@FXML
+	public void handleClearInput(ActionEvent e) {
+		System.out.println("clearin");
+		try {
+			((BumpBar) service).clearInput();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleClearOutput(ActionEvent e) {
+		System.out.println("clearouts");
+		try {
+			((BumpBar) service).clearOutput();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleBumpBarSound(ActionEvent e) {
+		System.out.println("sound");
+		if (bumpbarSound_duration.getText().isEmpty() || bumpBarSound_frequency.getText().isEmpty()
+				|| bumpBarSound_interSoundWait.getText().isEmpty()
+				|| bumpBarSound_numberOfCycles.getText().isEmpty() || bumpBarSound_units.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				((BumpBar) service).bumpBarSound(Integer.parseInt(bumpBarSound_units.getText()),
+						Integer.parseInt(bumpBarSound_frequency.getText()),
+						Integer.parseInt(bumpbarSound_duration.getText()),
+						Integer.parseInt(bumpBarSound_numberOfCycles.getText()),
+						Integer.parseInt(bumpBarSound_interSoundWait.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleSetKeyTranslation(ActionEvent e) {
+		System.out.println("setKey");
+		if (setKeyTranslation_logicalKey.getText().isEmpty()
+				|| setKeyTranslation_scanCode.getText().isEmpty()
+				|| setKeyTranslation_units.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				((BumpBar) service).setKeyTranslation(Integer.parseInt(setKeyTranslation_units.getText()),
+						Integer.parseInt(setKeyTranslation_scanCode.getText()),
+						Integer.parseInt(setKeyTranslation_logicalKey.getText()));
+
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
 		}
 	}
 	
-	@FXML
-	public void handleFirmware(ActionEvent e) {
-		try {
-			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(bumpBar);
-			dlg.setVisible(true);
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
-		}
+	private void setUpCheckHealthLevel(){
+		checkHealth_level.getItems().clear();
+		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_INTERNAL.getConstant());
+		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_EXTERNAL.getConstant());
+		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_INTERACTIVE.getConstant());
+		checkHealth_level.setValue(CommonConstantMapper.JPOS_CH_INTERNAL.getConstant());
 	}
+	
 
 }

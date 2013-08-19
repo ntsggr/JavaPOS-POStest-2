@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ConfiguredDevicesController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ConfiguredDevicesController">
   <children>
     <TableView fx:id="tableConfiguredDevices" editable="true" layoutX="50.0" layoutY="85.0" prefHeight="200.0" prefWidth="607.0">
       <columns>

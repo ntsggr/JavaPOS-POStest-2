@@ -10,7 +10,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CashDrawerController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CashDrawerController">
   <children>
     <BorderPane prefHeight="488.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -22,7 +22,7 @@
             <Button fx:id="buttonWaitForDrawer" layoutX="398.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleWaitForDrawer" text="Wait For Drawer Close" />
             <Button fx:id="buttonOpenCash" layoutX="106.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleOpenCash" text="Open Cash Drawer" />
             <Text layoutX="282.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" />
-            <TextArea layoutX="106.0" layoutY="160.0" prefHeight="214.0" prefWidth="430.0" wrapText="true" />
+            <TextArea fx:id="textAreaActionLog" layoutX="106.0" layoutY="160.0" prefHeight="214.0" prefWidth="430.0" wrapText="true" />
           </children>
         </Pane>
       </center>
@@ -40,7 +40,7 @@
               </items>
             </ComboBox>
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
+            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>
                 <Font name="System Bold" size="12.0" />
               </font>
@@ -49,10 +49,10 @@
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
-            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
-            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" onAction="#handleInfo" />
-            <Button fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" onAction="#handleStatistics" />
-            <Button fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" onAction="#handleFirmware" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
+            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
+            <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
           </children>
           <BorderPane.margin>
             <Insets />

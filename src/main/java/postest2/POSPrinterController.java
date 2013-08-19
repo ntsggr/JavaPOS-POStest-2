@@ -8,7 +8,6 @@ package postest2;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -16,25 +15,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.xerces.parsers.DOMParser;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -44,188 +29,172 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
-import jpos.LineDisplayConst;
 import jpos.POSPrinter;
 import jpos.POSPrinterConst;
 import jpos.profile.JposDevCats;
 
-public class POSPrinterController implements Initializable {
-
-	// Common
-	@FXML
-	private ComboBox<String> logicalName;
-	@FXML
-	private CheckBox deviceEnabled;
-	@FXML
-	private Button buttonOpen;
-	@FXML
-	private Button buttonClaim;
-	@FXML
-	private Button buttonRelease;
-	@FXML
-	private Button buttonInfo;
-	@FXML
-	private Button buttonStatistics;
-	@FXML
-	private Button buttonClose;
-	@FXML
-	private Button buttonFirmware;
-	@FXML
-	private Text statusLabel;
-	@FXML
-	private CheckBox freezeEvents;
-	@FXML
-	private ComboBox<String> rotationMode;
-	@FXML
-	private ComboBox<String> mapMode;
-	@FXML
-	private CheckBox asyncMode;
-	@FXML
-	private CheckBox flagWhenIdle;
-	@FXML
-	private TextArea deviceMessages;
+public class POSPrinterController extends CommonController implements Initializable {
+	
+	//Common
+	@FXML @RequiredState(JposState.ENABLED)
+	public ComboBox<String> rotationMode;
+	@FXML @RequiredState(JposState.ENABLED)
+	public ComboBox<String> mapMode;
+	@FXML @RequiredState(JposState.ENABLED)
+	public CheckBox asyncMode;
+	@FXML @RequiredState(JposState.ENABLED)
+	public CheckBox flagWhenIdle;
+	@FXML @RequiredState(JposState.ENABLED)
+	public TextArea deviceMessages;
 
 	// Stations
-	@FXML
-	private RadioButton rbReceipt;
-	@FXML
-	private RadioButton rbJournal;
-	@FXML
-	private RadioButton rbSlip;
+	@FXML @RequiredState(JposState.ENABLED)
+	public RadioButton rbReceipt;
+	@FXML @RequiredState(JposState.ENABLED)
+	public RadioButton rbJournal;
+	@FXML @RequiredState(JposState.ENABLED)
+	public RadioButton rbSlip;
 
 	// Group for the radiobuttons
 	@FXML
-	private final ToggleGroup group = new ToggleGroup();
+	public final ToggleGroup group = new ToggleGroup();
 
 	// TabPane
-	@FXML
-	private TabPane functionTab;
+	@FXML @RequiredState(JposState.ENABLED)
+	public TabPane functionTab;
 
 	// General Printing
 	@FXML
-	private ComboBox<String> transactionPrint;
+	public ComboBox<String> transactionPrint;
 	@FXML
-	private TextArea printNormalData;
+	public TextArea printNormalData;
 
 	@FXML
-	private Slider cutPaperPercentage;
+	public Slider cutPaperPercentage;
 
 	// Barcode
 	@FXML
-	private TextField barcodeHeight;
+	public TextField barcodeHeight;
 	@FXML
-	private TextField barcodeWidth;
+	public TextField barcodeWidth;
 	@FXML
-	private TextField barcodeData;
+	public TextField barcodeData;
 	@FXML
-	private ComboBox<String> barcodeSymbology;
+	public ComboBox<String> barcodeSymbology;
 	@FXML
-	private ComboBox<String> barcodeTextPosition;
+	public ComboBox<String> barcodeTextPosition;
 	@FXML
-	private ComboBox<String> barcodeAlignment;
+	public ComboBox<String> barcodeAlignment;
 
 	// Bitmap
 	@FXML
-	private TextField bitmapPath;
+	public TextField bitmapPath;
 	@FXML
-	private ComboBox<String> bitmapWidth;
+	public ComboBox<String> bitmapWidth;
 	@FXML
-	private ComboBox<String> bitmapAlignment;
+	public ComboBox<String> bitmapAlignment;
 	@FXML
-	private ComboBox<Integer> bitmapNumber;
+	public ComboBox<Integer> bitmapNumber;
 
 	// Draw Line
 	@FXML
-	private TextField drawLineStartPosX;
+	public TextField drawLineStartPosX;
 	@FXML
-	private TextField drawLineStartPosY;
+	public TextField drawLineStartPosY;
 	@FXML
-	private TextField drawLineEndPosX;
+	public TextField drawLineEndPosX;
 	@FXML
-	private TextField drawLineEndPosY;
+	public TextField drawLineEndPosY;
 	@FXML
-	private TextField drawLineWidth;
+	public TextField drawLineWidth;
 	@FXML
-	private ComboBox<String> drawLineDirection;
+	public ComboBox<String> drawLineDirection;
 	@FXML
-	private ComboBox<String> drawLineStyle;
+	public ComboBox<String> drawLineStyle;
 	@FXML
-	private ComboBox<String> drawLineColor;
+	public ComboBox<String> drawLineColor;
 
 	// Print2Normal
 	@FXML
-	private TextArea print2NormalFirstData;
+	public TextArea print2NormalFirstData;
 	@FXML
-	private TextArea print2NormalSecondData;
+	public TextArea print2NormalSecondData;
 	@FXML
-	private ComboBox<String> print2NormalStation;
+	public ComboBox<String> print2NormalStation;
 
 	// PageMode
 	@FXML
-	private TextField pageModeHorizontalPosition;
+	public TextField pageModeHorizontalPosition;
 	@FXML
-	private TextField pageModeVerticalPosition;
+	public TextField pageModeVerticalPosition;
 	@FXML
-	private TextField pageModePrintAreaStartPosX;
+	public TextField pageModePrintAreaStartPosX;
 	@FXML
-	private TextField pageModePrintAreaStartPosY;
+	public TextField pageModePrintAreaStartPosY;
 	@FXML
-	private TextField pageModePrintAreaEndPosX;
+	public TextField pageModePrintAreaEndPosX;
 	@FXML
-	private TextField pageModePrintAreaEndPosY;
+	public TextField pageModePrintAreaEndPosY;
 	@FXML
-	private ComboBox<String> pageModePrintDirection;
+	public ComboBox<String> pageModePrintDirection;
 	@FXML
-	private ComboBox<String> pageModePrintStation;
+	public ComboBox<String> pageModePrintStation;
 	@FXML
-	private ComboBox<String> pageModePrint;
+	public ComboBox<String> pageModePrint;
 	@FXML
-	private Label pageModeArea;
+	public Label pageModeArea;
 	@FXML
-	private Label pageModeDescriptor;
+	public Label pageModeDescriptor;
 
 	// Misc
 	@FXML
-	private TextField lineChars;
+	public TextField lineChars;
 	@FXML
-	private TextField lineHeight;
+	public TextField lineHeight;
 	@FXML
-	private ComboBox<String> printSide;
+	public ComboBox<String> printSide;
 	@FXML
-	private ComboBox<String> markFeed;
+	public ComboBox<String> markFeed;
 	@FXML
-	private ComboBox<Integer> characterSet;
+	public ComboBox<Integer> characterSet;
 	@FXML
-	private ComboBox<Boolean> mapCharacterSet;
+	public ComboBox<Boolean> mapCharacterSet;
 	@FXML
-	private ComboBox<String> currentCartridge;
-	@FXML
-	private TextField lineSpacing;
+	public ComboBox<String> currentCartridge;
+	@FXML 
+	public TextField lineSpacing;
 
+	//Holds position of ESC-Characters.
+	//Need because Textarea delete ESC everytime it changes
 	private ArrayList<Integer> printNormalEscapeSequenceList;
 	private ArrayList<Integer> print2NormalFirstEscapeSequenceList;
 	private ArrayList<Integer> print2NormalSecondEscapeSequenceList;
 
-	// Service
-	private POSPrinter printer;
-
+	//Driver
+	//private POSPrinter printer;
+	
+	//Escape-Character
 	final char ESC = (char) 0x1B;
 
-	// Letter Quality
+	//Letter Quality
 	private boolean jrnLetterQuality = false;
 	private boolean recLetterQuality = false;
 	private boolean slpLetterQuality = false;
 
-	private static String statistics = "";
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		printer = new POSPrinter();
-
+		service = new POSPrinter();
+		
+		RequiredStateChecker.invokeThis(this, (BaseJposControl) service);
+		
 		printNormalEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();
@@ -237,6 +206,9 @@ public class POSPrinterController implements Initializable {
 		rbSlip.setToggleGroup(group);
 		rbReceipt.setSelected(true);
 
+		/*
+		 * Add ChangeListener to update EscCharacterPosititon List
+		 */
 		printNormalData.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -275,22 +247,20 @@ public class POSPrinterController implements Initializable {
 		});
 	}
 
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.POSPRINTER_DEVCAT
-				.toString()));
-	}
 
 	/* ************************************************************************
-	 * ************************ Action Handler *********************************
-	 * ***********************************************************************
+	 * ************************ Action Handler ********************************
+	 * ************************************************************************
 	 */
 
+	/*
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		try {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				printer.open(logicalName.getValue());
-				buttonClaim.setDisable(false);
+				RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+				//buttonClaim.setDisable(false);
 				System.out.println(printer.getState());
 				setStatusLabel();
 			} else {
@@ -305,14 +275,15 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
-	// Requests exclusive access to the device
 	@FXML
 	public void handleClaim(ActionEvent e) {
 		try {
 			printer.claim(0);
-			deviceEnabled.setDisable(false);
-			buttonRelease.setDisable(false);
 
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+			//deviceEnabled.setDisable(false);
+			//buttonRelease.setDisable(false);
+			
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
 					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
@@ -320,32 +291,37 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	*/
+
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		deviceMessages.setText("");
 		try {
 			if (deviceEnabled.isSelected()) {
-				printer.setDeviceEnabled(true);
+				service.setDeviceEnabled(true);
 				setUpCheckboxes();
 				setUpPageModeLabels();
 			} else {
-				printer.setDeviceEnabled(false);
+				service.setDeviceEnabled(false);
 			}
+			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 	}
 
-	// Releases exclusive access to the device. The device is also disabled.
+	/*
 	@FXML
 	public void handleRelease(ActionEvent e) {
 		try {
 			printer.release();
 			if (deviceEnabled.isSelected()) {
 				deviceEnabled.setSelected(false);
-				functionTab.setVisible(false);
+				//functionTab.setVisible(false);
 			}
-			deviceEnabled.setDisable(true);
+
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+			//deviceEnabled.setDisable(true);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
 					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
@@ -353,18 +329,19 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
-	// Releases the device and its resources. Also the device is released.
 	@FXML
 	public void handleClose(ActionEvent e) {
 		try {
 			printer.close();
 			if (!deviceEnabled.isDisable()) {
 				deviceEnabled.setSelected(false);
-				functionTab.setVisible(false);
+				//functionTab.setVisible(false);
 			}
-			buttonClaim.setDisable(true);
-			deviceEnabled.setDisable(true);
-			buttonRelease.setDisable(true);
+
+			RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
+			//buttonClaim.setDisable(true);
+			//deviceEnabled.setDisable(true);
+			//buttonRelease.setDisable(true);
 			setStatusLabel();
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
@@ -373,130 +350,25 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
-	// Shows information of device
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		// TODO implement
+	}
+
 	@FXML
 	public void handleInfo(ActionEvent e) {
-		try {
-			String ver = new Integer(printer.getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + printer.getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(printer.getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + printer.getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + printer.getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + printer.getPhysicalDeviceDescription();
-
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (printer.getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (printer.getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (printer.getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (printer.getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced" : (printer
-							.getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard" : "None"));
-
-			msg = msg + "\nCapCharacterSet: ";
-			int charSet = printer.getCapCharacterSet();
-			switch (charSet) {
-			case LineDisplayConst.DISP_CCS_NUMERIC:
-				msg = msg + "DISP_CCS_NUMERIC";
-				break;
-			case LineDisplayConst.DISP_CCS_ALPHA:
-				msg = msg + "DISP_CCS_ALPHA";
-				break;
-			case LineDisplayConst.DISP_CCS_ASCII:
-				msg = msg + "DISP_CCS_ASCII";
-				break;
-			case LineDisplayConst.DISP_CCS_KANA:
-				msg = msg + "DISP_CCS_KANA";
-				break;
-			case LineDisplayConst.DISP_CCS_KANJI:
-				msg = msg + "DISP_CCS_KANJI";
-				break;
-			case LineDisplayConst.DISP_CCS_UNICODE:
-				msg = msg + "DISP_CCS_UNICODE";
-				break;
-			}
-
-			msg = msg + "\nCapMapCharacterSet: " + printer.getCapMapCharacterSet();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
+		// TODO implement
 	}
-
-	// Shows statistics of device
+	
 	@FXML
 	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			printer.retrieveStatistics(stats);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
+		// TODO implement
 
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		}
-
-		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		statistics = "";
-	}
-
-	// Method to parse the String XML and print the data
-	private static void printStatistics(Node e, String tab) {
-		if (e.getNodeType() == Node.TEXT_NODE) {
-			statistics += tab + e.getNodeValue() + "\n";
-			return;
-		}
-
-		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
-				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
-				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
-			statistics += tab + e.getNodeName();
-
-		if (e.getNodeValue() != null) {
-			statistics += tab + " " + e.getNodeValue();
-		}
-
-		NodeList childs = e.getChildNodes();
-		for (int i = 0; i < childs.getLength(); i++) {
-			printStatistics(childs.item(i), " ");
-		}
 	}
 
 	@FXML
 	public void handleFirmware(ActionEvent e) {
-		try {
-			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(printer);
-			dlg.setVisible(true);
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
-		}
+		// TODO implement
 	}
 
 	@FXML
@@ -507,11 +379,13 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
+	
+	*/
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
 		try {
-			printer.setAsyncMode(asyncMode.selectedProperty().getValue());
+			((POSPrinter)service).setAsyncMode(asyncMode.selectedProperty().getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -520,7 +394,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleFlagWhenIdle(ActionEvent e) {
 		try {
-			printer.setFlagWhenIdle(flagWhenIdle.selectedProperty().getValue());
+			((POSPrinter)service).setFlagWhenIdle(flagWhenIdle.selectedProperty().getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -530,7 +404,7 @@ public class POSPrinterController implements Initializable {
 	public void handleSetMapMode(ActionEvent e) {
 		if (mapMode.getSelectionModel().getSelectedItem() != null) {
 			try {
-				printer.setMapMode(POSPrinterConstantMapper.getConstantNumberFromString(mapMode
+				((POSPrinter)service).setMapMode(POSPrinterConstantMapper.getConstantNumberFromString(mapMode
 						.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -542,7 +416,7 @@ public class POSPrinterController implements Initializable {
 	public void handleRotatePrint(ActionEvent e) {
 		if (rotationMode.getSelectionModel().getSelectedItem() != null) {
 			try {
-				printer.rotatePrint(this.getSelectedStation(), POSPrinterConstantMapper
+				((POSPrinter)service).rotatePrint(this.getSelectedStation(), POSPrinterConstantMapper
 						.getConstantNumberFromString(rotationMode.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -555,7 +429,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleBeginInsertion(ActionEvent e) {
 		try {
-			printer.beginInsertion(0);
+			((POSPrinter)service).beginInsertion(0);
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -564,7 +438,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleEndInsertion(ActionEvent e) {
 		try {
-			printer.endInsertion();
+			((POSPrinter)service).endInsertion();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -573,7 +447,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleBeginRemoval(ActionEvent e) {
 		try {
-			printer.beginRemoval(0);
+			((POSPrinter)service).beginRemoval(0);
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -582,7 +456,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleEndRemoval(ActionEvent e) {
 		try {
-			printer.endRemoval();
+			((POSPrinter)service).endRemoval();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -592,16 +466,17 @@ public class POSPrinterController implements Initializable {
 	public void handlePrintNormal(ActionEvent e) {
 		System.out.println(addEscSequencesToPrintNormalData());
 		try {
-			printer.printNormal(getSelectedStation(), addEscSequencesToPrintNormalData());
+			((POSPrinter)service).printNormal(getSelectedStation(), addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
 	@FXML
 	public void handlePrintImmediate(ActionEvent e) {
 		try {
-			printer.printImmediate(getSelectedStation(), addEscSequencesToPrintNormalData());
+			((POSPrinter)service).printImmediate(getSelectedStation(), addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -610,7 +485,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleSetTopLogo(ActionEvent e) {
 		try {
-			printer.setLogo(POSPrinterConst.PTR_L_TOP, addEscSequencesToPrintNormalData());
+			((POSPrinter)service).setLogo(POSPrinterConst.PTR_L_TOP, addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -619,7 +494,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleSetBottomLogo(ActionEvent e) {
 		try {
-			printer.setLogo(POSPrinterConst.PTR_L_BOTTOM, addEscSequencesToPrintNormalData());
+			((POSPrinter)service).setLogo(POSPrinterConst.PTR_L_BOTTOM, addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -628,7 +503,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleTransactionPrint(ActionEvent e) {
 		try {
-			printer.transactionPrint(this.getSelectedStation(), POSPrinterConstantMapper
+			((POSPrinter)service).transactionPrint(this.getSelectedStation(), POSPrinterConstantMapper
 					.getConstantNumberFromString(transactionPrint.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -652,7 +527,7 @@ public class POSPrinterController implements Initializable {
 		if (rbJournal.isSelected()) {
 			try {
 				jrnLetterQuality = (!jrnLetterQuality);
-				printer.setJrnLetterQuality(jrnLetterQuality);
+				((POSPrinter)service).setJrnLetterQuality(jrnLetterQuality);
 				deviceMessages.setText(deviceMessages.getText() + "\nSet Journal Letter Quality to "
 						+ jrnLetterQuality);
 			} catch (JposException e1) {
@@ -663,7 +538,7 @@ public class POSPrinterController implements Initializable {
 		if (rbReceipt.isSelected()) {
 			try {
 				recLetterQuality = (!recLetterQuality);
-				printer.setRecLetterQuality(recLetterQuality);
+				((POSPrinter)service).setRecLetterQuality(recLetterQuality);
 				deviceMessages.setText(deviceMessages.getText() + "\nSet Receipt Letter Quality to "
 						+ recLetterQuality);
 			} catch (JposException e1) {
@@ -674,7 +549,7 @@ public class POSPrinterController implements Initializable {
 		if (rbSlip.isSelected()) {
 			try {
 				slpLetterQuality = (!slpLetterQuality);
-				printer.setSlpLetterQuality(slpLetterQuality);
+				((POSPrinter)service).setSlpLetterQuality(slpLetterQuality);
 				deviceMessages.setText(deviceMessages.getText() + "\nSet Slip Letter Quality to "
 						+ slpLetterQuality);
 			} catch (JposException e1) {
@@ -686,7 +561,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleCutPaper(ActionEvent e) {
 		try {
-			printer.cutPaper((int) cutPaperPercentage.getValue());
+			((POSPrinter)service).cutPaper((int) cutPaperPercentage.getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -695,7 +570,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleValidateData(ActionEvent e) {
 		try {
-			printer.validateData(this.getSelectedStation(), addEscSequencesToPrintNormalData());
+			((POSPrinter)service).validateData(this.getSelectedStation(), addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			deviceMessages.setText(deviceMessages.getText() + "\n" + e1.getMessage());
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -733,7 +608,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handlePrint2Normal(ActionEvent e) {
 		try {
-			printer.printTwoNormal(POSPrinterConstantMapper.getConstantNumberFromString(print2NormalStation
+			((POSPrinter)service).printTwoNormal(POSPrinterConstantMapper.getConstantNumberFromString(print2NormalStation
 					.getSelectionModel().getSelectedItem()), addEscSequencesToPrint2NormalDataFirst(),
 					addEscSequencesToPrint2NormalDataSecond());
 		} catch (JposException e1) {
@@ -751,7 +626,7 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, "One of the parameter is not specified");
 		} else {
 			try {
-				printer.printBarCode(this.getSelectedStation(), barcodeData.getText(),
+				((POSPrinter)service).printBarCode(this.getSelectedStation(), barcodeData.getText(),
 						POSPrinterConstantMapper.getConstantNumberFromString(barcodeSymbology
 								.getSelectionModel().getSelectedItem()), Integer.parseInt(barcodeHeight
 								.getText()), Integer.parseInt(barcodeWidth.getText()),
@@ -775,7 +650,7 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, "Bitmap Path is not specified!");
 		} else {
 			try {
-				printer.printBitmap(this.getSelectedStation(), bitmapPath.getText(), POSPrinterConstantMapper
+				((POSPrinter)service).printBitmap(this.getSelectedStation(), bitmapPath.getText(), POSPrinterConstantMapper
 						.getConstantNumberFromString(bitmapWidth.getSelectionModel().getSelectedItem()),
 						POSPrinterConstantMapper.getConstantNumberFromString(bitmapAlignment
 								.getSelectionModel().getSelectedItem()));
@@ -793,7 +668,7 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, "Binary Path is not specified!");
 		} else {
 			try {
-				printer.printMemoryBitmap(this.getSelectedStation(), getBytesFromFile(bitmapPath.getText()),
+				((POSPrinter)service).printMemoryBitmap(this.getSelectedStation(), getBytesFromFile(bitmapPath.getText()),
 						POSPrinterConstantMapper.getConstantNumberFromString(bitmapWidth.getSelectionModel()
 								.getSelectedItem()), getTypeFromFile(bitmapPath.getText()),
 						POSPrinterConstantMapper.getConstantNumberFromString(bitmapAlignment
@@ -814,7 +689,7 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, "Bitmap Path is not specified!");
 		} else {
 			try {
-				printer.setBitmap(bitmapNumber.getSelectionModel().getSelectedItem(), getSelectedStation(),
+				((POSPrinter)service).setBitmap(bitmapNumber.getSelectionModel().getSelectedItem(), getSelectedStation(),
 						bitmapPath.getText(), POSPrinterConstantMapper
 								.getConstantNumberFromString(bitmapWidth.getSelectionModel()
 										.getSelectedItem()), POSPrinterConstantMapper
@@ -829,7 +704,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleRotateSpecial(ActionEvent e) {
 		try {
-			printer.setRotateSpecial(POSPrinterConstantMapper.getConstantNumberFromString(rotationMode
+			((POSPrinter)service).setRotateSpecial(POSPrinterConstantMapper.getConstantNumberFromString(rotationMode
 					.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -849,7 +724,7 @@ public class POSPrinterController implements Initializable {
 			String position = drawLineStartPosX.getText() + "," + drawLineStartPosY.getText() + ","
 					+ drawLineEndPosX.getText() + "," + drawLineEndPosY.getText();
 			try {
-				printer.drawRuledLine(getSelectedStation(), position,
+				((POSPrinter)service).drawRuledLine(getSelectedStation(), position,
 						POSPrinterConstantMapper.getConstantNumberFromString(drawLineDirection
 								.getSelectionModel().getSelectedItem()), Integer.parseInt(drawLineWidth
 								.getText()), POSPrinterConstantMapper
@@ -871,7 +746,7 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, "Horizontal Position is not specified!");
 		} else {
 			try {
-				printer.setPageModeHorizontalPosition(Integer.parseInt(pageModeHorizontalPosition.getText()));
+				((POSPrinter)service).setPageModeHorizontalPosition(Integer.parseInt(pageModeHorizontalPosition.getText()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -884,7 +759,7 @@ public class POSPrinterController implements Initializable {
 			JOptionPane.showMessageDialog(null, "Vertical Position is not specified!");
 		} else {
 			try {
-				printer.setPageModeVerticalPosition(Integer.parseInt(pageModeVerticalPosition.getText()));
+				((POSPrinter)service).setPageModeVerticalPosition(Integer.parseInt(pageModeVerticalPosition.getText()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -903,7 +778,7 @@ public class POSPrinterController implements Initializable {
 			String area = pageModePrintAreaStartPosX.getText() + "," + pageModePrintAreaStartPosY.getText()
 					+ "," + pageModePrintAreaEndPosX.getText() + "," + pageModePrintAreaEndPosX.getText();
 			try {
-				printer.setPageModePrintArea(area);
+				((POSPrinter)service).setPageModePrintArea(area);
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -913,7 +788,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleSetPrintDirection(ActionEvent e) {
 		try {
-			printer.setPageModePrintDirection(POSPrinterConstantMapper
+			((POSPrinter)service).setPageModePrintDirection(POSPrinterConstantMapper
 					.getConstantNumberFromString(pageModePrintDirection.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -923,7 +798,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleSetPageModeStation(ActionEvent e) {
 		try {
-			printer.setPageModeStation(POSPrinterConstantMapper
+			((POSPrinter)service).setPageModeStation(POSPrinterConstantMapper
 					.getConstantNumberFromString(pageModePrintStation.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -933,7 +808,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleClearPrintArea(ActionEvent e) {
 		try {
-			printer.clearPrintArea();
+			((POSPrinter)service).clearPrintArea();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -942,7 +817,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handlePageModePrint(ActionEvent e) {
 		try {
-			printer.pageModePrint(POSPrinterConstantMapper.getConstantNumberFromString(pageModePrint
+			((POSPrinter)service).pageModePrint(POSPrinterConstantMapper.getConstantNumberFromString(pageModePrint
 					.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -954,7 +829,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleChangePrintSide(ActionEvent e) {
 		try {
-			printer.changePrintSide(POSPrinterConstantMapper.getConstantNumberFromString(printSide
+			((POSPrinter)service).changePrintSide(POSPrinterConstantMapper.getConstantNumberFromString(printSide
 					.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -964,7 +839,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleMarkFeed(ActionEvent e) {
 		try {
-			printer.markFeed(POSPrinterConstantMapper.getConstantNumberFromString(markFeed
+			((POSPrinter)service).markFeed(POSPrinterConstantMapper.getConstantNumberFromString(markFeed
 					.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -974,7 +849,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleSetCharacterSet(ActionEvent e) {
 		try {
-			printer.setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
+			((POSPrinter)service).setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -983,7 +858,7 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	public void handleSetMapCharacterSet(ActionEvent e) {
 		try {
-			printer.setMapCharacterSet(mapCharacterSet.getSelectionModel().getSelectedItem());
+			((POSPrinter)service).setMapCharacterSet(mapCharacterSet.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -997,7 +872,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbJournal.isSelected()) {
 				try {
-					printer.setJrnLineSpacing(Integer.parseInt(lineSpacing.getText()));
+					((POSPrinter)service).setJrnLineSpacing(Integer.parseInt(lineSpacing.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1005,7 +880,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbReceipt.isSelected()) {
 				try {
-					printer.setRecLineSpacing(Integer.parseInt(lineSpacing.getText()));
+					((POSPrinter)service).setRecLineSpacing(Integer.parseInt(lineSpacing.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1013,7 +888,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbSlip.isSelected()) {
 				try {
-					printer.setSlpLineSpacing(Integer.parseInt(lineSpacing.getText()));
+					((POSPrinter)service).setSlpLineSpacing(Integer.parseInt(lineSpacing.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1028,7 +903,7 @@ public class POSPrinterController implements Initializable {
 		} else {
 			if (rbJournal.isSelected()) {
 				try {
-					printer.setJrnLineChars(Integer.parseInt(lineChars.getText()));
+					((POSPrinter)service).setJrnLineChars(Integer.parseInt(lineChars.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1036,7 +911,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbReceipt.isSelected()) {
 				try {
-					printer.setRecLineChars(Integer.parseInt(lineChars.getText()));
+					((POSPrinter)service).setRecLineChars(Integer.parseInt(lineChars.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1044,7 +919,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbSlip.isSelected()) {
 				try {
-					printer.setSlpLineChars(Integer.parseInt(lineChars.getText()));
+					((POSPrinter)service).setSlpLineChars(Integer.parseInt(lineChars.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1059,7 +934,7 @@ public class POSPrinterController implements Initializable {
 		} else {
 			if (rbJournal.isSelected()) {
 				try {
-					printer.setJrnLineHeight(Integer.parseInt(lineHeight.getText()));
+					((POSPrinter)service).setJrnLineHeight(Integer.parseInt(lineHeight.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1067,7 +942,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbReceipt.isSelected()) {
 				try {
-					printer.setRecLineHeight(Integer.parseInt(lineHeight.getText()));
+					((POSPrinter)service).setRecLineHeight(Integer.parseInt(lineHeight.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1075,7 +950,7 @@ public class POSPrinterController implements Initializable {
 
 			if (rbSlip.isSelected()) {
 				try {
-					printer.setSlpLineHeight(Integer.parseInt(lineHeight.getText()));
+					((POSPrinter)service).setSlpLineHeight(Integer.parseInt(lineHeight.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
@@ -1087,7 +962,7 @@ public class POSPrinterController implements Initializable {
 	public void handleSetCurrentCartridge(ActionEvent e) {
 		if (rbJournal.isSelected()) {
 			try {
-				printer.setJrnCurrentCartridge(POSPrinterConstantMapper
+				((POSPrinter)service).setJrnCurrentCartridge(POSPrinterConstantMapper
 						.getConstantNumberFromString(currentCartridge.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -1096,7 +971,7 @@ public class POSPrinterController implements Initializable {
 
 		if (rbReceipt.isSelected()) {
 			try {
-				printer.setRecCurrentCartridge(POSPrinterConstantMapper
+				((POSPrinter)service).setRecCurrentCartridge(POSPrinterConstantMapper
 						.getConstantNumberFromString(currentCartridge.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -1105,7 +980,7 @@ public class POSPrinterController implements Initializable {
 
 		if (rbSlip.isSelected()) {
 			try {
-				printer.setSlpCurrentCartridge(POSPrinterConstantMapper
+				((POSPrinter)service).setSlpCurrentCartridge(POSPrinterConstantMapper
 						.getConstantNumberFromString(currentCartridge.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -1123,6 +998,11 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	/**
+	 * This Method gets a Byte Array from a File to print it with printMemoryBitmap
+	 * @param path to Binary File
+	 * @return byte[] containing the data from the File
+	 */
 	private byte[] getBytesFromFile(String path) {
 		byte[] bytes = null;
 		BufferedImage originalImage = null;
@@ -1159,6 +1039,12 @@ public class POSPrinterController implements Initializable {
 		return bytes;
 	}
 
+	/**
+	 * This Method returns the Type of the selected file and returns it, if it is a valid type. Otherwise an Exception is thrown 
+	 * @param path to File
+	 * @return
+	 * @throws IOException
+	 */
 	private int getTypeFromFile(String path) throws IOException {
 		String extension = "";
 
@@ -1188,6 +1074,12 @@ public class POSPrinterController implements Initializable {
 	/*
 	 * Initialize ComboBoxes
 	 */
+
+	
+	private void setUpLogicalNameComboBox() {
+		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.POSPRINTER_DEVCAT
+				.toString()));
+	}
 
 	private void setUpRotationMode() {
 		rotationMode.getItems().clear();
@@ -1379,13 +1271,16 @@ public class POSPrinterController implements Initializable {
 		markFeed.setValue(POSPrinterConstantMapper.PTR_MF_TO_TAKEUP.getConstant());
 	}
 
+	/**
+	 * Sets the CharacterSetComboBox Values corresponding to the allowed Values for this device.
+	 */
 	private void setUpCharacterSet() {
 		characterSet.getItems().clear();
 		try {
-			for (int i = 0; i < printer.getCharacterSetList().split(",").length; i++) {
-				characterSet.getItems().add(Integer.parseInt((printer.getCharacterSetList().split(","))[i]));
+			for (int i = 0; i < ((POSPrinter)service).getCharacterSetList().split(",").length; i++) {
+				characterSet.getItems().add(Integer.parseInt((((POSPrinter)service).getCharacterSetList().split(","))[i]));
 				if (i == 0) {
-					characterSet.setValue(Integer.parseInt((printer.getCharacterSetList().split(","))[i]));
+					characterSet.setValue(Integer.parseInt((((POSPrinter)service).getCharacterSetList().split(","))[i]));
 				}
 			}
 
@@ -1442,6 +1337,11 @@ public class POSPrinterController implements Initializable {
 		setUpMapCharacterSet();
 	}
 
+	/**
+	 * Gets the Constant for the currently selected station
+	 * @return
+	 * @throws JposException
+	 */
 	private int getSelectedStation() throws JposException {
 		if (rbJournal.isSelected()) {
 			return POSPrinterConst.PTR_S_JOURNAL;
@@ -1457,15 +1357,23 @@ public class POSPrinterController implements Initializable {
 		throw new JposException(JposConst.JPOS_E_FAILURE, "No Station is selected!");
 	}
 
+	/**
+	 * Initialize the PageMode Properties PageModeArea and PageModeDescriptor 
+	 */
 	private void setUpPageModeLabels() {
 		try {
-			pageModeArea.setText(printer.getPageModeArea());
-			pageModeDescriptor.setText(POSPrinterConstantMapper.getPageModeDescriptorConstantName(printer
+			pageModeArea.setText(((POSPrinter)service).getPageModeArea());
+			pageModeDescriptor.setText(POSPrinterConstantMapper.getPageModeDescriptorConstantName(((POSPrinter)service)
 					.getPageModeDescriptor()));
 		} catch (JposException e) {
 		}
 	}
 
+	/**
+	 * Adds the ESC-Character to the printNormal-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * @return the Correct String containing the ESC-characters
+	 */
 	private String addEscSequencesToPrintNormalData() {
 		String ret = printNormalData.getText();
 		if (!printNormalEscapeSequenceList.isEmpty()) {
@@ -1480,7 +1388,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if something was added to printNormalData
 	 */
 	private void updateInsertsEscSequencesToPrintNormalData(int diff) {
 		int cursorPos = printNormalData.getCaretPosition();
@@ -1495,16 +1403,17 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+
 	/**
-	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if something was deleted from printNormalData
 	 */
 	private void updateDeletesEscSequencesToPrintNormalData(int diff) {
 		// Compare Length with ArrayList pos
 		// Decrement Index -1 > Cursor Pos
 		int cursorPos = printNormalData.getCaretPosition();
 		for (int pos : printNormalEscapeSequenceList) {
-			if (pos > printNormalData.getText().length()) {
-				printNormalEscapeSequenceList.remove((Object) pos);
+			if(pos > printNormalData.getText().length()){
+				printNormalEscapeSequenceList.remove((Object)pos);
 				System.out.println("Removed: " + pos);
 				if (printNormalEscapeSequenceList.isEmpty()) {
 					break;
@@ -1527,8 +1436,13 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	
 	/* Print 2 Normal First */
-
+	/**
+	 * Adds the ESC-Character to the print2NormalFirst-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * @return the Correct String containing the ESC-characters
+	 */
 	private String addEscSequencesToPrint2NormalDataFirst() {
 
 		String ret = print2NormalFirstData.getText();
@@ -1544,7 +1458,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if something was added to print2NormalDataFirst
 	 */
 	private void updateInsertsEscSequencesToPrint2NormalDataFirst(int diff) {
 		int cursorPos = print2NormalFirstData.getCaretPosition();
@@ -1560,15 +1474,15 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if something was deleted from print2NormalDataFirst
 	 */
 	private void updateDeletesEscSequencesToPrint2NormalDataFirst(int diff) {
 		// Compare Length with ArrayList pos
 		// Decrement Index -1 > Cursor Pos
 		int cursorPos = print2NormalFirstData.getCaretPosition();
 		for (int pos : print2NormalFirstEscapeSequenceList) {
-			if (pos > print2NormalFirstData.getText().length()) {
-				print2NormalFirstEscapeSequenceList.remove((Object) pos);
+			if(pos > print2NormalFirstData.getText().length()){
+				print2NormalFirstEscapeSequenceList.remove((Object)pos);
 				System.out.println("Removed: " + pos);
 				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
 					break;
@@ -1592,7 +1506,12 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/* Print 2 Normal Second */
-
+	
+	/**
+	 * Adds the ESC-Character to the print2NormalSecond-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * @return the Correct String containing the ESC-characters
+	 */
 	private String addEscSequencesToPrint2NormalDataSecond() {
 		String ret = print2NormalSecondData.getText();
 		if (!print2NormalSecondEscapeSequenceList.isEmpty()) {
@@ -1607,7 +1526,7 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if something was added to print2NormalDataSecond
 	 */
 	private void updateInsertsEscSequencesToPrint2NormalDataSecond(int diff) {
 		int cursorPos = print2NormalSecondData.getCaretPosition();
@@ -1623,59 +1542,39 @@ public class POSPrinterController implements Initializable {
 	}
 
 	/**
-	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
+	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if something was deleted from print2NormalDataSecond
 	 */
 	private void updateDeletesEscSequencesToPrint2NormalDataSecond(int diff) {
 		// Compare Length with ArrayList pos
 		// Decrement Index -1 > Cursor Pos
 		int cursorPos = print2NormalSecondData.getCaretPosition();
 		for (int pos : print2NormalSecondEscapeSequenceList) {
-			if (pos > print2NormalSecondData.getText().length()) {
-				print2NormalSecondEscapeSequenceList.remove((Object) pos);
+			if(pos > print2NormalSecondData.getText().length()){
+				print2NormalSecondEscapeSequenceList.remove((Object)pos);
 				System.out.println("Removed: " + pos);
 				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
 					break;
 				}
 				continue;
 			}
-
+			
 			if (pos == cursorPos - 1) {
 				print2NormalSecondEscapeSequenceList.remove((Object) pos);
 				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
 					break;
 				}
 			}
-
+			
 			if (pos > cursorPos) {
 				print2NormalSecondEscapeSequenceList.remove((Object) pos);
 				print2NormalSecondEscapeSequenceList.add(0, pos - diff);
 			}
-
+			
 			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
 				break;
 			}
 		}
 	}
-
-	/**
-	 * Set StatusLabel
-	 */
-	private void setStatusLabel() {
-		if (printer.getState() == JposConst.JPOS_S_IDLE) {
-			statusLabel.setText("JPOS_S_IDLE");
-		}
-
-		if (printer.getState() == JposConst.JPOS_S_CLOSED) {
-			statusLabel.setText("JPOS_S_CLOSED");
-		}
-
-		if (printer.getState() == JposConst.JPOS_S_BUSY) {
-			statusLabel.setText("JPOS_S_BUSY");
-		}
-
-		if (printer.getState() == JposConst.JPOS_S_ERROR) {
-			statusLabel.setText("JPOS_S_ERROR");
-		}
-	}
-
+	
+	
 }
