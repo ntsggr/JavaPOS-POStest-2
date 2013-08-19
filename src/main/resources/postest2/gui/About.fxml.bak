@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane >
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" >
+  <!-- TODO Add Nodes -->
+  <children>
+    <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POSTest">
+      <font>
+        <Font name="System Bold" size="32.0" />
+      </font>
+    </Text>
+    <Text fontSmoothingType="LCD" layoutX="184.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The JavaPOS Device Tester">
+      <font>
+        <Font name="System Bold" size="20.0" />
+      </font>
+    </Text>
+    <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POStest is a community project under the direction of the JavaPOS working group." />
+  </children>
+  <stylesheets>
+    <URL value="@win7glass.css" />
+  </stylesheets>
+</AnchorPane>
+</AnchorPane>

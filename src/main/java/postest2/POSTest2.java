@@ -14,7 +14,7 @@ public class POSTest2 extends Application {
 	public void start(Stage primaryStage) throws IOException {
 		
 		Parent root = FXMLLoader.load(getClass().getResource("gui/MainWindow.fxml"));
-		Scene scene = new Scene(root, 1300, 800);
+		Scene scene = new Scene(root, 1150, 800);
 		primaryStage.setTitle("JavaPOS POStest 2");
 		primaryStage.setScene(scene);
 		primaryStage.show();

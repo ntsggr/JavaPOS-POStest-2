@@ -8,6 +8,7 @@ package postest2;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +18,17 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -34,18 +44,18 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import jpos.JposConst;
 import jpos.JposException;
 import jpos.LineDisplayConst;
 import jpos.POSPrinter;
 import jpos.POSPrinterConst;
-import jpos.config.JposConfigException;
 import jpos.profile.JposDevCats;
 
 public class POSPrinterController implements Initializable {
 
-	//Common
+	// Common
 	@FXML
 	private ComboBox<String> logicalName;
 	@FXML
@@ -57,13 +67,15 @@ public class POSPrinterController implements Initializable {
 	@FXML
 	private Button buttonRelease;
 	@FXML
+	private Button buttonInfo;
+	@FXML
 	private Button buttonStatistics;
 	@FXML
 	private Button buttonClose;
 	@FXML
 	private Button buttonFirmware;
 	@FXML
-	private Label statusLabel;
+	private Text statusLabel;
 	@FXML
 	private CheckBox freezeEvents;
 	@FXML
@@ -208,6 +220,8 @@ public class POSPrinterController implements Initializable {
 	private boolean recLetterQuality = false;
 	private boolean slpLetterQuality = false;
 
+	private static String statistics = "";
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		printer = new POSPrinter();
@@ -228,10 +242,10 @@ public class POSPrinterController implements Initializable {
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 
 				if (arg2.length() > arg1.length()) {
-					updateInsertsEscSequencesToPrintNormalData();
+					updateInsertsEscSequencesToPrintNormalData((arg2.length() - arg1.length()));
 
 				} else {
-					updateDeletesEscSequencesToPrintNormalData();
+					updateDeletesEscSequencesToPrintNormalData(arg1.length() - arg2.length());
 				}
 			}
 		});
@@ -241,9 +255,9 @@ public class POSPrinterController implements Initializable {
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 
 				if (arg2.length() > arg1.length()) {
-					updateInsertsEscSequencesToPrint2NormalDataFirst();
+					updateInsertsEscSequencesToPrint2NormalDataFirst(arg2.length() - arg1.length());
 				} else {
-					updateDeletesEscSequencesToPrint2NormalDataFirst();
+					updateDeletesEscSequencesToPrint2NormalDataFirst(arg1.length() - arg2.length());
 				}
 			}
 		});
@@ -253,9 +267,9 @@ public class POSPrinterController implements Initializable {
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
 
 				if (arg2.length() > arg1.length()) {
-					updateInsertsEscSequencesToPrint2NormalDataSecond();
+					updateInsertsEscSequencesToPrint2NormalDataSecond(arg2.length() - arg1.length());
 				} else {
-					updateDeletesEscSequencesToPrint2NormalDataSecond();
+					updateDeletesEscSequencesToPrint2NormalDataSecond(arg1.length() - arg2.length());
 				}
 			}
 		});
@@ -277,6 +291,8 @@ public class POSPrinterController implements Initializable {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				printer.open(logicalName.getValue());
 				buttonClaim.setDisable(false);
+				System.out.println(printer.getState());
+				setStatusLabel();
 			} else {
 				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty",
 						JOptionPane.WARNING_MESSAGE);
@@ -306,6 +322,7 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
+		deviceMessages.setText("");
 		try {
 			if (deviceEnabled.isSelected()) {
 				printer.setDeviceEnabled(true);
@@ -348,6 +365,7 @@ public class POSPrinterController implements Initializable {
 			buttonClaim.setDisable(true);
 			deviceEnabled.setDisable(true);
 			buttonRelease.setDisable(true);
+			setStatusLabel();
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
 					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem()
@@ -355,15 +373,130 @@ public class POSPrinterController implements Initializable {
 		}
 	}
 
+	// Shows information of device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String ver = new Integer(printer.getDeviceServiceVersion()).toString();
+			String msg = "Service Description: " + printer.getDeviceServiceDescription();
+			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
+					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
+			ver = new Integer(printer.getDeviceControlVersion()).toString();
+			msg += "\n\nControl Description: " + printer.getDeviceControlDescription();
+			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
+					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
+			msg += "\n\nPhysical Device Name: " + printer.getPhysicalDeviceName();
+			msg += "\nPhysical Device Description: " + printer.getPhysicalDeviceDescription();
+
+			msg += "\n\nProperties:\n------------------------";
+
+			msg += "\nCapStatisticsReporting: " + (printer.getCapStatisticsReporting());
+
+			msg += "\nCapUpdateFirmware: " + (printer.getCapUpdateFirmware());
+
+			msg += "\nCapCompareFirmwareVersion: " + (printer.getCapCompareFirmwareVersion());
+
+			msg += "\nCapPowerReporting: "
+					+ (printer.getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced" : (printer
+							.getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard" : "None"));
+
+			msg = msg + "\nCapCharacterSet: ";
+			int charSet = printer.getCapCharacterSet();
+			switch (charSet) {
+			case LineDisplayConst.DISP_CCS_NUMERIC:
+				msg = msg + "DISP_CCS_NUMERIC";
+				break;
+			case LineDisplayConst.DISP_CCS_ALPHA:
+				msg = msg + "DISP_CCS_ALPHA";
+				break;
+			case LineDisplayConst.DISP_CCS_ASCII:
+				msg = msg + "DISP_CCS_ASCII";
+				break;
+			case LineDisplayConst.DISP_CCS_KANA:
+				msg = msg + "DISP_CCS_KANA";
+				break;
+			case LineDisplayConst.DISP_CCS_KANJI:
+				msg = msg + "DISP_CCS_KANJI";
+				break;
+			case LineDisplayConst.DISP_CCS_UNICODE:
+				msg = msg + "DISP_CCS_UNICODE";
+				break;
+			}
+
+			msg = msg + "\nCapMapCharacterSet: " + printer.getCapMapCharacterSet();
+
+			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device
 	@FXML
 	public void handleStatistics(ActionEvent e) {
-		// TODO implement
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			printer.retrieveStatistics(stats);
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+		}
 
+		try {
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		}
+
+		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		statistics = "";
+	}
+
+	// Method to parse the String XML and print the data
+	private static void printStatistics(Node e, String tab) {
+		if (e.getNodeType() == Node.TEXT_NODE) {
+			statistics += tab + e.getNodeValue() + "\n";
+			return;
+		}
+
+		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
+				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
+				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
+			statistics += tab + e.getNodeName();
+
+		if (e.getNodeValue() != null) {
+			statistics += tab + " " + e.getNodeValue();
+		}
+
+		NodeList childs = e.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			printStatistics(childs.item(i), " ");
+		}
 	}
 
 	@FXML
 	public void handleFirmware(ActionEvent e) {
-		// TODO implement
+		try {
+			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(printer);
+			dlg.setVisible(true);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@FXML
@@ -457,6 +590,7 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handlePrintNormal(ActionEvent e) {
+		System.out.println(addEscSequencesToPrintNormalData());
 		try {
 			printer.printNormal(getSelectedStation(), addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
@@ -611,18 +745,25 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handlePrintBarcode(ActionEvent e) {
-		try {
-			printer.printBarCode(this.getSelectedStation(), barcodeData.getText(), POSPrinterConstantMapper
-					.getConstantNumberFromString(barcodeSymbology.getSelectionModel().getSelectedItem()),
-					Integer.parseInt(barcodeHeight.getText()), Integer.parseInt(barcodeWidth.getText()),
-					POSPrinterConstantMapper.getConstantNumberFromString(barcodeAlignment.getSelectionModel()
-							.getSelectedItem()), POSPrinterConstantMapper
-							.getConstantNumberFromString(barcodeTextPosition.getSelectionModel()
-									.getSelectedItem()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (barcodeData.getText().equals("") || barcodeHeight.getText().equals("")
+				|| barcodeWidth.getText().equals("")) {
+
+			JOptionPane.showMessageDialog(null, "One of the parameter is not specified");
+		} else {
+			try {
+				printer.printBarCode(this.getSelectedStation(), barcodeData.getText(),
+						POSPrinterConstantMapper.getConstantNumberFromString(barcodeSymbology
+								.getSelectionModel().getSelectedItem()), Integer.parseInt(barcodeHeight
+								.getText()), Integer.parseInt(barcodeWidth.getText()),
+						POSPrinterConstantMapper.getConstantNumberFromString(barcodeAlignment
+								.getSelectionModel().getSelectedItem()), POSPrinterConstantMapper
+								.getConstantNumberFromString(barcodeTextPosition.getSelectionModel()
+										.getSelectedItem()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
@@ -630,45 +771,58 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handlePrintBitmap(ActionEvent e) {
-		try {
-			printer.printBitmap(this.getSelectedStation(), bitmapPath.getText(), POSPrinterConstantMapper
-					.getConstantNumberFromString(bitmapWidth.getSelectionModel().getSelectedItem()),
-					POSPrinterConstantMapper.getConstantNumberFromString(bitmapAlignment.getSelectionModel()
-							.getSelectedItem()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (bitmapPath.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Bitmap Path is not specified!");
+		} else {
+			try {
+				printer.printBitmap(this.getSelectedStation(), bitmapPath.getText(), POSPrinterConstantMapper
+						.getConstantNumberFromString(bitmapWidth.getSelectionModel().getSelectedItem()),
+						POSPrinterConstantMapper.getConstantNumberFromString(bitmapAlignment
+								.getSelectionModel().getSelectedItem()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
 	@FXML
 	public void handlePrintMemoryBitmap(ActionEvent e) {
-		try {
-			printer.printMemoryBitmap(this.getSelectedStation(), getBytesFromFile(bitmapPath.getText()),
-					POSPrinterConstantMapper.getConstantNumberFromString(bitmapWidth.getSelectionModel()
-							.getSelectedItem()), getTypeFromFile(bitmapPath.getText()),
-					POSPrinterConstantMapper.getConstantNumberFromString(bitmapAlignment.getSelectionModel()
-							.getSelectedItem()));
-		} catch (NumberFormatException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		} catch (IOException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (bitmapPath.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Binary Path is not specified!");
+		} else {
+			try {
+				printer.printMemoryBitmap(this.getSelectedStation(), getBytesFromFile(bitmapPath.getText()),
+						POSPrinterConstantMapper.getConstantNumberFromString(bitmapWidth.getSelectionModel()
+								.getSelectedItem()), getTypeFromFile(bitmapPath.getText()),
+						POSPrinterConstantMapper.getConstantNumberFromString(bitmapAlignment
+								.getSelectionModel().getSelectedItem()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (IOException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
 	@FXML
 	public void handleSetBitmap(ActionEvent e) {
-		try {
-			printer.setBitmap(bitmapNumber.getSelectionModel().getSelectedItem(), getSelectedStation(),
-					bitmapPath.getText(), POSPrinterConstantMapper.getConstantNumberFromString(bitmapWidth
-							.getSelectionModel().getSelectedItem()), POSPrinterConstantMapper
-							.getConstantNumberFromString(bitmapAlignment.getSelectionModel()
-									.getSelectedItem()));
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (bitmapPath.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Bitmap Path is not specified!");
+		} else {
+			try {
+				printer.setBitmap(bitmapNumber.getSelectionModel().getSelectedItem(), getSelectedStation(),
+						bitmapPath.getText(), POSPrinterConstantMapper
+								.getConstantNumberFromString(bitmapWidth.getSelectionModel()
+										.getSelectedItem()), POSPrinterConstantMapper
+								.getConstantNumberFromString(bitmapAlignment.getSelectionModel()
+										.getSelectedItem()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
@@ -686,17 +840,26 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handleDrawRuledLine(ActionEvent e) {
-		String position = drawLineStartPosX.getText() + "" + drawLineStartPosY.getText() + ""
-				+ drawLineEndPosX.getText() + "" + drawLineEndPosY.getText();
-		try {
-			printer.drawRuledLine(getSelectedStation(), position, POSPrinterConstantMapper
-					.getConstantNumberFromString(drawLineDirection.getSelectionModel().getSelectedItem()),
-					Integer.parseInt(drawLineWidth.getText()),
-					POSPrinterConstantMapper.getConstantNumberFromString(drawLineStyle.getSelectionModel()
-							.getSelectedItem()), POSPrinterConstantMapper
-							.getConstantNumberFromString(drawLineColor.getSelectionModel().getSelectedItem()));
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+
+		if (drawLineStartPosX.getText().equals("") || drawLineStartPosY.getText().equals("")
+				|| drawLineEndPosX.getText().equals("") || drawLineEndPosY.getText().equals("")
+				|| drawLineWidth.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "One of the Parameter is not specified!");
+		} else {
+			String position = drawLineStartPosX.getText() + "," + drawLineStartPosY.getText() + ","
+					+ drawLineEndPosX.getText() + "," + drawLineEndPosY.getText();
+			try {
+				printer.drawRuledLine(getSelectedStation(), position,
+						POSPrinterConstantMapper.getConstantNumberFromString(drawLineDirection
+								.getSelectionModel().getSelectedItem()), Integer.parseInt(drawLineWidth
+								.getText()), POSPrinterConstantMapper
+								.getConstantNumberFromString(drawLineStyle.getSelectionModel()
+										.getSelectedItem()), POSPrinterConstantMapper
+								.getConstantNumberFromString(drawLineColor.getSelectionModel()
+										.getSelectedItem()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
@@ -704,30 +867,46 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handleSetHorizontalPosition(ActionEvent e) {
-		try {
-			printer.setPageModeHorizontalPosition(Integer.parseInt(pageModeHorizontalPosition.getText()));
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (pageModeHorizontalPosition.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Horizontal Position is not specified!");
+		} else {
+			try {
+				printer.setPageModeHorizontalPosition(Integer.parseInt(pageModeHorizontalPosition.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
 	@FXML
 	public void handleSetVerticalPosition(ActionEvent e) {
-		try {
-			printer.setPageModeVerticalPosition(Integer.parseInt(pageModeVerticalPosition.getText()));
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (pageModeVerticalPosition.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Vertical Position is not specified!");
+		} else {
+			try {
+				printer.setPageModeVerticalPosition(Integer.parseInt(pageModeVerticalPosition.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
 	@FXML
 	public void handleSetPrintArea(ActionEvent e) {
-		String area = pageModePrintAreaStartPosX + "," + pageModePrintAreaStartPosY + ","
-				+ pageModePrintAreaEndPosX + "," + pageModePrintAreaEndPosX;
-		try {
-			printer.setPageModePrintArea(area);
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (pageModePrintAreaStartPosX.getText().equals("")
+				|| pageModePrintAreaStartPosY.getText().equals("")
+				|| pageModePrintAreaEndPosX.getText().equals("")
+				|| pageModePrintAreaEndPosX.getText().equals("")) {
+
+			JOptionPane.showMessageDialog(null, "One of the Parameter is not specified!");
+		} else {
+			String area = pageModePrintAreaStartPosX.getText() + "," + pageModePrintAreaStartPosY.getText()
+					+ "," + pageModePrintAreaEndPosX.getText() + "," + pageModePrintAreaEndPosX.getText();
+			try {
+				printer.setPageModePrintArea(area);
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
 		}
 	}
 
@@ -812,81 +991,94 @@ public class POSPrinterController implements Initializable {
 
 	@FXML
 	public void handleSetLineSpacing(ActionEvent e) {
-		if (rbJournal.isSelected()) {
-			try {
-				printer.setJrnLineSpacing(Integer.parseInt(lineSpacing.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-		}
+		if (lineSpacing.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Line Spacing is not specified!");
+		} else {
 
-		if (rbReceipt.isSelected()) {
-			try {
-				printer.setRecLineSpacing(Integer.parseInt(lineSpacing.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+			if (rbJournal.isSelected()) {
+				try {
+					printer.setJrnLineSpacing(Integer.parseInt(lineSpacing.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
-		}
 
-		if (rbSlip.isSelected()) {
-			try {
-				printer.setSlpLineSpacing(Integer.parseInt(lineSpacing.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+			if (rbReceipt.isSelected()) {
+				try {
+					printer.setRecLineSpacing(Integer.parseInt(lineSpacing.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}
+
+			if (rbSlip.isSelected()) {
+				try {
+					printer.setSlpLineSpacing(Integer.parseInt(lineSpacing.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
 		}
 	}
 
 	@FXML
 	public void handleSetLineChars(ActionEvent e) {
-		if (rbJournal.isSelected()) {
-			try {
-				printer.setJrnLineChars(Integer.parseInt(lineChars.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (lineChars.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Line Chars is not specified!");
+		} else {
+			if (rbJournal.isSelected()) {
+				try {
+					printer.setJrnLineChars(Integer.parseInt(lineChars.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
-		}
 
-		if (rbReceipt.isSelected()) {
-			try {
-				printer.setRecLineChars(Integer.parseInt(lineChars.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+			if (rbReceipt.isSelected()) {
+				try {
+					printer.setRecLineChars(Integer.parseInt(lineChars.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
-		}
 
-		if (rbSlip.isSelected()) {
-			try {
-				printer.setSlpLineChars(Integer.parseInt(lineChars.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+			if (rbSlip.isSelected()) {
+				try {
+					printer.setSlpLineChars(Integer.parseInt(lineChars.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
 		}
 	}
 
 	@FXML
 	public void handleSetLineHeight(ActionEvent e) {
-		if (rbJournal.isSelected()) {
-			try {
-				printer.setJrnLineHeight(Integer.parseInt(lineHeight.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+		if (lineHeight.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Line Height is not specified!");
+		} else {
+			if (rbJournal.isSelected()) {
+				try {
+					printer.setJrnLineHeight(Integer.parseInt(lineHeight.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
-		}
 
-		if (rbReceipt.isSelected()) {
-			try {
-				printer.setRecLineHeight(Integer.parseInt(lineHeight.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+			if (rbReceipt.isSelected()) {
+				try {
+					printer.setRecLineHeight(Integer.parseInt(lineHeight.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
-		}
 
-		if (rbSlip.isSelected()) {
-			try {
-				printer.setSlpLineHeight(Integer.parseInt(lineHeight.getText()));
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
+			if (rbSlip.isSelected()) {
+				try {
+					printer.setSlpLineHeight(Integer.parseInt(lineHeight.getText()));
+				} catch (JposException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
 			}
 		}
 	}
@@ -1062,7 +1254,6 @@ public class POSPrinterController implements Initializable {
 		barcodeSymbology.getItems().add(POSPrinterConstantMapper.PTR_BCS_AZTEC.getConstant());
 		barcodeSymbology.getItems().add(POSPrinterConstantMapper.PTR_BCS_UPDF417.getConstant());
 		barcodeSymbology.getItems().add(POSPrinterConstantMapper.PTR_BCS_OTHER.getConstant());
-
 		barcodeSymbology.setValue(POSPrinterConstantMapper.PTR_BCS_UPCA.getConstant());
 
 	}
@@ -1161,6 +1352,15 @@ public class POSPrinterController implements Initializable {
 		pageModePrintStation.setValue(POSPrinterConstantMapper.PTR_S_RECEIPT.getConstant());
 	}
 
+	private void setUpPageModePrintCommands() {
+		pageModePrint.getItems().clear();
+		pageModePrint.getItems().add(POSPrinterConstantMapper.PTR_PM_PAGE_MODE.getConstant());
+		pageModePrint.getItems().add(POSPrinterConstantMapper.PTR_PM_PRINT_SAVE.getConstant());
+		pageModePrint.getItems().add(POSPrinterConstantMapper.PTR_PM_NORMAL.getConstant());
+		pageModePrint.getItems().add(POSPrinterConstantMapper.PTR_PM_CANCEL.getConstant());
+		pageModePrint.setValue(POSPrinterConstantMapper.PTR_PM_PAGE_MODE.getConstant());
+	}
+
 	private void setUpPrintSide() {
 		printSide.getItems().clear();
 		printSide.getItems().add(POSPrinterConstantMapper.PTR_PS_UNKNOWN.getConstant());
@@ -1234,6 +1434,7 @@ public class POSPrinterController implements Initializable {
 		setUpPrint2NormalStation();
 		setUpPageModePrintDirection();
 		setUpPageModePrintStation();
+		setUpPageModePrintCommands();
 		setUpPrintSide();
 		setUpMarkFeed();
 		setUpCharacterSet();
@@ -1281,12 +1482,12 @@ public class POSPrinterController implements Initializable {
 	/**
 	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
 	 */
-	private void updateInsertsEscSequencesToPrintNormalData() {
+	private void updateInsertsEscSequencesToPrintNormalData(int diff) {
 		int cursorPos = printNormalData.getCaretPosition();
 		for (int pos : printNormalEscapeSequenceList) {
 			if (pos > cursorPos) {
 				printNormalEscapeSequenceList.remove((Object) pos);
-				printNormalEscapeSequenceList.add(0, pos + 1);
+				printNormalEscapeSequenceList.add(0, pos + diff);
 			}
 			if (printNormalEscapeSequenceList.isEmpty()) {
 				break;
@@ -1297,11 +1498,19 @@ public class POSPrinterController implements Initializable {
 	/**
 	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
 	 */
-	private void updateDeletesEscSequencesToPrintNormalData() {
+	private void updateDeletesEscSequencesToPrintNormalData(int diff) {
 		// Compare Length with ArrayList pos
 		// Decrement Index -1 > Cursor Pos
 		int cursorPos = printNormalData.getCaretPosition();
 		for (int pos : printNormalEscapeSequenceList) {
+			if (pos > printNormalData.getText().length()) {
+				printNormalEscapeSequenceList.remove((Object) pos);
+				System.out.println("Removed: " + pos);
+				if (printNormalEscapeSequenceList.isEmpty()) {
+					break;
+				}
+				continue;
+			}
 			if (pos == cursorPos - 1) {
 				printNormalEscapeSequenceList.remove((Object) pos);
 				if (printNormalEscapeSequenceList.isEmpty()) {
@@ -1310,7 +1519,10 @@ public class POSPrinterController implements Initializable {
 			}
 			if (pos > cursorPos) {
 				printNormalEscapeSequenceList.remove((Object) pos);
-				printNormalEscapeSequenceList.add(0, pos - 1);
+				printNormalEscapeSequenceList.add(0, pos - diff);
+			}
+			if (printNormalEscapeSequenceList.isEmpty()) {
+				break;
 			}
 		}
 	}
@@ -1334,12 +1546,12 @@ public class POSPrinterController implements Initializable {
 	/**
 	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
 	 */
-	private void updateInsertsEscSequencesToPrint2NormalDataFirst() {
+	private void updateInsertsEscSequencesToPrint2NormalDataFirst(int diff) {
 		int cursorPos = print2NormalFirstData.getCaretPosition();
 		for (int pos : print2NormalFirstEscapeSequenceList) {
 			if (pos > cursorPos) {
 				print2NormalFirstEscapeSequenceList.remove((Object) pos);
-				print2NormalFirstEscapeSequenceList.add(0, pos + 1);
+				print2NormalFirstEscapeSequenceList.add(0, pos + diff);
 			}
 			if (printNormalEscapeSequenceList.isEmpty()) {
 				break;
@@ -1350,11 +1562,19 @@ public class POSPrinterController implements Initializable {
 	/**
 	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
 	 */
-	private void updateDeletesEscSequencesToPrint2NormalDataFirst() {
+	private void updateDeletesEscSequencesToPrint2NormalDataFirst(int diff) {
 		// Compare Length with ArrayList pos
 		// Decrement Index -1 > Cursor Pos
 		int cursorPos = print2NormalFirstData.getCaretPosition();
 		for (int pos : print2NormalFirstEscapeSequenceList) {
+			if (pos > print2NormalFirstData.getText().length()) {
+				print2NormalFirstEscapeSequenceList.remove((Object) pos);
+				System.out.println("Removed: " + pos);
+				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
+					break;
+				}
+				continue;
+			}
 			if (pos == cursorPos - 1) {
 				print2NormalFirstEscapeSequenceList.remove((Object) pos);
 				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
@@ -1363,9 +1583,11 @@ public class POSPrinterController implements Initializable {
 			}
 			if (pos > cursorPos) {
 				print2NormalFirstEscapeSequenceList.remove((Object) pos);
-				print2NormalFirstEscapeSequenceList.add(0, pos - 1);
+				print2NormalFirstEscapeSequenceList.add(0, pos - diff);
 			}
-
+			if (print2NormalFirstEscapeSequenceList.isEmpty()) {
+				break;
+			}
 		}
 	}
 
@@ -1387,12 +1609,12 @@ public class POSPrinterController implements Initializable {
 	/**
 	 * Compare Length with ArrayList pos Increment Index if > Cursor Pos
 	 */
-	private void updateInsertsEscSequencesToPrint2NormalDataSecond() {
+	private void updateInsertsEscSequencesToPrint2NormalDataSecond(int diff) {
 		int cursorPos = print2NormalSecondData.getCaretPosition();
 		for (int pos : print2NormalSecondEscapeSequenceList) {
 			if (pos > cursorPos) {
 				print2NormalSecondEscapeSequenceList.remove((Object) pos);
-				print2NormalSecondEscapeSequenceList.add(0, pos + 1);
+				print2NormalSecondEscapeSequenceList.add(0, pos + diff);
 			}
 			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
 				break;
@@ -1403,22 +1625,56 @@ public class POSPrinterController implements Initializable {
 	/**
 	 * Compare Length with ArrayList pos Decrement Index if > Cursor Pos
 	 */
-	private void updateDeletesEscSequencesToPrint2NormalDataSecond() {
+	private void updateDeletesEscSequencesToPrint2NormalDataSecond(int diff) {
 		// Compare Length with ArrayList pos
 		// Decrement Index -1 > Cursor Pos
 		int cursorPos = print2NormalSecondData.getCaretPosition();
 		for (int pos : print2NormalSecondEscapeSequenceList) {
+			if (pos > print2NormalSecondData.getText().length()) {
+				print2NormalSecondEscapeSequenceList.remove((Object) pos);
+				System.out.println("Removed: " + pos);
+				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
+					break;
+				}
+				continue;
+			}
+
 			if (pos == cursorPos - 1) {
 				print2NormalSecondEscapeSequenceList.remove((Object) pos);
 				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
 					break;
 				}
 			}
+
 			if (pos > cursorPos) {
 				print2NormalSecondEscapeSequenceList.remove((Object) pos);
-				print2NormalSecondEscapeSequenceList.add(0, pos - 1);
+				print2NormalSecondEscapeSequenceList.add(0, pos - diff);
 			}
 
+			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Set StatusLabel
+	 */
+	private void setStatusLabel() {
+		if (printer.getState() == JposConst.JPOS_S_IDLE) {
+			statusLabel.setText("JPOS_S_IDLE");
+		}
+
+		if (printer.getState() == JposConst.JPOS_S_CLOSED) {
+			statusLabel.setText("JPOS_S_CLOSED");
+		}
+
+		if (printer.getState() == JposConst.JPOS_S_BUSY) {
+			statusLabel.setText("JPOS_S_BUSY");
+		}
+
+		if (printer.getState() == JposConst.JPOS_S_ERROR) {
+			statusLabel.setText("JPOS_S_ERROR");
 		}
 	}
 

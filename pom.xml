@@ -16,6 +16,13 @@
 			<artifactId>jpos</artifactId>
 			<version>1.13.0</version>
 		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>javapos</groupId>
+			<artifactId>jpos-sources</artifactId>
+			<version>1.13.0</version>
+		</dependency>
+		-->
 		
 		<dependency>
 			<groupId>xerces</groupId>
