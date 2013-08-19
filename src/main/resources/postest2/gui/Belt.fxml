@@ -17,7 +17,6 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
-            
             <Pane fx:id="functionPane" layoutX="14.0" layoutY="53.0" prefHeight="627.0" prefWidth="958.0">
               <children>
                 <TextField id="AutoStopBackwardDelayTime" fx:id="autoStopBackwardDelayTime" layoutX="198.0" layoutY="152.0" prefWidth="100.0" />
@@ -25,7 +24,7 @@
                 <ComboBox id="autoStopBackward" fx:id="moveBackward_speed" layoutX="383.0" layoutY="278.0" prefHeight="21.0" prefWidth="113.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-	                <!-- 
+                      <!-- 
 	                  <String fx:value="Item 1" />
 	                  <String fx:value="Item 2" />
 	                  <String fx:value="Item 3" />
@@ -41,7 +40,7 @@
                 <ComboBox id="autoStopBackward" fx:id="moveForward_speed" layoutX="645.0" layoutY="278.0" prefHeight="21.0" prefWidth="113.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-	                <!-- 
+                      <!-- 
 	                  <String fx:value="Item 1" />
 	                  <String fx:value="Item 2" />
 	                  <String fx:value="Item 3" />
@@ -61,7 +60,7 @@
                 <ComboBox id="autoStopBackward" fx:id="resetitemCount_direction" layoutX="383.0" layoutY="446.0" prefHeight="21.0" prefWidth="113.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-	                <!-- 
+                      <!-- 
 	                  <String fx:value="Item 1" />
 	                  <String fx:value="Item 2" />
 	                  <String fx:value="Item 3" />
@@ -84,7 +83,7 @@
                 <ComboBox id="autoStopBackward" fx:id="adjustItemCount_direction" layoutX="114.0" layoutY="278.0" prefHeight="21.0" prefWidth="113.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-	                <!-- 
+                      <!-- 
 	                  <String fx:value="Item 1" />
 	                  <String fx:value="Item 2" />
 	                  <String fx:value="Item 3" />
@@ -97,7 +96,7 @@
                 <ComboBox id="autoStopBackward" fx:id="autoStopForward" layoutX="526.0" layoutY="31.0" prefHeight="21.0" prefWidth="100.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-	                <!-- 
+                      <!-- 
 	                  <String fx:value="Item 1" />
 	                  <String fx:value="Item 2" />
 	                  <String fx:value="Item 3" />
@@ -110,7 +109,7 @@
                 <ComboBox fx:id="autoStopBackward" layoutX="197.0" layoutY="32.0" prefHeight="21.0" prefWidth="100.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-	                <!-- 
+                      <!-- 
 	                  <String fx:value="Item 1" />
 	                  <String fx:value="Item 2" />
 	                  <String fx:value="Item 3" />
@@ -123,7 +122,6 @@
               </children>
             </Pane>
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
-          
           </children>
         </Pane>
       </center>
@@ -134,7 +132,7 @@
             <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
-                <!-- 
+                  <!-- 
                   <String fx:value="Item 1" />
                   <String fx:value="Item 2" />
                   <String fx:value="Item 3" />
@@ -152,7 +150,7 @@
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
-            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
             <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
             <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
             <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />

@@ -13,22 +13,15 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -36,17 +29,17 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
-import jpos.LineDisplayConst;
 import jpos.POSPrinter;
 import jpos.POSPrinterConst;
-import jpos.config.JposConfigException;
 import jpos.profile.JposDevCats;
-import jpos.services.BaseService;
 
 public class POSPrinterController extends CommonController implements Initializable {
 	
@@ -476,6 +469,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter)service).printNormal(getSelectedStation(), addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 

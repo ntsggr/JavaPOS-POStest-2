@@ -106,7 +106,7 @@
                         <Label layoutX="42.0" layoutY="96.0" text="Max FRR Requested:" />
                         <TextField id="identify_maxFRRRequested" fx:id="identifyMatch_maxFRRRequested" layoutX="187.0" layoutY="93.0" prefWidth="141.0" />
                         <Label layoutX="42.0" layoutY="138.0" text="FAR Precedence:" />
-                        <ComboBox id="identifyMatch_FRRPrecedence" fx:id="identifyMatch_FARPrecedence" layoutX="187.0" layoutY="136.0" prefHeight="21.0" prefWidth="141.0" />
+                        <ComboBox fx:id="identifyMatch_FRRPrecedence" layoutX="187.0" layoutY="136.0" prefHeight="21.0" prefWidth="141.0" />
                         <Label layoutX="43.0" layoutY="219.0" text="ReferenceBIR Population:" />
                         <ListView fx:id="identifyMatch_referenceBIRPopulation" layoutX="188.0" layoutY="219.0" prefHeight="200.0" prefWidth="320.0" />
                         <Label layoutX="114.0" layoutY="435.0" text="New ReferenceBIR:" />

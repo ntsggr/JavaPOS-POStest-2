@@ -8,11 +8,10 @@ package postest2;
 
 import java.lang.reflect.Field;
 
+import javafx.scene.Node;
 import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
-import javafx.scene.Node;
-import javafx.scene.control.*;
 
 /**
  * This Class provides the functionality that a Field with the RequiredState-Annotation is disabled/enabled 

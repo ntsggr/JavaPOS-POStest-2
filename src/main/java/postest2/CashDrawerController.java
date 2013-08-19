@@ -3,20 +3,14 @@ package postest2;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.Pane;
 
-import jpos.BaseJposControl;
+import javax.swing.JOptionPane;
+
 import jpos.CashDrawer;
 import jpos.CashDrawerConst;
 import jpos.JposException;

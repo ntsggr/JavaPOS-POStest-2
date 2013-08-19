@@ -15,8 +15,212 @@
       <center>
         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="root">
           <children>
-            <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
-            <CheckBox layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
+            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <TabPane fx:id="functionPane" layoutX="33.0" layoutY="50.0" prefHeight="618.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="General">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="892.0" styleClass="root">
+                      <children>
+                        <Button layoutX="118.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetAlgorithm" prefWidth="100.0" text="Set Algorithm" />
+                        <Label layoutX="33.0" layoutY="49.0" text="Set Algorithm:" />
+                        <ComboBox fx:id="algorithm" layoutX="118.0" layoutY="47.0" prefHeight="21.0" prefWidth="100.0" />
+                        <ComboBox id="currencyCode" fx:id="realTimeDataEnabled" layoutX="408.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
+                        <Button layoutX="364.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetRealTimeDataEnabled" text="Set Real Time Data Enabled" />
+                        <Label layoutX="268.0" layoutY="49.0" text="Real Time Data Enabled:" />
+                        <ComboBox id="currencyCode" fx:id="sensorOrientation" layoutX="698.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
+                        <Button layoutX="680.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetSensorOrientation" text="Set Sensor Orientation" />
+                        <Label layoutX="582.0" layoutY="49.0" text="Sensor Orientation:" />
+                        <ComboBox id="currencyCode" fx:id="sensorType" layoutX="118.0" layoutY="142.0" prefHeight="21.0" prefWidth="122.0" />
+                        <Button layoutX="135.0" layoutY="182.0" mnemonicParsing="false" onAction="#handleSetSensorType" text="Set Sensor Type" />
+                        <Label layoutX="33.0" layoutY="147.0" text="Sensor Type:" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Capture">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label alignment="CENTER" layoutX="50.0" layoutY="52.0" prefWidth="351.0" text="Begin Enroll Capture" underline="true">
+                          <font>
+                            <Font size="14.0" />
+                          </font>
+                        </Label>
+                        <TextField fx:id="beginEnrollCapture_referenceBIR" layoutX="133.0" layoutY="94.0" prefWidth="200.0" />
+                        <Label layoutX="50.0" layoutY="97.0" text="Reference-BIR:" />
+                        <Button layoutX="332.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleBrowseBeginEnrollCaptureReferenceBIR" prefWidth="69.0" text="Browse" />
+                        <TextField fx:id="beginEnrollCapture_payload" layoutX="133.0" layoutY="130.0" prefWidth="200.0" />
+                        <Label layoutX="50.0" layoutY="133.0" text="Payload:" />
+                        <Button layoutX="332.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleBrowseBeginEnrollCapturePayload" prefWidth="69.0" text="Browse" />
+                        <Button layoutX="235.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleBeginEnrollCapture" prefWidth="166.0" text="Begin Enroll Capture" />
+                        <Label alignment="CENTER" layoutX="461.0" layoutY="52.0" prefWidth="166.0" text="Begin Verify Capture" underline="true" />
+                        <Button layoutX="461.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleBeginVerifyCapture" prefWidth="166.0" text="Begin Verify Capture" />
+                        <Label alignment="CENTER" layoutX="461.0" layoutY="154.0" prefWidth="166.0" text="End Capture" underline="true" />
+                        <Button layoutX="461.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleEndCapture" prefWidth="166.0" text="End Capture" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Identify">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
+                        <TextField id="maxFARRequested" fx:id="identify_maxFARRequested" layoutX="187.0" layoutY="57.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="96.0" text="Max FRR Requested:" />
+                        <TextField fx:id="identify_maxFRRRequested" layoutX="187.0" layoutY="93.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="138.0" text="FAR Precedence:" />
+                        <ComboBox id="identify_FRRPrecedence" fx:id="identify_FARPrecedence" layoutX="187.0" layoutY="136.0" prefHeight="21.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="181.0" text="ReferenceBIR Population:" />
+                        <ListView fx:id="identify_referenceBIRPopulation" layoutX="187.0" layoutY="181.0" prefHeight="200.0" prefWidth="320.0" />
+                        <Label layoutX="113.0" layoutY="397.0" text="New ReferenceBIR:" />
+                        <TextField id="identify_maxFRRRequested" fx:id="identify_newReferenceBIR" layoutX="222.0" layoutY="394.0" prefWidth="141.0" />
+                        <Button layoutX="363.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleBrowseIdentifyReferenceBIR" text="Browse" />
+                        <Button layoutX="429.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleIdentifyAddReferenceBIR" text="Add to List" />
+                        <Label layoutX="42.0" layoutY="454.0" text="Timeout:" />
+                        <TextField id="identify_maxFRRRequested" fx:id="identify_timeout" layoutX="187.0" layoutY="451.0" prefWidth="141.0" />
+                        <Button layoutX="42.0" layoutY="490.0" mnemonicParsing="false" onAction="#handleIdentify" prefWidth="464.0" text="Identify" />
+                        <ListView id="identify_referenceBIRPopulation" fx:id="identify_candidateRanking" layoutX="650.0" layoutY="245.0" prefHeight="271.0" prefWidth="194.0" />
+                        <Label alignment="CENTER" layoutX="650.0" layoutY="216.0" prefWidth="194.0" text="Candidate Ranking:" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="IdentifyMatch">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
+                        <TextField id="maxFARRequested" fx:id="identifyMatch_maxFARRequested" layoutX="187.0" layoutY="57.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="96.0" text="Max FRR Requested:" />
+                        <TextField id="identify_maxFRRRequested" fx:id="identifyMatch_maxFRRRequested" layoutX="187.0" layoutY="93.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="138.0" text="FAR Precedence:" />
+                        <ComboBox id="identifyMatch_FRRPrecedence" fx:id="identifyMatch_FARPrecedence" layoutX="187.0" layoutY="136.0" prefHeight="21.0" prefWidth="141.0" />
+                        <Label layoutX="43.0" layoutY="219.0" text="ReferenceBIR Population:" />
+                        <ListView fx:id="identifyMatch_referenceBIRPopulation" layoutX="188.0" layoutY="219.0" prefHeight="200.0" prefWidth="320.0" />
+                        <Label layoutX="114.0" layoutY="435.0" text="New ReferenceBIR:" />
+                        <TextField id="identify_maxFRRRequested" fx:id="identifyMatch_newReferenceBIR" layoutX="223.0" layoutY="432.0" prefWidth="141.0" />
+                        <Button layoutX="364.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleBrowseIdentifyMatchReferenceBIR" text="Browse" />
+                        <Button layoutX="430.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleIdentifyMatchAddReferenceBIR" text="Add to List" />
+                        <Label layoutX="42.0" layoutY="176.0" text="Sample BIR:" />
+                        <TextField id="identify_maxFRRRequested" fx:id="identifyMatch_sampleBIR" layoutX="187.0" layoutY="173.0" prefWidth="141.0" />
+                        <Button layoutX="42.0" layoutY="490.0" mnemonicParsing="false" onAction="#handleIdentifyMatch" prefWidth="464.0" text="Identify Match" />
+                        <ListView id="identify_referenceBIRPopulation" fx:id="identifyMatch_candidateRanking" layoutX="650.0" layoutY="245.0" prefHeight="271.0" prefWidth="194.0" />
+                        <Label alignment="CENTER" layoutX="650.0" layoutY="216.0" prefWidth="194.0" text="Candidate Ranking:" />
+                        <Button layoutX="328.0" layoutY="171.0" mnemonicParsing="false" onAction="#handleBrowseIdentifyMatchSampleBIR" text="Browse" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Process Prematch Data">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Button layoutX="350.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleBrowseProcessPrematchDataSampleBIR" text="Browse" />
+                        <Label layoutX="39.0" layoutY="103.0" text="Sample BIR:" />
+                        <TextField id="processPrematchData" fx:id="processPrematchData_sampleBIR" layoutX="150.0" layoutY="100.0" prefWidth="200.0" />
+                        <Button layoutX="150.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleProcessPrematchData" prefWidth="259.0" text="Process Prematch Data" />
+                        <Label layoutX="39.0" layoutY="216.0" text="Processed BIR:" />
+                        <TextField fx:id="processPrematchData_ProcessedBIR" editable="false" layoutX="150.0" layoutY="213.0" prefWidth="200.0" />
+                        <Button layoutX="350.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleBrowseProcessPrematchDataPrematchDataBIR" text="Browse" />
+                        <Label layoutX="39.0" layoutY="139.0" text="Prematch Data BIR:" />
+                        <TextField fx:id="processPrematchData_prematchDataBIR" layoutX="150.0" layoutY="136.0" prefWidth="200.0" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab style="" text="Verify">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
+                        <TextField id="maxFARRequested" fx:id="verify_maxFARRequested" layoutX="163.0" layoutY="57.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="96.0" text="Max FRR Requested:" />
+                        <TextField fx:id="verify_maxFRRRequested" layoutX="163.0" layoutY="93.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="138.0" text="FRR Precedence:" />
+                        <ComboBox fx:id="verify_FRRPrecedence" layoutX="163.0" layoutY="136.0" prefHeight="21.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="181.0" text="Reference BIR:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verify_referenceBIR" layoutX="163.0" layoutY="178.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleBrowseVerifyReferenceBIR" text="Browse" />
+                        <Label layoutX="39.0" layoutY="286.0" text="Timeout:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verify_timeout" layoutX="163.0" layoutY="283.0" prefWidth="141.0" />
+                        <Button layoutX="39.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleVerify" prefWidth="323.912109375" text="Verify" />
+                        <Label layoutX="42.0" layoutY="217.0" text="Adapted BIR:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verify_adaptedBIR" layoutX="163.0" layoutY="214.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleBrowseVerifyAdaptedBIR" text="Browse" />
+                        <Label layoutX="42.0" layoutY="248.0" text="Payload:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verify_payload" layoutX="163.0" layoutY="245.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="242.0" mnemonicParsing="false" onAction="#handleBrowseVerifyPayload" text="Browse" />
+                        <Label alignment="CENTER" layoutX="39.0" layoutY="374.0" prefWidth="348.0" text="Results:" />
+                        <Label layoutX="42.0" layoutY="409.0" text="Result:" />
+                        <Label fx:id="verify_result" layoutX="138.0" layoutY="409.0" prefWidth="132.0" />
+                        <Label layoutX="42.0" layoutY="436.0" text="FAR Achieved:" />
+                        <Label id="verify_result" fx:id="verify_FARAchieved" layoutX="138.0" layoutY="436.0" prefWidth="132.0" />
+                        <Label layoutX="42.0" layoutY="467.0" text="FRR Achieved:" />
+                        <Label id="verify_result" fx:id="verify_FRRAchieved" layoutX="138.0" layoutY="467.0" prefWidth="132.0" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="VerifyMatch">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
+                        <TextField id="maxFARRequested" fx:id="verifyMatch_maxFARRequested" layoutX="163.0" layoutY="57.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="96.0" text="Max FRR Requested:" />
+                        <TextField fx:id="verifyMatch_maxFRRRequested" layoutX="163.0" layoutY="93.0" prefWidth="141.0" />
+                        <Label layoutX="42.0" layoutY="138.0" text="FRR Precedence:" />
+                        <ComboBox fx:id="verifyMatch_FRRPrecedence" layoutX="163.0" layoutY="136.0" prefHeight="21.0" prefWidth="141.00009999999747" />
+                        <Label layoutX="42.0" layoutY="208.0" text="Reference BIR:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verifyMatch_referenceBIR" layoutX="163.0" layoutY="205.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleBrowseVerifyMatchReferenceBIR" text="Browse" />
+                        <Button layoutX="39.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleVerifyMatch" prefWidth="324.0" text="Verify Match" />
+                        <Label layoutX="42.0" layoutY="244.0" text="Adapted BIR:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verifyMatch_adaptedBIR" layoutX="163.0" layoutY="241.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="238.0" mnemonicParsing="false" onAction="#handleBrowseVerifyMatchAdaptedBIR" text="Browse" />
+                        <Label layoutX="42.0" layoutY="275.0" text="Payload:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verifyMatch_payload" layoutX="163.0" layoutY="272.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleBrowseVerifyMatchPayload" text="Browse" />
+                        <Label alignment="CENTER" layoutX="39.0" layoutY="374.0" prefWidth="348.0" text="Results:" />
+                        <Label layoutX="42.0" layoutY="409.0" text="Result:" />
+                        <Label fx:id="verifyMatch_result" layoutX="138.0" layoutY="409.0" prefWidth="132.0" />
+                        <Label layoutX="42.0" layoutY="436.0" text="FAR Achieved:" />
+                        <Label id="verify_result" fx:id="verifyMatch_FARAchieved" layoutX="138.0" layoutY="436.0" prefWidth="132.0" />
+                        <Label layoutX="42.0" layoutY="467.0" text="FRR Achieved:" />
+                        <Label id="verify_result" fx:id="verifyMatch_FRRAchieved" layoutX="138.0" layoutY="467.0" prefWidth="132.0" />
+                        <Label layoutX="42.0" layoutY="169.0" text="Sample BIR:" />
+                        <TextField id="verify_maxFRRRequested" fx:id="verifyMatch_sampleBIR" layoutX="163.0" layoutY="166.0" prefWidth="140.9998779296875" />
+                        <Button layoutX="304.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleBrowseVerifyMatchSampleBIR" text="Browse" />
+                      </children>
+                      <stylesheets>
+                        <URL value="@win7glass.css" />
+                      </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
           </children>
         </Pane>
       </center>
@@ -24,29 +228,21 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
+            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>
                 <Font name="System Bold" size="12.0" />
               </font>
             </Text>
-            <Button layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" />
-            <Button layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" />
-            <Button layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" />
-            <Button layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" />
-            <Button layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
-            <Button layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
-            <Button layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
-            <Button layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
+            <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Open" />
+            <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Claim" />
+            <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Release" />
+            <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" prefWidth="61.0" text="Close" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" />
+            <Button fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" text="Statistics" />
+            <Button fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" text="Firmware" />
           </children>
         </Pane>
       </top>

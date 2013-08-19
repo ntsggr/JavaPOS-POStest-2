@@ -1,11 +1,5 @@
 package postest2;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import jpos.LineDisplayConst;
 
 public interface LineDisplayConstantMapper {
 	

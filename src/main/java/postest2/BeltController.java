@@ -8,6 +8,7 @@ package postest2;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,35 +18,14 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+
 import javax.swing.JOptionPane;
+
 import jpos.Belt;
-import jpos.JposConst;
 import jpos.JposException;
 
 public class BeltController extends CommonController implements Initializable {
 
-	@FXML
-	public ComboBox<String> logicalName;
-	@FXML
-	public CheckBox deviceEnabled;
-	@FXML
-	public Button buttonOpen;
-	@FXML
-	public Button buttonClaim;
-	@FXML
-	public Button buttonRelease;
-	@FXML
-	public Button buttonStatistics;
-	@FXML
-	public Button buttonClose;
-	@FXML
-	public Button buttonOCE;
-	@FXML
-	public Button buttonFirmware;
-	@FXML
-	public Text statusLabel;
-	@FXML
-	public CheckBox freezeEvents;
 
 	@FXML
 	public ComboBox<Boolean> autoStopBackward;
@@ -88,7 +68,7 @@ public class BeltController extends CommonController implements Initializable {
 		try {
 			if (deviceEnabled.isSelected()) {
 				((Belt)service).setDeviceEnabled(true);
-				setUpCheckboxes();
+				setUpComboBoxes();
 				
 			} else {
 				((Belt)service).setDeviceEnabled(false);
@@ -284,7 +264,7 @@ public class BeltController extends CommonController implements Initializable {
 		resetitemCount_direction.setValue(BeltConstantMapper.BELT_RIC_FORWARD.getConstant());
 	}
 
-	private void setUpCheckboxes() {
+	private void setUpComboBoxes() {
 		setUpAutoStopBackward();
 		setUpAutoStopForward();
 		setUpAdjustItemCountDirection();

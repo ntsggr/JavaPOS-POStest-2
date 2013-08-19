@@ -34,7 +34,7 @@
                   </font>
                 </Label>
                 <TextField fx:id="adjustCashCounts" layoutX="131.0" layoutY="188.0" prefWidth="119.0" />
-                <Button layoutX="390.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleDispenseCash" prefWidth="122.0" text="Dispense Cash" />
+                <Button layoutX="390.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleEndDeposit" prefWidth="122.0" text="Dispense Cash" />
                 <Label layoutX="306.0" layoutY="188.0" text="Cash Counts:" />
                 <Label alignment="CENTER" font="$x1" layoutX="306.0" layoutY="163.0" prefWidth="215.0" text="Dispense Cash" underline="true" />
                 <Button layoutX="610.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleReadCashCount" prefWidth="122.0" text="Read Cash Count" />

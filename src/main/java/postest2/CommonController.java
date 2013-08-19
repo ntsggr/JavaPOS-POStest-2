@@ -1,7 +1,5 @@
 package postest2;
 
-import javax.swing.JOptionPane;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
+
+import javax.swing.JOptionPane;
+
 import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
@@ -145,7 +146,7 @@ public abstract class CommonController implements Initializable {
 	}
 	
 	/**
-	 * Set StatusLabel corresponding to the Devicestatus
+	 * Set StatusLabel corresponding to the Device Status
 	 */
 	private void setStatusLabel(){
 		if(service.getState() == JposConst.JPOS_S_IDLE){
