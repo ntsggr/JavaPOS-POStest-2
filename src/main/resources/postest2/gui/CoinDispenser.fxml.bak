@@ -60,7 +60,7 @@
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
             <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
             <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
-            <Button id="buttonFirmware" fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
+            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
             <Button id="buttonStatistics" fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
           </children>
         </Pane>

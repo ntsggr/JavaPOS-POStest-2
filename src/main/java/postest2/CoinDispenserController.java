@@ -9,6 +9,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,10 +30,27 @@ import org.xml.sax.SAXException;
 
 public class CoinDispenserController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	@FXML
+	public Label readCashCount_cashCount;
+	@FXML
+	public Label readCashCount_discrepancy;
+
+	@FXML
+	public TextField adjustCashCounts;
+	@FXML
+	public TextField dispenseCash_cashCounts;
+
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CoinDispenser();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox();
+		
 	}
 
 	/* ************************************************************************
@@ -114,5 +134,56 @@ public class CoinDispenserController extends CommonController implements Initial
 
 		statistics = "";
 	}
+	
+	@FXML
+	public void handleAdjustCashCounts(ActionEvent e) {
+		System.out.println("adjust");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
 
+	@FXML
+	public void handleDispenseCash(ActionEvent e) {
+		System.out.println("dispenseCash");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleReadCashCount(ActionEvent e) {
+		System.out.println("readCashCount");
+		String[] cashCounts = new String[1];
+		boolean[] discrepancy = new boolean[1];
+		try {
+			((CoinDispenser) service).readCashCounts(cashCounts, discrepancy);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+		this.readCashCount_cashCount.setText(cashCounts[0]);
+		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
+	}
+
+	/*
+	 * ComboBoxes
+	 */
+
+	private void setUpLogicalNameComboBox() {
+		if (!LogicalNameGetter.getLogicalNamesByCategory("CoinDispenser").isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CoinDispenser"));
+		}
+	}
+	
 }

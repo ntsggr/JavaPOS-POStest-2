@@ -66,6 +66,7 @@ public class BillDispenserController extends CommonController implements Initial
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.service = new BillDispenser();
 		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox();
 	}
 
 	/* ************************************************************************
@@ -207,7 +208,6 @@ public class BillDispenserController extends CommonController implements Initial
 	}
 
 	private void setUpComboBoxes() {
-		setUpLogicalNameComboBox();
 		setUpCurrencyCode();
 		setUpCurrentExit();
 	}
