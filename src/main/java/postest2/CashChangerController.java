@@ -1,32 +1,422 @@
 package postest2;
 
+import java.awt.Dimension;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
+<<<<<<< HEAD
+=======
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+>>>>>>> added info, statistics and firmware
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+<<<<<<< HEAD
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import jpos.CashChanger;
+=======
+import jpos.CashChanger;
+import jpos.CashDrawer;
+import jpos.JposConst;
+>>>>>>> added info, statistics and firmware
+import jpos.JposException;
 
 public class CashChangerController extends CommonController implements Initializable {
 
+<<<<<<< HEAD
 	@FXML
-	private ComboBox<String> logicalName;
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	@FXML
+	@RequiredState(JposState.OPENED)
+	public CheckBox asyncMode;
+
+	// Controls
+	@FXML
+	ComboBox<Integer> currentService;
 	
+	@FXML
+	public ComboBox<String> currencyCode;
+	
+	@FXML
+	public ComboBox<Boolean> realTimeDataEnabled;
+	
+	@FXML
+	public ComboBox<String> endDeposit_success;
+	
+	@FXML
+	public ComboBox<String> pauseDeposit_control;
+
+	@FXML
+	public Label readCashCount_cashCount;
+	
+	@FXML
+	public Label readCashCount_discrepancy;
+
+	@FXML
+	public TextField adjustCashCounts;
+
+	@FXML
+	public ComboBox<Integer> currentExit;
+
+	@FXML
+	public TextField dispenseCash_cashCounts;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		service = new CashChanger();
+		setUpLogicalNameComboBox();
+		RequiredStateChecker.invokeThis(this, service);
+=======
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		service = new CashChanger();
+		// RequiredStateChecker.invokeThis(this, service);
+>>>>>>> added info, statistics and firmware
 	}
-	
+
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
 
-	/*
-	 * Action Handler
-	 */
 	@FXML
-	public void handle(ActionEvent e) {
+	public void handleDeviceEnable(ActionEvent e) {
+<<<<<<< HEAD
+		System.out.println("DevEnable");
+		try {
+			if (deviceEnabled.isSelected()) {
+				((CashChanger) service).setDeviceEnabled(true);
+				setUpComboBoxes();
+
+			} else {
+				((CashChanger) service).setDeviceEnabled(false);
+			}
+		} catch (JposException je) {
+			JOptionPane.showMessageDialog(null, je.getMessage());
+		}
+
+		RequiredStateChecker.invokeThis(this, service);
+	}
+
+	@FXML
+	public void handleAsyncMode(ActionEvent e) {
+		System.out.println("asyncMode");
+		try {
+			((CashChanger) service).setAsyncMode(asyncMode.isSelected());
+		} catch (JposException je) {
+			JOptionPane.showMessageDialog(null, je.getMessage());
+		}
+	}
+
+	@FXML
+	public void handleSetCurrencyCode(ActionEvent e) {
+		System.out.println("currencyCode");
+		try {
+			((CashChanger) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleSetRealTimeDataEnabled(ActionEvent e) {
+		System.out.println("realtimedataenabled");
+		try {
+			((CashChanger) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
+					.getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleAdjustCashCounts(ActionEvent e) {
+		System.out.println("adjust");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((CashChanger) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleBeginDeposit(ActionEvent e) {
+		System.out.println("begin");
+		try {
+			((CashChanger) service).beginDeposit();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEndDeposit(ActionEvent e) {
+		System.out.println("end");
+		try {
+			((CashChanger) service).endDeposit(BillAcceptorConstantMapper
+					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleFixDeposit(ActionEvent e) {
+		System.out.println("fix");
+		try {
+			((CashChanger) service).fixDeposit();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handlePauseDeposit(ActionEvent e) {
+		System.out.println("pause");
+		try {
+			((CashChanger) service).pauseDeposit(BillAcceptorConstantMapper
+					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleReadCashCount(ActionEvent e) {
+		System.out.println("readCashCount");
+		String[] cashCounts = new String[1];
+		boolean[] discrepancy = new boolean[1];
+		try {
+			((CashChanger) service).readCashCounts(cashCounts, discrepancy);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+		this.readCashCount_cashCount.setText(cashCounts[0]);
+		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
+	}
+
+	@FXML
+	public void handleSetCurrentExit(ActionEvent e) {
+		System.out.println("currenctExit");
+		try {
+			((CashChanger) service).setCurrentExit(currentExit.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleDispenseCash(ActionEvent e) {
+		System.out.println("dispenseCash");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((CashChanger) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleSetCurrentService(ActionEvent e) {
+		System.out.println("currentservice");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((CashChanger) service).setCurrentService(currentService.getSelectionModel()
+						.getSelectedItem());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	/*
+	 * Set Up all ComboBoxes
+	 */
+
+	private void setUpCurrencyCode() {
+		String[] currencies = null;
+		try {
+			currencies = ((CashChanger) service).getDepositCodeList().split(",");
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+
+		currencyCode.getItems().clear();
+		for (int i = 0; i < currencies.length; i++) {
+			currencyCode.getItems().add(currencies[i]);
+		}
+		currencyCode.setValue(currencies[0]);
+
+	}
+
+	private void setUpRealTimeDataEnabled() {
+
+		realTimeDataEnabled.getItems().clear();
+		realTimeDataEnabled.getItems().add(true);
+		realTimeDataEnabled.getItems().add(false);
+		realTimeDataEnabled.setValue(true);
+
+	}
+
+	private void setUpEndDepositSuccess() {
+		endDeposit_success.getItems().clear();
+		endDeposit_success.getItems().add(BillAcceptorConstantMapper.BACC_DEPOSIT_COMPLETE.getConstant());
+		endDeposit_success.setValue(BillAcceptorConstantMapper.BACC_DEPOSIT_COMPLETE.getConstant());
+	}
+
+	private void setUpPauseDepositControl() {
+
+		pauseDeposit_control.getItems().clear();
+		pauseDeposit_control.getItems().add(BillAcceptorConstantMapper.BACC_DEPOSIT_PAUSE.getConstant());
+		pauseDeposit_control.getItems().add(BillAcceptorConstantMapper.BACC_DEPOSIT_RESTART.getConstant());
+		pauseDeposit_control.setValue(BillAcceptorConstantMapper.BACC_DEPOSIT_PAUSE.getConstant());
+	}
+
+	private void setUpCurrentExit() {
+		currentExit.getItems().clear();
+		try {
+			for (int i = 1; i <= ((CashChanger) service).getDeviceExits(); i++) {
+				currentExit.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		currentExit.setValue(1);
 	}
 	
+	private void setUpCurrentService() {
+		currentService.getItems().clear();
+		try {
+			for (int i = 0; i <= ((CashChanger) service).getServiceCount(); i++) {
+				currentService.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		currentService.setValue(1);
+	}
+
+	private void setUpComboBoxes() {
+		setUpCurrencyCode();
+		setUpRealTimeDataEnabled();
+		setUpEndDepositSuccess();
+		setUpPauseDepositControl();
+		setUpCurrentExit();
+		setUpCurrentService();
+	}
+
+	private void setUpLogicalNameComboBox() {
+		if (!LogicalNameGetter.getLogicalNamesByCategory("CashChanger").isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CashChanger"));
+		}
+=======
+		try {
+			if (deviceEnabled.isSelected()) {
+				((CashChanger) service).setDeviceEnabled(true);
+			} else {
+				((CashChanger) service).setDeviceEnabled(false);
+			}
+			RequiredStateChecker.invokeThis(this, service);
+		} catch (JposException je) {
+			System.err.println("CashChangerPanel: CheckBoxListener: Jpos Exception" + je);
+		}
+	}
+
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties((CashChanger) service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((CashChanger) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+>>>>>>> added info, statistics and firmware
+	}
+
 }

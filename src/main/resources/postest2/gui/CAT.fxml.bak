@@ -16,7 +16,7 @@
         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="root">
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Device enabled" />
-            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
+            <CheckBox layoutX="155.0" layoutY="14.0" mnemonicParsing="false" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
             <TabPane fx:id="functionPane" layoutX="43.0" layoutY="72.0" prefHeight="608.0" prefWidth="907.0" tabClosingPolicy="UNAVAILABLE">
               <stylesheets>

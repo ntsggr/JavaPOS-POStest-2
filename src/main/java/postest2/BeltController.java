@@ -6,6 +6,9 @@
  */
 package postest2;
 
+import java.awt.Dimension;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,12 +23,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.Belt;
+import jpos.CashDrawer;
+import jpos.JposConst;
 import jpos.JposException;
 
-public class BeltController extends CommonController implements Initializable {
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
+public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public ComboBox<Boolean> autoStopBackward;
@@ -46,8 +60,9 @@ public class BeltController extends CommonController implements Initializable {
 	public TextField autoStopForwardDelayTime;
 	@FXML
 	public TextField adjustItemCount_Count;
-	
-	@FXML @RequiredState(JposState.ENABLED)
+
+	@FXML
+	@RequiredState(JposState.ENABLED)
 	public Pane functionPane;
 
 	@Override
@@ -67,11 +82,11 @@ public class BeltController extends CommonController implements Initializable {
 		System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
-				((Belt)service).setDeviceEnabled(true);
+				((Belt) service).setDeviceEnabled(true);
 				setUpComboBoxes();
-				
+
 			} else {
-				((Belt)service).setDeviceEnabled(false);
+				((Belt) service).setDeviceEnabled(false);
 			}
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
@@ -79,11 +94,18 @@ public class BeltController extends CommonController implements Initializable {
 	}
 
 	@FXML
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
+	}
+
+	@FXML
 	public void handleAutoStopBackward(ActionEvent e) {
 		System.out.println("AutoStopBackward");
-		if(autoStopBackward.getSelectionModel().getSelectedItem() != null){
+		if (autoStopBackward.getSelectionModel().getSelectedItem() != null) {
 			try {
-				((Belt)service).setAutoStopBackward(autoStopBackward.getSelectionModel().getSelectedItem());
+				((Belt) service).setAutoStopBackward(autoStopBackward.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -93,10 +115,11 @@ public class BeltController extends CommonController implements Initializable {
 	@FXML
 	public void handleAutoStopBackwardDelayTime(ActionEvent e) {
 		System.out.println("AutoStopBWDT");
-		if(!autoStopBackwardDelayTime.getText().isEmpty()){
+		if (!autoStopBackwardDelayTime.getText().isEmpty()) {
 			try {
-				((Belt)service).setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime.getText()));
-			} catch (NumberFormatException e1){
+				((Belt) service).setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime
+						.getText()));
+			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -107,9 +130,9 @@ public class BeltController extends CommonController implements Initializable {
 	@FXML
 	public void handleAutoStopForward(ActionEvent e) {
 		System.out.println("ASW");
-		if(autoStopForward.getSelectionModel().getSelectedItem() != null){
+		if (autoStopForward.getSelectionModel().getSelectedItem() != null) {
 			try {
-				((Belt)service).setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
+				((Belt) service).setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -119,27 +142,28 @@ public class BeltController extends CommonController implements Initializable {
 	@FXML
 	public void handleAutoStopForwardDelayTime(ActionEvent e) {
 		System.out.println("ASFDT");
-		if(!autoStopForwardDelayTime.getText().isEmpty()){
+		if (!autoStopForwardDelayTime.getText().isEmpty()) {
 			try {
-				((Belt)service).setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime.getText()));
-			} catch (NumberFormatException e1){
+				((Belt) service).setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime
+						.getText()));
+			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
-			} 
+			}
 		}
 	}
 
 	@FXML
 	public void handleAdjustItemCount(ActionEvent e) {
 		System.out.println("AIC");
-		if(adjustItemCount_direction.getSelectionModel().getSelectedItem() != null){
-	
+		if (adjustItemCount_direction.getSelectionModel().getSelectedItem() != null) {
+
 			try {
-				((Belt)service).adjustItemCount(BeltConstantMapper.getConstantNumberFromString(adjustItemCount_direction
-						.getSelectionModel().getSelectedItem()),
-						Integer.parseInt(adjustItemCount_Count.getText()));
-			} catch (NumberFormatException e1){
+				((Belt) service).adjustItemCount(BeltConstantMapper
+						.getConstantNumberFromString(adjustItemCount_direction.getSelectionModel()
+								.getSelectedItem()), Integer.parseInt(adjustItemCount_Count.getText()));
+			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -150,9 +174,9 @@ public class BeltController extends CommonController implements Initializable {
 	@FXML
 	public void handleMoveBackward(ActionEvent e) {
 		System.out.println("MB");
-		if(moveBackward_speed.getSelectionModel().getSelectedItem() != null){
+		if (moveBackward_speed.getSelectionModel().getSelectedItem() != null) {
 			try {
-				((Belt)service).moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
+				((Belt) service).moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -162,9 +186,9 @@ public class BeltController extends CommonController implements Initializable {
 	@FXML
 	public void handleMoveForward(ActionEvent e) {
 		System.out.println("MF");
-		if(moveForward_speed.getSelectionModel().getSelectedItem() != null){
+		if (moveForward_speed.getSelectionModel().getSelectedItem() != null) {
 			try {
-				((Belt)service).moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
+				((Belt) service).moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -175,7 +199,7 @@ public class BeltController extends CommonController implements Initializable {
 	public void handleResetBelt(ActionEvent e) {
 		System.out.println("RB");
 		try {
-			((Belt)service).resetBelt();
+			((Belt) service).resetBelt();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -184,10 +208,11 @@ public class BeltController extends CommonController implements Initializable {
 	@FXML
 	public void handleResetItemCount(ActionEvent e) {
 		System.out.println("RIC");
-		if(resetitemCount_direction.getSelectionModel().getSelectedItem() != null){
+		if (resetitemCount_direction.getSelectionModel().getSelectedItem() != null) {
 			try {
-				((Belt)service).resetItemCount(BeltConstantMapper.getConstantNumberFromString(resetitemCount_direction
-						.getSelectionModel().getSelectedItem()));
+				((Belt) service).resetItemCount(BeltConstantMapper
+						.getConstantNumberFromString(resetitemCount_direction.getSelectionModel()
+								.getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
@@ -198,7 +223,7 @@ public class BeltController extends CommonController implements Initializable {
 	public void handleStopBelt(ActionEvent e) {
 		System.out.println("SB");
 		try {
-			((Belt)service).stopBelt();
+			((Belt) service).stopBelt();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
@@ -228,7 +253,6 @@ public class BeltController extends CommonController implements Initializable {
 		adjustItemCount_direction.getItems().add(BeltConstantMapper.BELT_AIC_FORWARD.getConstant());
 		adjustItemCount_direction.setValue(BeltConstantMapper.BELT_AIC_FORWARD.getConstant());
 	}
-
 
 	// Cannot implement correctly because the Variable CapSpeedStepsBackward of
 	// the JPOS Class Belt is not implemented correctly
@@ -275,10 +299,62 @@ public class BeltController extends CommonController implements Initializable {
 	}
 
 	private void setUpLogicalNameComboBox() {
-		if(!LogicalNameGetter.getLogicalNamesByCategory("Belt").isEmpty()){
+		if (!LogicalNameGetter.getLogicalNamesByCategory("Belt").isEmpty()) {
 			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("Belt"));
 		}
 	}
 
-	
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties((Belt) service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((Belt) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+	}
+
 }

@@ -1,5 +1,8 @@
 package postest2;
 
+import java.awt.Dimension;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,184 +13,170 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import jpos.CashDrawer;
 import jpos.CashDrawerConst;
+import jpos.JposConst;
 import jpos.JposException;
+import jpos.POSPrinter;
 import jpos.events.StatusUpdateEvent;
 import jpos.events.StatusUpdateListener;
 import jpos.profile.JposDevCats;
 
 public class CashDrawerController extends CommonController implements Initializable, StatusUpdateListener {
 
-	/*
 	@FXML
-	private ComboBox<String> logicalName;
-	
-	@FXML
-	private Button buttonOpen;
-	@FXML
-	private Button buttonClaim;
-	@FXML
-	private Button buttonRelease;
-	@FXML
-	private CheckBox deviceEnabled;
-	*/
-	@FXML @RequiredState(JposState.ENABLED)
+	@RequiredState(JposState.ENABLED)
 	public TextArea textAreaActionLog;
-	@FXML @RequiredState(JposState.ENABLED)
-	public Button buttonOpenCash;
-	@FXML @RequiredState(JposState.ENABLED)
-	public Button buttonGetDrawer;
-	@FXML @RequiredState(JposState.ENABLED)
-	public Button buttonWaitForDrawer;
-	
-	/*
 	@FXML
-	private Label statusLabel;
+	@RequiredState(JposState.ENABLED)
+	public Button buttonOpenCash;
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Button buttonGetDrawer;
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Button buttonWaitForDrawer;
 
-	private CashDrawer cashDrawer;
-	private String defaultLogicalName = "defaultCashDrawer";
-	*/
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		setUpLogicalNameComboBox();
 		service = new CashDrawer();
-		((CashDrawer)service).addStatusUpdateListener(this);
-
+		((CashDrawer) service).addStatusUpdateListener(this);
 		RequiredStateChecker.invokeThis(this, service);
 	}
-	
+
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
-	/*
-	@FXML
-	public void handleOpen(ActionEvent e) {
-		try {
-			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
-				cashDrawer.open(logicalName.getValue());
-				buttonClaim.setDisable(false);
-				int version = cashDrawer.getDeviceServiceVersion();
-				statusLabel.setText("JPOS_S_IDLE");
-			} else {
-				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty", JOptionPane.WARNING_MESSAGE);
-			}
 
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
-	// Requests exclusive access to the device
-	@FXML
-	public void handleClaim(ActionEvent e) {
-		try {
-			cashDrawer.claim(0);
-			deviceEnabled.setDisable(false);
-			buttonRelease.setDisable(false);
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Failed to claim \"" + "CashDrawer" + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	*/
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		try {
 			if (deviceEnabled.isSelected()) {
-				((CashDrawer)service).setDeviceEnabled(true);
-				buttonOpenCash.setDisable(false);
-				buttonGetDrawer.setDisable(false);
-				buttonWaitForDrawer.setDisable(false);
+				((CashDrawer) service).setDeviceEnabled(true);
+				System.out.println("true");
 			} else {
-				((CashDrawer)service).setDeviceEnabled(false);
-				buttonOpenCash.setDisable(true);
-				buttonGetDrawer.setDisable(true);
-				buttonWaitForDrawer.setDisable(true);
+				((CashDrawer) service).setDeviceEnabled(false);
+				System.out.println("false");
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			System.err.println("CashDrawerPanel: CheckBoxListener: Jpos Exception" + je);
 		}
 	}
-	/*
-	// Releases exclusive access to the device. The device is also disabled.
-	@FXML
-	public void handleRelease(ActionEvent e) {
-		try {
-			((CashDrawer)service).release();
-			if (deviceEnabled.isSelected()) {
-				deviceEnabled.setSelected(false);
-				buttonOpenCash.setDisable(true);
-				buttonGetDrawer.setDisable(true);
-				buttonWaitForDrawer.setDisable(true);
-			}
-			deviceEnabled.setDisable(true);
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Failed to release \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
-	}
 
-	// Releases the device and its resources. Also the device is released.
 	@FXML
-	public void handleClose(ActionEvent e) {
-		try {
-			((CashDrawer)service).close();
-			statusLabel.setText("JPOS_S_CLOSED");
-			if (!deviceEnabled.isDisable()) {
-				deviceEnabled.setSelected(false);
-				buttonOpenCash.setDisable(true);
-				buttonGetDrawer.setDisable(true);
-				buttonWaitForDrawer.setDisable(true);
-			}
-			buttonClaim.setDisable(true);
-			deviceEnabled.setDisable(true);
-			buttonRelease.setDisable(true);
-		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Failed to close \"" + logicalName + "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
-		}
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
 	}
-	*/
 
 	@FXML
 	public void handleOpenCash(ActionEvent e) {
 		try {
-			((CashDrawer)service).openDrawer();
+			((CashDrawer) service).openDrawer();
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Exception in openDrawer: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in openDrawer: " + je.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	@FXML
 	public void handleGetDrawer(ActionEvent e) {
 		try {
-			if (((CashDrawer)service).getDrawerOpened()) {
+			if (((CashDrawer) service).getDrawerOpened()) {
 				textAreaActionLog.appendText("Cash drawer is open.\n");
 			} else {
 				textAreaActionLog.appendText("Cash drawer is closed.\n");
 			}
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Exception in getDrawerOpened: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in getDrawerOpened: " + je.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	@FXML
 	public void handleWaitForDrawer(ActionEvent e) {
 		try {
-			((CashDrawer)service).waitForDrawerClose(100, 500, 100, 200);
+			((CashDrawer) service).waitForDrawerClose(100, 500, 100, 200);
 			textAreaActionLog.appendText("Cash drawer is closed.\n");
 		} catch (JposException je) {
 			textAreaActionLog.appendText("Jpos exception " + je + "\n");
-			JOptionPane.showMessageDialog(null, "Exception in waitForDrawerClose: " + je.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in waitForDrawerClose: " + je.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties((CashDrawer) service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((CashDrawer) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
 	}
 
 	@Override
 	public void statusUpdateOccurred(StatusUpdateEvent sue) {
 		String msg = "Status Update Event: ";
-		statusLabel.setText(""+sue.getStatus());
+		statusLabel.setText("" + sue.getStatus());
 		switch (sue.getStatus()) {
 		case CashDrawerConst.CASH_SUE_DRAWERCLOSED:
 			msg += "Drawer Closed\n";
@@ -200,8 +189,10 @@ public class CashDrawerController extends CommonController implements Initializa
 			break;
 		}
 	}
+
 	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT.toString()));
+		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT
+				.toString()));
 	}
-	
+
 }
