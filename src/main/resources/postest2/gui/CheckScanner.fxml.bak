@@ -144,7 +144,7 @@
                           </items>
                         </ComboBox>
                         <Label alignment="CENTER" font="$x1" layoutX="30.0" layoutY="231.0" prefWidth="227.0" text="Define Crop Area" underline="true" />
-                        <Button layoutX="108.0" layoutY="426.0" mnemonicParsing="false" prefWidth="113.0" text="Define CropArea" />
+                        <Button layoutX="121.0" layoutY="426.0" mnemonicParsing="false" prefWidth="100.0" text="Define CropArea" />
                         <Label layoutX="30.0" layoutY="268.0" text="Crop AreaID:" />
                         <ComboBox id="clearImage_by" layoutX="108.0" layoutY="265.0" prefHeight="21.0" prefWidth="113.0">
                           <items>

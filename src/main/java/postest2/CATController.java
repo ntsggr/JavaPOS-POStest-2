@@ -3,8 +3,6 @@ package postest2;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,11 +10,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import jpos.BumpBar;
+
+import javax.swing.JOptionPane;
+
 import jpos.CAT;
-import jpos.CATConst;
-import jpos.CashChanger;
 import jpos.JposException;
 
 public class CATController extends CommonController implements Initializable {
@@ -106,15 +103,15 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleSetAdditionalSecurityInformation(ActionEvent e) {
 		System.out.println("setaddit");
-		if(additionalSecurityInformation.getText().isEmpty()){
+		if (additionalSecurityInformation.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value");
 		} else {
-		try {
-			((CAT) service).setAdditionalSecurityInformation(additionalSecurityInformation.getText());
-		} catch (JposException e1) {
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-			e1.printStackTrace();
-		}
+			try {
+				((CAT) service).setAdditionalSecurityInformation(additionalSecurityInformation.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
 		}
 	}
 
@@ -144,13 +141,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAccessDailyLog(ActionEvent e) {
 		System.out.println("dailylog");
-		if(accessDailyLog_sequenceNumber.getText().isEmpty() || accessDailyLog_timeout.getText().isEmpty()){
+		if (accessDailyLog_sequenceNumber.getText().isEmpty() || accessDailyLog_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
-				((CAT) service).accessDailyLog(Integer.parseInt(accessDailyLog_sequenceNumber.getText()), CATConstantMapper
-						.getConstantNumberFromString(accessDailyLog_type.getSelectionModel().getSelectedItem()), Integer
-						.parseInt(accessDailyLog_timeout.getText()));
+				((CAT) service).accessDailyLog(Integer.parseInt(accessDailyLog_sequenceNumber.getText()),
+						CATConstantMapper.getConstantNumberFromString(accessDailyLog_type.getSelectionModel()
+								.getSelectedItem()), Integer.parseInt(accessDailyLog_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -164,13 +161,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeCompletion(ActionEvent e) {
 		System.out.println("authComp");
-		if(authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty() || authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()){
+		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
+				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeCompletion(Integer.parseInt(authorize_sequenceNumber.getText()),
-						Long.parseLong(authorize_amount.getText()), 
-						Long.parseLong(authorize_taxOthers.getText()),
+						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -185,13 +182,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizePreSales(ActionEvent e) {
 		System.out.println("authpresal");
-		if(authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty() || authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()){
+		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
+				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizePreSales(Integer.parseInt(authorize_sequenceNumber.getText()),
-						Long.parseLong(authorize_amount.getText()), 
-						Long.parseLong(authorize_taxOthers.getText()),
+						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -206,13 +203,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeVoid(ActionEvent e) {
 		System.out.println("authVoid");
-		if(authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty() || authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()){
+		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
+				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeVoid(Integer.parseInt(authorize_sequenceNumber.getText()),
-						Long.parseLong(authorize_amount.getText()), 
-						Long.parseLong(authorize_taxOthers.getText()),
+						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -227,13 +224,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeSales(ActionEvent e) {
 		System.out.println("authsale");
-		if(authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty() || authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()){
+		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
+				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeSales(Integer.parseInt(authorize_sequenceNumber.getText()),
-						Long.parseLong(authorize_amount.getText()), 
-						Long.parseLong(authorize_taxOthers.getText()),
+						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -248,13 +245,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeRefund(ActionEvent e) {
 		System.out.println("authRef");
-		if(authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty() || authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()){
+		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
+				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeRefund(Integer.parseInt(authorize_sequenceNumber.getText()),
-						Long.parseLong(authorize_amount.getText()), 
-						Long.parseLong(authorize_taxOthers.getText()),
+						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -269,13 +266,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeVoidPreSales(ActionEvent e) {
 		System.out.println("authVoidPresal");
-		if(authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty() || authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()){
+		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
+				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeVoidPreSales(Integer.parseInt(authorize_sequenceNumber.getText()),
-						Long.parseLong(authorize_amount.getText()), 
-						Long.parseLong(authorize_taxOthers.getText()),
+						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -290,11 +287,13 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleCashDeposit(ActionEvent e) {
 		System.out.println("cashDepo");
-		if(cashDeposit_amount.getText().isEmpty() || cashDeposit_sequenceNumber.getText().isEmpty() || cashDeposit_timeout.getText().isEmpty()){
+		if (cashDeposit_amount.getText().isEmpty() || cashDeposit_sequenceNumber.getText().isEmpty()
+				|| cashDeposit_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
-				((CAT)service).cashDeposit(Integer.parseInt(cashDeposit_sequenceNumber.getText()), Long.parseLong(cashDeposit_amount.getText()), Integer.parseInt(cashDeposit_timeout.getText()));
+				((CAT) service).cashDeposit(Integer.parseInt(cashDeposit_sequenceNumber.getText()),
+						Long.parseLong(cashDeposit_amount.getText()), Integer.parseInt(cashDeposit_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -308,11 +307,12 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleCheckCard(ActionEvent e) {
 		System.out.println("checkcard");
-		if(checkCard_sequenceNumber.getText().isEmpty() || checkCard_timeout.getText().isEmpty()){
+		if (checkCard_sequenceNumber.getText().isEmpty() || checkCard_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
-				((CAT)service).checkCard(Integer.parseInt(checkCard_sequenceNumber.getText()), Integer.parseInt(checkCard_timeout.getText()));
+				((CAT) service).checkCard(Integer.parseInt(checkCard_sequenceNumber.getText()),
+						Integer.parseInt(checkCard_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -327,7 +327,7 @@ public class CATController extends CommonController implements Initializable {
 	public void handleLockTerminal(ActionEvent e) {
 		System.out.println("lock");
 		try {
-			((CAT)service).lockTerminal();
+			((CAT) service).lockTerminal();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -338,7 +338,7 @@ public class CATController extends CommonController implements Initializable {
 	public void handleUnlockTerminal(ActionEvent e) {
 		System.out.println("unlock");
 		try {
-			((CAT)service).unlockTerminal();
+			((CAT) service).unlockTerminal();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();

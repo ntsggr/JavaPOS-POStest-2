@@ -10,8 +10,6 @@ import javafx.scene.control.ComboBox;
 
 public class CheckScannerController extends CommonController implements Initializable {
 
-	@FXML
-	private ComboBox<String> logicalName;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -22,11 +20,9 @@ public class CheckScannerController extends CommonController implements Initiali
 	 * ***********************************************************************
 	 */
 
-	/*
-	 * Action Handler
-	 */
 	@FXML
 	public void handle(ActionEvent e) {
+		
 	}
 	
 }
