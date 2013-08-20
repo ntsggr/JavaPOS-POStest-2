@@ -235,6 +235,7 @@ public class FirmwareUpdateDlg extends JDialog implements ActionListener, Status
 		setTitle("Firmware Utilities");
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getActionCommand().equals("Close")) {
 			setVisible(false);
@@ -287,6 +288,7 @@ public class FirmwareUpdateDlg extends JDialog implements ActionListener, Status
 		}
 	}
 
+	@Override
 	public void statusUpdateOccurred(StatusUpdateEvent sue) {
 		int status = sue.getStatus();
 		// JOptionPane.showMessageDialog(null,
@@ -359,6 +361,7 @@ public class FirmwareUpdateDlg extends JDialog implements ActionListener, Status
 	}
 
 	private class UpdateThread extends Thread {
+		@Override
 		public void run() {
 			try {
 				Object[] args = new Object[1];

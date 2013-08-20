@@ -41,14 +41,14 @@
                         <Button layoutX="380.0" layoutY="143.0" mnemonicParsing="false" onAction="#handleSetTimeout" prefWidth="155.0" text="Set Timeout" />
                         <Label alignment="CENTER" layoutX="34.0" layoutY="191.0" prefWidth="189.0" text="Check Health" underline="true">
                           <font>
-                            <Font size="14.0" />
+                            <Font size="14.0" fx:id="x1" />
                           </font>
                         </Label>
                         <Button layoutX="380.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleCheckHealth" prefWidth="155.0" text="CheckHealth" />
                         <Label layoutX="34.0" layoutY="232.0" text="Level:" />
-                        <Label alignment="CENTER" layoutX="34.0" layoutY="275.0" prefWidth="189.0" text="Clear Input" underline="true" />
+                        <Label alignment="CENTER" font="$x1" layoutX="34.0" layoutY="275.0" prefWidth="189.0" text="Clear Input" underline="true" />
                         <Button layoutX="44.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearInput" prefWidth="155.0" text="Clear Input" />
-                        <Label alignment="CENTER" layoutX="252.0" layoutY="275.0" prefWidth="189.0" text="Clear Output" underline="true" />
+                        <Label alignment="CENTER" font="$x1" layoutX="252.0" layoutY="275.0" prefWidth="189.0" text="Clear Output" underline="true" />
                         <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearOutput" prefWidth="155.0" text="Clear Output" />
                         <ComboBox fx:id="checkHealth_level" layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0">
                           <items>
@@ -84,8 +84,8 @@
                         <TextField id="bumpBarSound_frequency" fx:id="setKeyTranslation_scanCode" layoutX="556.0" layoutY="91.0" prefWidth="200.0" />
                         <Label layoutX="448.0" layoutY="129.0" text="Logical Key:" />
                         <TextField id="bumpbarSound_duration" fx:id="setKeyTranslation_logicalKey" layoutX="556.0" layoutY="125.0" prefWidth="200.0" />
-                        <Label alignment="CENTER" layoutX="25.0" layoutY="33.0" prefWidth="311.0" text="BumpBar Sound" underline="true" />
-                        <Label alignment="CENTER" layoutX="448.0" layoutY="33.0" prefWidth="311.0" text="Set Key Translation" underline="true" />
+                        <Label alignment="CENTER" font="$x1" layoutX="25.0" layoutY="33.0" prefWidth="311.0" text="BumpBar Sound" underline="true" />
+                        <Label alignment="CENTER" font="$x1" layoutX="448.0" layoutY="33.0" prefWidth="311.0" text="Set Key Translation" underline="true" />
                         <Button layoutX="638.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleSetKeyTranslation" text="Set KeyTranslation" />
                       </children>
                     </AnchorPane>
@@ -93,7 +93,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-			<Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

@@ -9,6 +9,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,10 +31,29 @@ import org.xml.sax.SAXException;
 
 public class CoinAcceptorController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	// Controls
+	@FXML
+	public ComboBox<String> currencyCode;
+	@FXML
+	public ComboBox<String> endDeposit_success;
+	@FXML
+	public ComboBox<String> pauseDeposit_control;
+	@FXML
+	public Label readCashCount_cashCount;
+	@FXML
+	public Label readCashCount_discrepancy;
+	@FXML
+	public TextField adjustCashCounts;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CoinAcceptor();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox();
 	}
 
 	/* ************************************************************************
@@ -43,6 +66,7 @@ public class CoinAcceptorController extends CommonController implements Initiali
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CoinAcceptor) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 			} else {
 				((CoinAcceptor) service).setDeviceEnabled(false);
 			}
@@ -52,6 +76,7 @@ public class CoinAcceptorController extends CommonController implements Initiali
 		}
 	}
 
+	@Override
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
@@ -60,10 +85,11 @@ public class CoinAcceptorController extends CommonController implements Initiali
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties((CoinAcceptor) service);
+			String msg = DeviceProperties.getProperties(service);
 
 			JTextArea jta = new JTextArea(msg);
 			JScrollPane jsp = new JScrollPane(jta) {
@@ -74,14 +100,15 @@ public class CoinAcceptorController extends CommonController implements Initiali
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
 		String[] stats = new String[] { "", "U_", "M_" };
@@ -110,6 +137,137 @@ public class CoinAcceptorController extends CommonController implements Initiali
 		}
 
 		statistics = "";
+	}
+
+	@FXML
+	public void handleSetCurrencyCode(ActionEvent e) {
+		System.out.println("currencyCode");
+		try {
+			((CoinAcceptor) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleAdjustCashCounts(ActionEvent e) {
+		System.out.println("adjust");
+		if (!adjustCashCounts.getText().isEmpty()) {
+			try {
+				((CoinAcceptor) service).adjustCashCounts(adjustCashCounts.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleBeginDeposit(ActionEvent e) {
+		System.out.println("begin");
+		try {
+			((CoinAcceptor) service).beginDeposit();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEndDeposit(ActionEvent e) {
+		System.out.println("end");
+		try {
+			((CoinAcceptor) service).endDeposit(CoinAcceptorConstantMapper
+					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleFixDeposit(ActionEvent e) {
+		System.out.println("fix");
+		try {
+			((CoinAcceptor) service).fixDeposit();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handlePauseDeposit(ActionEvent e) {
+		System.out.println("pause");
+		try {
+			((CoinAcceptor) service).pauseDeposit(CoinAcceptorConstantMapper
+					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleReadCashCount(ActionEvent e) {
+		System.out.println("readCashCount");
+		String[] cashCounts = new String[1];
+		boolean[] discrepancy = new boolean[1];
+		try {
+			((CoinAcceptor) service).readCashCounts(cashCounts, discrepancy);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+		this.readCashCount_cashCount.setText(cashCounts[0]);
+		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
+	}
+
+	/*
+	 * ComboBoxes
+	 */
+
+	private void setUpCurrencyCode() {
+		String[] currencies = null;
+		try {
+			currencies = ((CoinAcceptor) service).getDepositCodeList().split(",");
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+
+		currencyCode.getItems().clear();
+		for (int i = 0; i < currencies.length; i++) {
+			currencyCode.getItems().add(currencies[i]);
+		}
+		currencyCode.setValue(currencies[0]);
+
+	}
+
+	private void setUpEndDepositSuccess() {
+		endDeposit_success.getItems().clear();
+		endDeposit_success.getItems().add(CoinAcceptorConstantMapper.CACC_DEPOSIT_COMPLETE.getConstant());
+		endDeposit_success.setValue(CoinAcceptorConstantMapper.CACC_DEPOSIT_COMPLETE.getConstant());
+	}
+
+	private void setUpPauseDepositControl() {
+		pauseDeposit_control.getItems().clear();
+		pauseDeposit_control.getItems().add(CoinAcceptorConstantMapper.CACC_DEPOSIT_PAUSE.getConstant());
+		pauseDeposit_control.getItems().add(CoinAcceptorConstantMapper.CACC_DEPOSIT_RESTART.getConstant());
+		pauseDeposit_control.setValue(CoinAcceptorConstantMapper.CACC_DEPOSIT_PAUSE.getConstant());
+	}
+
+	private void setUpComboBoxes() {
+		setUpCurrencyCode();
+		setUpEndDepositSuccess();
+		setUpPauseDepositControl();
+	}
+
+	private void setUpLogicalNameComboBox() {
+		if (!LogicalNameGetter.getLogicalNamesByCategory("CoinAcceptor").isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CoinAcceptor"));
+		}
 	}
 
 }

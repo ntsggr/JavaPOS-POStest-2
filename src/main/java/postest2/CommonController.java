@@ -67,7 +67,7 @@ public abstract class CommonController implements Initializable {
 		try {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				service.open(logicalName.getValue());
-				RequiredStateChecker.invokeThis(this, (BaseJposControl) service);
+				RequiredStateChecker.invokeThis(this, service);
 				// buttonClaim.setDisable(false);
 				System.out.println(service.getState());
 				setStatusLabel();
@@ -87,7 +87,7 @@ public abstract class CommonController implements Initializable {
 	public void handleClaim(ActionEvent e) {
 		try {
 			service.claim(0);
-			RequiredStateChecker.invokeThis(this, (BaseJposControl) service);
+			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
 					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
@@ -103,7 +103,7 @@ public abstract class CommonController implements Initializable {
 				deviceEnabled.setSelected(false);
 			}
 
-			RequiredStateChecker.invokeThis(this, (BaseJposControl) service);
+			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,
 					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
@@ -119,7 +119,7 @@ public abstract class CommonController implements Initializable {
 				deviceEnabled.setSelected(false);
 			}
 
-			RequiredStateChecker.invokeThis(this, (BaseJposControl) service);
+			RequiredStateChecker.invokeThis(this, service);
 			setStatusLabel();
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null,

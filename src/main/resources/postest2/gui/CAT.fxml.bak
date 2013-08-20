@@ -92,7 +92,7 @@
                         <Label layoutX="437.0" layoutY="104.0" text="Timeout:" />
                         <TextField id="cashDeposit_sequenceNumber" fx:id="checkCard_timeout" layoutX="549.0" layoutY="101.0" prefWidth="200.0" />
                         <Button layoutX="659.0" layoutY="167.0" mnemonicParsing="false" onAction="#handleCheckCard" text="Check Card" />
-                        <Label alignment="CENTER" font="$x1" layoutX="30.0" layoutY="238.0" prefWidth="204.77734375" text="Lock Terminal" underline="true" />
+                        <Label alignment="CENTER" layoutX="30.0" layoutY="238.0" prefWidth="204.77734375" text="Lock Terminal" underline="true" />
                         <Button layoutX="81.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleLockTerminal" text="Lock Terminal" />
                         <Label alignment="CENTER" font="$x1" layoutX="437.0" layoutY="238.0" prefWidth="204.77734375" text="Unlock Terminal" underline="true" />
                         <Button layoutX="493.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleUnlockTerminal" text="UnlockTerminal" />

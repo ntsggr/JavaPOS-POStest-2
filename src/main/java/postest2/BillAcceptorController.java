@@ -63,12 +63,67 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.service = new BillAcceptor();
 		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox();
 	}
 
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
+	// Shows statistics of device if they are supported by the device
+	@Override
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties(service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@Override
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((BillAcceptor) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+	}
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
@@ -88,6 +143,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 		RequiredStateChecker.invokeThis(this, service);
 	}
 
+	@Override
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
@@ -110,8 +166,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
 		System.out.println("realtimedataenabled");
 		try {
-			((BillAcceptor) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
-					.getSelectedItem());
+			((BillAcceptor) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -237,7 +292,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 	}
 
 	private void setUpComboBoxes() {
-		setUpLogicalNameComboBox();
 		setUpCurrencyCode();
 		setUpRealTimeDataEnabled();
 		setUpEndDepositSuccess();
@@ -248,59 +302,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 		if (!LogicalNameGetter.getLogicalNamesByCategory("BillAcceptor").isEmpty()) {
 			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BillAcceptor"));
 		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String msg = DeviceProperties.getProperties((BillAcceptor) service);
-
-			JTextArea jta = new JTextArea(msg);
-			JScrollPane jsp = new JScrollPane(jta) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(460, 390);
-				}
-			};
-			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			((BillAcceptor) service).retrieveStatistics(stats);
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-		statistics = "";
 	}
 
 }

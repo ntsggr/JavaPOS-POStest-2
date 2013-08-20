@@ -114,6 +114,7 @@ public class POSTest2Controller implements Initializable {
 
 		// Show the respective device panel for each selected item from the list "All devices"
 		listAllDevices.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
 				//System.out.println(old_val + ", " + new_val);
 				setPanel(new_val);
@@ -122,6 +123,7 @@ public class POSTest2Controller implements Initializable {
 		
 		// Show the respective device panel for each selected item from the list "Favorites"
 		listFavorites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
 				//System.out.println(old_val + ", " + new_val);
 				if (new_val != null)
@@ -133,6 +135,7 @@ public class POSTest2Controller implements Initializable {
 		
 		// Show "All devices" or "Favorites"
 		toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			@Override
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
 				if (new_toggle != null) {
 					if (new_toggle.getUserData().equals("all")) {

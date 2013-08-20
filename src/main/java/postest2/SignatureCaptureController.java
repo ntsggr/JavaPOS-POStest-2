@@ -50,6 +50,7 @@ public class SignatureCaptureController extends CommonController implements Init
 		}
 	}
 
+	@Override
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
@@ -58,6 +59,7 @@ public class SignatureCaptureController extends CommonController implements Init
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
@@ -101,6 +103,7 @@ public class SignatureCaptureController extends CommonController implements Init
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
 		String[] stats = new String[] { "", "U_", "M_" };

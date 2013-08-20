@@ -60,7 +60,7 @@
                         <Button layoutX="235.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleBeginEnrollCapture" prefWidth="166.0" text="Begin Enroll Capture" />
                         <Label alignment="CENTER" font="$x1" layoutX="461.0" layoutY="52.0" prefWidth="166.0" text="Begin Verify Capture" underline="true" />
                         <Button layoutX="461.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleBeginVerifyCapture" prefWidth="166.0" text="Begin Verify Capture" />
-                        <Label alignment="CENTER" font="$x1" layoutX="461.0" layoutY="154.0" prefWidth="166.0" text="End Capture" underline="true" />
+                        <Label alignment="CENTER" layoutX="461.0" layoutY="154.0" prefWidth="166.0" text="End Capture" underline="true" />
                         <Button layoutX="461.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleEndCapture" prefWidth="166.0" text="End Capture" />
                       </children>
                       <stylesheets>

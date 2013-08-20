@@ -77,7 +77,6 @@ public class CATController extends CommonController implements Initializable {
 		service = new CAT();
 		setUpLogicalNameComboBox();
 		RequiredStateChecker.invokeThis(this, service);
-		setUpComboBoxes();
 	}
 
 	/* ************************************************************************
@@ -420,6 +419,7 @@ public class CATController extends CommonController implements Initializable {
 	}
 
 
+	@Override
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
@@ -428,10 +428,11 @@ public class CATController extends CommonController implements Initializable {
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties((CAT) service);
+			String msg = DeviceProperties.getProperties(service);
 
 			JTextArea jta = new JTextArea(msg);
 			JScrollPane jsp = new JScrollPane(jta) {
@@ -450,6 +451,7 @@ public class CATController extends CommonController implements Initializable {
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
 		String[] stats = new String[] { "", "U_", "M_" };

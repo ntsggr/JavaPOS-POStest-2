@@ -196,6 +196,7 @@ public class LineDisplayController extends CommonController implements Initializ
 		}
 	}
 
+	@Override
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
@@ -857,10 +858,11 @@ public class LineDisplayController extends CommonController implements Initializ
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties((LineDisplay) service);
+			String msg = DeviceProperties.getProperties(service);
 
 			JTextArea jta = new JTextArea(msg);
 			JScrollPane jsp = new JScrollPane(jta) {
@@ -879,6 +881,7 @@ public class LineDisplayController extends CommonController implements Initializ
 	}
 
 	// Shows statistics of device if they are supported by the device
+	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
 		String[] stats = new String[] { "", "U_", "M_" };
