@@ -21,24 +21,30 @@ public class CashChangerController extends CommonController implements Initializ
 	@FXML
 	@RequiredState(JposState.ENABLED)
 	public Pane functionPane;
-	
+
 	@FXML
 	@RequiredState(JposState.OPENED)
 	public CheckBox asyncMode;
 
 	// Controls
-	@FXML ComboBox<Integer> currentService;
+	@FXML
+	ComboBox<Integer> currentService;
+	
 	@FXML
 	public ComboBox<String> currencyCode;
+	
 	@FXML
 	public ComboBox<Boolean> realTimeDataEnabled;
+	
 	@FXML
 	public ComboBox<String> endDeposit_success;
+	
 	@FXML
 	public ComboBox<String> pauseDeposit_control;
 
 	@FXML
 	public Label readCashCount_cashCount;
+	
 	@FXML
 	public Label readCashCount_discrepancy;
 
@@ -53,6 +59,9 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		service = new CashChanger();
+		setUpLogicalNameComboBox();
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	/* ************************************************************************
@@ -60,9 +69,6 @@ public class CashChangerController extends CommonController implements Initializ
 	 * ***********************************************************************
 	 */
 
-	/*
-	 * Action Handler
-	 */
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		System.out.println("DevEnable");
@@ -80,7 +86,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 		RequiredStateChecker.invokeThis(this, service);
 	}
-	
+
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
 		System.out.println("asyncMode");
@@ -187,7 +193,7 @@ public class CashChangerController extends CommonController implements Initializ
 		this.readCashCount_cashCount.setText(cashCounts[0]);
 		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
 	}
-	
+
 	@FXML
 	public void handleSetCurrentExit(ActionEvent e) {
 		System.out.println("currenctExit");
@@ -211,21 +217,21 @@ public class CashChangerController extends CommonController implements Initializ
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleSetCurrentService(ActionEvent e) {
 		System.out.println("currentservice");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
-				//TODO current service
-				((CashChanger) service).setCurrentService(currentService.getSelectionModel().getSelectedItem());
+				((CashChanger) service).setCurrentService(currentService.getSelectionModel()
+						.getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
 			}
 		}
 	}
-	
+
 	/*
 	 * Set Up all ComboBoxes
 	 */
@@ -281,20 +287,29 @@ public class CashChangerController extends CommonController implements Initializ
 			e.printStackTrace();
 		}
 		currentExit.setValue(1);
-
 	}
 	
-	
+	private void setUpCurrentService() {
+		currentService.getItems().clear();
+		try {
+			for (int i = 0; i <= ((CashChanger) service).getServiceCount(); i++) {
+				currentService.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		currentService.setValue(1);
+	}
+
 	private void setUpComboBoxes() {
-		setUpLogicalNameComboBox();
 		setUpCurrencyCode();
 		setUpRealTimeDataEnabled();
 		setUpEndDepositSuccess();
 		setUpPauseDepositControl();
 		setUpCurrentExit();
+		setUpCurrentService();
 	}
-	
-	
 
 	private void setUpLogicalNameComboBox() {
 		if (!LogicalNameGetter.getLogicalNamesByCategory("CashChanger").isEmpty()) {
