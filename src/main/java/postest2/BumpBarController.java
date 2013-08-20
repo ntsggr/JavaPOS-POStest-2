@@ -1,9 +1,10 @@
 package postest2;
 
+import java.awt.Dimension;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +13,21 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import jpos.BumpBar;
 import jpos.JposException;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 
 public class BumpBarController extends CommonController implements Initializable {
@@ -48,12 +62,9 @@ public class BumpBarController extends CommonController implements Initializable
 	public TextField setKeyTranslation_scanCode;
 	@FXML
 	public TextField setKeyTranslation_logicalKey;
-	
 
 	@FXML
 	public ComboBox<String> checkHealth_level;
-	
-	
 	
 
 	@Override
@@ -78,6 +89,13 @@ public class BumpBarController extends CommonController implements Initializable
 		}
 		setUpCheckHealthLevel();
 		RequiredStateChecker.invokeThis(this, service);
+	}
+
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
 	}
 
 	@FXML
@@ -154,14 +172,15 @@ public class BumpBarController extends CommonController implements Initializable
 	@FXML
 	public void handleCheckHealth(ActionEvent e) {
 		System.out.println("checkhealt");
-		
+
 		try {
-			((BumpBar) service).checkHealth(CommonConstantMapper.getConstantNumberFromString(checkHealth_level.getSelectionModel().getSelectedItem()));
+			((BumpBar) service).checkHealth(CommonConstantMapper
+					.getConstantNumberFromString(checkHealth_level.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
-		
+
 	}
 
 	@FXML
@@ -226,15 +245,15 @@ public class BumpBarController extends CommonController implements Initializable
 			}
 		}
 	}
-	
-	private void setUpCheckHealthLevel(){
+
+	private void setUpCheckHealthLevel() {
 		checkHealth_level.getItems().clear();
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_INTERNAL.getConstant());
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_EXTERNAL.getConstant());
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_INTERACTIVE.getConstant());
 		checkHealth_level.setValue(CommonConstantMapper.JPOS_CH_INTERNAL.getConstant());
 	}
-	
+
 
 	private void setUpLogicalNameComboBox() {
 		if (!LogicalNameGetter.getLogicalNamesByCategory("BumpBar").isEmpty()) {
@@ -242,5 +261,56 @@ public class BumpBarController extends CommonController implements Initializable
 		}
 	}
 	
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties((BumpBar) service);
 
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((BumpBar) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+	}
 }

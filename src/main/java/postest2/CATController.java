@@ -1,5 +1,8 @@
 package postest2;
 
+import java.awt.Dimension;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,9 +15,19 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.CAT;
 import jpos.JposException;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class CATController extends CommonController implements Initializable {
 
@@ -40,6 +53,7 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public TextField accessDailyLog_timeout;
 	@FXML
+
 	public TextField authorize_sequenceNumber;
 	@FXML
 	public TextField authorize_amount;
@@ -73,6 +87,7 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
+
 		System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
@@ -148,6 +163,7 @@ public class CATController extends CommonController implements Initializable {
 				((CAT) service).accessDailyLog(Integer.parseInt(accessDailyLog_sequenceNumber.getText()),
 						CATConstantMapper.getConstantNumberFromString(accessDailyLog_type.getSelectionModel()
 								.getSelectedItem()), Integer.parseInt(accessDailyLog_timeout.getText()));
+
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -163,6 +179,7 @@ public class CATController extends CommonController implements Initializable {
 		System.out.println("authComp");
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
@@ -184,6 +201,7 @@ public class CATController extends CommonController implements Initializable {
 		System.out.println("authpresal");
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
@@ -205,11 +223,14 @@ public class CATController extends CommonController implements Initializable {
 		System.out.println("authVoid");
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeVoid(Integer.parseInt(authorize_sequenceNumber.getText()),
+
 						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
+
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -224,13 +245,17 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeSales(ActionEvent e) {
 		System.out.println("authsale");
+
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeSales(Integer.parseInt(authorize_sequenceNumber.getText()),
+
 						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
+
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -245,13 +270,17 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeRefund(ActionEvent e) {
 		System.out.println("authRef");
+
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
 				((CAT) service).authorizeRefund(Integer.parseInt(authorize_sequenceNumber.getText()),
+
 						Long.parseLong(authorize_amount.getText()), Long.parseLong(authorize_taxOthers.getText()),
+
 						Integer.parseInt(authorize_timeout.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -266,8 +295,10 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleAuthorizeVoidPreSales(ActionEvent e) {
 		System.out.println("authVoidPresal");
+
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
+
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
 			try {
@@ -313,6 +344,7 @@ public class CATController extends CommonController implements Initializable {
 			try {
 				((CAT) service).checkCard(Integer.parseInt(checkCard_sequenceNumber.getText()),
 						Integer.parseInt(checkCard_timeout.getText()));
+
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -328,6 +360,7 @@ public class CATController extends CommonController implements Initializable {
 		System.out.println("lock");
 		try {
 			((CAT) service).lockTerminal();
+
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -356,6 +389,7 @@ public class CATController extends CommonController implements Initializable {
 		paymentMedia.getItems().add(CATConstantMapper.CAT_MEDIA_DEBIT.getConstant());
 		paymentMedia.getItems().add(CATConstantMapper.CAT_MEDIA_ELECTRONIC_MONEY.getConstant());
 		paymentMedia.setValue(CATConstantMapper.CAT_MEDIA_UNSPECIFIED.getConstant());
+
 	}
 
 	private void setUpTrainingMode() {
@@ -383,6 +417,67 @@ public class CATController extends CommonController implements Initializable {
 		if (!LogicalNameGetter.getLogicalNamesByCategory("CAT").isEmpty()) {
 			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CAT"));
 		}
+	}
+
+
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties((CAT) service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((CAT) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
 	}
 
 }

@@ -14,39 +14,53 @@ import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 public abstract class CommonController implements Initializable {
 
 	/* ************************************************************************
 	 * ************************ Action Handler ********************************
 	 * ************************************************************************
 	 */
-	
+
 	// Common
 	@FXML
 	public ComboBox<String> logicalName;
-	@FXML @RequiredState(JposState.CLAIMED)
+	@FXML
+	@RequiredState(JposState.CLAIMED)
 	public CheckBox deviceEnabled;
 	@FXML
 	public Button buttonOpen;
-	@FXML  @RequiredState(JposState.OPENED)
+	@FXML
+	@RequiredState(JposState.OPENED)
 	public Button buttonClaim;
-	@FXML @RequiredState(JposState.OPENED)
+	@FXML
+	@RequiredState(JposState.OPENED)
 	public Button buttonRelease;
-	@FXML @RequiredState(JposState.OPENED)
+	@FXML
+	@RequiredState(JposState.OPENED)
 	public Button buttonStatistics;
-	@FXML @RequiredState(JposState.OPENED)
+	@FXML
+	@RequiredState(JposState.OPENED)
 	public Button buttonClose;
-	@FXML @RequiredState(JposState.OPENED)
+	@FXML
+	@RequiredState(JposState.OPENED)
 	public Button buttonFirmware;
-	@FXML @RequiredState(JposState.CLOSED)
+	@FXML
+	@RequiredState(JposState.CLOSED)
 	public Button buttonOCE;
-	@FXML @RequiredState(JposState.ENABLED)
+	@FXML
+	@RequiredState(JposState.ENABLED)
 	public Button buttonInfo;
 	@FXML
 	public Text statusLabel;
-	@FXML @RequiredState(JposState.ENABLED)
+	@FXML
+	@RequiredState(JposState.ENABLED)
 	public CheckBox freezeEvents;
 	BaseJposControl service;
+	
+	static String statistics = "";
 	
 	@FXML
 	public void handleOpen(ActionEvent e) {
@@ -54,7 +68,7 @@ public abstract class CommonController implements Initializable {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				service.open(logicalName.getValue());
 				RequiredStateChecker.invokeThis(this, (BaseJposControl) service);
-				//buttonClaim.setDisable(false);
+				// buttonClaim.setDisable(false);
 				System.out.println(service.getState());
 				setStatusLabel();
 			} else {
@@ -81,7 +95,6 @@ public abstract class CommonController implements Initializable {
 		}
 	}
 
-	
 	@FXML
 	public void handleRelease(ActionEvent e) {
 		try {
@@ -117,23 +130,53 @@ public abstract class CommonController implements Initializable {
 
 	@FXML
 	public void handleOCE(ActionEvent e) {
-		// TODO implement
+		handleOpen(e);
+		handleClaim(e);
 	}
 
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		// TODO implement
 	}
-	
+
 	@FXML
 	public void handleStatistics(ActionEvent e) {
 		// TODO implement
 
 	}
 
+	// Method to parse the String XML and print the data for the
+	// handleStatistics funtion
+	public static void printStatistics(Node e, String tab) {
+		if (e.getNodeType() == Node.TEXT_NODE) {
+			statistics += tab + e.getNodeValue() + "\n";
+			return;
+		}
+
+		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
+				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
+				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
+			statistics += tab + e.getNodeName();
+
+		if (e.getNodeValue() != null) {
+			statistics += tab + " " + e.getNodeValue();
+		}
+
+		NodeList childs = e.getChildNodes();
+		for (int i = 0; i < childs.getLength(); i++) {
+			printStatistics(childs.item(i), " ");
+		}
+	}
+
 	@FXML
 	public void handleFirmware(ActionEvent e) {
-		// TODO implement
+		try {
+			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(service);
+			dlg.setVisible(true);
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@FXML
@@ -144,27 +187,26 @@ public abstract class CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Set StatusLabel corresponding to the Device Status
 	 */
-	private void setStatusLabel(){
-		if(service.getState() == JposConst.JPOS_S_IDLE){
+	private void setStatusLabel() {
+		if (service.getState() == JposConst.JPOS_S_IDLE) {
 			statusLabel.setText("JPOS_S_IDLE");
 		}
-		
-		if(service.getState() == JposConst.JPOS_S_CLOSED){
+
+		if (service.getState() == JposConst.JPOS_S_CLOSED) {
 			statusLabel.setText("JPOS_S_CLOSED");
 		}
-		
-		if(service.getState() == JposConst.JPOS_S_BUSY){
+
+		if (service.getState() == JposConst.JPOS_S_BUSY) {
 			statusLabel.setText("JPOS_S_BUSY");
 		}
-		
-		if(service.getState() == JposConst.JPOS_S_ERROR){
+
+		if (service.getState() == JposConst.JPOS_S_ERROR) {
 			statusLabel.setText("JPOS_S_ERROR");
 		}
 	}
 
-	
 }

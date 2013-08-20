@@ -6,10 +6,11 @@
  */
 package postest2;
 
+import java.awt.Dimension;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +19,21 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import jpos.BillAcceptor;
 import jpos.JposException;
+
+import org.apache.xerces.parsers.DOMParser;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 public class BillAcceptorController extends CommonController implements Initializable {
 
@@ -49,7 +63,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.service = new BillAcceptor();
 		RequiredStateChecker.invokeThis(this, service);
-
 	}
 
 	/* ************************************************************************
@@ -76,6 +89,13 @@ public class BillAcceptorController extends CommonController implements Initiali
 	}
 
 	@FXML
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
+	}
+
+	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
 		System.out.println("currencyCode");
 		try {
@@ -90,7 +110,8 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
 		System.out.println("realtimedataenabled");
 		try {
-			((BillAcceptor) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel().getSelectedItem());
+			((BillAcceptor) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
+					.getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -100,7 +121,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
 		System.out.println("adjust");
-		if(!adjustCashCounts.getText().isEmpty()){
+		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillAcceptor) service).adjustCashCounts(adjustCashCounts.getText());
 			} catch (JposException e1) {
@@ -125,7 +146,8 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void handleEndDeposit(ActionEvent e) {
 		System.out.println("end");
 		try {
-			((BillAcceptor) service).endDeposit(BillAcceptorConstantMapper.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
+			((BillAcceptor) service).endDeposit(BillAcceptorConstantMapper
+					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -147,7 +169,8 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void handlePauseDeposit(ActionEvent e) {
 		System.out.println("pause");
 		try {
-			((BillAcceptor) service).pauseDeposit(BillAcceptorConstantMapper.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
+			((BillAcceptor) service).pauseDeposit(BillAcceptorConstantMapper
+					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -172,7 +195,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 	/*
 	 * Set Up all ComboBoxes
 	 */
-	
+
 	private void setUpCurrencyCode() {
 		String[] currencies = null;
 		try {
@@ -181,38 +204,38 @@ public class BillAcceptorController extends CommonController implements Initiali
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			e.printStackTrace();
 		}
-	
+
 		currencyCode.getItems().clear();
-		for(int i = 0; i < currencies.length; i++){
+		for (int i = 0; i < currencies.length; i++) {
 			currencyCode.getItems().add(currencies[i]);
 		}
 		currencyCode.setValue(currencies[0]);
-		
+
 	}
-	
-	private void setUpRealTimeDataEnabled(){
+
+	private void setUpRealTimeDataEnabled() {
 
 		realTimeDataEnabled.getItems().clear();
 		realTimeDataEnabled.getItems().add(true);
 		realTimeDataEnabled.getItems().add(false);
 		realTimeDataEnabled.setValue(true);
-		
+
 	}
-	
-	private void setUpEndDepositSuccess(){
+
+	private void setUpEndDepositSuccess() {
 		endDeposit_success.getItems().clear();
 		endDeposit_success.getItems().add(BillAcceptorConstantMapper.BACC_DEPOSIT_COMPLETE.getConstant());
 		endDeposit_success.setValue(BillAcceptorConstantMapper.BACC_DEPOSIT_COMPLETE.getConstant());
 	}
-	
-	private void setUpPauseDepositControl(){
+
+	private void setUpPauseDepositControl() {
 
 		pauseDeposit_control.getItems().clear();
 		pauseDeposit_control.getItems().add(BillAcceptorConstantMapper.BACC_DEPOSIT_PAUSE.getConstant());
 		pauseDeposit_control.getItems().add(BillAcceptorConstantMapper.BACC_DEPOSIT_RESTART.getConstant());
 		pauseDeposit_control.setValue(BillAcceptorConstantMapper.BACC_DEPOSIT_PAUSE.getConstant());
 	}
-	
+
 	private void setUpComboBoxes() {
 		setUpLogicalNameComboBox();
 		setUpCurrencyCode();
@@ -225,6 +248,59 @@ public class BillAcceptorController extends CommonController implements Initiali
 		if (!LogicalNameGetter.getLogicalNamesByCategory("BillAcceptor").isEmpty()) {
 			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BillAcceptor"));
 		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties((BillAcceptor) service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((BillAcceptor) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
 	}
 
 }
