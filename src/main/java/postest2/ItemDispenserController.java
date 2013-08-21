@@ -9,6 +9,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,10 +30,29 @@ import org.xml.sax.SAXException;
 
 public class ItemDispenserController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	@FXML
+	ComboBox<Integer> adjustItemCount_slotNumber;
+	@FXML
+	ComboBox<Integer> dispenseItem_slotNumber;
+	@FXML
+	ComboBox<Integer> readItemCount_slotNumber;
+
+	@FXML
+	TextField adjustItemCount_itemCount;
+	@FXML
+	TextField dispenseItem_numItem;
+	@FXML
+	TextField readItemCount_itemCount;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new ItemDispenser();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("ItemDispenser");
 	}
 
 	/* ************************************************************************
@@ -43,6 +65,7 @@ public class ItemDispenserController extends CommonController implements Initial
 		try {
 			if (deviceEnabled.isSelected()) {
 				((ItemDispenser) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 			} else {
 				((ItemDispenser) service).setDeviceEnabled(false);
 			}
@@ -76,9 +99,9 @@ public class ItemDispenserController extends CommonController implements Initial
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -113,6 +136,105 @@ public class ItemDispenserController extends CommonController implements Initial
 		}
 
 		statistics = "";
+	}
+	
+	@FXML
+	public void handleAdjustItemCount(ActionEvent e) {
+		if(adjustItemCount_itemCount.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Field should have a value!");
+		} else {
+			try {
+				((ItemDispenser)service).adjustItemCount(Integer.parseInt(adjustItemCount_itemCount.getText()), adjustItemCount_slotNumber.getSelectionModel().getSelectedItem());
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleDispenseItem(ActionEvent e) {
+		if(dispenseItem_numItem.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Field should have a value!");
+		} else {
+			int[] numItem = new int [1];
+			numItem[0] = Integer.parseInt(dispenseItem_numItem.getText());
+			try {
+				((ItemDispenser)service).dispenseItem(numItem, dispenseItem_slotNumber.getSelectionModel().getSelectedItem());
+				dispenseItem_numItem.setText("" + numItem[0]);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleReadItemCount(ActionEvent e) {
+		
+		int[] numItem = new int [1];
+		try {
+			((ItemDispenser)service).readItemCount(numItem, readItemCount_slotNumber.getSelectionModel().getSelectedItem());
+			readItemCount_itemCount.setText("" + numItem[0]);
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+		
+	}
+
+	private void setUpAdjustItemCountSlotNumber() {
+		adjustItemCount_slotNumber.getItems().clear();
+		try {
+			for (int i = 1; i < ((ItemDispenser) service).getMaxSlots(); i++) {
+				adjustItemCount_slotNumber.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		adjustItemCount_slotNumber.setValue(1);
+	}
+
+	private void setUpDispenseItemSlotNumber() {
+		dispenseItem_slotNumber.getItems().clear();
+		try {
+			for (int i = 1; i < ((ItemDispenser) service).getMaxSlots(); i++) {
+				dispenseItem_slotNumber.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		dispenseItem_slotNumber.setValue(1);
+	}
+
+	private void setUpReadItemCountSlotNumber() {
+		readItemCount_slotNumber.getItems().clear();
+		try {
+			for (int i = 1; i < ((ItemDispenser) service).getMaxSlots(); i++) {
+				readItemCount_slotNumber.getItems().add(i);
+			}
+		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
+		}
+		readItemCount_slotNumber.setValue(1);
+	}
+
+	private void setUpComboBoxes() {
+		setUpAdjustItemCountSlotNumber();
+		setUpDispenseItemSlotNumber();
+		setUpReadItemCountSlotNumber();
 	}
 
 }

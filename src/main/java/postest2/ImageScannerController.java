@@ -17,9 +17,6 @@ import jpos.ImageScanner;
 import jpos.JposException;
 
 public class ImageScannerController extends CommonController implements Initializable {
-
-	@FXML
-	private ComboBox<String> logicalName;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
