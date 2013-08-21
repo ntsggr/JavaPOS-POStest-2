@@ -133,20 +133,20 @@ public abstract class CommonController implements Initializable {
 		handleOpen(e);
 		handleClaim(e);
 	}
-
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		// TODO implement
+	
+	
+	public void handleInfo(ActionEvent e){
+		
 	}
-
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		// TODO implement
-
+	
+	public void handleStatistics(ActionEvent e){
+		
 	}
+	
+	
 
 	// Method to parse the String XML and print the data for the
-	// handleStatistics funtion
+	// handleStatistics function
 	public static void printStatistics(Node e, String tab) {
 		if (e.getNodeType() == Node.TEXT_NODE) {
 			statistics += tab + e.getNodeValue() + "\n";
@@ -206,6 +206,12 @@ public abstract class CommonController implements Initializable {
 
 		if (service.getState() == JposConst.JPOS_S_ERROR) {
 			statusLabel.setText("JPOS_S_ERROR");
+		}
+	}
+	
+	protected void setUpLogicalNameComboBox(String devCategory) {
+		if (!LogicalNameGetter.getLogicalNamesByCategory(devCategory).isEmpty()) {
+			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(devCategory));
 		}
 	}
 

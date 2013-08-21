@@ -43,22 +43,22 @@ public class CashChangerController extends CommonController implements Initializ
 	// Controls
 	@FXML
 	ComboBox<Integer> currentService;
-	
+
 	@FXML
 	public ComboBox<String> currencyCode;
-	
+
 	@FXML
 	public ComboBox<Boolean> realTimeDataEnabled;
-	
+
 	@FXML
 	public ComboBox<String> endDeposit_success;
-	
+
 	@FXML
 	public ComboBox<String> pauseDeposit_control;
 
 	@FXML
 	public Label readCashCount_cashCount;
-	
+
 	@FXML
 	public Label readCashCount_discrepancy;
 
@@ -74,7 +74,7 @@ public class CashChangerController extends CommonController implements Initializ
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CashChanger();
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("CashChanger");
 		RequiredStateChecker.invokeThis(this, service);
 	}
 
@@ -82,10 +82,72 @@ public class CashChangerController extends CommonController implements Initializ
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
+	@Override
+	@FXML
+	public void handleOCE(ActionEvent e) {
+		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
+		handleDeviceEnable(e);
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@Override
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties(service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@Override
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((CashChanger) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+	}
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		System.out.println("DevEnable");
+		//System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CashChanger) service).setDeviceEnabled(true);
@@ -103,7 +165,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		System.out.println("asyncMode");
+		//System.out.println("asyncMode");
 		try {
 			((CashChanger) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException je) {
@@ -113,7 +175,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
-		System.out.println("currencyCode");
+		//System.out.println("currencyCode");
 		try {
 			((CashChanger) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -124,10 +186,9 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
-		System.out.println("realtimedataenabled");
+		//System.out.println("realtimedataenabled");
 		try {
-			((CashChanger) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
-					.getSelectedItem());
+			((CashChanger) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -136,7 +197,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		System.out.println("adjust");
+		//System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CashChanger) service).adjustCashCounts(adjustCashCounts.getText());
@@ -149,7 +210,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleBeginDeposit(ActionEvent e) {
-		System.out.println("begin");
+		//System.out.println("begin");
 		try {
 			((CashChanger) service).beginDeposit();
 		} catch (JposException e1) {
@@ -160,7 +221,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleEndDeposit(ActionEvent e) {
-		System.out.println("end");
+		//System.out.println("end");
 		try {
 			((CashChanger) service).endDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
@@ -172,7 +233,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleFixDeposit(ActionEvent e) {
-		System.out.println("fix");
+		//System.out.println("fix");
 		try {
 			((CashChanger) service).fixDeposit();
 		} catch (JposException e1) {
@@ -183,7 +244,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handlePauseDeposit(ActionEvent e) {
-		System.out.println("pause");
+		//System.out.println("pause");
 		try {
 			((CashChanger) service).pauseDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
@@ -195,7 +256,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		System.out.println("readCashCount");
+		//System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {
@@ -210,7 +271,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetCurrentExit(ActionEvent e) {
-		System.out.println("currenctExit");
+		//System.out.println("currenctExit");
 		try {
 			((CashChanger) service).setCurrentExit(currentExit.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -221,7 +282,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
-		System.out.println("dispenseCash");
+		//System.out.println("dispenseCash");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CashChanger) service).adjustCashCounts(adjustCashCounts.getText());
@@ -234,11 +295,10 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetCurrentService(ActionEvent e) {
-		System.out.println("currentservice");
+		//System.out.println("currentservice");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
-				((CashChanger) service).setCurrentService(currentService.getSelectionModel()
-						.getSelectedItem());
+				((CashChanger) service).setCurrentService(currentService.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -302,7 +362,7 @@ public class CashChangerController extends CommonController implements Initializ
 		}
 		currentExit.setValue(1);
 	}
-	
+
 	private void setUpCurrentService() {
 		currentService.getItems().clear();
 		try {
@@ -323,75 +383,6 @@ public class CashChangerController extends CommonController implements Initializ
 		setUpPauseDepositControl();
 		setUpCurrentExit();
 		setUpCurrentService();
-	}
-
-	private void setUpLogicalNameComboBox() {
-		if (!LogicalNameGetter.getLogicalNamesByCategory("CashChanger").isEmpty()) {
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CashChanger"));
-		}
-	}
-
-	@Override
-	@FXML
-	public void handleOCE(ActionEvent e) {
-		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
-		handleDeviceEnable(e);
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String msg = DeviceProperties.getProperties(service);
-
-			JTextArea jta = new JTextArea(msg);
-			JScrollPane jsp = new JScrollPane(jta) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(460, 390);
-				}
-			};
-			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			((CashChanger) service).retrieveStatistics(stats);
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-		statistics = "";
 	}
 
 }

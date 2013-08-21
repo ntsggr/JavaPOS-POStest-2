@@ -41,7 +41,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.BaseJposControl;
 import jpos.JposConst;
 import jpos.JposException;
 import jpos.POSPrinter;
@@ -220,7 +219,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();
 
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("POSPrinter");
 		// Group the Radiobuttons
 		rbReceipt.setToggleGroup(group);
 		rbJournal.setToggleGroup(group);
@@ -1068,11 +1067,6 @@ public class POSPrinterController extends CommonController implements Initializa
 	/*
 	 * Initialize ComboBoxes
 	 */
-
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.POSPRINTER_DEVCAT
-				.toString()));
-	}
 
 	private void setUpRotationMode() {
 		rotationMode.getItems().clear();

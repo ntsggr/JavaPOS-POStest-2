@@ -1,9 +1,3 @@
-/*
- * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
- * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
- * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
- * Homepage: www.ntswincash.com
- */
 package postest2;
 
 import java.awt.Dimension;
@@ -63,7 +57,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.service = new BillAcceptor();
 		RequiredStateChecker.invokeThis(this, service);
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("BillAcceptor");
 	}
 
 	/* ************************************************************************
@@ -127,7 +121,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		System.out.println("DevEnable");
+		//System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((BillAcceptor) service).setDeviceEnabled(true);
@@ -153,7 +147,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
-		System.out.println("currencyCode");
+		//System.out.println("currencyCode");
 		try {
 			((BillAcceptor) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -164,7 +158,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
-		System.out.println("realtimedataenabled");
+		//System.out.println("realtimedataenabled");
 		try {
 			((BillAcceptor) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -175,7 +169,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		System.out.println("adjust");
+		//System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillAcceptor) service).adjustCashCounts(adjustCashCounts.getText());
@@ -188,7 +182,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleBeginDeposit(ActionEvent e) {
-		System.out.println("begin");
+		//System.out.println("begin");
 		try {
 			((BillAcceptor) service).beginDeposit();
 		} catch (JposException e1) {
@@ -199,7 +193,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleEndDeposit(ActionEvent e) {
-		System.out.println("end");
+		//System.out.println("end");
 		try {
 			((BillAcceptor) service).endDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
@@ -211,7 +205,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleFixDeposit(ActionEvent e) {
-		System.out.println("fix");
+		//System.out.println("fix");
 		try {
 			((BillAcceptor) service).fixDeposit();
 		} catch (JposException e1) {
@@ -222,7 +216,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handlePauseDeposit(ActionEvent e) {
-		System.out.println("pause");
+		//System.out.println("pause");
 		try {
 			((BillAcceptor) service).pauseDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
@@ -234,7 +228,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		System.out.println("readCashCount");
+		//System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {
@@ -296,12 +290,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 		setUpRealTimeDataEnabled();
 		setUpEndDepositSuccess();
 		setUpPauseDepositControl();
-	}
-
-	private void setUpLogicalNameComboBox() {
-		if (!LogicalNameGetter.getLogicalNamesByCategory("BillAcceptor").isEmpty()) {
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BillAcceptor"));
-		}
 	}
 
 }

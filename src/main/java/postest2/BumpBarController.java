@@ -70,7 +70,7 @@ public class BumpBarController extends CommonController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new BumpBar();
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("BumpBar");
 		RequiredStateChecker.invokeThis(this, service);
 	}
 
@@ -81,7 +81,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		System.out.println("DevEnable");
+		//System.out.println("DevEnable");
 		try {
 			((BumpBar) service).setDeviceEnabled(deviceEnabled.isSelected());
 		} catch (JposException je) {
@@ -101,7 +101,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		System.out.println("async");
+		//System.out.println("async");
 		try {
 			((BumpBar) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException e1) {
@@ -112,7 +112,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleSetAutoToneDuration(ActionEvent e) {
-		System.out.println("setAutoDur");
+		//System.out.println("setAutoDur");
 		if (autoToneDuration.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field is empty!");
 		} else {
@@ -127,7 +127,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleSetAutoToneFrequency(ActionEvent e) {
-		System.out.println("setautoFre");
+		//System.out.println("setautoFre");
 		if (autoToneFrequency.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field is empty!");
 		} else {
@@ -142,7 +142,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleSetCurrentUnitID(ActionEvent e) {
-		System.out.println("setCurrentID");
+		//System.out.println("setCurrentID");
 		if (currentUnitID.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field is empty!");
 		} else {
@@ -157,7 +157,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleSetTimeout(ActionEvent e) {
-		System.out.println("setTimeout");
+		//System.out.println("setTimeout");
 		if (timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field is empty!");
 		} else {
@@ -172,7 +172,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleCheckHealth(ActionEvent e) {
-		System.out.println("checkhealt");
+		//System.out.println("checkhealt");
 
 		try {
 			((BumpBar) service).checkHealth(CommonConstantMapper
@@ -186,7 +186,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleClearInput(ActionEvent e) {
-		System.out.println("clearin");
+		//System.out.println("clearin");
 		try {
 			((BumpBar) service).clearInput();
 		} catch (JposException e1) {
@@ -197,7 +197,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleClearOutput(ActionEvent e) {
-		System.out.println("clearouts");
+		//System.out.println("clearouts");
 		try {
 			((BumpBar) service).clearOutput();
 		} catch (JposException e1) {
@@ -208,7 +208,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleBumpBarSound(ActionEvent e) {
-		System.out.println("sound");
+		//System.out.println("sound");
 		if (bumpbarSound_duration.getText().isEmpty() || bumpBarSound_frequency.getText().isEmpty()
 				|| bumpBarSound_interSoundWait.getText().isEmpty()
 				|| bumpBarSound_numberOfCycles.getText().isEmpty() || bumpBarSound_units.getText().isEmpty()) {
@@ -229,7 +229,7 @@ public class BumpBarController extends CommonController implements Initializable
 
 	@FXML
 	public void handleSetKeyTranslation(ActionEvent e) {
-		System.out.println("setKey");
+		//System.out.println("setKey");
 		if (setKeyTranslation_logicalKey.getText().isEmpty()
 				|| setKeyTranslation_scanCode.getText().isEmpty()
 				|| setKeyTranslation_units.getText().isEmpty()) {
@@ -253,13 +253,6 @@ public class BumpBarController extends CommonController implements Initializable
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_EXTERNAL.getConstant());
 		checkHealth_level.getItems().add(CommonConstantMapper.JPOS_CH_INTERACTIVE.getConstant());
 		checkHealth_level.setValue(CommonConstantMapper.JPOS_CH_INTERNAL.getConstant());
-	}
-
-
-	private void setUpLogicalNameComboBox() {
-		if (!LogicalNameGetter.getLogicalNamesByCategory("BumpBar").isEmpty()) {
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("BumpBar"));
-		}
 	}
 	
 	// Shows statistics of device if they are supported by the device

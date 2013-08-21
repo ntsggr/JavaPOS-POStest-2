@@ -49,7 +49,7 @@ public class CoinDispenserController extends CommonController implements Initial
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CoinDispenser();
 		RequiredStateChecker.invokeThis(this, service);
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("CoinDispenser");
 		
 	}
 
@@ -137,7 +137,7 @@ public class CoinDispenserController extends CommonController implements Initial
 	
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		System.out.println("adjust");
+		//System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -150,7 +150,7 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
-		System.out.println("dispenseCash");
+		//System.out.println("dispenseCash");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -163,7 +163,7 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		System.out.println("readCashCount");
+		//System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {
@@ -180,10 +180,5 @@ public class CoinDispenserController extends CommonController implements Initial
 	 * ComboBoxes
 	 */
 
-	private void setUpLogicalNameComboBox() {
-		if (!LogicalNameGetter.getLogicalNamesByCategory("CoinDispenser").isEmpty()) {
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CoinDispenser"));
-		}
-	}
 	
 }

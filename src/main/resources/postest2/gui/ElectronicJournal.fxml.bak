@@ -34,6 +34,9 @@
                         <ComboBox fx:id="storageEnabled" layoutX="140.0" layoutY="75.0" prefHeight="21.0" prefWidth="124.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -42,6 +45,9 @@
                         <ComboBox id="storageEnabled" fx:id="station" layoutX="139.0" layoutY="39.0" prefHeight="21.0" prefWidth="124.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -49,6 +55,9 @@
                         <ComboBox id="storageEnabled" fx:id="waterMark" layoutX="140.0" layoutY="108.0" prefHeight="21.0" prefWidth="124.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -128,6 +137,9 @@
                         <ComboBox fx:id="retrieveCurrentMarker_markerType" layoutX="468.0" layoutY="59.0" prefHeight="21.0" prefWidth="177.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -139,6 +151,9 @@
                         <ComboBox fx:id="retrieveMarker_markerType" layoutX="138.0" layoutY="209.0" prefHeight="21.0" prefWidth="177.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -154,6 +169,9 @@
                         <ComboBox fx:id="retrieveMarkerByDateTime_markerType" layoutX="494.0" layoutY="209.0" prefHeight="21.0" prefWidth="177.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -165,7 +183,7 @@
                         <Label layoutX="25.0" layoutY="406.0" text="Marker:" />
                         <Button layoutX="167.0" layoutY="464.0" mnemonicParsing="false" onAction="#handleRetrieveMarkersDateTime" prefWidth="148.0" text="Retrieve DateTime" />
                         <Label layoutX="25.0" layoutY="433.0" text="Date Time:" />
-                        <TextField id="retrieveMarkerDateTime_dateTime" fx:id="retrieveMarkersDateTime_dateTime" editable="false" layoutX="138.0" layoutY="430.0" prefWidth="177.0" />
+                        <TextField fx:id="retrieveMarkerDateTime_dateTime" editable="false" layoutX="138.0" layoutY="430.0" prefWidth="177.0" />
                         <TextField fx:id="retrieveMarkersDateTime_marker" layoutX="138.0" layoutY="403.0" prefWidth="177.0" />
                       </children>
                     </AnchorPane>
@@ -183,6 +201,9 @@
             <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
                 </FXCollections>
               </items>
             </ComboBox>

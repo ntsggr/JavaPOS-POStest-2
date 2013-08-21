@@ -48,7 +48,7 @@ public class CashDrawerController extends CommonController implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("CashDrawer");
 		service = new CashDrawer();
 		((CashDrawer) service).addStatusUpdateListener(this);
 		RequiredStateChecker.invokeThis(this, service);
@@ -191,9 +191,5 @@ public class CashDrawerController extends CommonController implements Initializa
 		}
 	}
 
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.CASHDRAWER_DEVCAT
-				.toString()));
-	}
 
 }

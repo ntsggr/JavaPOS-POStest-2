@@ -94,7 +94,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		//System.out.println("devena");
+		// System.out.println("devena");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CheckScanner) service).setDeviceEnabled(true);
@@ -173,7 +173,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetColor(ActionEvent e) {
-		////System.out.println("color");
+		// //System.out.println("color");
 		try {
 			((CheckScanner) service).setColor(CheckScannerConstantMapper.getConstantNumberFromString(color
 					.getSelectionModel().getSelectedItem()));
@@ -185,7 +185,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetConcurrentMICR(ActionEvent e) {
-		//System.out.println("concurrentMICR");
+		// System.out.println("concurrentMICR");
 		try {
 			((CheckScanner) service).setConcurrentMICR(concurrentMICR.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -196,7 +196,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetContrast(ActionEvent e) {
-		//System.out.println("contrast");
+		// System.out.println("contrast");
 		try {
 			((CheckScanner) service).setContrast((int) contrast.getValue());
 		} catch (JposException e1) {
@@ -207,7 +207,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetDocumentHeight(ActionEvent e) {
-		//System.out.println("dokuhei");
+		// System.out.println("dokuhei");
 		if (documentHeight.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -225,7 +225,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetDocumentWidth(ActionEvent e) {
-		//System.out.println("ducumwith");
+		// System.out.println("ducumwith");
 		if (documentWidth.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -243,7 +243,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetFileID(ActionEvent e) {
-		//System.out.println("fileid");
+		// System.out.println("fileid");
 		if (fileID.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -258,8 +258,8 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetFileIndex(ActionEvent e) {
-		//System.out.println("fileindex");
-		if (documentHeight.getText().isEmpty()) {
+		// System.out.println("fileindex");
+		if (fileIndex.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
 			try {
@@ -276,7 +276,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetImageFormat(ActionEvent e) {
-		//System.out.println("imageformat");
+		// System.out.println("imageformat");
 		try {
 			((CheckScanner) service).setImageFormat(CheckScannerConstantMapper.getConstantNumberFromString(imageFormat
 					.getSelectionModel().getSelectedItem()));
@@ -288,8 +288,8 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetImageTagData(ActionEvent e) {
-		//System.out.println("imagetagdata");
-		if (documentHeight.getText().isEmpty()) {
+		// System.out.println("imagetagdata");
+		if (imageTagData.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
 			try {
@@ -303,7 +303,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetMapMode(ActionEvent e) {
-		//System.out.println("MM");
+		// System.out.println("MM");
 		try {
 			((CheckScanner) service).setMapMode(CheckScannerConstantMapper.getConstantNumberFromString(mapMode
 					.getSelectionModel().getSelectedItem()));
@@ -315,7 +315,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetQuality(ActionEvent e) {
-		//System.out.println("qual");
+		// System.out.println("qual");
 		try {
 			((CheckScanner) service).setQuality(CheckScannerConstantMapper.getConstantNumberFromString(quality
 					.getSelectionModel().getSelectedItem()));
@@ -327,7 +327,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleBeginInsertion(ActionEvent e) {
-		//System.out.println("regin");
+		// System.out.println("regin");
 		try {
 			((CheckScanner) service).beginInsertion(0);
 		} catch (JposException e1) {
@@ -338,7 +338,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleBeginRemoval(ActionEvent e) {
-		//System.out.println("begrem");
+		// System.out.println("begrem");
 		try {
 			((CheckScanner) service).beginRemoval(0);
 		} catch (JposException e1) {
@@ -349,7 +349,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleEndInsertion(ActionEvent e) {
-		//System.out.println("endin");
+		// System.out.println("endin");
 		try {
 			((CheckScanner) service).endInsertion();
 		} catch (JposException e1) {
@@ -360,7 +360,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleEndRemoval(ActionEvent e) {
-		//System.out.println("endrem");
+		// System.out.println("endrem");
 		try {
 			((CheckScanner) service).endRemoval();
 		} catch (JposException e1) {
@@ -371,7 +371,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleClearImage(ActionEvent e) {
-		//System.out.println("clearimg");
+		// System.out.println("clearimg");
 		try {
 			((CheckScanner) service).clearImage(CheckScannerConstantMapper.getConstantNumberFromString(clearImage_by
 					.getSelectionModel().getSelectedItem()));
@@ -383,7 +383,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleRetrieveImage(ActionEvent e) {
-		//System.out.println("retrievimg");
+		// System.out.println("retrievimg");
 		try {
 			((CheckScanner) service).retrieveImage(CheckScannerConstantMapper
 					.getConstantNumberFromString(retrieveImage_cropAreaID.getSelectionModel().getSelectedItem()));
@@ -395,7 +395,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleDefineCropArea(ActionEvent e) {
-		//System.out.println("defcrop");
+		// System.out.println("defcrop");
 		if (defineCropArea_x.getText().isEmpty() || defineCropArea_y.getText().isEmpty()
 				|| defineCropArea_cx.getSelectionModel().getSelectedItem().isEmpty()
 				|| defineCropArea_cx.getSelectionModel().getSelectedItem().isEmpty()) {
@@ -420,7 +420,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleRetrieveMemory(ActionEvent e) {
-		//System.out.println("reMem");
+		// System.out.println("reMem");
 		try {
 			((CheckScanner) service).retrieveMemory(CheckScannerConstantMapper
 					.getConstantNumberFromString(retrieveMemory_by.getSelectionModel().getSelectedItem()));
@@ -432,7 +432,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@FXML
 	public void handleStoreImage(ActionEvent e) {
-		//System.out.println("storeim");
+		// System.out.println("storeim");
 		try {
 			((CheckScanner) service).storeImage(CheckScannerConstantMapper
 					.getConstantNumberFromString(storeImage_cropAreaID.getSelectionModel().getSelectedItem()));
@@ -445,7 +445,7 @@ public class CheckScannerController extends CommonController implements Initiali
 	/*
 	 * Set Up Combo Boxes
 	 */
-	
+
 	private void setUpLogicalNameComboBox() {
 		if (!LogicalNameGetter.getLogicalNamesByCategory("CheckScanner").isEmpty()) {
 			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CheckScanner"));
