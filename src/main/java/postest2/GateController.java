@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -27,10 +29,18 @@ import org.xml.sax.SAXException;
 
 public class GateController extends CommonController implements Initializable {
 
+	@FXML @RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+	
+	@FXML 
+	public TextField waitForGateClose_timeout;
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new Gate();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("Gate");
 	}
 
 	/* ************************************************************************
@@ -114,5 +124,31 @@ public class GateController extends CommonController implements Initializable {
 
 		statistics = "";
 	}
+	
+	@FXML
+	public void handleOpenGate(ActionEvent e) {
+		try {
+			((Gate)service).openGate();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
 
+	@FXML
+	public void handleWaitForGateClose(ActionEvent e) {
+		if(waitForGateClose_timeout.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Field should have a value!");
+		} else {
+			try {
+				((Gate)service).waitForGateClose(Integer.parseInt(waitForGateClose_timeout.getText()));
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NumberFormatException e1){
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
 }

@@ -15,7 +15,7 @@
         <Pane prefHeight="637.0" prefWidth="853.0" styleClass="root">
           <children>
            	<CheckBox fx:id="deviceEnabled" layoutX="23.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
-		    <CheckBox fx:id="freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" text="Freeze events" />
+		    <CheckBox fx:id="freezeEvents" layoutX="23.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
 		    <TabPane fx:id="functionTab" layoutX="135.0" layoutY="102.0" prefHeight="569.0" prefWidth="721.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
 		      <tabs>
 		        <Tab text="Display Text">
@@ -25,18 +25,12 @@
 		                <ComboBox fx:id="row" layoutX="96.0" layoutY="34.0" prefHeight="21.0" prefWidth="135.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
 		                <ComboBox fx:id="column" layoutX="96.0" layoutY="66.0" prefWidth="135.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -111,9 +105,6 @@
 		                <ComboBox fx:id="descriptors" layoutX="378.0" layoutY="409.0" prefHeight="20.999900000002526" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -133,9 +124,6 @@
 		                <ComboBox fx:id="characterSet" layoutX="123.0" layoutY="411.0" prefHeight="22.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -143,9 +131,6 @@
 		                <ComboBox fx:id="scrollText_direction" layoutX="105.0" layoutY="79.0" prefHeight="21.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -158,9 +143,6 @@
 		                <ComboBox id="descriptors" fx:id="descriptor_attribute" layoutX="378.0" layoutY="442.0" prefHeight="20.999900000002526" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -175,9 +157,6 @@
 		                <ComboBox id="MarqueeType" fx:id="marqueeType" layoutX="179.0" layoutY="153.0" prefHeight="21.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -186,9 +165,6 @@
 		                <ComboBox fx:id="marqueeFormat" layoutX="179.0" layoutY="85.0" prefHeight="21.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -215,9 +191,6 @@
 		                <ComboBox fx:id="bitmapWidth" layoutX="125.0" layoutY="125.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -227,18 +200,12 @@
 		                <ComboBox id="bitmapWidth" fx:id="alignmentX" layoutX="125.0" layoutY="164.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
 		                <ComboBox id="bitmapWidth" fx:id="alignmentY" layoutX="125.0" layoutY="200.0" prefWidth="115.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -259,9 +226,6 @@
 		                <ComboBox fx:id="screenMode" layoutX="112.0" layoutY="59.0" prefHeight="21.000099999997474" prefWidth="90.0">
 		                  <items>
 		                    <FXCollections fx:factory="observableArrayList">
-		                      <String fx:value="Item 1" />
-		                      <String fx:value="Item 2" />
-		                      <String fx:value="Item 3" />
 		                    </FXCollections>
 		                  </items>
 		                </ComboBox>
@@ -282,9 +246,6 @@
             <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
                 </FXCollections>
               </items>
             </ComboBox>
@@ -301,8 +262,8 @@
 
             <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
             <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
-            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
-            <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
+            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
+            <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
           </children>
         </Pane>
       </top>

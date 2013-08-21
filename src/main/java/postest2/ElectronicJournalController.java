@@ -126,6 +126,7 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	// Shows statistics of device if they are supported by the device
 	@Override
+	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
 			String msg = DeviceProperties.getProperties(service);

@@ -44,9 +44,6 @@
                         <ComboBox id="currentService" fx:id="detectionControl" layoutX="212.0" layoutY="171.0" prefHeight="21.0" prefWidth="200.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -99,9 +96,6 @@
                         <ComboBox fx:id="accessLog_type" layoutX="125.0" layoutY="82.0" prefHeight="21.0" prefWidth="129.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -119,9 +113,6 @@
                         <ComboBox fx:id="beginDetection_type" layoutX="632.0" layoutY="55.0" prefHeight="21.0" prefWidth="129.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -147,9 +138,6 @@
                         <ComboBox fx:id="transactionAccess_control" layoutX="78.0" layoutY="395.0" prefHeight="21.0" prefWidth="129.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -176,9 +164,6 @@
             <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
                 </FXCollections>
               </items>
             </ComboBox>
@@ -194,8 +179,8 @@
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
             <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
             <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
-            <Button id="buttonFirmware" fx:id="buttonStatistics" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
-            <Button id="buttonStatistics" fx:id="buttonFirmware" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
+            <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
+            <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
           </children>
         </Pane>
       </top>
