@@ -45,7 +45,6 @@ import jpos.JposConst;
 import jpos.JposException;
 import jpos.POSPrinter;
 import jpos.POSPrinterConst;
-import jpos.profile.JposDevCats;
 
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;

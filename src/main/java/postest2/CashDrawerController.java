@@ -24,7 +24,6 @@ import jpos.CashDrawerConst;
 import jpos.JposException;
 import jpos.events.StatusUpdateEvent;
 import jpos.events.StatusUpdateListener;
-import jpos.profile.JposDevCats;
 
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;

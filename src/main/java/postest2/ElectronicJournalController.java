@@ -23,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.ElectronicJournal;
 import jpos.JposException;
+
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -31,7 +32,7 @@ import org.xml.sax.SAXException;
 public class ElectronicJournalController extends CommonController implements Initializable {
 
 	@FXML
-	@RequiredState(JposState.CLOSED)
+	@RequiredState(JposState.ENABLED)
 	public TabPane functionPane;
 
 	@FXML
