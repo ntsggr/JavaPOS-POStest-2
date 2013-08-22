@@ -219,6 +219,63 @@ public class BeltController extends CommonController implements Initializable {
 		}
 	}
 
+
+
+	// Shows statistics of device if they are supported by the device
+	@Override
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties(service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	// Shows statistics of device if they are supported by the device
+	@Override
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((Belt) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+	}
+	
 	/*
 	 * Initialize ComboBoxes
 	 */
@@ -286,61 +343,6 @@ public class BeltController extends CommonController implements Initializable {
 		setUpMoveForwardSpeed();
 		setUpResetItemCount();
 
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String msg = DeviceProperties.getProperties(service);
-
-			JTextArea jta = new JTextArea(msg);
-			JScrollPane jsp = new JScrollPane(jta) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(460, 390);
-				}
-			};
-			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			((Belt) service).retrieveStatistics(stats);
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-		statistics = "";
 	}
 
 }

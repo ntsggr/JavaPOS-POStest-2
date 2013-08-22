@@ -87,13 +87,13 @@
                         <Label alignment="CENTER" font="$x1" layoutX="429.0" layoutY="151.0" prefWidth="269.0" text="Update Key" underline="true" />
                         <Label layoutX="429.0" layoutY="181.0" text="Key:" />
                         <Button layoutX="620.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleUpdateKey" text="UpdateKey" />
-                        <TextField fx:id="updateKey_keyName" layoutX="498.0" layoutY="204.0" prefWidth="200.0" />
+                        <TextField fx:id="updateKey_keyName" editable="false" layoutX="498.0" layoutY="204.0" prefWidth="200.0" />
                         <Label layoutX="429.0" layoutY="207.0" text="KeyName:" />
                         <TextField fx:id="writeTracks_addData" layoutX="498.0" layoutY="419.0" prefWidth="200.0" />
                         <Label alignment="CENTER" font="$x1" layoutX="429.0" layoutY="266.0" prefWidth="269.0" text="Write Tracks" underline="true" />
                         <Label layoutX="429.0" layoutY="296.0" text="Data:" />
                         <Button layoutX="616.0" layoutY="472.0" mnemonicParsing="false" onAction="#handleWriteTracks" text="WriteTracks" />
-                        <TextField id="writeTracks_keyName" fx:id="writeTracks_timeout" layoutX="498.0" layoutY="448.0" prefWidth="200.0" />
+                        <TextField id="writeTracks_keyName" fx:id="writeTracks_timeout" editable="false" layoutX="498.0" layoutY="448.0" prefWidth="200.0" />
                         <Label layoutX="429.0" layoutY="451.0" text="Timeout:" />
                         <ListView fx:id="writeTracks_data" layoutX="498.0" layoutY="291.0" prefHeight="116.0" prefWidth="200.0" />
                         <Label layoutX="429.0" layoutY="422.0" text="Add Data:" />
