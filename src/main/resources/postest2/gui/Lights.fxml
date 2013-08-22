@@ -28,9 +28,6 @@
                 <ComboBox fx:id="switchOn_lightNumber" layoutX="128.0" layoutY="64.0" prefHeight="21.0" prefWidth="130.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item 1" />
-                      <String fx:value="Item 2" />
-                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>
@@ -40,9 +37,6 @@
                 <ComboBox fx:id="switchOn_color" layoutX="128.0" layoutY="157.0" prefHeight="21.0" prefWidth="130.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item 1" />
-                      <String fx:value="Item 2" />
-                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>
@@ -50,9 +44,6 @@
                 <ComboBox fx:id="switchOn_alarm" layoutX="128.0" layoutY="192.0" prefHeight="21.0" prefWidth="130.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item 1" />
-                      <String fx:value="Item 2" />
-                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>
@@ -63,9 +54,6 @@
                 <ComboBox fx:id="switchOff_lightNumber" layoutX="472.0" layoutY="64.0" prefHeight="21.0" prefWidth="130.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
-                      <String fx:value="Item 1" />
-                      <String fx:value="Item 2" />
-                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>

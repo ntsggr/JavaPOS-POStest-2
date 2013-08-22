@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -28,10 +29,15 @@ import org.xml.sax.SAXException;
 
 public class MICRController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new MICR();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("MICR");
 	}
 
 	/* ************************************************************************
@@ -77,9 +83,9 @@ public class MICRController extends CommonController implements Initializable {
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -114,6 +120,47 @@ public class MICRController extends CommonController implements Initializable {
 		}
 
 		statistics = "";
+	}
+	
+	
+	@FXML
+	public void handleBeginInsertion(ActionEvent e) {
+		try {
+			((MICR) service).beginInsertion(0);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEndInsertion(ActionEvent e) {
+		try {
+			((MICR) service).endInsertion();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleBeginRemoval(ActionEvent e) {
+		try {
+			((MICR) service).beginRemoval(0);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEndRemoval(ActionEvent e) {
+		try {
+			((MICR) service).endRemoval();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
 	}
 
 }

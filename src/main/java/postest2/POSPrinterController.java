@@ -411,6 +411,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).beginInsertion(0);
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -420,6 +421,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).endInsertion();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -429,6 +431,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).beginRemoval(0);
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -438,6 +441,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).endRemoval();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -458,6 +462,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).printImmediate(getSelectedStation(), addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -467,6 +472,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).setLogo(POSPrinterConst.PTR_L_TOP, addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -476,6 +482,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).setLogo(POSPrinterConst.PTR_L_BOTTOM, addEscSequencesToPrintNormalData());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -486,6 +493,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					.getConstantNumberFromString(transactionPrint.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -511,6 +519,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						+ jrnLetterQuality);
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 
@@ -522,6 +531,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						+ recLetterQuality);
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 
@@ -543,6 +553,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).cutPaper((int) cutPaperPercentage.getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -554,6 +565,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		} catch (JposException e1) {
 			deviceMessages.setText(deviceMessages.getText() + "\n" + e1.getMessage());
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -593,6 +605,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					addEscSequencesToPrint2NormalDataFirst(), addEscSequencesToPrint2NormalDataSecond());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -616,8 +629,10 @@ public class POSPrinterController extends CommonController implements Initializa
 										.getSelectedItem()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -637,8 +652,10 @@ public class POSPrinterController extends CommonController implements Initializa
 										.getSelectedItem()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -657,10 +674,13 @@ public class POSPrinterController extends CommonController implements Initializa
 								.getSelectionModel().getSelectedItem()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -679,6 +699,7 @@ public class POSPrinterController extends CommonController implements Initializa
 										.getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -690,6 +711,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					.getConstantNumberFromString(rotationMode.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -716,6 +738,7 @@ public class POSPrinterController extends CommonController implements Initializa
 										.getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -732,6 +755,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.parseInt(pageModeHorizontalPosition.getText()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -746,6 +770,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.getText()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -765,6 +790,7 @@ public class POSPrinterController extends CommonController implements Initializa
 				((POSPrinter) service).setPageModePrintArea(area);
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -778,6 +804,7 @@ public class POSPrinterController extends CommonController implements Initializa
 									.getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -788,6 +815,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					.getConstantNumberFromString(pageModePrintStation.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -797,6 +825,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).clearPrintArea();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -807,6 +836,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					.getConstantNumberFromString(pageModePrint.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -819,6 +849,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					.getConstantNumberFromString(printSide.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -829,6 +860,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -838,6 +870,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -847,6 +880,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).setMapCharacterSet(mapCharacterSet.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -861,6 +895,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setJrnLineSpacing(Integer.parseInt(lineSpacing.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 
@@ -869,6 +904,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setRecLineSpacing(Integer.parseInt(lineSpacing.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 
@@ -877,6 +913,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setSlpLineSpacing(Integer.parseInt(lineSpacing.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 		}
@@ -892,6 +929,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setJrnLineChars(Integer.parseInt(lineChars.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 
@@ -900,6 +938,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setRecLineChars(Integer.parseInt(lineChars.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 
@@ -908,6 +947,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setSlpLineChars(Integer.parseInt(lineChars.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 		}
@@ -923,6 +963,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setJrnLineHeight(Integer.parseInt(lineHeight.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 
@@ -931,6 +972,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setRecLineHeight(Integer.parseInt(lineHeight.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 
@@ -939,6 +981,7 @@ public class POSPrinterController extends CommonController implements Initializa
 					((POSPrinter) service).setSlpLineHeight(Integer.parseInt(lineHeight.getText()));
 				} catch (JposException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 		}
@@ -952,6 +995,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.getConstantNumberFromString(currentCartridge.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 
@@ -961,6 +1005,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.getConstantNumberFromString(currentCartridge.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 
@@ -970,6 +1015,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.getConstantNumberFromString(currentCartridge.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
