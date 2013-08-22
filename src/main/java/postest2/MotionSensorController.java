@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -28,10 +30,20 @@ import org.xml.sax.SAXException;
 
 public class MotionSensorController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	@FXML
+	public TextField timeout;
+	@FXML
+	public TextField waitForMotion_timeout;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new MotionSensor();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("MotionSensor");
 	}
 
 	/* ************************************************************************
@@ -77,9 +89,9 @@ public class MotionSensorController extends CommonController implements Initiali
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -114,6 +126,40 @@ public class MotionSensorController extends CommonController implements Initiali
 		}
 
 		statistics = "";
+	}
+	
+	@FXML
+	public void handleSetTimeout(ActionEvent e) {
+		if(timeout.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Field should have a value!");
+		} else {
+			try {
+				((MotionSensor)service).setTimeout(Integer.parseInt(timeout.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleWaitForMotion(ActionEvent e) {
+		if(waitForMotion_timeout.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Field should have a value!");
+		} else {
+			try {
+				((MotionSensor)service).waitForMotion(Integer.parseInt(waitForMotion_timeout.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
 	}
 
 }

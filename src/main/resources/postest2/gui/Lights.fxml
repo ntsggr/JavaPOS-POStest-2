@@ -61,6 +61,7 @@
                 <Button layoutX="528.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleSwitchOff" text="Switch On" />
               </children>
             </Pane>
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
