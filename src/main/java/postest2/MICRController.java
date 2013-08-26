@@ -32,7 +32,7 @@ public class MICRController extends CommonController implements Initializable {
 	@FXML
 	@RequiredState(JposState.ENABLED)
 	public Pane functionPane;
-
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new MICR();

@@ -27,7 +27,7 @@
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
             <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
+            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>
                 <Font name="System Bold" size="12.0" />
               </font>
