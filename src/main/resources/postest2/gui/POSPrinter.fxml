@@ -39,9 +39,9 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <RadioButton fx:id="rbReceipt"  layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
-            <RadioButton fx:id="rbJournal"  layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
-            <RadioButton fx:id="rbSlip"  layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
+            <RadioButton fx:id="rbReceipt" layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
+            <RadioButton fx:id="rbJournal" layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
+            <RadioButton fx:id="rbSlip" layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
             <TabPane fx:id="functionTab" layoutX="196.0" layoutY="70.0" prefHeight="417.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General Printing">

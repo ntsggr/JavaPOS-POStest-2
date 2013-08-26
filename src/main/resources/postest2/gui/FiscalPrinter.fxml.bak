@@ -356,9 +356,9 @@
                         <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number:" />
                         <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data:" />
                         <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="String:" />
-                        <TextField fx:id="directNumber" layoutX="70.0" layoutY="44.0" prefWidth="300.0" />
-                        <TextField fx:id="directData" layoutX="70.0" layoutY="84.0" prefWidth="300.0" />
-                        <TextField fx:id="directString" layoutX="70.0" layoutY="124.0" prefWidth="300.0" />
+                        <TextField fx:id="directNumber" layoutX="70.0" layoutY="44.0" prefWidth="287.0" />
+                        <TextField fx:id="directData" layoutX="70.0" layoutY="84.0" prefWidth="287.0" />
+                        <TextField fx:id="directString" layoutX="70.0" layoutY="124.0" prefWidth="287.0" />
                         <Button layoutX="402.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleDirectIO" prefWidth="81.0" text="Direct IO" />
                         <Button layoutX="491.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleClearFields" text="Clear Fields" />
                       </children>
