@@ -8,6 +8,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,10 +29,27 @@ import org.xml.sax.SAXException;
 
 public class ScaleController extends CommonController implements Initializable {
 
+	@FXML @RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+	
+	 @FXML @RequiredState(JposState.OPENED)
+	 public CheckBox asyncMode;
+	
+	 @FXML public TextField tareWeight;
+	 @FXML public TextField unitPrice;
+	 @FXML public TextField displayText_data;
+	 @FXML public TextField readWeight_weightData;
+	 @FXML public TextField readWeight_timeout;
+	 
+	 @FXML public ComboBox<String> statusNotify;
+	 @FXML public ComboBox<Boolean> zeroValid;
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new Scale();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("Scale");
 	}
 
 	/* ************************************************************************
@@ -41,6 +62,7 @@ public class ScaleController extends CommonController implements Initializable {
 		try {
 			if (deviceEnabled.isSelected()) {
 				((Scale) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 			} else {
 				((Scale) service).setDeviceEnabled(false);
 			}
@@ -134,5 +156,136 @@ public class ScaleController extends CommonController implements Initializable {
 
 		statistics = "";
 	}
+	
+	@FXML
+	public void handleAsyncMode(ActionEvent e) {
+		try {
+			((Scale) service).setAsyncMode(asyncMode.selectedProperty().getValue());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void handleSetStatusNotify(ActionEvent e) {
+		try {
+			((Scale)service).setStatusNotify(ScaleConstantMapper.getConstantNumberFromString(statusNotify.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void handleSetTareWeight(ActionEvent e) {
+		if(tareWeight.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified");
+		} else {
+			try {
+				((Scale)service).setTareWeight(Integer.parseInt(tareWeight.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetUnitPrice(ActionEvent e) {
+		if(unitPrice.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified");
+		} else {
+			try {
+				((Scale)service).setUnitPrice(Long.parseLong(unitPrice.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetZeroValid(ActionEvent e) {
+		try {
+			((Scale)service).setZeroValid(zeroValid.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void handleDisplayText(ActionEvent e) {
+		if(displayText_data.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified");
+		} else {
+			try {
+				((Scale)service).displayText(displayText_data.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleReadWeight(ActionEvent e) {
+		if(readWeight_timeout.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified");
+		} else {
+			int[] weightData = new int[1];
+			try {
+				((Scale)service).readWeight(weightData, Integer.parseInt(readWeight_timeout.getText()));
+				readWeight_weightData.setText("" + weightData[0]);
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleZeroScale(ActionEvent e) {
+		try {
+			((Scale)service).zeroScale();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	/*
+	 * Set up ComboBoxes
+	 */
+	
+	private void setUpStatusNotify(){
+		statusNotify.getItems().clear();
+		statusNotify.getItems().add(ScaleConstantMapper.SCAL_SN_DISABLED.getConstant());
+		statusNotify.getItems().add(ScaleConstantMapper.SCAL_SN_ENABLED.getConstant());
+		statusNotify.setValue(ScaleConstantMapper.SCAL_SN_DISABLED.getConstant());
+	}
+
+	private void setUpZeroValid(){
+		zeroValid.getItems().clear();
+		zeroValid.getItems().add(true);
+		zeroValid.getItems().add(false);
+		zeroValid.setValue(true);
+	}
+
+	private void setUpComboBoxes(){
+		setUpZeroValid();
+		setUpStatusNotify();
+	}
+	
 
 }

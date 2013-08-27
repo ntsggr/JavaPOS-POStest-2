@@ -322,51 +322,13 @@ public class POSPrinterController extends CommonController implements Initializa
 		handleDeviceEnable(e);
 	}
 
-	/*
-	 * @FXML public void handleRelease(ActionEvent e) { try { printer.release();
-	 * if (deviceEnabled.isSelected()) { deviceEnabled.setSelected(false);
-	 * //functionTab.setVisible(false); }
-	 * 
-	 * RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
-	 * //deviceEnabled.setDisable(true); } catch (JposException je) {
-	 * JOptionPane.showMessageDialog(null, "Failed to release \"" +
-	 * logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " +
-	 * je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE); } }
-	 * 
-	 * @FXML public void handleClose(ActionEvent e) { try { printer.close(); if
-	 * (!deviceEnabled.isDisable()) { deviceEnabled.setSelected(false);
-	 * //functionTab.setVisible(false); }
-	 * 
-	 * RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
-	 * //buttonClaim.setDisable(true); //deviceEnabled.setDisable(true);
-	 * //buttonRelease.setDisable(true); setStatusLabel(); } catch
-	 * (JposException je) { JOptionPane.showMessageDialog(null,
-	 * "Failed to close \"" + logicalName.getSelectionModel().getSelectedItem()
-	 * + "\"\nException: " + je.getMessage(), "Failed",
-	 * JOptionPane.ERROR_MESSAGE); } }
-	 * 
-	 * @FXML public void handleOCE(ActionEvent e) { // TODO implement }
-	 * 
-	 * @FXML public void handleInfo(ActionEvent e) { // TODO implement }
-	 * 
-	 * @FXML public void handleStatistics(ActionEvent e) { // TODO implement
-	 * 
-	 * }
-	 * 
-	 * @FXML public void handleFirmware(ActionEvent e) { // TODO implement }
-	 * 
-	 * @FXML public void handleFreezeEvents(ActionEvent e) { try {
-	 * printer.setFreezeEvents(freezeEvents.selectedProperty().getValue()); }
-	 * catch (JposException e1) { JOptionPane.showMessageDialog(null,
-	 * e1.getMessage()); } }
-	 */
-
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
 		try {
 			((POSPrinter) service).setAsyncMode(asyncMode.selectedProperty().getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -376,6 +338,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			((POSPrinter) service).setFlagWhenIdle(flagWhenIdle.selectedProperty().getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -387,6 +350,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.getConstantNumberFromString(mapMode.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -399,6 +363,7 @@ public class POSPrinterController extends CommonController implements Initializa
 						.getConstantNumberFromString(rotationMode.getSelectionModel().getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -616,7 +581,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		if (barcodeData.getText().equals("") || barcodeHeight.getText().equals("")
 				|| barcodeWidth.getText().equals("")) {
 
-			JOptionPane.showMessageDialog(null, "One of the parameter is not specified");
+			JOptionPane.showMessageDialog(null, "One of the parameters is not specified");
 		} else {
 			try {
 				((POSPrinter) service).printBarCode(this.getSelectedStation(), barcodeData.getText(),
