@@ -19,7 +19,7 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <Pane fx:id="functionPane" layoutX="26.0" layoutY="38.0" prefHeight="634.0" prefWidth="849.0">
               <children>
-                <Button layoutX="320.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleSetRealTimeDataEnabled" text="Set RealTimeDataEnabled" />
+                <Button layoutX="320.0" layoutY="36.0" mnemonicParsing="false" text="Set RealTimeDataEnabled" />
                 <Label layoutX="23.0" layoutY="41.0" text="Set RealTimeDataEnabled:" />
                 <ComboBox fx:id="realTimeDataEnabled" layoutX="174.0" layoutY="38.0" prefHeight="21.0" prefWidth="138.0">
                   <items>
@@ -42,7 +42,6 @@
                 <Button layoutX="411.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleEndCapture" text="EndCapture" />
               </children>
             </Pane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

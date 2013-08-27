@@ -8,6 +8,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,10 +28,26 @@ import org.xml.sax.SAXException;
 
 public class SmartCardRWController extends CommonController implements Initializable {
 
+	@FXML @RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+	
+	@FXML public TextField SCSlot;
+	@FXML public TextField readData_count;
+	@FXML public TextField readData_data;
+	@FXML public TextField writeData_count;
+	@FXML public TextField writeData_data;
+	
+	@FXML public ComboBox<String> interfaceMode;
+	@FXML public ComboBox<String> readData_action;
+	@FXML public ComboBox<String> writeData_action;
+	
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new SmartCardRW();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("SmartCardRW");
 	}
 
 	/* ************************************************************************
@@ -41,6 +60,7 @@ public class SmartCardRWController extends CommonController implements Initializ
 		try {
 			if (deviceEnabled.isSelected()) {
 				((SmartCardRW) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 			} else {
 				((SmartCardRW) service).setDeviceEnabled(false);
 			}
@@ -134,5 +154,155 @@ public class SmartCardRWController extends CommonController implements Initializ
 
 		statistics = "";
 	}
+	
+	@FXML
+	public void handleBeginInsertion(ActionEvent e) {
+		try {
+			((SmartCardRW) service).beginInsertion(0);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEndInsertion(ActionEvent e) {
+		try {
+			((SmartCardRW) service).endInsertion();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleBeginRemoval(ActionEvent e) {
+		try {
+			((SmartCardRW) service).beginRemoval(0);
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleEndRemoval(ActionEvent e) {
+		try {
+			((SmartCardRW) service).endRemoval();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleSetInterfaceMode(ActionEvent e) {
+		try {
+			((SmartCardRW)service).setInterfaceMode(SmartCardRWConstantMapper.getConstantNumberFromString(interfaceMode.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleSetSCSlot(ActionEvent e) {
+		if(SCSlot.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified");
+		} else {
+			try {
+				((SmartCardRW)service).setSCSlot(Integer.parseInt(SCSlot.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleReadData(ActionEvent e) {
+		if(readData_count.getText().isEmpty() || readData_data.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "One of the parameters are not specified");
+		} else {
+			try {
+				int[] count = new int[1];
+				count[0] = Integer.parseInt(readData_count.getText());
+				String[] data = new String[1];
+				data[0] = readData_data.getText();
+				((SmartCardRW)service).readData(SmartCardRWConstantMapper.getConstantNumberFromString(
+						readData_action.getSelectionModel().getSelectedItem()), count, data);
+				readData_count.setText("" + count[0]);
+				readData_data.setText(data[0]);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleWriteData(ActionEvent e) {
+		if(writeData_count.getText().isEmpty() || writeData_data.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "One of the parameters are not specified");
+		} else {
+			try {
+				((SmartCardRW)service).writeData(SmartCardRWConstantMapper.getConstantNumberFromString(
+						writeData_action.getSelectionModel().getSelectedItem()), Integer.parseInt(writeData_count.getText()), writeData_data.getText());
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/*
+	 * Set Up ComboBoxes
+	 */
+	
+	private void setUpInterfaceMode(){
+		interfaceMode.getItems().clear();
+		interfaceMode.getItems().add(SmartCardRWConstantMapper.SC_MODE_APDU.getConstant());
+		interfaceMode.getItems().add(SmartCardRWConstantMapper.SC_MODE_BLOCK.getConstant());
+		interfaceMode.getItems().add(SmartCardRWConstantMapper.SC_MODE_TRANS.getConstant());
+		interfaceMode.getItems().add(SmartCardRWConstantMapper.SC_MODE_XML.getConstant());
+		interfaceMode.setValue(SmartCardRWConstantMapper.SC_MODE_APDU.getConstant());
+	}
+	
+	private void setUpReadDataAction(){
+		readData_action.getItems().clear();
+		readData_action.getItems().add(SmartCardRWConstantMapper.SC_READ_DATA.getConstant());
+		readData_action.getItems().add(SmartCardRWConstantMapper.SC_READ_PROGRAM.getConstant());
+		readData_action.getItems().add(SmartCardRWConstantMapper.SC_EXECUTE_AND_READ_DATA.getConstant());
+		readData_action.getItems().add(SmartCardRWConstantMapper.SC_XML_READ_BLOCK_DATA.getConstant());
+		readData_action.setValue(SmartCardRWConstantMapper.SC_READ_DATA.getConstant());
+	}
+	
+	private void setUpWriteDataAction(){
+		writeData_action.getItems().clear();
+		writeData_action.getItems().add(SmartCardRWConstantMapper.SC_STORE_DATA.getConstant());
+		writeData_action.getItems().add(SmartCardRWConstantMapper.SC_STORE_PROGRAM.getConstant());
+		writeData_action.getItems().add(SmartCardRWConstantMapper.SC_EXECUTE_DATA.getConstant());
+		writeData_action.getItems().add(SmartCardRWConstantMapper.SC_XML_BLOCK_DATA.getConstant());
+		writeData_action.getItems().add(SmartCardRWConstantMapper.SC_SECURITY_FUSE.getConstant());
+		writeData_action.getItems().add(SmartCardRWConstantMapper.SC_RESET.getConstant());
+		writeData_action.setValue(SmartCardRWConstantMapper.SC_STORE_DATA.getConstant());
+	}
+	
+	private void setUpComboBoxes(){
+		setUpInterfaceMode();
+		setUpReadDataAction();
+		setUpWriteDataAction();
+	}
+
 
 }

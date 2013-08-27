@@ -8,6 +8,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,10 +28,21 @@ import org.xml.sax.SAXException;
 
 public class SignatureCaptureController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+
+	@FXML
+	public TextField beginCapture_formName;
+
+	@FXML
+	public ComboBox<Boolean> realTimeDataEnabled;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new SignatureCapture();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("SignatureCapture");
 	}
 
 	/* ************************************************************************
@@ -41,6 +55,7 @@ public class SignatureCaptureController extends CommonController implements Init
 		try {
 			if (deviceEnabled.isSelected()) {
 				((SignatureCapture) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 			} else {
 				((SignatureCapture) service).setDeviceEnabled(false);
 			}
@@ -69,11 +84,10 @@ public class SignatureCaptureController extends CommonController implements Init
 					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
 			ver = new Integer(((SignatureCapture) service).getDeviceControlVersion()).toString();
 			msg += "\n\nControl Description: " + ((SignatureCapture) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
+			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "." + new Integer(ver.substring(1, 4))
+					+ "." + new Integer(ver.substring(4, 7));
 			msg += "\n\nPhysical Device Name: " + ((SignatureCapture) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: "
-					+ ((SignatureCapture) service).getPhysicalDeviceDescription();
+			msg += "\nPhysical Device Description: " + ((SignatureCapture) service).getPhysicalDeviceDescription();
 
 			msg += "\n\nProperties:\n------------------------";
 
@@ -81,8 +95,7 @@ public class SignatureCaptureController extends CommonController implements Init
 
 			msg += "\nCapUpdateFirmware: " + (((SignatureCapture) service).getCapUpdateFirmware());
 
-			msg += "\nCapCompareFirmwareVersion: "
-					+ (((SignatureCapture) service).getCapCompareFirmwareVersion());
+			msg += "\nCapCompareFirmwareVersion: " + (((SignatureCapture) service).getCapCompareFirmwareVersion());
 
 			msg += "\nCapPowerReporting: "
 					+ (((SignatureCapture) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
@@ -96,8 +109,8 @@ public class SignatureCaptureController extends CommonController implements Init
 			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -134,4 +147,53 @@ public class SignatureCaptureController extends CommonController implements Init
 		statistics = "";
 	}
 
+	@FXML
+	public void handleSetRealTimeDataEnabled(ActionEvent e) {
+		try {
+			((SignatureCapture) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
+					.getSelectedItem());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void handleBeginCapture(ActionEvent e) {
+		if (beginCapture_formName.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Parameter is not specified!");
+		} else {
+			try {
+				((SignatureCapture) service).beginCapture(beginCapture_formName.getText());
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	@FXML
+	public void handleEndCapture(ActionEvent e) {
+		try {
+			((SignatureCapture) service).endCapture();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+
+	/*
+	 * Set up ComboBoxes
+	 */
+
+	private void setUpRealTimeDataEnabled() {
+		realTimeDataEnabled.getItems().clear();
+		realTimeDataEnabled.getItems().add(true);
+		realTimeDataEnabled.getItems().add(false);
+		realTimeDataEnabled.setValue(true);
+	}
+
+	private void setUpComboBoxes() {
+		setUpRealTimeDataEnabled();
+	}
 }

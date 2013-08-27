@@ -17,12 +17,15 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="functionPane" layoutX="18.0" layoutY="49.0" prefHeight="622.0" prefWidth="853.0">
+            <Pane layoutX="18.0" layoutY="49.0" prefHeight="622.0" prefWidth="853.0">
               <children>
                 <Label layoutX="27.0" layoutY="39.0" text="Set InterfaceMode:" />
                 <ComboBox fx:id="interfaceMode" layoutX="141.0" layoutY="36.0" prefHeight="21.0" prefWidth="148.77734375">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>
@@ -52,6 +55,9 @@
                 <ComboBox id="data_action" fx:id="readData_action" layoutX="140.0" layoutY="143.0" prefHeight="21.0" prefWidth="148.77734375">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>
@@ -64,13 +70,15 @@
                 <ComboBox id="data_action" fx:id="writeData_action" layoutX="548.0" layoutY="143.0" prefHeight="21.0" prefWidth="148.77734375">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
                     </FXCollections>
                   </items>
                 </ComboBox>
                 <Label alignment="CENTER" font="$x1" layoutX="435.0" layoutY="116.0" prefWidth="265.0" text="Write Data" underline="true" />
               </children>
             </Pane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
