@@ -8,6 +8,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,10 +30,35 @@ import org.xml.sax.SAXException;
 
 public class ToneIndicatorController extends CommonController implements Initializable {
 
+	
+	@FXML @RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+	
+	@FXML
+	@RequiredState(JposState.OPENED)
+	public CheckBox asyncMode;
+	
+	
+	@FXML public TextField interToneWait;
+	@FXML public TextField tone1Duration;
+	@FXML public TextField tone1Pitch;
+	@FXML public TextField tone2Duration;
+	@FXML public TextField tone2Pitch;
+	@FXML public TextField sound_numberOfCycles;
+	@FXML public TextField sound_interSoundWait;
+	
+	@FXML public ComboBox<String> melodyType;
+	
+	@FXML public Slider melodyVolume;
+	@FXML public Slider tone1Volume;
+	@FXML public Slider tone2Volume;
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new ToneIndicator();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("ToneIndicator");
 	}
 
 	/* ************************************************************************
@@ -41,6 +71,7 @@ public class ToneIndicatorController extends CommonController implements Initial
 		try {
 			if (deviceEnabled.isSelected()) {
 				((ToneIndicator) service).setDeviceEnabled(true);
+				setUpComboBoxes();
 			} else {
 				((ToneIndicator) service).setDeviceEnabled(false);
 			}
@@ -133,5 +164,186 @@ public class ToneIndicatorController extends CommonController implements Initial
 
 		statistics = "";
 	}
+	
+
+	@FXML
+	public void handleAsyncMode(ActionEvent e) {
+		try {
+			((ToneIndicator) service).setAsyncMode(asyncMode.selectedProperty().getValue());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+	}
+	
+	@FXML
+	public void handleSetInterToneWait(ActionEvent e) {
+		if(interToneWait.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified!");
+		} else {
+			try {
+				((ToneIndicator)service).setInterToneWait(Integer.parseInt(interToneWait.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetMelodyType(ActionEvent e) {
+		try {
+			((ToneIndicator)service).setMelodyType(ToneIndicatorConstantMapper.getConstantNumberFromString(
+					melodyType.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void handleSetMelodyVolume(ActionEvent e) {
+		try {
+			((ToneIndicator)service).setMelodyVolume((int) melodyVolume.getValue());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void handleSetTone1Duration(ActionEvent e) {
+		if(tone1Duration.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified!");
+		} else {
+			try {
+				((ToneIndicator)service).setTone1Duration(Integer.parseInt(tone1Duration.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetTone1Pitch(ActionEvent e) {
+		if(tone1Pitch.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified!");
+		} else {
+			try {
+				((ToneIndicator)service).setTone1Pitch(Integer.parseInt(tone1Pitch.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetTone1Volume(ActionEvent e) {
+		try {
+			((ToneIndicator)service).setTone1Volume((int) tone1Volume.getValue());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+
+	
+	@FXML
+	public void handleSetTone2Duration(ActionEvent e) {
+		if(tone2Duration.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified!");
+		} else {
+			try {
+				((ToneIndicator)service).setTone2Duration(Integer.parseInt(tone2Duration.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetTone2Pitch(ActionEvent e) {
+		if(tone2Pitch.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Parameter is not specified!");
+		} else {
+			try {
+				((ToneIndicator)service).setTone2Pitch(Integer.parseInt(tone2Pitch.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetTone2Volume(ActionEvent e) {
+		try {
+			((ToneIndicator)service).setTone2Volume((int) tone2Volume.getValue());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	@FXML
+	public void handleSound(ActionEvent e) {
+		if(sound_interSoundWait.getText().isEmpty() || sound_numberOfCycles.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "One of the Parameters are not specified!");
+		} else {
+			try {
+				((ToneIndicator)service).sound(Integer.parseInt(sound_numberOfCycles.getText()), 
+						Integer.parseInt(sound_interSoundWait.getText()));
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			} catch (JposException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSoundImmediate(ActionEvent e) {
+		try {
+			((ToneIndicator)service).soundImmediate();
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
+	
+	/*
+	 * Set up ComboBoxes
+	 */
+	// Not properly initialized due to missing values in the ToneIndicatorConst Interface
+	private void setUpMelodyType(){
+		melodyType.getItems().clear();
+		melodyType.getItems().add(ToneIndicatorConstantMapper.TONE_MT_NONE.getConstant());
+		melodyType.setValue(ToneIndicatorConstantMapper.TONE_MT_NONE.getConstant());
+	}
+	private void setUpComboBoxes(){
+		setUpMelodyType();
+	}
+	
+
 
 }
