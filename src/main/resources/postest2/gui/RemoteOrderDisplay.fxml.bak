@@ -146,7 +146,7 @@
                     </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Misc">
+                <Tab text="Untitled Tab 2">
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root" />
                   </content>
