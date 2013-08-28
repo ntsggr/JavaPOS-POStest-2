@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.text.Text;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -17,13 +18,19 @@ import javax.xml.parsers.ParserConfigurationException;
 import jpos.JposConst;
 import jpos.JposException;
 import jpos.POSKeyboard;
+import jpos.POSKeyboardConst;
+import jpos.events.DataEvent;
+import jpos.events.DataListener;
 
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public class POSKeyboardController extends CommonController implements Initializable {
+public class POSKeyboardController extends CommonController implements Initializable, DataListener {
+
+	@FXML
+	public Text keyText;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -35,6 +42,18 @@ public class POSKeyboardController extends CommonController implements Initializ
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
+
+	@Override
+	public void dataOccurred(DataEvent e) {
+		try {
+			String type = ((POSKeyboard) service).getPOSKeyEventType() == POSKeyboardConst.KBD_ET_DOWN ? " Pressed "
+					: " Released ";
+			keyText.setText("POS key " + Integer.toString(((POSKeyboard) service).getPOSKeyData()) + type);
+		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in getKeyPosition(): " + jpe.getMessage(),
+					"Failed", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {

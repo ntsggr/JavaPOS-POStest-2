@@ -25,7 +25,7 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="34.0" layoutY="41.0" text="Set AutoToneDuration:" />
                         <TextField fx:id="autoToneDuration" layoutX="165.0" layoutY="38.0" prefWidth="200.0" />
@@ -50,19 +50,14 @@
                         <Button layoutX="44.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearInput" prefWidth="155.0" text="Clear Input" />
                         <Label alignment="CENTER" font="$x1" layoutX="252.0" layoutY="275.0" prefWidth="189.0" text="Clear Output" underline="true" />
                         <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearOutput" prefWidth="155.0" text="Clear Output" />
-                        <ComboBox fx:id="checkHealth_level" layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="checkHealth_level" layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0" />
                       </children>
                     </AnchorPane>
                   </content>
                 </Tab>
                 <Tab text="Methods">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Button layoutX="230.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleBumpBarSound" text="BumpBar Sound" />
                         <Label layoutX="28.0" layoutY="61.0" text="Units:" />
@@ -90,7 +85,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

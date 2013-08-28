@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="14.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <CheckBox fx:id="asyncMode" layoutX="140.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Async mode" />
+            <CheckBox fx:id="asyncMode" layoutX="140.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
             <TabPane fx:id="functionTab" layoutX="14.0" layoutY="72.0" prefHeight="529.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General Print Settings">
@@ -374,6 +374,7 @@
             <Button layoutX="522.0" layoutY="4.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleEndTraining" text="End Training" />
             <Button layoutX="416.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearOutput" text="Clear Output" />
             <Button layoutX="522.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearError" text="Clear Error" />
+            <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -381,20 +382,15 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
             <Text fx:id="statusLabel" font="$x2" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED" />
             <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOpen" prefWidth="61.0" text="Open" />
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />
             <Button fx:id="buttonClose" layoutX="221.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClose" prefWidth="61.0" text="Close" />
-            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" text="O/C/E" onAction="#handleOCE" />
-            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" text="Info" onAction="#handleInfo" />
+            <Button fx:id="buttonOCE" layoutX="320.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOCE" text="O/C/E" />
+            <Button fx:id="buttonInfo" layoutX="410.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleInfo" text="Info" />
             <Button fx:id="buttonFirmware" layoutX="461.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleFirmware" text="Firmware" />
             <Button fx:id="buttonStatistics" layoutX="539.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleStatistics" text="Statistics" />
           </children>

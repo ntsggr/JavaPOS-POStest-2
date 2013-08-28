@@ -26,32 +26,17 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Button layoutX="273.0" layoutY="37.0" mnemonicParsing="false" onAction="#handleSetStation" prefWidth="140.0" text="Set Station" />
                         <Label layoutX="26.0" layoutY="111.0" text="Set Water Mark:" />
                         <Button layoutX="273.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleSetWaterMark" prefWidth="140.0" text="Set WaterMark" />
-                        <ComboBox fx:id="storageEnabled" layoutX="140.0" layoutY="75.0" prefHeight="21.0" prefWidth="124.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="storageEnabled" layoutX="140.0" layoutY="75.0" prefHeight="21.0" prefWidth="124.0" />
                         <Label layoutX="26.0" layoutY="78.0" text="Set StorageEnabled" />
                         <Button layoutX="273.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleSetStorageEnabled" prefWidth="140.0" text="Set StorageEnabled" />
-                        <ComboBox id="storageEnabled" fx:id="station" layoutX="139.0" layoutY="39.0" prefHeight="21.0" prefWidth="124.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="storageEnabled" fx:id="station" layoutX="139.0" layoutY="39.0" prefHeight="21.0" prefWidth="124.0" />
                         <Label layoutX="25.0" layoutY="42.0" text="Set Station:" />
-                        <ComboBox id="storageEnabled" fx:id="waterMark" layoutX="140.0" layoutY="108.0" prefHeight="21.0" prefWidth="124.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="storageEnabled" fx:id="waterMark" layoutX="140.0" layoutY="108.0" prefHeight="21.0" prefWidth="124.0" />
                         <Label alignment="CENTER" layoutX="25.0" layoutY="169.0" prefWidth="225.0" text="Erase Medium" underline="true">
                           <font>
                             <Font size="14.0" fx:id="x1" />
@@ -68,7 +53,7 @@
                 </Tab>
                 <Tab text="Printing">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" font="$x1" layoutX="505.0" layoutY="208.0" prefWidth="225.0" text="Cancel Print Content" underline="true" />
                         <Button layoutX="551.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleCancelPrintContent" prefWidth="140.0" text="Cancel Print Content" />
@@ -92,7 +77,7 @@
                 </Tab>
                 <Tab text="Querying">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" font="$x1" layoutX="26.0" layoutY="45.0" prefWidth="225.0" text="Query Content" underline="true" />
                         <Button layoutX="161.0" layoutY="163.0" mnemonicParsing="false" onAction="#handleQueryContent" prefWidth="150.0" text="Query Content" />
@@ -114,7 +99,7 @@
                 </Tab>
                 <Tab text="Marker">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" font="$x1" layoutX="27.0" layoutY="32.0" prefWidth="225.0" text="Add Marker" underline="true" />
                         <Label layoutX="25.0" layoutY="61.0" text="Marker:" />
@@ -125,23 +110,13 @@
                         <Button layoutX="497.0" layoutY="114.0" mnemonicParsing="false" onAction="#handleRetrieveCurrentMarker" prefWidth="148.0" text="Retrieve Current Marker" />
                         <Label layoutX="381.0" layoutY="90.0" text="Marker:" />
                         <TextField id="addMarker_marker" fx:id="retrieveCurrentMarker_marker" editable="false" layoutX="468.0" layoutY="87.0" prefWidth="177.0" />
-                        <ComboBox fx:id="retrieveCurrentMarker_markerType" layoutX="468.0" layoutY="59.0" prefHeight="21.0" prefWidth="177.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="retrieveCurrentMarker_markerType" layoutX="468.0" layoutY="59.0" prefHeight="21.0" prefWidth="177.0" />
                         <Label alignment="CENTER" font="$x1" layoutX="27.0" layoutY="182.0" prefWidth="288.0" text="Retrieve Marker" underline="true" />
                         <Label layoutX="25.0" layoutY="211.0" text="Marker Type:" />
                         <Button layoutX="167.0" layoutY="315.0" mnemonicParsing="false" onAction="#handleRetrieveMarker" prefWidth="148.0" text="Retrieve Marker" />
                         <Label layoutX="25.0" layoutY="290.0" text="Marker:" />
                         <TextField id="addMarker_marker" fx:id="retrieveMarker_marker" editable="false" layoutX="138.0" layoutY="287.0" prefWidth="177.0" />
-                        <ComboBox fx:id="retrieveMarker_markerType" layoutX="138.0" layoutY="209.0" prefHeight="21.0" prefWidth="177.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="retrieveMarker_markerType" layoutX="138.0" layoutY="209.0" prefHeight="21.0" prefWidth="177.0" />
                         <Label layoutX="25.0" layoutY="238.0" text="Session Number:" />
                         <TextField id="addMarker_marker" fx:id="retrieveMarker_sessionNumber" layoutX="138.0" layoutY="235.0" prefWidth="177.0" />
                         <Label layoutX="25.0" layoutY="264.0" text="Document Number:" />
@@ -151,12 +126,7 @@
                         <Button layoutX="523.0" layoutY="315.0" mnemonicParsing="false" onAction="#handleRetrieveMarkerByDateTime" prefWidth="148.0" text="Retrieve Marker" />
                         <Label layoutX="381.0" layoutY="290.0" text="Marker:" />
                         <TextField fx:id="retrieveMarkerByDateTime_marker" editable="false" layoutX="494.0" layoutY="287.0" prefWidth="177.0" />
-                        <ComboBox fx:id="retrieveMarkerByDateTime_markerType" layoutX="494.0" layoutY="209.0" prefHeight="21.0" prefWidth="177.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="retrieveMarkerByDateTime_markerType" layoutX="494.0" layoutY="209.0" prefHeight="21.0" prefWidth="177.0" />
                         <Label layoutX="381.0" layoutY="238.0" text="Date Time:" />
                         <TextField fx:id="retrieveMarkerByDateTime_dateTime" layoutX="494.0" layoutY="235.0" prefWidth="177.0" />
                         <Label layoutX="381.0" layoutY="264.0" text="Marker Number:" />
@@ -173,7 +143,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -181,14 +151,9 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED"/>
+            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED" />
             <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOpen" prefWidth="61.0" text="Open" />
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />

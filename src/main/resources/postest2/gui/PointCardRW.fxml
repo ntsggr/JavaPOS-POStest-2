@@ -17,6 +17,70 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
+            <Pane fx:id="pane" layoutX="14.0" layoutY="45.0" prefHeight="450.0" prefWidth="592.0" styleClass="whiteBackground">
+              <children>
+                <TextArea fx:id="textToPrint" layoutX="14.0" layoutY="45.0" prefHeight="100.0" prefWidth="250.0" wrapText="true" />
+                <Text fontSmoothingType="LCD" layoutX="88.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text for write/print:" />
+                <Button layoutX="296.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleBeginInsertion" prefWidth="110.0" text="Begin Insertion" />
+                <Button layoutX="416.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleEndInsertion" prefWidth="110.0" text="End Insertion" />
+                <Button layoutX="296.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleBeginRemoval" prefWidth="110.0" text="Begin Removal" />
+                <Button layoutX="416.0" layoutY="83.0" mnemonicParsing="false" onAction="#handleEndRemoval" prefWidth="110.0" text="End Removal" />
+                <Button layoutX="173.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleValidateData" text="Validate Data" />
+                <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleAddEscSec" text="Add Esc Sec." />
+                <Button layoutX="134.0" layoutY="340.0" mnemonicParsing="false" onAction="#handlePrintWrite" prefWidth="110.0" text="Print Write" />
+                <Button layoutX="134.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleRotatePrint" prefWidth="110.0" text="Rotate Print" />
+                <Button layoutX="296.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleCleanCard" prefWidth="110.0" text="Clean Card" />
+                <Button layoutX="174.0" layoutY="398.0" mnemonicParsing="false" onAction="#handleCleanPrintWrite" prefWidth="110.0" text="Clean PrintWrite" />
+                <ComboBox fx:id="kind" layoutX="14.0" layoutY="342.0" prefHeight="21.0" prefWidth="110.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Print" />
+                      <String fx:value="Write" />
+                      <String fx:value="Print + Write" />
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+                <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Map Mode:" />
+                <ComboBox fx:id="mapMode" layoutX="89.0" layoutY="197.0" prefHeight="21.0" prefWidth="155.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+                <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Horizontal position:" />
+                <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vertical position:" />
+                <TextField fx:id="hpos" layoutX="124.0" layoutY="230.0" prefWidth="52.0" />
+                <TextField fx:id="vpos" layoutX="124.0" layoutY="261.0" prefWidth="52.0" />
+                <ComboBox fx:id="rotationMode" layoutX="14.0" layoutY="302.0" prefHeight="21.0" prefWidth="110.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+                <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width of erase:" />
+                <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height of erase:" />
+                <TextField id="hpos" fx:id="height" layoutX="108.0" layoutY="414.0" prefWidth="52.0" />
+                <TextField id="hpos" fx:id="width" layoutX="108.0" layoutY="389.0" prefWidth="52.0" />
+                <Text fontSmoothingType="LCD" layoutX="296.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Character Set:" />
+                <ComboBox fx:id="characterSet" layoutX="381.0" layoutY="197.0" prefHeight="21.0" prefWidth="144.0">
+                  <items>
+                    <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="Item 1" />
+                      <String fx:value="Item 2" />
+                      <String fx:value="Item 3" />
+                    </FXCollections>
+                  </items>
+                </ComboBox>
+                <Button layoutX="363.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleSetCharacterSet" text="Set CharacterSet" />
+              </children>
+            </Pane>
+            <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="691.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -24,12 +88,7 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
             <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>
@@ -50,4 +109,3 @@
     </BorderPane>
   </children>
 </AnchorPane>
-

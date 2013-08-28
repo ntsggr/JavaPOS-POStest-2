@@ -24,7 +24,7 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="257.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="257.0">
                       <children>
                         <Button layoutX="325.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleSetColor" prefWidth="135.0" text="Set Color" />
                         <Label layoutX="30.0" layoutY="25.0" text="Set Color:" />
@@ -65,7 +65,7 @@
                 </Tab>
                 <Tab text="Scan Functions">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" layoutX="30.0" layoutY="38.0" prefWidth="227.0" text="Begin Insertion" underline="true">
                           <font>
@@ -113,7 +113,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fontSmoothingType="LCD" layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

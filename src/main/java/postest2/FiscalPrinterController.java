@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -27,8 +27,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.FiscalPrinter;
 import jpos.JposException;
-import jpos.events.StatusUpdateEvent;
-import jpos.events.StatusUpdateListener;
 import jpos.profile.JposDevCats;
 
 import org.apache.xerces.parsers.DOMParser;
@@ -36,17 +34,22 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-public class FiscalPrinterController extends CommonController implements Initializable, StatusUpdateListener {
+public class FiscalPrinterController extends CommonController implements Initializable {
 
 	@FXML
-	// @RequiredState(JposState.ENABLED)
+	@RequiredState(JposState.ENABLED)
+	public TabPane functionTab;
+	@FXML
+	@RequiredState(JposState.OPENED)
 	private CheckBox asyncMode;
 	@FXML
-	// @RequiredState(JposState.ENABLED)
+	@RequiredState(JposState.OPENED)
 	public CheckBox flagWhenIdle;
 	@FXML
+	@RequiredState(JposState.OPENED)
 	private CheckBox duplicateReceipt;
 	@FXML
+	@RequiredState(JposState.OPENED)
 	private CheckBox checkTotal;
 
 	// General Printing Settings Tab
@@ -193,7 +196,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new FiscalPrinter();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
 
 		setUpLogicalNameComboBox();
 	}
@@ -254,6 +257,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
 		}
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	@Override
@@ -1509,11 +1513,6 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 
 		statistics = "";
-	}
-
-	@Override
-	public void statusUpdateOccurred(StatusUpdateEvent sue) {
-		statusLabel.setText("" + sue.getStatus());
 	}
 
 }

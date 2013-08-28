@@ -21,7 +21,7 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="892.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="892.0">
                       <children>
                         <Button layoutX="118.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetAlgorithm" prefWidth="100.0" text="Set Algorithm" />
                         <Label layoutX="33.0" layoutY="49.0" text="Set Algorithm:" />
@@ -44,7 +44,7 @@
                 </Tab>
                 <Tab text="Capture">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" layoutX="50.0" layoutY="52.0" prefWidth="351.0" text="Begin Enroll Capture" underline="true">
                           <font>
@@ -71,7 +71,7 @@
                 </Tab>
                 <Tab text="Identify">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
                         <TextField id="maxFARRequested" fx:id="identify_maxFARRequested" layoutX="187.0" layoutY="57.0" prefWidth="141.0" />
@@ -99,7 +99,7 @@
                 </Tab>
                 <Tab text="IdentifyMatch">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
                         <TextField id="maxFARRequested" fx:id="identifyMatch_maxFARRequested" layoutX="187.0" layoutY="57.0" prefWidth="141.0" />
@@ -128,7 +128,7 @@
                 </Tab>
                 <Tab text="Process Prematch Data">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Button layoutX="350.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleBrowseProcessPrematchDataSampleBIR" text="Browse" />
                         <Label layoutX="39.0" layoutY="103.0" text="Sample BIR:" />
@@ -148,7 +148,7 @@
                 </Tab>
                 <Tab style="" text="Verify">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
                         <TextField id="maxFARRequested" fx:id="verify_maxFARRequested" layoutX="163.0" layoutY="57.0" prefWidth="141.0" />
@@ -184,7 +184,7 @@
                 </Tab>
                 <Tab text="VerifyMatch">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="42.0" layoutY="60.0" text="Max FAR Requested:" />
                         <TextField id="maxFARRequested" fx:id="verifyMatch_maxFARRequested" layoutX="163.0" layoutY="57.0" prefWidth="141.0" />
@@ -221,7 +221,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
