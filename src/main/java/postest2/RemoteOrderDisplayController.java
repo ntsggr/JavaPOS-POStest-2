@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -16,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.JposConst;
 import jpos.JposException;
+import jpos.POSPrinter;
 import jpos.RemoteOrderDisplay;
 
 import org.apache.xerces.parsers.DOMParser;
@@ -25,10 +27,15 @@ import org.xml.sax.SAXException;
 
 public class RemoteOrderDisplayController extends CommonController implements Initializable {
 
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public CheckBox asyncMode;
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new RemoteOrderDisplay();
-		RequiredStateChecker.invokeThis(this, service);
+		//RequiredStateChecker.invokeThis(this, service);
 	}
 
 	/* ************************************************************************
@@ -138,7 +145,15 @@ public class RemoteOrderDisplayController extends CommonController implements In
 		statistics = "";
 	}
 	
-	
+	@FXML
+	public void handleAsyncMode(ActionEvent e) {
+		try {
+			((RemoteOrderDisplay) service).setAsyncMode(asyncMode.selectedProperty().getValue());
+		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
+	}
 	
 	
 

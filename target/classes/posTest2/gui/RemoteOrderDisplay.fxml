@@ -44,11 +44,109 @@
                             </FXCollections>
                           </items>
                         </ComboBox>
+                        <Label layoutX="16.0" layoutY="132.0" text="Set EventTypes:" />
+                        <TextField layoutX="152.0" layoutY="129.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="127.0" mnemonicParsing="false" text="Set EventTypes" />
+                        <Label layoutX="16.0" layoutY="166.0" text="Set MapCharacterSet:" />
+                        <Button layoutX="291.0" layoutY="161.0" mnemonicParsing="false" text="Set MapCharacterSet" />
+                        <ComboBox layoutX="152.0" layoutY="164.0" prefHeight="21.0" prefWidth="129.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Label layoutX="16.0" layoutY="199.0" text="Set Timeout:" />
+                        <TextField layoutX="152.0" layoutY="196.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="194.0" mnemonicParsing="false" text="Set Timeout" />
+                        <Label layoutX="16.0" layoutY="233.0" text="Set VideoMode:" />
+                        <TextField layoutX="152.0" layoutY="230.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="228.0" mnemonicParsing="false" text="Set VideoMode" />
+                        <Label alignment="CENTER" layoutX="16.0" layoutY="276.0" prefWidth="186.0" text="Check Health" underline="true">
+                          <font>
+                            <Font size="14.0" fx:id="x1" />
+                          </font>
+                        </Label>
+                        <Label layoutX="16.0" layoutY="310.0" text="Level:" />
+                        <ComboBox layoutX="73.0" layoutY="308.0" prefHeight="21.0" prefWidth="129.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Button layoutX="115.0" layoutY="336.0" mnemonicParsing="false" text="CheckHealth" />
+                        <Label alignment="CENTER" font="$x1" layoutX="566.0" layoutY="276.0" prefWidth="75.0" text="Clear Input" underline="true" />
+                        <Button layoutX="565.0" layoutY="303.0" mnemonicParsing="false" text="ClearInput" />
+                        <Label alignment="CENTER" font="$x1" layoutX="689.0" layoutY="276.0" prefWidth="87.0" text="Clear Output" underline="true" />
+                        <Button layoutX="690.0" layoutY="303.0" mnemonicParsing="false" text="ClearOutput" />
+                        <Label alignment="CENTER" font="$x1" layoutX="16.0" layoutY="386.0" prefWidth="186.0" text="Clear Video" underline="true" />
+                        <Label layoutX="16.0" layoutY="420.0" text="Units:" />
+                        <ComboBox layoutX="73.0" layoutY="418.0" prefHeight="21.0" prefWidth="129.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Button layoutX="124.0" layoutY="475.0" mnemonicParsing="false" text="ClearVideo" />
+                        <Label layoutX="16.0" layoutY="451.0" text="Attribute:" />
+                        <TextField layoutX="73.0" layoutY="448.0" prefWidth="129.0" />
+                        <Label alignment="CENTER" font="$x1" layoutX="292.0" layoutY="276.0" prefWidth="186.0" text="Clear Video Region" underline="true" />
+                        <Label layoutX="292.0" layoutY="310.0" text="Units:" />
+                        <ComboBox layoutX="349.0" layoutY="308.0" prefHeight="21.0" prefWidth="129.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Label layoutX="292.0" layoutY="341.0" text="Row:" />
+                        <TextField layoutX="349.0" layoutY="338.0" prefWidth="129.0" />
+                        <Label layoutX="292.0" layoutY="369.0" text="Column:" />
+                        <TextField layoutX="349.0" layoutY="366.0" prefWidth="129.0" />
+                        <Label layoutX="292.0" layoutY="396.0" text="Height:" />
+                        <TextField layoutX="349.0" layoutY="393.0" prefWidth="129.0" />
+                        <Label layoutX="292.0" layoutY="424.0" text="Width:" />
+                        <TextField layoutX="349.0" layoutY="421.0" prefWidth="129.0" />
+                        <Label layoutX="292.0" layoutY="451.0" text="Attribute:" />
+                        <TextField layoutX="349.0" layoutY="448.0" prefWidth="129.0" />
+                        <Button layoutX="363.0" layoutY="475.0" mnemonicParsing="false" text="ClearVideoRegion" />
+                        <Label alignment="CENTER" font="$x1" layoutX="565.0" layoutY="351.0" prefWidth="203.0" text="Select CharacterSet" underline="true" />
+                        <Label layoutX="565.0" layoutY="385.0" text="Units:" />
+                        <ComboBox layoutX="639.0" layoutY="383.0" prefHeight="21.0" prefWidth="129.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Label layoutX="565.0" layoutY="416.0" text="characterSet:" />
+                        <ComboBox layoutX="639.0" layoutY="414.0" prefHeight="21.0" prefWidth="129.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Button layoutX="649.0" layoutY="441.0" mnemonicParsing="false" text="SelectCharacterSet" />
                       </children>
                     </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+                <Tab text="Misc">
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root" />
                   </content>
