@@ -25,7 +25,7 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Button layoutX="422.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleSetAdditionalSecurityInformation" prefWidth="200.0" text="Set AdditionalSecurityInformation" />
                         <Label layoutX="18.0" layoutY="36.0" text="Set AdditionalSecurityInformation:" />
@@ -41,12 +41,7 @@
                         <TextField id="" fx:id="currentService" layoutX="212.0" layoutY="136.0" prefWidth="200.0" />
                         <Button layoutX="422.0" layoutY="168.0" mnemonicParsing="false" onAction="#handleSetDetectionControl" prefWidth="200.0" text="Set DetectionControl" />
                         <Label layoutX="18.0" layoutY="173.0" text="Set DetectionControl:" />
-                        <ComboBox id="currentService" fx:id="detectionControl" layoutX="212.0" layoutY="171.0" prefHeight="21.0" prefWidth="200.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="currentService" fx:id="detectionControl" layoutX="212.0" layoutY="171.0" prefHeight="21.0" prefWidth="200.0" />
                         <Button layoutX="422.0" layoutY="202.0" mnemonicParsing="false" onAction="#handleSetMediumID" prefWidth="200.0" text="Set MediumID" />
                         <Label layoutX="18.0" layoutY="207.0" text="Set MediumID:" />
                         <TextField id="" fx:id="mediumID" layoutX="212.0" layoutY="204.0" prefWidth="200.0" />
@@ -65,7 +60,7 @@
                 </Tab>
                 <Tab text="Modify Value">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Button layoutX="387.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleAddValue" prefWidth="100.0" text="Add Value" />
                         <Label layoutX="28.0" layoutY="106.0" text="Sequence Number:" />
@@ -87,18 +82,13 @@
                 </Tab>
                 <Tab text="Misc">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" font="$x1" layoutX="15.0" layoutY="31.0" prefWidth="239.0" text="Access Log" underline="true" />
                         <Label layoutX="15.0" layoutY="60.0" text="Sequence Number:" />
                         <TextField fx:id="accessLog_sequenceNumber" layoutX="125.0" layoutY="57.0" prefWidth="129.0" />
                         <Label layoutX="15.0" layoutY="86.0" text="Type:" />
-                        <ComboBox fx:id="accessLog_type" layoutX="125.0" layoutY="82.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="accessLog_type" layoutX="125.0" layoutY="82.0" prefHeight="21.0" prefWidth="129.0" />
                         <Label layoutX="15.0" layoutY="113.0" text="Timeout:" />
                         <TextField fx:id="accessLog_timeout" layoutX="125.0" layoutY="110.0" prefWidth="129.0" />
                         <Button layoutX="175.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleAccessLog" text="Access Log" />
@@ -110,12 +100,7 @@
                         <Button layoutX="351.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleActivateService" text="Activate Service" />
                         <Label alignment="CENTER" font="$x1" layoutX="569.0" layoutY="31.0" prefWidth="192.0" text="Begin Detection" underline="true" />
                         <Label layoutX="569.0" layoutY="57.0" text="Type:" />
-                        <ComboBox fx:id="beginDetection_type" layoutX="632.0" layoutY="55.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="beginDetection_type" layoutX="632.0" layoutY="55.0" prefHeight="21.0" prefWidth="129.0" />
                         <Label layoutX="569.0" layoutY="84.0" text="Timeout:" />
                         <TextField fx:id="beginDetection_timeout" layoutX="632.0" layoutY="81.0" prefWidth="129.0" />
                         <Button layoutX="656.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleBeginDetection" text="Begin Detection" />
@@ -135,12 +120,7 @@
                         <Button layoutX="406.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleUnlockTerminal" text="Unlock Terminal" />
                         <Label alignment="CENTER" font="$x1" layoutX="15.0" layoutY="363.0" prefWidth="192.0" text="Transaction Access" underline="true" />
                         <Label layoutX="14.0" layoutY="399.0" text="Control:" />
-                        <ComboBox fx:id="transactionAccess_control" layoutX="78.0" layoutY="395.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="transactionAccess_control" layoutX="78.0" layoutY="395.0" prefHeight="21.0" prefWidth="129.0" />
                         <Button layoutX="87.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleTransactionAccess" text="Transaction Access" />
                         <Label alignment="CENTER" font="$x1" layoutX="245.0" layoutY="363.0" prefWidth="238.9998779296875" text="Update Key" underline="true" />
                         <Label layoutX="245.0" layoutY="393.0" text="Data:" />
@@ -154,7 +134,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -162,14 +142,9 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED"/>
+            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED" />
             <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOpen" prefWidth="61.0" text="Open" />
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />

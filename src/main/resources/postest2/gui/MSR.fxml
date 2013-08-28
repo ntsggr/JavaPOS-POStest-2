@@ -24,7 +24,7 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="169.00009999999747" prefWidth="199.9998779296875" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="15.0" layoutY="40.0" text="Set DataEncryptionAlgorithm:" />
                         <ComboBox fx:id="dataEncryptionAlgorithm" layoutX="188.0" layoutY="38.0" prefHeight="21.0" prefWidth="157.0" />
@@ -56,7 +56,7 @@
                 </Tab>
                 <Tab text="Misc">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <TextField fx:id="authenticateDevice_response" layoutX="101.0" layoutY="65.0" prefWidth="200.0" />
                         <Label alignment="CENTER" layoutX="31.0" layoutY="38.0" prefWidth="328.0" text="Authenticate Device" underline="true">

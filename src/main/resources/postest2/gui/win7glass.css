@@ -27,6 +27,10 @@ menu item is being hovered.
     -fx-background-color: #EBF4FA;
 }
 
+.whiteBackground {
+	-fx-background-color: #FFFFFF;
+}
+
 /*******************************************************************************
 * *
 * Toolbar *

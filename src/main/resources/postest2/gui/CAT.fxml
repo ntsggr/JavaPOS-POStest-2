@@ -25,7 +25,7 @@
               <tabs>
                 <Tab text="General">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Button layoutX="438.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleSetAdditionalSecurityInformation" prefWidth="210.0" text="Set AdditionalSecurityInformation" />
                         <Label layoutX="28.0" layoutY="49.0" text="Set AdditionalSecurityInformation:" />
@@ -54,7 +54,7 @@
                 </Tab>
                 <Tab text="Authorize Functionality">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="39.0" layoutY="68.0" text="Sequence Number:" />
                         <TextField id="access_sequencsNumber" fx:id="authorize_sequenceNumber" layoutX="167.0" layoutY="65.0" prefWidth="200.0" />
@@ -76,7 +76,7 @@
                 </Tab>
                 <Tab text="Misc">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label alignment="CENTER" font="$x1" layoutX="30.0" layoutY="44.0" prefWidth="204.77734375" text="Cash Deposit" underline="true" />
                         <Label layoutX="30.0" layoutY="74.0" text="Sequence Number:" />
@@ -102,7 +102,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

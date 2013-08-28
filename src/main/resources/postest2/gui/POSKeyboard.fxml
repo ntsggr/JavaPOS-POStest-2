@@ -17,6 +17,12 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
+            <Text fx:id="keyText" fontSmoothingType="LCD" layoutX="189.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press a key">
+              <font>
+                <Font name="System Bold" size="22.0" />
+              </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="691.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>
@@ -24,12 +30,7 @@
         <Pane prefHeight="92.0" styleClass="topPane">
           <children>
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
-            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
             <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
               <font>
@@ -50,4 +51,3 @@
     </BorderPane>
   </children>
 </AnchorPane>
-
