@@ -28,7 +28,7 @@ public class RemoteOrderDisplayController extends CommonController implements In
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new RemoteOrderDisplay();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	/* ************************************************************************
@@ -137,5 +137,9 @@ public class RemoteOrderDisplayController extends CommonController implements In
 
 		statistics = "";
 	}
+	
+	
+	
+	
 
 }
