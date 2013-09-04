@@ -184,15 +184,15 @@ public class POSPrinterController extends CommonController implements Initializa
 	public ComboBox<String> currentCartridge;
 	@FXML
 	public TextField lineSpacing;
+	@FXML public ComboBox<String> cartridgeNotify;
+	
+	
 
 	// Holds position of ESC-Characters.
 	// Need because Textarea delete ESC everytime it changes
 	private ArrayList<Integer> printNormalEscapeSequenceList;
 	private ArrayList<Integer> print2NormalFirstEscapeSequenceList;
 	private ArrayList<Integer> print2NormalSecondEscapeSequenceList;
-
-	// Driver
-	// private POSPrinter printer;
 
 	// Escape-Character
 	final char ESC = (char) 0x1B;
@@ -265,31 +265,65 @@ public class POSPrinterController extends CommonController implements Initializa
 	 * ************************************************************************
 	 */
 
-	/*
-	 * @FXML public void handleOpen(ActionEvent e) { try { if
-	 * (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
-	 * printer.open(logicalName.getValue());
-	 * RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
-	 * //buttonClaim.setDisable(false); System.out.println(printer.getState());
-	 * setStatusLabel(); } else { JOptionPane.showMessageDialog(null,
-	 * "Choose a device!", "Logical name is empty",
-	 * JOptionPane.WARNING_MESSAGE); }
-	 * 
-	 * } catch (JposException je) { JOptionPane.showMessageDialog(null,
-	 * "Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-	 * + "\"\nException: " + je.getMessage(), "Failed",
-	 * JOptionPane.ERROR_MESSAGE); } }
-	 * 
-	 * @FXML public void handleClaim(ActionEvent e) { try { printer.claim(0);
-	 * 
-	 * RequiredStateChecker.invokeThis(this, (BaseJposControl) printer);
-	 * //deviceEnabled.setDisable(false); //buttonRelease.setDisable(false);
-	 * 
-	 * } catch (JposException je) { JOptionPane.showMessageDialog(null,
-	 * "Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-	 * + "\"\nException: " + je.getMessage(), "Failed",
-	 * JOptionPane.ERROR_MESSAGE); } }
+	/**
+	 * Shows information of device
 	 */
+	@Override
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties(service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
+	@Override
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((POSPrinter) service).retrieveStatistics(stats);
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+		}
+
+		try {
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		}
+
+		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		statistics = "";
+	}
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
@@ -1306,6 +1340,14 @@ public class POSPrinterController extends CommonController implements Initializa
 		currentCartridge.getItems().add(POSPrinterConstantMapper.PTR_COLOR_YELLOW.getConstant());
 		currentCartridge.setValue(POSPrinterConstantMapper.PTR_COLOR_PRIMARY.getConstant());
 	}
+	
+	private void setUpCartridgeNotify(){
+		cartridgeNotify.getItems().clear();
+		cartridgeNotify.getItems().add(POSPrinterConstantMapper.PTR_CN_ENABLED.getConstant());
+		cartridgeNotify.getItems().add(POSPrinterConstantMapper.PTR_CN_ENABLED.getConstant());
+		cartridgeNotify.setValue(POSPrinterConstantMapper.PTR_CN_ENABLED.getConstant());
+	}
+	
 
 	private void setUpCheckboxes() {
 		setUpRotationMode();
@@ -1329,6 +1371,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		setUpCharacterSet();
 		setUpCurrentCartridge();
 		setUpMapCharacterSet();
+		setUpCartridgeNotify();
 	}
 
 	/**
@@ -1361,6 +1404,8 @@ public class POSPrinterController extends CommonController implements Initializa
 			pageModeDescriptor.setText(POSPrinterConstantMapper
 					.getPageModeDescriptorConstantName(((POSPrinter) service).getPageModeDescriptor()));
 		} catch (JposException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -1576,62 +1621,6 @@ public class POSPrinterController extends CommonController implements Initializa
 				break;
 			}
 		}
-	}
-
-	// Shows information of device
-	@Override
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String msg = DeviceProperties.getProperties(service);
-
-			JTextArea jta = new JTextArea(msg);
-			JScrollPane jsp = new JScrollPane(jta) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(460, 390);
-				}
-			};
-			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			((POSPrinter) service).retrieveStatistics(stats);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
-
-		try {
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
-			e1.printStackTrace();
-		}
-
-		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		statistics = "";
 	}
 
 }

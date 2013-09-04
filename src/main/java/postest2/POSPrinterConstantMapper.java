@@ -1,5 +1,6 @@
 package postest2;
 
+
 public class POSPrinterConstantMapper {
 
 	// ###################################################################
@@ -372,14 +373,33 @@ public class POSPrinterConstantMapper {
 																										// in
 																										// 1.13
 	public static final ConstantConverter PTR_LS_CHAIN_LINE = new ConstantConverter(4, "PTR_LS_CHAIN_LINE"); // Added
-																									// in
-																									// 1.13
+																										// in
+																										// 1.13
+	
+    /////////////////////////////////////////////////////////////////////
+    // "CartridgeNotify"  Property Constants
+    /////////////////////////////////////////////////////////////////////
+
+    public static final ConstantConverter PTR_CN_DISABLED        = new ConstantConverter(0x00000000, "PTR_CN_DISABLED");
+    public static final ConstantConverter PTR_CN_ENABLED         = new ConstantConverter(0x00000001, "PTR_CN_ENABLED");
+	
 	/**
 	 * Get Constant Number from String - Needed because ComboBoxes just hold the String and not the Object
 	 * @param constant
 	 * @return
 	 */
 	public static int getConstantNumberFromString(String constant){
+		
+		
+
+
+		if(constant.equals(POSPrinterConstantMapper.PTR_CN_DISABLED.getConstant())) {
+			return POSPrinterConstantMapper.PTR_CN_DISABLED.getContantNumber();
+		}
+
+		if(constant.equals(POSPrinterConstantMapper.PTR_CN_ENABLED.getConstant())) {
+			return POSPrinterConstantMapper.PTR_CN_ENABLED.getContantNumber();
+		}
 
 		if(constant.equals(POSPrinterConstantMapper.PTR_S_JOURNAL.getConstant())) {
 			return POSPrinterConstantMapper.PTR_S_JOURNAL.getContantNumber();

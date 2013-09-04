@@ -386,17 +386,17 @@
                             </FXCollections>
                           </items>
                         </ComboBox>
-                        <ComboBox fx:id="cartridgeNotify" layoutX="594.0" layoutY="318.0" prefWidth="110.0" />
+                        <ComboBox fx:id="cartridgeNotify" layoutX="594.0" layoutY="318.0" prefWidth="110.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
                         <Button layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleMarkFeed" text="Set CartridgeNotify" />
                         <Label layoutX="505.0" layoutY="320.0" text="CartridgeNotify:" />
                         <Label layoutX="505.0" layoutY="291.0" text="Set Cartridge Notify" underline="true" />
                       </children>
                     </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="DirectIO">
-                  <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </Tab>
               </tabs>
