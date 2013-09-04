@@ -41,6 +41,7 @@ public class ImageScannerController extends CommonController implements Initiali
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 

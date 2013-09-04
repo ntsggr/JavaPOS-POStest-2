@@ -83,6 +83,7 @@ public class SmartCardRWController extends CommonController implements Initializ
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
@@ -106,8 +107,8 @@ public class SmartCardRWController extends CommonController implements Initializ
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -224,9 +225,8 @@ public class SmartCardRWController extends CommonController implements Initializ
 				count[0] = Integer.parseInt(readData_count.getText());
 				String[] data = new String[1];
 				data[0] = readData_data.getText();
-				((SmartCardRW) service).readData(SmartCardRWConstantMapper
-						.getConstantNumberFromString(readData_action.getSelectionModel().getSelectedItem()),
-						count, data);
+				((SmartCardRW) service).readData(SmartCardRWConstantMapper.getConstantNumberFromString(readData_action
+						.getSelectionModel().getSelectedItem()), count, data);
 				readData_count.setText("" + count[0]);
 				readData_data.setText(data[0]);
 			} catch (NumberFormatException e1) {
@@ -246,8 +246,8 @@ public class SmartCardRWController extends CommonController implements Initializ
 		} else {
 			try {
 				((SmartCardRW) service).writeData(SmartCardRWConstantMapper
-						.getConstantNumberFromString(writeData_action.getSelectionModel().getSelectedItem()),
-						Integer.parseInt(writeData_count.getText()), writeData_data.getText());
+						.getConstantNumberFromString(writeData_action.getSelectionModel().getSelectedItem()), Integer
+						.parseInt(writeData_count.getText()), writeData_data.getText());
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();

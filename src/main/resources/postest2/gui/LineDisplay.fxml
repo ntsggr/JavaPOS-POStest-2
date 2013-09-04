@@ -16,7 +16,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="143.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <TabPane fx:id="functionTab" layoutX="135.0" layoutY="102.0" prefHeight="569.0" prefWidth="721.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
+            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="44.0" prefHeight="638.0" prefWidth="816.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
               <tabs>
                 <Tab text="Display Text">
                   <content>
@@ -89,33 +89,37 @@
                             <Font size="14.0" fx:id="x1" />
                           </font>
                         </Label>
-                        <Slider fx:id="deviceBrightness" layoutX="309.0" layoutY="110.0" prefWidth="125.0" value="100.0" />
-                        <Label font="$x1" layoutX="309.0" layoutY="58.0" prefWidth="125.0" text="Device Brightness:" underline="true" />
-                        <Label font="$x1" layoutX="308.0" layoutY="381.0" prefWidth="125.0" text="Descriptors:" underline="true" />
-                        <ComboBox fx:id="descriptors" layoutX="378.0" layoutY="409.0" prefHeight="21.0" prefWidth="115.0" />
-                        <Button layoutX="511.0" layoutY="409.0" mnemonicParsing="false" onAction="#handleClearAllDescriptors" prefWidth="135.0" text="Clear All" />
-                        <Label font="$x1" layoutX="42.0" layoutY="194.0" prefWidth="211.0" text="Read Character at Cursor Position" underline="true" />
-                        <Button layoutX="41.0" layoutY="241.0" mnemonicParsing="false" onAction="#handleReadCharacter" prefWidth="135.0" text="Read Character" />
-                        <Label layoutX="42.0" layoutY="277.0" text="Character:" />
-                        <TextField fx:id="readCharacterField" disable="true" editable="false" layoutX="100.0" layoutY="274.0" prefWidth="49.0" />
-                        <Label font="$x1" layoutX="308.0" layoutY="194.0" prefWidth="125.0" text="Define Glyph:" underline="true" />
-                        <Label layoutX="308.0" layoutY="239.0" text="Glyphe Code:" />
-                        <TextField fx:id="glypeCode" layoutX="393.0" layoutY="234.0" prefWidth="136.0" />
-                        <Label layoutX="308.0" layoutY="269.0" text="Glyph Binary:" />
-                        <TextField fx:id="glyphBinaryPath" editable="false" layoutX="393.0" layoutY="266.0" prefWidth="136.0" />
-                        <Button layoutX="542.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleSelectGlyphBinary" prefWidth="135.0" text="Select Binary" />
-                        <Button layoutX="307.0" layoutY="305.0" mnemonicParsing="false" onAction="#handleDefineGlyph" prefWidth="135.0" text="Define Glyph" />
+                        <Slider fx:id="deviceBrightness" layoutX="282.0" layoutY="110.0" prefWidth="125.0" value="100.0" />
+                        <Label font="$x1" layoutX="282.0" layoutY="58.0" prefWidth="125.0" text="Device Brightness:" underline="true" />
+                        <Label font="$x1" layoutX="460.0" layoutY="58.0" prefWidth="125.0" text="Descriptors:" underline="true" />
+                        <ComboBox fx:id="descriptors" layoutX="530.0" layoutY="86.0" prefHeight="21.0" prefWidth="115.0" />
+                        <Button layoutX="663.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleClearAllDescriptors" prefWidth="135.0" text="Clear All" />
+                        <Label font="$x1" layoutX="42.0" layoutY="206.0" prefWidth="211.0" text="Read Character at Cursor Position" underline="true" />
+                        <Button layoutX="41.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleReadCharacter" prefWidth="135.0" text="Read Character" />
+                        <Label layoutX="42.0" layoutY="289.0" text="Character:" />
+                        <TextField fx:id="readCharacterField" disable="true" editable="false" layoutX="100.0" layoutY="286.0" prefWidth="49.0" />
+                        <Label font="$x1" layoutX="282.0" layoutY="206.0" prefWidth="125.0" text="Define Glyph:" underline="true" />
+                        <Label layoutX="281.0" layoutY="251.0" text="Glyphe Code:" />
+                        <TextField fx:id="glypeCode" layoutX="366.0" layoutY="246.0" prefWidth="136.0" />
+                        <Label layoutX="281.0" layoutY="281.0" text="Glyph Binary:" />
+                        <TextField fx:id="glyphBinaryPath" editable="false" layoutX="366.0" layoutY="278.0" prefWidth="136.0" />
+                        <Button layoutX="515.0" layoutY="278.0" mnemonicParsing="false" onAction="#handleSelectGlyphBinary" prefWidth="135.0" text="Select Binary" />
+                        <Button layoutX="280.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleDefineGlyph" prefWidth="135.0" text="Define Glyph" />
                         <Label font="$x1" layoutX="42.0" layoutY="377.0" prefWidth="125.0" text="Set Character Set" underline="true" />
                         <ComboBox fx:id="characterSet" layoutX="123.0" layoutY="411.0" prefHeight="22.0" prefWidth="115.0" />
                         <Label layoutX="42.0" layoutY="414.0" text="Character Set:" />
                         <ComboBox fx:id="scrollText_direction" layoutX="105.0" layoutY="79.0" prefHeight="21.0" prefWidth="115.0" />
                         <Button layoutX="41.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleSetCharacterSet" prefWidth="135.0" text="Set Character Set" />
                         <Button layoutX="41.0" layoutY="148.0" mnemonicParsing="false" onAction="#handleScrollText" prefWidth="135.0" text="Scroll Text" />
-                        <Button layoutX="307.0" layoutY="148.0" mnemonicParsing="false" onAction="#handleSetDeviceBrightness" prefWidth="135.0" text="Set Device Brightness" />
-                        <Button layoutX="308.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleSetDescriptor" prefWidth="135.0" text="Set Descriptor" />
-                        <Label layoutX="307.0" layoutY="414.0" text="Descriptors:" />
-                        <Label layoutX="307.0" layoutY="447.0" text="Attribute:" />
-                        <ComboBox id="descriptors" fx:id="descriptor_attribute" layoutX="378.0" layoutY="442.0" prefHeight="21.0" prefWidth="115.0" />
+                        <Button layoutX="280.0" layoutY="148.0" mnemonicParsing="false" onAction="#handleSetDeviceBrightness" prefWidth="135.0" text="Set Device Brightness" />
+                        <Button layoutX="460.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleSetDescriptor" prefWidth="135.0" text="Set Descriptor" />
+                        <Label layoutX="459.0" layoutY="91.0" text="Descriptors:" />
+                        <Label layoutX="459.0" layoutY="124.0" text="Attribute:" />
+                        <ComboBox id="descriptors" fx:id="descriptor_attribute" layoutX="530.0" layoutY="119.0" prefHeight="21.0" prefWidth="115.0" />
+                        <Label font="$x1" layoutX="280.0" layoutY="377.0" prefWidth="179.0" text="Set Map Character Set" underline="true" />
+                        <ComboBox id="characterSet" fx:id="mapCharacterSet" layoutX="382.0" layoutY="411.0" prefHeight="22.0" prefWidth="115.0" />
+                        <Label layoutX="279.0" layoutY="414.0" text="Map CharacterSet:" />
+                        <Button layoutX="279.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleSetMapCharacterSet" prefWidth="135.0" text="Set Map CharacterSet" />
                       </children>
                     </AnchorPane>
                   </content>
@@ -154,6 +158,42 @@
                         <Button layoutX="38.0" layoutY="248.0" mnemonicParsing="false" onAction="#handleDisplayBitmap" text="Display Bitmap" />
                         <ComboBox id="bitmapWidth" fx:id="alignmentX" layoutX="125.0" layoutY="164.0" prefWidth="115.0" />
                         <ComboBox id="bitmapWidth" fx:id="alignmentY" layoutX="125.0" layoutY="200.0" prefWidth="115.0" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Cursor Control">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                        <Button layoutX="253.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleSetCursorColumn" prefWidth="120.0" text="Set CursorColumn" />
+                        <Label layoutX="41.0" layoutY="75.0" text="CursorColumn:" />
+                        <TextField fx:id="cursorColumn" layoutX="131.0" layoutY="72.0" prefWidth="117.0" />
+                        <Button layoutX="253.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleSetCursorRow" prefWidth="120.0" text="Set CursorRow" />
+                        <Label layoutX="41.0" layoutY="103.0" text="CursorRow:" />
+                        <TextField fx:id="cursorRow" layoutX="131.0" layoutY="100.0" prefWidth="117.0" />
+                        <Button layoutX="253.0" layoutY="126.0" mnemonicParsing="false" onAction="#handleSetCursorType" prefWidth="120.0" text="Set CursorType" />
+                        <Label layoutX="41.0" layoutY="131.0" text="CursorType:" />
+                        <ComboBox fx:id="cursorType" layoutX="131.0" layoutY="129.0" prefHeight="21.0" prefWidth="116.00009999999747">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <Button layoutX="253.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleSetCursorUpdate" prefWidth="120.0" text="Set CursorUpdate" />
+                        <Label layoutX="41.0" layoutY="158.0" text="CursorUpdate" />
+                        <ComboBox fx:id="cursorUpdate" layoutX="131.0" layoutY="156.0" prefHeight="21.0" prefWidth="116.00009999999747">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
                       </children>
                     </AnchorPane>
                   </content>

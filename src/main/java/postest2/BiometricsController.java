@@ -207,7 +207,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		// System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((Biometrics) service).setDeviceEnabled(true);
@@ -226,12 +225,12 @@ public class BiometricsController extends CommonController implements Initializa
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
 	@FXML
 	public void handleSetAlgorithm(ActionEvent e) {
-		// System.out.println("algorithm");
 		try {
 			((Biometrics) service).setAlgorithm(algorithm.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -242,7 +241,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
-		// System.out.println("realtimedat");
 		try {
 			((Biometrics) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel()
 					.getSelectedItem());
@@ -254,7 +252,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetSensorOrientation(ActionEvent e) {
-		// System.out.println("sensoror");
 		try {
 			((Biometrics) service).setSensorOrientation(BiometricsConstantMapper
 					.getConstantNumberFromString(sensorOrientation.getSelectionModel().getSelectedItem()));
@@ -266,7 +263,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleSetSensorType(ActionEvent e) {
-		// System.out.println("sensorty");
 		try {
 			((Biometrics) service).setSensorType(BiometricsConstantMapper
 					.getConstantNumberFromString(sensorType.getSelectionModel().getSelectedItem()));
@@ -298,7 +294,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleBeginEnrollCapture(ActionEvent e) {
-		// System.out.println("beginenrollcaprute");
 		if (beginEnrollCapture_referenceBIR.getText().isEmpty()
 				|| beginEnrollCapture_payload.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
@@ -316,7 +311,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleBeginVerifyCapture(ActionEvent e) {
-		// System.out.println("beginverifycap");
 		try {
 			((Biometrics) service).beginVerifyCapture();
 		} catch (JposException e1) {
@@ -328,7 +322,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleEndCapture(ActionEvent e) {
-		// System.out.println("endcapt");
 		try {
 			((Biometrics) service).endCapture();
 		} catch (JposException e1) {
@@ -349,7 +342,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleIdentifyAddReferenceBIR(ActionEvent e) {
-		// System.out.println("identifyaddrefBIR");
 		if (identify_newReferenceBIR.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
 		} else {
@@ -359,7 +351,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleIdentify(ActionEvent e) {
-		// System.out.println("identify");
 		if (identify_maxFARRequested.getText().isEmpty() || identify_maxFRRRequested.getText().isEmpty()
 				|| identify_referenceBIRPopulation.getItems().isEmpty()
 				|| identify_timeout.getText().isEmpty()) {
@@ -413,7 +404,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleIdentifyMatchAddReferenceBIR(ActionEvent e) {
-		// System.out.println("idenmatchaddrefbir");
 		if (identifyMatch_newReferenceBIR.getText().isEmpty()) {
 
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
@@ -424,7 +414,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleIdentifyMatch(ActionEvent e) {
-		// System.out.println("identifyMatch");
 		if (identifyMatch_maxFARRequested.getText().isEmpty()
 				|| identifyMatch_maxFRRRequested.getText().isEmpty()
 				|| identifyMatch_referenceBIRPopulation.getItems().isEmpty()
@@ -490,7 +479,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleProcessPrematchData(ActionEvent e) {
-		// System.out.println("processpremachdata");
 		if (processPrematchData_sampleBIR.getText().isEmpty()
 				|| processPrematchData_prematchDataBIR.getText().isEmpty()) {
 
@@ -535,7 +523,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleVerify(ActionEvent e) {
-		// System.out.println("verify");
 		if (verify_maxFARRequested.getText().isEmpty() || verify_maxFRRRequested.getText().isEmpty()
 				|| verify_referenceBIR.getText().isEmpty() || verify_adaptedBIR.getText().isEmpty()
 				|| verify_payload.getText().isEmpty() || verify_timeout.getText().isEmpty()) {
@@ -607,7 +594,6 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@FXML
 	public void handleVerifyMatch(ActionEvent e) {
-		// System.out.println("verifymatch");
 		if (verifyMatch_maxFARRequested.getText().isEmpty()
 				|| verifyMatch_maxFRRRequested.getText().isEmpty()
 				|| verifyMatch_referenceBIR.getText().isEmpty() || verifyMatch_adaptedBIR.getText().isEmpty()

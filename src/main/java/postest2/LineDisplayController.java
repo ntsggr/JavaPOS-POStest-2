@@ -32,7 +32,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.JposException;
 import jpos.LineDisplay;
-import jpos.profile.JposDevCats;
 
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
@@ -115,6 +114,14 @@ public class LineDisplayController extends CommonController implements Initializ
 	public ComboBox<String> bitmapWidth;
 	@FXML
 	public TextField bitmapPath;
+	
+	//Cursor Control
+	@FXML public TextField cursorColumn;
+	@FXML public TextField cursorRow;
+
+	@FXML public ComboBox<Boolean> mapCharacterSet;
+	@FXML public ComboBox<String> cursorType;
+	@FXML public ComboBox<Boolean> cursorUpdate;
 
 	// Screen Mode
 	@FXML
@@ -132,7 +139,6 @@ public class LineDisplayController extends CommonController implements Initializ
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpLogicalNameComboBox("LineDisplay");
-		setUpAttribute();
 		service = new LineDisplay();
 		RequiredStateChecker.invokeThis(this, service);
 	}
@@ -211,6 +217,7 @@ public class LineDisplayController extends CommonController implements Initializ
 	@Override
 	public void handleClaim(ActionEvent e) {
 		setUpScreenMode();
+		deviceEnabled.setSelected(true);
 		super.handleClaim(e);
 	}
 
@@ -219,17 +226,7 @@ public class LineDisplayController extends CommonController implements Initializ
 		try {
 			if (deviceEnabled.isSelected()) {
 				((LineDisplay) service).setDeviceEnabled(true);
-				setUpRow();
-				setUpColumns();
-				setUpDescriptors();
-				setUpDescriptorAttribute();
-				setUpScrollTextDirection();
-				setUpCharacterSet();
-				setUpMarqueeType();
-				setUpMarqueeFormat();
-				setUpBitmapWidth();
-				setUpAlignmentX();
-				setUpAlignmentY();
+				setUpComboBoxes();
 
 				windowList.clear();
 
@@ -249,6 +246,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		setUpScreenMode();
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
@@ -259,9 +258,9 @@ public class LineDisplayController extends CommonController implements Initializ
 					JOptionPane.WARNING_MESSAGE);
 		}
 		try {
-			((LineDisplay) service).displayTextAt(row.getSelectionModel().getSelectedIndex(), column
-					.getSelectionModel().getSelectedItem(), displayText.getText(), attribute
-					.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).displayTextAt(row.getSelectionModel().getSelectedItem(), 
+					column.getSelectionModel().getSelectedItem(), displayText.getText(), 
+					LineDisplayConstantMapper.getConstantNumberFromString(attribute.getSelectionModel().getSelectedItem()));
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -275,8 +274,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleDisplayText(ActionEvent e) {
 		try {
-			((LineDisplay) service).displayText(displayText.getText(), attribute.getSelectionModel()
-					.getSelectedIndex());
+			((LineDisplay) service).displayText(displayText.getText(), 
+					LineDisplayConstantMapper.getConstantNumberFromString(attribute.getSelectionModel().getSelectedItem()));
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -295,14 +294,13 @@ public class LineDisplayController extends CommonController implements Initializ
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
 	public void handleMoveCursor(ActionEvent e) {
 		try {
-			((LineDisplay) service).setCursorColumn(column.getSelectionModel().getSelectedIndex());
-			((LineDisplay) service).setCursorRow(row.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setCursorColumn(column.getSelectionModel().getSelectedItem());
+			((LineDisplay) service).setCursorRow(row.getSelectionModel().getSelectedItem());
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -433,8 +431,9 @@ public class LineDisplayController extends CommonController implements Initializ
 					JOptionPane.WARNING_MESSAGE);
 		} else {
 			try {
-				((LineDisplay) service).scrollText(scrollText_direction.getSelectionModel()
-						.getSelectedIndex(), Integer.parseInt(scrollText_Units.getText()));
+				((LineDisplay) service).scrollText(
+						LineDisplayConstantMapper.getConstantNumberFromString(scrollText_direction.getSelectionModel().getSelectedItem()), 
+						Integer.parseInt(scrollText_Units.getText()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -459,8 +458,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleSetDescriptor(ActionEvent e) {
 		try {
-			((LineDisplay) service).setDescriptor(descriptors.getSelectionModel().getSelectedIndex(),
-					descriptor_attribute.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setDescriptor(descriptors.getSelectionModel().getSelectedItem(),
+					LineDisplayConstantMapper.getConstantNumberFromString(descriptor_attribute.getSelectionModel().getSelectedItem()));
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -524,9 +523,17 @@ public class LineDisplayController extends CommonController implements Initializ
 	public void handleSetCharacterSet(ActionEvent e) {
 		try {
 			((LineDisplay) service).setCharacterSet(characterSet.getSelectionModel().getSelectedItem());
-		} catch (NumberFormatException e1) {
+		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+
+	}
+
+	@FXML
+	public void handleSetMapCharacterSet(ActionEvent e) {
+		try {
+			((LineDisplay) service).setMapCharacterSet(mapCharacterSet.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -537,7 +544,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleSetScreenMode(ActionEvent e) {
 		try {
-			((LineDisplay) service).setScreenMode(screenMode.getSelectionModel().getSelectedIndex());
+			//Add 1 to the Index, because the index starts with 0 but the first Item in the List should be number 1
+			((LineDisplay) service).setScreenMode(screenMode.getSelectionModel().getSelectedIndex() + 1);
 		} catch (JposException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -547,7 +555,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleSetMarqueeType(ActionEvent e) {
 		try {
-			((LineDisplay) service).setMarqueeType(marqueeType.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setMarqueeType(
+					LineDisplayConstantMapper.getConstantNumberFromString(marqueeType.getSelectionModel().getSelectedItem()));
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -561,7 +570,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleSetMarqueeFormat(ActionEvent e) {
 		try {
-			((LineDisplay) service).setMarqueeFormat(marqueeFormat.getSelectionModel().getSelectedIndex());
+			((LineDisplay) service).setMarqueeFormat(
+					LineDisplayConstantMapper.getConstantNumberFromString(marqueeFormat.getSelectionModel().getSelectedItem()));
 
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
@@ -624,58 +634,11 @@ public class LineDisplayController extends CommonController implements Initializ
 		if (bitmapPath.getText().equals("")) {
 			JOptionPane.showMessageDialog(null, "Param bitmapPath is not set");
 		} else {
-			// Calculate Bitmap Width
-			int newBitmapWidth = 0;
-			if (bitmapWidth.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_ASIS.getConstant())) {
-				newBitmapWidth = LineDisplayConstantMapper.DISP_BM_ASIS.getContantNumber();
-			} else {
-				newBitmapWidth = Integer.parseInt(bitmapWidth.getSelectionModel().getSelectedItem());
-			}
-
-			// Calculate AlignmentX
-			int newAlignmentX = 0;
-			if (alignmentX.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_LEFT.getConstant())) {
-				newAlignmentX = LineDisplayConstantMapper.DISP_BM_LEFT.getContantNumber();
-
-			} else if (alignmentX.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant())) {
-
-				newAlignmentX = LineDisplayConstantMapper.DISP_BM_CENTER.getContantNumber();
-			} else if (alignmentX.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_RIGHT.getConstant())) {
-
-				newAlignmentX = LineDisplayConstantMapper.DISP_BM_RIGHT.getContantNumber();
-			} else {
-				newAlignmentX = Integer.parseInt(alignmentX.getSelectionModel().getSelectedItem());
-			}
-
-			// Calculate AlignmentX
-			int newAlignmentY = 0;
-			if (alignmentY.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant())) {
-
-				newAlignmentY = LineDisplayConstantMapper.DISP_BM_BOTTOM.getContantNumber();
-
-			} else if (alignmentY.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_CENTER.getConstant())) {
-
-				newAlignmentY = LineDisplayConstantMapper.DISP_BM_CENTER.getContantNumber();
-
-			} else if (alignmentY.getSelectionModel().getSelectedItem()
-					.equals(LineDisplayConstantMapper.DISP_BM_TOP.getConstant())) {
-
-				newAlignmentY = LineDisplayConstantMapper.DISP_BM_TOP.getContantNumber();
-
-			} else {
-
-				newAlignmentY = Integer.parseInt(alignmentY.getSelectionModel().getSelectedItem());
-			}
-
 			try {
-				((LineDisplay) service).displayBitmap(bitmapPath.getText(), newBitmapWidth, newAlignmentX,
-						newAlignmentY);
+				((LineDisplay) service).displayBitmap(bitmapPath.getText(), 
+						LineDisplayConstantMapper.getConstantNumberFromString(bitmapWidth.getSelectionModel().getSelectedItem()), 
+						LineDisplayConstantMapper.getConstantNumberFromString(alignmentX.getSelectionModel().getSelectedItem()),
+						LineDisplayConstantMapper.getConstantNumberFromString(alignmentY.getSelectionModel().getSelectedItem()));
 			} catch (NumberFormatException e1) {
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -685,12 +648,85 @@ public class LineDisplayController extends CommonController implements Initializ
 			}
 		}
 	}
+	
+	@FXML
+	public void handleSetCursorColumn(ActionEvent e) {
+		if (cursorColumn.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				((LineDisplay) service).setCursorColumn(Integer.parseInt(cursorColumn.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetCursorRow(ActionEvent e) {
+		if (cursorRow.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
+		} else {
+			try {
+				((LineDisplay) service).setCursorRow(Integer.parseInt(cursorRow.getText()));
+			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			} catch (JposException e1) {
+				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+		}
+	}
+	
+	@FXML
+	public void handleSetCursorType(ActionEvent e) {
+		try {
+			((LineDisplay) service).setCursorType(
+					LineDisplayConstantMapper.getConstantNumberFromString(cursorType.getSelectionModel().getSelectedItem()));
+		} catch (JposException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		
+	}
+	
+	@FXML
+	public void handleSetCursorUpdate(ActionEvent e) {
+		try {
+			((LineDisplay) service).setCursorUpdate(cursorUpdate.getSelectionModel().getSelectedItem());
+		} catch (JposException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+	}
 
 
 	/* ************************************************************************
 	 * ************************ Set all ComboBox Values ***********************
 	 * ************************************************************************
 	 */
+	
+	private void setUpComboBoxes(){
+		setUpAttribute();
+		setUpRow();
+		setUpColumns();
+		setUpDescriptors();
+		setUpDescriptorAttribute();
+		setUpScrollTextDirection();
+		setUpCharacterSet();
+		setUpMarqueeType();
+		setUpMarqueeFormat();
+		setUpBitmapWidth();
+		setUpAlignmentX();
+		setUpAlignmentY();
+		setUpCursorType();
+		setUpCursorUpdate();
+	}
 
 	private void setUpAttribute() {
 		attribute.getItems().clear();
@@ -748,29 +784,18 @@ public class LineDisplayController extends CommonController implements Initializ
 
 	private void setUpDescriptorAttribute() {
 		descriptor_attribute.getItems().clear();
-		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_OFF.getContantNumber(),
-				LineDisplayConstantMapper.DISP_SD_OFF.getConstant());
-		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_ON.getContantNumber(),
-				LineDisplayConstantMapper.DISP_SD_ON.getConstant());
-		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_BLINK.getContantNumber(),
-				LineDisplayConstantMapper.DISP_SD_BLINK.getConstant());
+		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_OFF.getConstant());
+		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_ON.getConstant());
+		descriptor_attribute.getItems().add(LineDisplayConstantMapper.DISP_SD_BLINK.getConstant());
 		descriptor_attribute.setValue(LineDisplayConstantMapper.DISP_SD_OFF.getConstant());
 	}
 
 	private void setUpScrollTextDirection() {
 		scrollText_direction.getItems().clear();
-
-		// Need for correct Index
-		scrollText_direction.getItems().add(0, "");
-		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_UP.getContantNumber(),
-				LineDisplayConstantMapper.DISP_ST_UP.getConstant());
-		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_DOWN.getContantNumber(),
-				LineDisplayConstantMapper.DISP_ST_DOWN.getConstant());
-		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_LEFT.getContantNumber(),
-				LineDisplayConstantMapper.DISP_ST_LEFT.getConstant());
-		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_RIGHT.getContantNumber(),
-				LineDisplayConstantMapper.DISP_ST_RIGHT.getConstant());
-
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_UP.getConstant());
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_DOWN.getConstant());
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_LEFT.getConstant());
+		scrollText_direction.getItems().add(LineDisplayConstantMapper.DISP_ST_RIGHT.getConstant());
 		scrollText_direction.setValue(LineDisplayConstantMapper.DISP_ST_UP.getConstant());
 
 	}
@@ -812,29 +837,19 @@ public class LineDisplayController extends CommonController implements Initializ
 
 	private void setUpMarqueeType() {
 		marqueeType.getItems().clear();
-		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_NONE.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MT_NONE.getConstant());
-		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_UP.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MT_UP.getConstant());
-		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_DOWN.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MT_DOWN.getConstant());
-		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_LEFT.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MT_LEFT.getConstant());
-		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_RIGHT.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MT_RIGHT.getConstant());
-		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_INIT.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MT_INIT.getConstant());
-
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_NONE.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_UP.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_DOWN.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_LEFT.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_RIGHT.getConstant());
+		marqueeType.getItems().add(LineDisplayConstantMapper.DISP_MT_INIT.getConstant());
 		marqueeType.setValue(LineDisplayConstantMapper.DISP_MT_NONE.getConstant());
 	}
 
 	private void setUpMarqueeFormat() {
 		marqueeFormat.getItems().clear();
-		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_WALK.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
-		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_PLACE.getContantNumber(),
-				LineDisplayConstantMapper.DISP_MF_PLACE.getConstant());
-
+		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
+		marqueeFormat.getItems().add(LineDisplayConstantMapper.DISP_MF_PLACE.getConstant());
 		marqueeFormat.setValue(LineDisplayConstantMapper.DISP_MF_WALK.getConstant());
 	}
 
@@ -862,14 +877,34 @@ public class LineDisplayController extends CommonController implements Initializ
 
 		alignmentY.setValue(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant());
 	}
+	
+	private void setUpCursorType(){
+		cursorType.getItems().clear();
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_BLINK.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_BLOCK.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_FIXED.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_HALFBLOCK.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_NONE.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_OTHER.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_REVERSE.getConstant());
+		cursorType.getItems().add(LineDisplayConstantMapper.DISP_CT_UNDERLINE.getConstant());
+		cursorType.setValue(LineDisplayConstantMapper.DISP_CT_NONE.getConstant());
+	}
+	
+	private void setUpCursorUpdate(){
+		cursorUpdate.getItems().clear();
+		cursorUpdate.getItems().add(true);
+		cursorUpdate.getItems().add(false);
+		cursorUpdate.setValue(true);
+	}
+	
 
 
 	/**
 	 * This Method gets a Byte Array from a File to print it with
 	 * displayMemoryBitmap
 	 * 
-	 * @param path
-	 *            to Binary File
+	 * @param path to Binary File
 	 * @return byte[] containing the data from the File
 	 */
 	private byte[] getBytesFromFile(String path) {

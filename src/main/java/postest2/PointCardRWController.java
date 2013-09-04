@@ -222,6 +222,7 @@ public class PointCardRWController extends CommonController implements Initializ
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 

@@ -27,7 +27,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jpos.FiscalPrinter;
 import jpos.JposException;
-import jpos.profile.JposDevCats;
 
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
@@ -258,6 +257,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 	

@@ -113,6 +113,7 @@ public class HardTotalsController extends CommonController implements Initializa
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
