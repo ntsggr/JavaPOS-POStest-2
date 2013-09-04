@@ -88,7 +88,6 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 

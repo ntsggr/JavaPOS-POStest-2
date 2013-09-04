@@ -18,7 +18,7 @@
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <TabPane layoutX="14.0" layoutY="61.0" prefHeight="614.0" prefWidth="854.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionPane" layoutX="14.0" layoutY="61.0" prefHeight="625.0000999999975" prefWidth="854.0" tabClosingPolicy="UNAVAILABLE">
               <stylesheets>
                 <URL value="@win7glass.css" />
               </stylesheets>
@@ -28,131 +28,243 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
                       <children>
                         <Label layoutX="14.0" layoutY="33.0" text="Set AutoToneDuration:" />
-                        <TextField layoutX="150.0" layoutY="30.0" prefWidth="129.0" />
-                        <Button layoutX="289.0" layoutY="28.0" mnemonicParsing="false" text="Set AutoToneDuration" />
+                        <TextField fx:id="autoToneDuration" layoutX="150.0" layoutY="30.0" prefWidth="129.0" />
+                        <Button layoutX="289.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleSetAutoToneDuration" text="Set AutoToneDuration" />
                         <Label layoutX="16.0" layoutY="66.0" text="Set AutoToneFrequency:" />
-                        <TextField layoutX="152.0" layoutY="63.0" prefWidth="129.0" />
-                        <Button layoutX="291.0" layoutY="61.0" mnemonicParsing="false" text="Set AutoToneFrequency" />
+                        <TextField fx:id="autoToneFrequency" layoutX="152.0" layoutY="63.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleSetAutoToneFrequency" text="Set AutoToneFrequency" />
                         <Label layoutX="16.0" layoutY="99.0" text="Set CurrentUnitID:" />
-                        <Button layoutX="291.0" layoutY="94.0" mnemonicParsing="false" text="Set CurrentUnitID" />
-                        <ComboBox layoutX="152.0" layoutY="97.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <Button layoutX="291.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleSetCurrentUnitID" text="Set CurrentUnitID" />
+                        <ComboBox fx:id="currentUnitID" layoutX="152.0" layoutY="97.0" prefHeight="21.0" prefWidth="129.0" />
                         <Label layoutX="16.0" layoutY="132.0" text="Set EventTypes:" />
-                        <TextField layoutX="152.0" layoutY="129.0" prefWidth="129.0" />
-                        <Button layoutX="291.0" layoutY="127.0" mnemonicParsing="false" text="Set EventTypes" />
+                        <TextField fx:id="eventTypes" layoutX="152.0" layoutY="129.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleSetEventTypes" text="Set EventTypes" />
                         <Label layoutX="16.0" layoutY="166.0" text="Set MapCharacterSet:" />
-                        <Button layoutX="291.0" layoutY="161.0" mnemonicParsing="false" text="Set MapCharacterSet" />
-                        <ComboBox layoutX="152.0" layoutY="164.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <Button layoutX="291.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleSetMapCharacterSet" text="Set MapCharacterSet" />
+                        <ComboBox fx:id="mapCharacterSet" layoutX="152.0" layoutY="164.0" prefHeight="21.0" prefWidth="129.0" />
                         <Label layoutX="16.0" layoutY="199.0" text="Set Timeout:" />
-                        <TextField layoutX="152.0" layoutY="196.0" prefWidth="129.0" />
-                        <Button layoutX="291.0" layoutY="194.0" mnemonicParsing="false" text="Set Timeout" />
+                        <TextField fx:id="timeout" layoutX="152.0" layoutY="196.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="194.0" mnemonicParsing="false" onAction="#handleSetTimeout" text="Set Timeout" />
                         <Label layoutX="16.0" layoutY="233.0" text="Set VideoMode:" />
-                        <TextField layoutX="152.0" layoutY="230.0" prefWidth="129.0" />
-                        <Button layoutX="291.0" layoutY="228.0" mnemonicParsing="false" text="Set VideoMode" />
+                        <TextField fx:id="videoMode" layoutX="152.0" layoutY="230.0" prefWidth="129.0" />
+                        <Button layoutX="291.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleSetVideoMode" text="Set VideoMode" />
                         <Label alignment="CENTER" layoutX="16.0" layoutY="276.0" prefWidth="186.0" text="Check Health" underline="true">
                           <font>
                             <Font size="14.0" fx:id="x1" />
                           </font>
                         </Label>
                         <Label layoutX="16.0" layoutY="310.0" text="Level:" />
-                        <ComboBox layoutX="73.0" layoutY="308.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <Button layoutX="115.0" layoutY="336.0" mnemonicParsing="false" text="CheckHealth" />
+                        <ComboBox fx:id="checkHealth_level" layoutX="73.0" layoutY="308.0" prefHeight="21.0" prefWidth="129.0" />
+                        <Button layoutX="115.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleCheckHealth" text="CheckHealth" />
                         <Label alignment="CENTER" font="$x1" layoutX="566.0" layoutY="276.0" prefWidth="75.0" text="Clear Input" underline="true" />
-                        <Button layoutX="565.0" layoutY="303.0" mnemonicParsing="false" text="ClearInput" />
+                        <Button layoutX="565.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleClearInput" text="ClearInput" />
                         <Label alignment="CENTER" font="$x1" layoutX="689.0" layoutY="276.0" prefWidth="87.0" text="Clear Output" underline="true" />
-                        <Button layoutX="690.0" layoutY="303.0" mnemonicParsing="false" text="ClearOutput" />
+                        <Button layoutX="690.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleClearOutput" text="ClearOutput" />
                         <Label alignment="CENTER" font="$x1" layoutX="16.0" layoutY="386.0" prefWidth="186.0" text="Clear Video" underline="true" />
                         <Label layoutX="16.0" layoutY="420.0" text="Units:" />
-                        <ComboBox layoutX="73.0" layoutY="418.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <Button layoutX="124.0" layoutY="475.0" mnemonicParsing="false" text="ClearVideo" />
+                        <ComboBox fx:id="clearVideo_units" layoutX="73.0" layoutY="418.0" prefHeight="21.0" prefWidth="129.0" />
+                        <Button layoutX="124.0" layoutY="475.0" mnemonicParsing="false" onAction="#handleClearVideo" text="ClearVideo" />
                         <Label layoutX="16.0" layoutY="451.0" text="Attribute:" />
-                        <TextField layoutX="73.0" layoutY="448.0" prefWidth="129.0" />
                         <Label alignment="CENTER" font="$x1" layoutX="292.0" layoutY="276.0" prefWidth="186.0" text="Clear Video Region" underline="true" />
                         <Label layoutX="292.0" layoutY="310.0" text="Units:" />
-                        <ComboBox layoutX="349.0" layoutY="308.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="clearVideoRegion_units" layoutX="349.0" layoutY="308.0" prefHeight="21.0" prefWidth="129.0" />
                         <Label layoutX="292.0" layoutY="341.0" text="Row:" />
-                        <TextField layoutX="349.0" layoutY="338.0" prefWidth="129.0" />
+                        <TextField fx:id="clearVideoRegion_row" layoutX="349.0" layoutY="338.0" prefWidth="129.0" />
                         <Label layoutX="292.0" layoutY="369.0" text="Column:" />
-                        <TextField layoutX="349.0" layoutY="366.0" prefWidth="129.0" />
+                        <TextField fx:id="clearVideoRegion_column" layoutX="349.0" layoutY="366.0" prefWidth="129.0" />
                         <Label layoutX="292.0" layoutY="396.0" text="Height:" />
-                        <TextField layoutX="349.0" layoutY="393.0" prefWidth="129.0" />
+                        <TextField fx:id="clearVideoRegion_height" layoutX="349.0" layoutY="393.0" prefWidth="129.0" />
                         <Label layoutX="292.0" layoutY="424.0" text="Width:" />
-                        <TextField layoutX="349.0" layoutY="421.0" prefWidth="129.0" />
+                        <TextField fx:id="clearVideoRegion_width" layoutX="349.0" layoutY="421.0" prefWidth="129.0" />
                         <Label layoutX="292.0" layoutY="451.0" text="Attribute:" />
-                        <TextField layoutX="349.0" layoutY="448.0" prefWidth="129.0" />
-                        <Button layoutX="363.0" layoutY="475.0" mnemonicParsing="false" text="ClearVideoRegion" />
+                        <Button layoutX="363.0" layoutY="475.0" mnemonicParsing="false" onAction="#handleClearVideoRegion" text="ClearVideoRegion" />
                         <Label alignment="CENTER" font="$x1" layoutX="565.0" layoutY="351.0" prefWidth="203.0" text="Select CharacterSet" underline="true" />
                         <Label layoutX="565.0" layoutY="385.0" text="Units:" />
-                        <ComboBox layoutX="639.0" layoutY="383.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="selectCharacterSet_units" layoutX="639.0" layoutY="383.0" prefHeight="21.0" prefWidth="129.0" />
                         <Label layoutX="565.0" layoutY="416.0" text="characterSet:" />
-                        <ComboBox layoutX="639.0" layoutY="414.0" prefHeight="21.0" prefWidth="129.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <Button layoutX="649.0" layoutY="441.0" mnemonicParsing="false" text="SelectCharacterSet" />
+                        <ComboBox fx:id="selectCharacterSet_characterSet" layoutX="639.0" layoutY="414.0" prefHeight="21.0" prefWidth="129.0" />
+                        <Button layoutX="649.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleSelectCharacterSet" text="SelectCharacterSet" />
+                        <TextField fx:id="clearVideoRegion_attribute" layoutX="348.0" layoutY="448.0" prefWidth="129.0" />
+                        <TextField fx:id="clearVideo_attribute" layoutX="73.0" layoutY="448.0" prefWidth="129.0" />
                       </children>
                     </AnchorPane>
                   </content>
                 </Tab>
                 <Tab text="Misc">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root" />
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <Label alignment="CENTER" font="$x1" layoutX="30.0" layoutY="36.0" prefWidth="169.0" text="Control Clock" underline="true" />
+                        <Label layoutX="31.0" layoutY="69.0" text="Units:" />
+                        <ComboBox id="controlClock_" fx:id="controlClock_units" layoutX="95.0" layoutY="67.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="31.0" layoutY="99.0" text="Function:" />
+                        <ComboBox fx:id="controlClock_function" layoutX="95.0" layoutY="97.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="31.0" layoutY="128.0" text="ClockID:" />
+                        <ComboBox fx:id="controlClock_clockID" layoutX="95.0" layoutY="126.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="31.0" layoutY="157.0" text="Hour:" />
+                        <Label layoutX="31.0" layoutY="187.0" text="Min:" />
+                        <Label layoutX="31.0" layoutY="216.0" text="Sec:" />
+                        <Label layoutX="31.0" layoutY="244.0" text="Row:" />
+                        <Label layoutX="31.0" layoutY="273.0" text="Column:" />
+                        <Label layoutX="31.0" layoutY="301.0" text="Attribute:" />
+                        <Label layoutX="31.0" layoutY="328.0" text="Mode:" />
+                        <ComboBox fx:id="controlClock_mode" layoutX="95.0" layoutY="326.0" prefHeight="21.0" prefWidth="91.0" />
+                        <TextField fx:id="controlClock_hour" layoutX="95.0" layoutY="154.0" prefWidth="91.0" />
+                        <TextField fx:id="controlClock_min" layoutX="95.0" layoutY="184.0" prefWidth="91.0" />
+                        <TextField fx:id="controlClock_sec" layoutX="95.0" layoutY="213.0" prefWidth="91.0" />
+                        <TextField fx:id="controlClock_row" layoutX="95.0" layoutY="241.0" prefWidth="91.0" />
+                        <TextField fx:id="controlClock_column" layoutX="95.0" layoutY="270.0" prefWidth="91.0" />
+                        <Button layoutX="94.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleControlClock" text="Control Clock" />
+                        <Label alignment="CENTER" font="$x1" layoutX="236.0" layoutY="36.0" prefWidth="169.0" text="Control Cursor" underline="true" />
+                        <Label layoutX="236.0" layoutY="69.0" text="Units:" />
+                        <ComboBox fx:id="controlCursor_units" layoutX="300.0" layoutY="67.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="236.0" layoutY="99.0" text="Function:" />
+                        <ComboBox fx:id="controlCursor_function" layoutX="300.0" layoutY="97.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="293.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleControlCursor" text="Control Cursor" />
+                        <Label alignment="CENTER" font="$x1" layoutX="238.0" layoutY="164.0" prefWidth="166.0001220703125" text="CopyVideoRegion" underline="true" />
+                        <Label layoutX="236.0" layoutY="197.0" text="Units:" />
+                        <ComboBox fx:id="copyVideoRegion_units" layoutX="300.0" layoutY="195.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="238.0" layoutY="227.0" text="Row:" />
+                        <Label layoutX="238.0" layoutY="257.0" text="Column:" />
+                        <Label layoutX="238.0" layoutY="286.0" text="Height:" />
+                        <Label layoutX="238.0" layoutY="314.0" text="Width:" />
+                        <Label layoutX="238.0" layoutY="343.0" text="TargetRow:" />
+                        <TextField fx:id="copyVideoRegion_row" layoutX="302.0" layoutY="224.0" prefWidth="91.0" />
+                        <TextField fx:id="copyVideoRegion_column" layoutX="302.0" layoutY="254.0" prefWidth="91.0" />
+                        <TextField fx:id="copyVideoRegion_height" layoutX="302.0" layoutY="283.0" prefWidth="91.0" />
+                        <TextField fx:id="copyVideoRegion_width" layoutX="302.0" layoutY="311.0" prefWidth="91.0" />
+                        <TextField fx:id="copyVideoRegion_targetRow" layoutX="302.0" layoutY="340.0" prefWidth="91.0" />
+                        <Label layoutX="237.0" layoutY="370.0" text="TargetCol:" />
+                        <TextField fx:id="copyVideoRegion_targetCol" layoutX="302.0" layoutY="367.0" prefWidth="91.0" />
+                        <Button layoutX="277.0" layoutY="396.0" mnemonicParsing="false" onAction="#handleCopyVideoRegion" text="CopyVideoRegion" />
+                        <Label alignment="CENTER" font="$x1" layoutX="654.0" layoutY="301.0" prefWidth="166.0001220703125" text="Display Data" underline="true" />
+                        <Label layoutX="652.0" layoutY="334.0" text="Units:" />
+                        <ComboBox fx:id="displayData_units" layoutX="716.0" layoutY="332.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="654.0" layoutY="364.0" text="Row:" />
+                        <Label layoutX="654.0" layoutY="394.0" text="Column:" />
+                        <Label layoutX="654.0" layoutY="423.0" text="Attribute:" />
+                        <TextField fx:id="displayData_row" layoutX="718.0" layoutY="361.0" prefWidth="91.0" />
+                        <TextField fx:id="displayData_column" layoutX="718.0" layoutY="391.0" prefWidth="91.0" />
+                        <Button layoutX="719.0" layoutY="474.0" mnemonicParsing="false" onAction="#handleDisplayData" text="DisplayData" />
+                        <Label layoutX="653.0" layoutY="450.0" text="Data:" />
+                        <TextField fx:id="displayData_data" layoutX="717.0" layoutY="447.0" prefWidth="91.0" />
+                        <Label alignment="CENTER" font="$x1" layoutX="444.0" layoutY="36.0" prefWidth="166.0001220703125" text="Draw Box" underline="true" />
+                        <Label layoutX="442.0" layoutY="69.0" text="Units:" />
+                        <ComboBox fx:id="drawBox_units" layoutX="506.0" layoutY="67.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="444.0" layoutY="99.0" text="Row:" />
+                        <Label layoutX="444.0" layoutY="129.0" text="Column:" />
+                        <Label layoutX="444.0" layoutY="158.0" text="Height:" />
+                        <Label layoutX="444.0" layoutY="186.0" text="Width:" />
+                        <TextField fx:id="drawBox_row" layoutX="508.0" layoutY="96.0" prefWidth="91.0" />
+                        <TextField fx:id="drawBox_column" layoutX="508.0" layoutY="126.0" prefWidth="91.0" />
+                        <TextField fx:id="drawBox_height" layoutX="508.0" layoutY="155.0" prefWidth="91.0" />
+                        <TextField fx:id="drawBox_width" layoutX="508.0" layoutY="183.0" prefWidth="91.0" />
+                        <Label layoutX="444.0" layoutY="213.0" text="Attribute:" />
+                        <Label layoutX="444.0" layoutY="241.0" text="BorderType:" />
+                        <ComboBox fx:id="drawBox_borderType" layoutX="508.0" layoutY="239.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="530.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleDrawBox" text="DrawBox" />
+                        <Label alignment="CENTER" font="$x1" layoutX="31.0" layoutY="398.0" prefWidth="169.0" text="Free Video Region" underline="true" />
+                        <Label layoutX="31.0" layoutY="431.0" text="Units:" />
+                        <ComboBox fx:id="freeVideoRegion_units" layoutX="95.0" layoutY="429.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="31.0" layoutY="461.0" text="BufferID:" />
+                        <ComboBox fx:id="freeVideoRegion_bufferID" layoutX="95.0" layoutY="459.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="75.0" layoutY="485.0" mnemonicParsing="false" onAction="#handleFreeVideoRegion" text="FreeVideoRegion" />
+                        <Label alignment="CENTER" font="$x1" layoutX="442.0" layoutY="301.0" prefWidth="169.0" text="Reset Video" underline="true" />
+                        <Label layoutX="442.0" layoutY="334.0" text="Units:" />
+                        <ComboBox fx:id="resetVideo_units" layoutX="506.0" layoutY="332.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="517.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleResetVideo" text="ResetVideo" />
+                        <Label alignment="CENTER" font="$x1" layoutX="442.0" layoutY="400.0" prefWidth="167.0" text="Restore Video Region" underline="true" />
+                        <Label layoutX="442.0" layoutY="433.0" text="Units:" />
+                        <ComboBox fx:id="restoreVideoRegion_units" layoutX="504.0" layoutY="431.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="442.0" layoutY="463.0" text="TargetRow:" />
+                        <Label layoutX="442.0" layoutY="493.0" text="TargetCol:" />
+                        <Label layoutX="442.0" layoutY="522.0" text="BufferID:" />
+                        <TextField fx:id="restoreVideoRegion_targetRow" layoutX="506.0" layoutY="460.0" prefWidth="91.0" />
+                        <TextField fx:id="restoreVideoRegion_targetCol" layoutX="506.0" layoutY="490.0" prefWidth="91.0" />
+                        <ComboBox fx:id="restoreVideoRegion_bufferID" layoutX="506.0" layoutY="521.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="470.0" layoutY="546.0" mnemonicParsing="false" onAction="#handleRestoreVideoRegion" text="RestoreVideoRegion" />
+                        <Label alignment="CENTER" font="$x1" layoutX="654.0" layoutY="36.0" prefWidth="166.0001220703125" text="Save Video Region" underline="true" />
+                        <Label layoutX="652.0" layoutY="69.0" text="Units:" />
+                        <ComboBox fx:id="saveVideoRegion_units" layoutX="716.0" layoutY="67.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label layoutX="654.0" layoutY="99.0" text="Row:" />
+                        <Label layoutX="654.0" layoutY="129.0" text="Column:" />
+                        <Label layoutX="654.0" layoutY="158.0" text="Height:" />
+                        <Label layoutX="654.0" layoutY="186.0" text="Width:" />
+                        <TextField fx:id="saveVideoRegion_row" layoutX="718.0" layoutY="96.0" prefWidth="91.0" />
+                        <TextField fx:id="saveVideoRegion_column" layoutX="718.0" layoutY="126.0" prefWidth="91.0" />
+                        <TextField fx:id="saveVideoRegion_height" layoutX="718.0" layoutY="155.0" prefWidth="91.0" />
+                        <TextField fx:id="saveVideoRegion_width" layoutX="718.0" layoutY="183.0" prefWidth="91.0" />
+                        <Label layoutX="654.0" layoutY="213.0" text="BufferID:" />
+                        <ComboBox fx:id="saveVideoRegion_bufferID" layoutX="719.0" layoutY="211.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="697.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleSaveVideoRegion" text="SaveVideoRegion" />
+                        <TextField id="controlClock_column" fx:id="controlClock_attribute" layoutX="95.0" layoutY="298.0" prefWidth="91.0" />
+                        <TextField id="drawBox_width" fx:id="drawBox_attribute" layoutX="508.0" layoutY="211.0" prefWidth="91.0" />
+                        <TextField id="displayData_column" fx:id="displayData_attribute" layoutX="719.0" layoutY="419.0" prefWidth="91.0" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Misc2">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="root">
+                      <children>
+                        <ComboBox fx:id="updateVideoRegionAttribute_units" layoutX="91.0" layoutY="250.0" prefHeight="21.0" prefWidth="91.0" />
+                        <ComboBox fx:id="updateVideoRegionAttribute_function" layoutX="91.0" layoutY="280.0" prefHeight="21.0" prefWidth="91.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Item 1" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                        </ComboBox>
+                        <TextField fx:id="updateVideoRegionAttribute_row" layoutX="91.0" layoutY="309.0" prefWidth="91.0" />
+                        <TextField fx:id="updateVideoRegionAttribute_col" layoutX="91.0" layoutY="339.0" prefWidth="91.0" />
+                        <TextField fx:id="updateVideoRegionAttribute_height" layoutX="91.0" layoutY="368.0" prefWidth="91.0" />
+                        <TextField fx:id="updateVideoRegionAttribute_width" layoutX="91.0" layoutY="396.0" prefWidth="91.0" />
+                        <Label layoutX="29.0" layoutY="424.0" text="Attribute:" />
+                        <Label layoutX="29.0" layoutY="398.0" text="Width:" />
+                        <Label layoutX="29.0" layoutY="370.0" text="Height:" />
+                        <Label layoutX="29.0" layoutY="341.0" text="Col:" />
+                        <Label layoutX="29.0" layoutY="311.0" text="Row:" />
+                        <Label layoutX="29.0" layoutY="281.0" text="Function:" />
+                        <Label layoutX="29.0" layoutY="251.0" text="Units:" />
+                        <Label layoutX="27.0" layoutY="79.0" text="Units:" />
+                        <ComboBox fx:id="setCursor_units" layoutX="91.0" layoutY="77.0" prefHeight="21.0" prefWidth="91.0" />
+                        <TextField fx:id="setCursor_row" layoutX="93.0" layoutY="106.0" prefWidth="91.0" />
+                        <TextField fx:id="setCursor_column" layoutX="93.0" layoutY="136.0" prefWidth="91.0" />
+                        <Label layoutX="29.0" layoutY="139.0" text="Column:" />
+                        <Label layoutX="29.0" layoutY="109.0" text="Row:" />
+                        <Label alignment="CENTER" font="$x1" layoutX="29.0" layoutY="46.0" prefWidth="166.0001220703125" text="Set Cursor" underline="true" />
+                        <Button layoutX="112.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleSetCursor" text="SetCursor" />
+                        <Label layoutX="249.0" layoutY="79.0" text="Units:" />
+                        <ComboBox fx:id="transactionDisplay_units" layoutX="351.0" layoutY="77.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Label alignment="CENTER" font="$x1" layoutX="251.0" layoutY="46.0" prefWidth="193.0" text="Transaction Display" underline="true" />
+                        <Label layoutX="249.0" layoutY="108.0" text="Function:" />
+                        <ComboBox fx:id="transactionDisplay_function" layoutX="350.0" layoutY="106.0" prefHeight="21.0" prefWidth="91.0" />
+                        <Button layoutX="335.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleTransactionDisplay" text="TransactionDisplay" />
+                        <Label alignment="CENTER" font="$x1" layoutX="28.0" layoutY="218.0" prefWidth="193.0" text="Update Video Region Attribute" underline="true" />
+                        <Button layoutX="29.0" layoutY="451.0" mnemonicParsing="false" onAction="#handleUpdateVideoRegionAttribute" text="UpdateVideoRegionAttribute" />
+                        <ComboBox fx:id="videoSound_units" layoutX="348.0" layoutY="249.0" prefHeight="21.0" prefWidth="91.0" />
+                        <TextField fx:id="videoSound_frequency" layoutX="348.0" layoutY="276.0" prefWidth="91.0" />
+                        <TextField fx:id="videoSound_duration" layoutX="348.0" layoutY="306.0" prefWidth="91.0" />
+                        <TextField fx:id="videoSound_numberOfCycles" layoutX="348.0" layoutY="335.0" prefWidth="91.0" />
+                        <TextField fx:id="videoSound_interSoundWait" layoutX="348.0" layoutY="363.0" prefWidth="91.0" />
+                        <Label layoutX="249.0" layoutY="366.0" text="InterSoundWait:" />
+                        <Label layoutX="249.0" layoutY="338.0" text="NumberOfCycles:" />
+                        <Label layoutX="249.0" layoutY="309.0" text="Duration:" />
+                        <Label layoutX="249.0" layoutY="279.0" text="Frequency:" />
+                        <Label layoutX="249.0" layoutY="251.0" text="Units:" />
+                        <Label alignment="CENTER" font="$x1" layoutX="248.0" layoutY="218.0" prefWidth="193.0" text="Video Sound" underline="true" />
+                        <Button layoutX="354.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleVideoSound" text="VideoSound" />
+                        <TextField id="updateVideoRegionAttribute_width" fx:id="updateVideoRegionAttribute_attribute" layoutX="91.0" layoutY="422.0" prefWidth="91.0" />
+                      </children>
+                    </AnchorPane>
                   </content>
                 </Tab>
               </tabs>
             </TabPane>
+            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

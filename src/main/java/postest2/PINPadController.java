@@ -77,6 +77,7 @@ public class PINPadController extends CommonController implements Initializable 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new PINPad();
 		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("PINPad");
 
 		dataEvent.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) {
@@ -119,12 +120,9 @@ public class PINPadController extends CommonController implements Initializable 
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
-
-	// /////////////////////////////////////////////////////////////////////////////
-
+	
 	// Initialize the beginning of an EFT Transaction.
 	@FXML
 	public void handleBeginEFTTransaction(ActionEvent e) {
@@ -160,7 +158,9 @@ public class PINPadController extends CommonController implements Initializable 
 		}
 	}
 
-	// Computes a MAC value and appends it to the designated message.
+	/**
+	 *  Computes a MAC value and appends it to the designated message.
+	 */
 	@FXML
 	public void handleComputeMAC(ActionEvent e) {
 		try {
@@ -171,7 +171,10 @@ public class PINPadController extends CommonController implements Initializable 
 		}
 	}
 
-	// Verify the MAC value in a message reecived from an EFT Transaction host.
+	/**
+	 *  Verify the MAC value in a message reecived from an EFT Transaction host.
+	 * @param e
+	 */
 	@FXML
 	public void handleVerifyMAC(ActionEvent e) {
 		try {
@@ -181,7 +184,10 @@ public class PINPadController extends CommonController implements Initializable 
 		}
 	}
 
-	// Provides a new encryption key to the PIN Pad.
+	/**
+	 * Provides a new encryption key to the PIN Pad.
+	 * @param e
+	 */
 	@FXML
 	public void handleUpdateKey(ActionEvent e) {
 		try {
@@ -270,7 +276,9 @@ public class PINPadController extends CommonController implements Initializable 
 		transactionType.getItems().add(PINPadConstantMapper.PPAD_TRANS_ADMIN.getConstant());
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -294,7 +302,9 @@ public class PINPadController extends CommonController implements Initializable 
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {

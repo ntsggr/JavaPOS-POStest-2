@@ -74,7 +74,10 @@ public class PointCardRWController extends CommonController implements Initializ
 		}
 	}
 
-	// PointCardRW waits for a point card insertion.
+	/**
+	 * PointCardRW waits for a point card insertion.
+	 * @param e
+	 */
 	@FXML
 	public void handleBeginInsertion(ActionEvent e) {
 		try {
@@ -95,7 +98,10 @@ public class PointCardRWController extends CommonController implements Initializ
 		}
 	}
 
-	// PointCardRW waits for a point card ejection.
+	/**
+	 * PointCardRW waits for a point card ejection.
+	 * @param e
+	 */
 	@FXML
 	public void handleBeginRemoval(ActionEvent e) {
 		try {
@@ -116,9 +122,12 @@ public class PointCardRWController extends CommonController implements Initializ
 		}
 	}
 
-	// Called to determine whether a data sequence, possibly including one or
-	// more escape sequences, is valid for printing, prior to calling the
-	// printWrite method.
+	/**
+	 * Called to determine whether a data sequence, possibly including one or
+	 * e more escape sequences, is valid for printing, prior to calling the
+	 * printWrite method.
+	 * @param 
+	 */ 
 	@FXML
 	public void handleValidateData(ActionEvent e) {
 		try {
@@ -213,11 +222,12 @@ public class PointCardRWController extends CommonController implements Initializ
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -241,7 +251,9 @@ public class PointCardRWController extends CommonController implements Initializ
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -273,6 +285,10 @@ public class PointCardRWController extends CommonController implements Initializ
 		statistics = "";
 	}
 
+	/*
+	 * setUp ComboBoxes 
+	 */
+	
 	private void setUpMapMode() {
 		mapMode.getItems().clear();
 		mapMode.getItems().add(PointCardRWConstantMapper.PCRW_MM_DOTS.getConstant());

@@ -1,20 +1,3 @@
-/*
- *
- * Created on May 17, 2005, 4:26 AM
- * *
- * This software is provided "AS IS".  Ultimate Technology Corp.
- * OR ANY OTHER MEMBER OF THE JavaPOS Working Group MAKE NO
- * REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE SOFTWARE,
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NON-INFRINGEMENT. The authors shall not be liable for
- * any damages suffered as a result of using, modifying or distributing this
- * software or its derivatives. Permission to use, copy, modify, and distribute
- * the software and its documentation for any purpose is hereby granted.
- *
- * FirmwareUpdateDlg.java a generic dialog box for performing Firmware functions
- */
-
 package postest2;
 
 import java.awt.Dimension;
@@ -44,10 +27,6 @@ import jpos.JposException;
 import jpos.events.StatusUpdateEvent;
 import jpos.events.StatusUpdateListener;
 
-/**
- * 
- * @author Jeff Lange
- */
 public class FirmwareUpdateDlg extends JDialog implements ActionListener, StatusUpdateListener {
 
 	private static final long serialVersionUID = 1180348090398413114L;
@@ -71,7 +50,9 @@ public class FirmwareUpdateDlg extends JDialog implements ActionListener, Status
 
 	// private JList fileList;
 
-	/** Creates a new instance of FirmwareUpdateDlg */
+	/** 
+	 * Creates a new instance of FirmwareUpdateDlg 
+	 */
 	public FirmwareUpdateDlg(Object object) throws Exception {
 		deviceObject = object;
 		Class c = object.getClass();

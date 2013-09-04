@@ -1,9 +1,3 @@
-/*
- * Copyright 2013 NTS New Technology Systems GmbH. All Rights reserved.
- * NTS PROPRIETARY/CONFIDENTIAL. Use is subject to NTS License Agreement.
- * Address: Doernbacher Strasse 126, A-4073 Wilhering, Austria
- * Homepage: www.ntswincash.com
- */
 package postest2;
 
 import java.awt.Color;
@@ -137,22 +131,78 @@ public class LineDisplayController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("LineDisplay");
 		setUpAttribute();
 		service = new LineDisplay();
 		RequiredStateChecker.invokeThis(this, service);
 	}
 
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.LINEDISPLAY_DEVCAT
-				.toString()));
-	}
 
 	/* ************************************************************************
 	 * ************************ Action Handler ********************************
 	 * ************************************************************************
 	 */
 
+
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
+	@Override
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties(service);
+
+			JTextArea jta = new JTextArea(msg);
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) { 
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
+	@Override
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((LineDisplay) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			e1.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
+	}
+	
 	/**
 	 * Need this to set the ComboBox for Screen mode. (only available if device
 	 * is claimed but not enabled)
@@ -161,7 +211,6 @@ public class LineDisplayController extends CommonController implements Initializ
 	@Override
 	public void handleClaim(ActionEvent e) {
 		setUpScreenMode();
-		deviceEnabled.setSelected(true);
 		super.handleClaim(e);
 	}
 
@@ -637,49 +686,6 @@ public class LineDisplayController extends CommonController implements Initializ
 		}
 	}
 
-	/**
-	 * This Method gets a Byte Array from a File to print it with
-	 * displayMemoryBitmap
-	 * 
-	 * @param path
-	 *            to Binary File
-	 * @return byte[] containing the data from the File
-	 */
-	private byte[] getBytesFromFile(String path) {
-		byte[] bytes = null;
-		BufferedImage originalImage = null;
-		try {
-			originalImage = ImageIO.read(new File(path));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
-		if (originalImage == null) {
-			JOptionPane.showMessageDialog(null, "Image has a Bad Format!");
-			return null;
-		}
-
-		// change Imgage Format
-		BufferedImage newBufferedImage = new BufferedImage(originalImage.getWidth(),
-				originalImage.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-
-		newBufferedImage.createGraphics().drawImage(originalImage, 0, 0, Color.WHITE, null);
-
-		// convert BufferedImage to byte array
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
-			ImageIO.write(newBufferedImage, "bmp", baos);
-			baos.flush();
-
-			bytes = baos.toByteArray();
-			baos.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			JOptionPane.showMessageDialog(null, e1.getMessage());
-		}
-
-		return bytes;
-	}
 
 	/* ************************************************************************
 	 * ************************ Set all ComboBox Values ***********************
@@ -857,58 +863,49 @@ public class LineDisplayController extends CommonController implements Initializ
 		alignmentY.setValue(LineDisplayConstantMapper.DISP_BM_BOTTOM.getConstant());
 	}
 
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleInfo(ActionEvent e) {
+
+	/**
+	 * This Method gets a Byte Array from a File to print it with
+	 * displayMemoryBitmap
+	 * 
+	 * @param path
+	 *            to Binary File
+	 * @return byte[] containing the data from the File
+	 */
+	private byte[] getBytesFromFile(String path) {
+		byte[] bytes = null;
+		BufferedImage originalImage = null;
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
-			JTextArea jta = new JTextArea(msg);
-			JScrollPane jsp = new JScrollPane(jta) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(460, 390);
-				}
-			};
-			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			((LineDisplay) service).retrieveStatistics(stats);
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException e1) {
+			originalImage = ImageIO.read(new File(path));
+		} catch (IOException e1) {
 			e1.printStackTrace();
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+		if (originalImage == null) {
+			JOptionPane.showMessageDialog(null, "Image has a Bad Format!");
+			return null;
 		}
 
-		statistics = "";
+		// change Imgage Format
+		BufferedImage newBufferedImage = new BufferedImage(originalImage.getWidth(),
+				originalImage.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+
+		newBufferedImage.createGraphics().drawImage(originalImage, 0, 0, Color.WHITE, null);
+
+		// convert BufferedImage to byte array
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(newBufferedImage, "bmp", baos);
+			baos.flush();
+
+			bytes = baos.toByteArray();
+			baos.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+		}
+
+		return bytes;
 	}
+	
 }

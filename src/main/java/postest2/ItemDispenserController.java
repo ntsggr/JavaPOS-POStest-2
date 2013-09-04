@@ -79,7 +79,6 @@ public class ItemDispenserController extends CommonController implements Initial
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 

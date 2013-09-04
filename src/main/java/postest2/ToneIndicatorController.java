@@ -85,11 +85,12 @@ public class ToneIndicatorController extends CommonController implements Initial
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -133,7 +134,9 @@ public class ToneIndicatorController extends CommonController implements Initial
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -257,8 +260,6 @@ public class ToneIndicatorController extends CommonController implements Initial
 		}
 	}
 	
-
-	
 	@FXML
 	public void handleSetTone2Duration(ActionEvent e) {
 		if(tone2Duration.getText().isEmpty()){
@@ -334,12 +335,14 @@ public class ToneIndicatorController extends CommonController implements Initial
 	/*
 	 * Set up ComboBoxes
 	 */
+	
 	// Not properly initialized due to missing values in the ToneIndicatorConst Interface
 	private void setUpMelodyType(){
 		melodyType.getItems().clear();
 		melodyType.getItems().add(ToneIndicatorConstantMapper.TONE_MT_NONE.getConstant());
 		melodyType.setValue(ToneIndicatorConstantMapper.TONE_MT_NONE.getConstant());
 	}
+	
 	private void setUpComboBoxes(){
 		setUpMelodyType();
 	}

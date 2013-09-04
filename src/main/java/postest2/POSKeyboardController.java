@@ -35,7 +35,8 @@ public class POSKeyboardController extends CommonController implements Initializ
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new POSKeyboard();
-		// RequiredStateChecker.invokeThis(this, service);
+		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("POSKeyboard");
 	}
 
 	/* ************************************************************************
@@ -73,11 +74,12 @@ public class POSKeyboardController extends CommonController implements Initializ
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 *  Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -117,7 +119,9 @@ public class POSKeyboardController extends CommonController implements Initializ
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 *  Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {

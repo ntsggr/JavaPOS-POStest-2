@@ -197,13 +197,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new FiscalPrinter();
 		RequiredStateChecker.invokeThis(this, service);
-
-		setUpLogicalNameComboBox();
-	}
-
-	private void setUpLogicalNameComboBox() {
-		logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(JposDevCats.POSPRINTER_DEVCAT
-				.toString()));
+		setUpLogicalNameComboBox("FiscalPrinter");
 	}
 
 	/* ************************************************************************
@@ -264,8 +258,67 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
+	}
+	
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
+	@Override
+	@FXML
+	public void handleInfo(ActionEvent e) {
+		try {
+			String msg = DeviceProperties.getProperties(service);
+
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
+			System.err.println("Jpos exception " + jpe);
+		}
+	}
+
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
+	@Override
+	@FXML
+	public void handleStatistics(ActionEvent e) {
+		String[] stats = new String[] { "", "U_", "M_" };
+		try {
+			((FiscalPrinter) service).retrieveStatistics(stats);
+			DOMParser parser = new DOMParser();
+			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
+
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
+
+			printStatistics(doc.getDocumentElement(), "");
+
+			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} catch (SAXException saxe) {
+			saxe.printStackTrace();
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (JposException jpe) {
+			jpe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+		statistics = "";
 	}
 
 	@FXML
@@ -540,7 +593,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Prints a cash-in or cash-out receipt amount.
+	/**
+	 * Prints a cash-in or cash-out receipt amount.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecCash(ActionEvent e) {
 		long lAmount = 0;
@@ -555,7 +611,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Prints a receipt item for a sold item
+	/**
+	 * Prints a receipt item for a sold item
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecItem(ActionEvent e) {
 		long lPrice = (long) (Double.parseDouble(price.getText()) * amountFactorDecimal);
@@ -592,8 +651,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Cancels one or more items that has been added to the receipt and prints a
-	// void description
+	/**
+	 * Cancels one or more items that has been added to the receipt and prints a
+	 * void description
+	 */
 	@FXML
 	public void handlePrintRecItemVoid(ActionEvent e) {
 		long lPrice = (long) (Double.parseDouble(price.getText()) * amountFactorDecimal);
@@ -629,8 +690,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Applies and prints an adjustment (discount or surcharge) to the last
-	// receipt item sold.
+	/**
+	 * Applies and prints an adjustment (discount or surcharge) to the last receipt item sold.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecItemAdjustment(ActionEvent e) {
 		long lAmount = 0;
@@ -664,8 +727,11 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Cancels an adjustment that has been added to the fiscal receipt before
-	// and prints a cancellation line.
+	/**
+	 * Cancels an adjustment that has been added to the fiscal receipt before and prints a cancellation line.
+	 * @param e
+	 */
+
 	@FXML
 	public void handlePrintRecItemAdjustmentVoid(ActionEvent e) {
 		long lAmount = 0;
@@ -699,7 +765,9 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Prints a receipt fuel item
+	/**
+	 * Prints a receipt fuel item
+	 */
 	@FXML
 	public void handlePrintRecItemFuel(ActionEvent e) {
 		long lPrice = (long) (Double.parseDouble(price.getText()) * amountFactorDecimal);
@@ -733,7 +801,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Called to void a fuel item
+	/**
+	 * Called to void a fuel item
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecItemFuelVoid(ActionEvent e) {
 		long lPrice = (long) (Double.parseDouble(price.getText()) * amountFactorDecimal);
@@ -759,7 +830,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Process one or more iterm refunds.
+	/**
+	 * Process one or more item refunds.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecItemRefund(ActionEvent e) {
 		long lAmount = 0;
@@ -794,7 +868,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Processes a void of one or more item refunds.
+	/**
+	 * Processes a void of one or more item refunds.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecItemRefundVoid(ActionEvent e) {
 		long lAmount = 0;
@@ -826,8 +903,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Called to give an adjustment(discount or surcharge) for a package of some
-	// item booked before.
+	/**
+	 * Called to give an adjustment(discount or surcharge) for a package of some item booked before.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecPackageAdjustment(ActionEvent e) {
 		try {
@@ -841,8 +920,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Called to void the adjustment(discount or surcharge) for a package of
-	// some items.
+	/**
+	 * Called to void the adjustment(discount or surcharge) for a package of some items.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecPackageAdjustmentVoid(ActionEvent e) {
 		try {
@@ -859,7 +940,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Processes a refund.
+	/**
+	 * Processes a refund.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecRefund(ActionEvent e) {
 		long lAmount = 0;
@@ -885,7 +969,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Called to process a void of a refund.
+	/**
+	 * Called to process a void of a refund.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecRefundVoid(ActionEvent e) {
 		long lAmount = 0;
@@ -908,7 +995,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Checks and prints the current receipt subtotal.
+	/**
+	 * Checks and prints the current receipt subtotal.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecSubtotal(ActionEvent e) {
 		long lAmount = 0;
@@ -927,8 +1017,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Applies and prints an adjustment (discount or surcharge) to the current
-	// receipt subtotal.
+	/**
+	 * Applies and prints an adjustment (discount or surcharge) to the current receipt subtotal.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecSubtotalAdjustment(ActionEvent e) {
 		long lAmount = 0;
@@ -955,7 +1047,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Called to void the adjustment for a package os some items.
+	/**
+	 * Called to void the adjustment for a package os some items.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecSubtotalAdjustmentVoid(ActionEvent e) {
 		long lAmount = 0;
@@ -979,7 +1074,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Cancels the current receipt.
+	/**
+	 * Cancels the current receipt.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecVoid(ActionEvent e) {
 		try {
@@ -991,8 +1089,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Cancels an item that has been added to the receipt and prints a void
-	// description.
+	/**
+	 * Cancels an item that has been added to the receipt and prints a void description.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecVoidItem(ActionEvent e) {
 		long lPrice = (long) (Double.parseDouble(price.getText()) * amountFactorDecimal);
@@ -1023,7 +1123,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Prints the customer tax identification
+	/**
+	 * Prints the customer tax identification
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecTaxId(ActionEvent e) {
 		try {
@@ -1035,7 +1138,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		clearFields();
 	}
 
-	// Prints the current receipt total
+	/**
+	 * Prints the current receipt total
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintRecTotal(ActionEvent e) {
 		long lPrice = (long) (Double.parseDouble(price.getText()) * amountFactorDecimal);
@@ -1121,7 +1227,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	// Prints a line of fiscal text to the slip station.
+	/**
+	 * Prints a line of fiscal text to the slip station.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintFiscalDocumentLine(ActionEvent e) {
 		try {
@@ -1132,7 +1241,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/* ********** Fiscal Report - Methods ********** */
-	// Prints a report of the fiscal.
+	/**
+	 * Prints a report of the fiscal.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintReport(ActionEvent e) {
 		try {
@@ -1144,8 +1256,11 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	// Prints a report of all the daily fiscal activities on the receipt. No
-	// data will be written to the fiscal EPROM.
+	/**
+	 * Prints a report of all the daily fiscal activities on the receipt. No
+	 * data will be written to the fiscal EPROM.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintXReport(ActionEvent e) {
 		try {
@@ -1155,8 +1270,11 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	// Prints a report of all the daily fiscal activities on the receipt. Data
-	// will be written to the fiscal EPROM.
+	/**
+	 * Prints a report of all the daily fiscal activities on the receipt. Data
+	 * will be written to the fiscal EPROM.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintZReport(ActionEvent e) {
 		try {
@@ -1166,7 +1284,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	// Prints a report of totals for a range of dates on the receipt.
+	/**
+	 * Prints a report of totals for a range of dates on the receipt.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintPeriodicReport(ActionEvent e) {
 		try {
@@ -1186,7 +1307,10 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	// Prints data on the Fiscal Printer station.
+	/**
+	 * Prints data on the Fiscal Printer station.
+	 * @param e
+	 */
 	@FXML
 	public void handlePrintNormal(ActionEvent e) {
 		try {
@@ -1249,8 +1373,11 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	// Forces the Fiscal Printer to return to Monitor state. It also cancels and
-	// closes any operations.
+	/**
+	 * Forces the Fiscal Printer to return to Monitor state. It also cancels and
+	 * closes any operations.
+	 * @param e
+	 */
 	@FXML
 	public void handleResetPrinter(ActionEvent e) {
 		try {
@@ -1459,60 +1586,5 @@ public class FiscalPrinterController extends CommonController implements Initial
 		dailyTotalizer.setSelected(true);
 	}
 
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleInfo(ActionEvent e) {
-		try {
-			String msg = DeviceProperties.getProperties(service);
-
-			JTextArea jta = new JTextArea(msg);
-			@SuppressWarnings("serial")
-			JScrollPane jsp = new JScrollPane(jta) {
-				@Override
-				public Dimension getPreferredSize() {
-					return new Dimension(460, 390);
-				}
-			};
-			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
-		}
-	}
-
-	// Shows statistics of device if they are supported by the device
-	@Override
-	@FXML
-	public void handleStatistics(ActionEvent e) {
-		String[] stats = new String[] { "", "U_", "M_" };
-		try {
-			((FiscalPrinter) service).retrieveStatistics(stats);
-			DOMParser parser = new DOMParser();
-			parser.parse(new InputSource(new java.io.StringReader(stats[1])));
-
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(new ByteArrayInputStream(stats[1].getBytes()));
-
-			printStatistics(doc.getDocumentElement(), "");
-
-			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		} catch (SAXException saxe) {
-			saxe.printStackTrace();
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
-					JOptionPane.ERROR_MESSAGE);
-		}
-
-		statistics = "";
-	}
 
 }
