@@ -11,7 +11,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CapBlink" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CB_NOBLINK      = new ConstantConverter(0, "DISP_CB_NOBLINK");
 	public static final ConstantConverter DISP_CB_BLINKALL     = new ConstantConverter(1, "DISP_CB_BLINKALL");
 	public static final ConstantConverter DISP_CB_BLINKEACH    = new ConstantConverter(2, "DISP_CB_BLINKEACH");
@@ -19,7 +18,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CapCharacterSet" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CCS_NUMERIC     = new ConstantConverter(0, "DISP_CCS_NUMERIC");
 	public static final ConstantConverter DISP_CCS_ALPHA       = new ConstantConverter(1, "DISP_CCS_ALPHA");
 	public static final ConstantConverter DISP_CCS_ASCII       = new ConstantConverter(998, "DISP_CCS_ASCII");
@@ -31,7 +29,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CapCursorType" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CCT_NONE        = new ConstantConverter(0x00000000, "DISP_CCT_NONE");
 	public static final ConstantConverter DISP_CCT_FIXED       = new ConstantConverter(0x00000001, "DISP_CCT_FIXED");
 	public static final ConstantConverter DISP_CCT_BLOCK       = new ConstantConverter(0x00000002, "DISP_CCT_BLOCK");
@@ -47,7 +44,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CapReadBack" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CRB_NONE        = new ConstantConverter(  0x00000000, "DISP_CRB_NONE");
 	public static final ConstantConverter DISP_CRB_SINGLE      = new ConstantConverter(  0x00000001, "DISP_CRB_SINGLE");
 	
@@ -55,7 +51,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CapReverse" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CR_NONE          = new ConstantConverter(  0x00000000, "DISP_CR_NONE");
 	public static final ConstantConverter DISP_CR_REVERSEALL    = new ConstantConverter(  0x00000001, "DISP_CR_REVERSEALL");
 	public static final ConstantConverter DISP_CR_REVERSEEACH   = new ConstantConverter(  0x00000002, "DISP_CR_REVERSEEACH");
@@ -64,7 +59,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CharacterSet" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CS_UNICODE      = new ConstantConverter(997, "DISP_CS_UNICODE");
 	public static final ConstantConverter DISP_CS_ASCII        = new ConstantConverter(998, "DISP_CS_ASCII");
 	public static final ConstantConverter DISP_CS_ANSI         = new ConstantConverter(999, "DISP_CS_ANSI");
@@ -73,7 +67,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "CursorType" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_CT_NONE        = new ConstantConverter(  0, "DISP_CT_NONE");
 	public static final ConstantConverter DISP_CT_FIXED       = new ConstantConverter(  1, "DISP_CT_FIXED");
 	public static final ConstantConverter DISP_CT_BLOCK       = new ConstantConverter(  2, "DISP_CT_BLOCK");
@@ -89,7 +82,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "MarqueeType" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_MT_NONE         = new ConstantConverter(0, "DISP_MT_NONE");
 	public static final ConstantConverter DISP_MT_UP           = new ConstantConverter(1, "DISP_MT_UP");
 	public static final ConstantConverter DISP_MT_DOWN         = new ConstantConverter(2, "DISP_MT_DOWN");
@@ -101,7 +93,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "MarqueeFormat" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_MF_WALK         = new ConstantConverter(0, "DISP_MF_WALK");
 	public static final ConstantConverter DISP_MF_PLACE        = new ConstantConverter(1, "DISP_MF_PLACE");
 	
@@ -109,7 +100,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "DefineGlyph" Method: "GlyphType" Parameter Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_GT_SINGLE       = new ConstantConverter(1, "DISP_GT_SINGLE");
 	
 	
@@ -117,7 +107,6 @@ public interface LineDisplayConstantMapper {
 	// "DisplayText" Method: "Attribute" Property Constants
 	// "DisplayTextAt" Method: "Attribute" Property Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_DT_NORMAL        = new ConstantConverter(0, "DISP_DT_NORMAL");
 	public static final ConstantConverter DISP_DT_BLINK         = new ConstantConverter(1, "DISP_DT_BLINK");
 	public static final ConstantConverter DISP_DT_REVERSE       = new ConstantConverter(2, "DISP_DT_REVERSE");
@@ -127,7 +116,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "ScrollText" Method: "Direction" Parameter Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_ST_UP           = new ConstantConverter(1, "DISP_ST_UP");
 	public static final ConstantConverter DISP_ST_DOWN         = new ConstantConverter(2, "DISP_ST_DOWN");
 	public static final ConstantConverter DISP_ST_LEFT         = new ConstantConverter(3, "DISP_ST_LEFT");
@@ -137,7 +125,6 @@ public interface LineDisplayConstantMapper {
 	/////////////////////////////////////////////////////////////////////
 	// "SetDescriptor" Method: "Attribute" Parameter Constants
 	/////////////////////////////////////////////////////////////////////
-	
 	public static final ConstantConverter DISP_SD_OFF          = new ConstantConverter(0, "DISP_SD_OFF");
 	public static final ConstantConverter DISP_SD_ON           = new ConstantConverter(1, "DISP_SD_ON");
 	public static final ConstantConverter DISP_SD_BLINK        = new ConstantConverter(2, "DISP_SD_BLINK");
@@ -168,6 +155,5 @@ public interface LineDisplayConstantMapper {
 	public static final ConstantConverter DISP_BM_TOP           = new ConstantConverter(-1, "DISP_BM_TOP");
 	//public static final ConstantConverter DISP_BM_CENTER      = new ConstantConverter(-2, "asdfasdfasdf");
 	public static final ConstantConverter DISP_BM_BOTTOM        = new ConstantConverter(-3, "DISP_BM_BOTTOM");
-	
 	
 }

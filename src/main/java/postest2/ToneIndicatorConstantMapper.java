@@ -1,6 +1,6 @@
 package postest2;
 
-public class ToneIndicatorConstantMapper {
+public class ToneIndicatorConstantMapper implements IMapWrapper {
 	 //###################################################################
     //#### Tone Indicator Constants
     //###################################################################
@@ -8,7 +8,7 @@ public class ToneIndicatorConstantMapper {
     /////////////////////////////////////////////////////////////////////
     // "MelodyType" Property Constants
     /////////////////////////////////////////////////////////////////////
-
+	@BelongingProperty(PropertyNames.getMelodyType)
     public static final ConstantConverter TONE_MT_NONE  = new ConstantConverter(0, "TONE_MT_NONE");
 
     public static int getConstantNumberFromString(String constant){
@@ -18,5 +18,10 @@ public class ToneIndicatorConstantMapper {
 		}
 		return Integer.parseInt(constant);
     }
+
+	@Override
+	public IMapWrapper getTheClass() {
+		return this;
+	}
 
 }

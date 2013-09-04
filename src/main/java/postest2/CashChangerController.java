@@ -95,9 +95,10 @@ public class CashChangerController extends CommonController implements Initializ
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper cccm = new CashChangerConstantMapper();
+			String msg = DeviceProperties.getProperties(service, cccm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {

@@ -1,40 +1,56 @@
 package postest2;
 
 
-public class MSRConstantMapper {
+public class MSRConstantMapper implements IMapWrapper {
 
     /////////////////////////////////////////////////////////////////////
     // "TracksToRead" Property Constants
     /////////////////////////////////////////////////////////////////////
-
+	@BelongingProperty(PropertyNames.getTracksToRead)
     public static final ConstantConverter MSR_TR_NONE      = new ConstantConverter(0, "MSR_TR_NONE");
-
+	
+	@BelongingProperty(PropertyNames.getTracksToRead)
     public static final ConstantConverter MSR_TR_1         = new ConstantConverter(1, "MSR_TR_1");
+	@BelongingProperty(PropertyNames.getTracksToRead)
     public static final ConstantConverter MSR_TR_2         = new ConstantConverter(2, "MSR_TR_2");
+	@BelongingProperty(PropertyNames.getTracksToRead)
     public static final ConstantConverter MSR_TR_3         = new ConstantConverter(4, "MSR_TR_3");
+	@BelongingProperty(PropertyNames.getTracksToRead)
     public static final ConstantConverter MSR_TR_4         = new ConstantConverter(8, "MSR_TR_4");
 
+	@BelongingProperty(PropertyNames.getTracksToRead)
     public static final ConstantConverter MSR_TR_1_2       = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber(), "MSR_TR_1_2");
-    public static final ConstantConverter MSR_TR_1_3       = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_3.getContantNumber(), "MSR_TR_1_3");
-    public static final ConstantConverter MSR_TR_1_4       = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_4");
-    public static final ConstantConverter MSR_TR_2_3       = new ConstantConverter(MSR_TR_2.getContantNumber() | MSR_TR_3.getContantNumber(), "MSR_TR_2_3");
-    public static final ConstantConverter MSR_TR_2_4       = new ConstantConverter(MSR_TR_2.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_2_4");
-    public static final ConstantConverter MSR_TR_3_4       = new ConstantConverter(MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_3_4");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_1_3       = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_3.getContantNumber(), "MSR_TR_1_3");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_1_4       = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_4");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_2_3       = new ConstantConverter(MSR_TR_2.getContantNumber() | MSR_TR_3.getContantNumber(), "MSR_TR_2_3");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_2_4       = new ConstantConverter(MSR_TR_2.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_2_4");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_3_4       = new ConstantConverter(MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_3_4");
 
-    public static final ConstantConverter MSR_TR_1_2_3     = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber() | MSR_TR_3.getContantNumber(), "MSR_TR_1_2_3");
-    public static final ConstantConverter MSR_TR_1_2_4     = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_2_4");
-    public static final ConstantConverter MSR_TR_1_3_4     = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_3_4");
-    public static final ConstantConverter MSR_TR_2_3_4     = new ConstantConverter(MSR_TR_2.getContantNumber() | MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_2_3_4");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_1_2_3     = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber() | MSR_TR_3.getContantNumber(), "MSR_TR_1_2_3");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_1_2_4     = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_2_4");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_1_3_4     = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_3_4");
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_2_3_4     = new ConstantConverter(MSR_TR_2.getContantNumber() | MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_2_3_4");
 
-    public static final ConstantConverter MSR_TR_1_2_3_4   = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber() |
+	@BelongingProperty(PropertyNames.getTracksToRead)
+	public static final ConstantConverter MSR_TR_1_2_3_4   = new ConstantConverter(MSR_TR_1.getContantNumber() | MSR_TR_2.getContantNumber() |
                                                MSR_TR_3.getContantNumber() | MSR_TR_4.getContantNumber(), "MSR_TR_1_2_3_4");
 
 
     /////////////////////////////////////////////////////////////////////
     // "ErrorReportingType" Property Constants
     /////////////////////////////////////////////////////////////////////
-
+	@BelongingProperty(PropertyNames.getErrorReportingType)
     public static final ConstantConverter MSR_ERT_CARD         = new ConstantConverter(0, "MSR_ERT_CARD");
+	@BelongingProperty(PropertyNames.getErrorReportingType)
     public static final ConstantConverter MSR_ERT_TRACK        = new ConstantConverter(1, "MSR_ERT_TRACK");
 
 
@@ -42,8 +58,9 @@ public class MSRConstantMapper {
     // "CapDataEncryption", "DataEncryptionAlgorithm" Property Constants
     //   (added in 1.12)
     /////////////////////////////////////////////////////////////////////
-
+    @BelongingProperty(PropertyNames.getCapDataEncryption)
     public static final ConstantConverter MSR_DE_NONE          = new ConstantConverter(0x00000001, "MSR_DE_NONE");
+    @BelongingProperty(PropertyNames.getCapDataEncryption)
     public static final ConstantConverter MSR_DE_3DEA_DUKPT    = new ConstantConverter(0x00000002, "MSR_DE_3DEA_DUKPT");
     // Note: Service-specific values begin at 0x01000000.
 
@@ -51,25 +68,29 @@ public class MSRConstantMapper {
     /////////////////////////////////////////////////////////////////////
     // "CapDeviceAuthentication" Property Constants (added in 1.12)
     /////////////////////////////////////////////////////////////////////
-
+    @BelongingProperty(PropertyNames.getCapDeviceAuthentication)
     public static final ConstantConverter MSR_DA_NOT_SUPPORTED = new ConstantConverter(0, "MSR_DA_NOT_SUPPORTED");
+    @BelongingProperty(PropertyNames.getCapDeviceAuthentication)
     public static final ConstantConverter MSR_DA_OPTIONAL      = new ConstantConverter(1, "MSR_DA_OPTIONAL");
+    @BelongingProperty(PropertyNames.getCapDeviceAuthentication)
     public static final ConstantConverter MSR_DA_REQUIRED      = new ConstantConverter(2, "MSR_DA_REQUIRED");
 
 
     /////////////////////////////////////////////////////////////////////
     // "DeviceAuthenticationProtocol" Property Constants (added in 1.12)
     /////////////////////////////////////////////////////////////////////
-
+    @BelongingProperty(PropertyNames.getDeviceAuthenticationProtocol)
     public static final ConstantConverter MSR_AP_NONE              = new ConstantConverter(0, "MSR_AP_NONE");
+    @BelongingProperty(PropertyNames.getDeviceAuthenticationProtocol)
     public static final ConstantConverter MSR_AP_CHALLENGERESPONSE = new ConstantConverter(1, "MSR_AP_CHALLENGERESPONSE");
 
     
     /////////////////////////////////////////////////////////////////////
     // "CardType" Property Constants (added in 1.12)
     /////////////////////////////////////////////////////////////////////
-
+    @BelongingProperty(PropertyNames.getCardType)
     public static final String MSR_CT_AAMVA = "AAMVA";
+    @BelongingProperty(PropertyNames.getCardType)
     public static final String MSR_CT_BANK  = "BANK";
 
 
@@ -205,7 +226,10 @@ public class MSRConstantMapper {
 		
 		return Integer.parseInt(constant);
 	}
-	
 
+	@Override
+	public IMapWrapper getTheClass() {
+		return this;
+	}
 	
 }

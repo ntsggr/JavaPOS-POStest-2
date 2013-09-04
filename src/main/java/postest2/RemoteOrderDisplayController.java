@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -11,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -70,43 +73,19 @@ public class RemoteOrderDisplayController extends CommonController implements In
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String ver = new Integer(((RemoteOrderDisplay) service).getDeviceServiceVersion()).toString();
-			String msg = "Service Description: "
-					+ ((RemoteOrderDisplay) service).getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(((RemoteOrderDisplay) service).getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + ((RemoteOrderDisplay) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + ((RemoteOrderDisplay) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: "
-					+ ((RemoteOrderDisplay) service).getPhysicalDeviceDescription();
+			String msg = DeviceProperties.getProperties(service, null);
 
-			msg += "\n\nProperties:\n------------------------";
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-			msg += "\nCapStatisticsReporting: "
-					+ (((RemoteOrderDisplay) service).getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (((RemoteOrderDisplay) service).getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: "
-					+ (((RemoteOrderDisplay) service).getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (((RemoteOrderDisplay) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (((RemoteOrderDisplay) service).getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapMapCharacterSet: " + ((RemoteOrderDisplay) service).getCapMapCharacterSet();
-			msg = msg + "\nCapSelectCharacterSet: "
-					+ ((RemoteOrderDisplay) service).getCapSelectCharacterSet();
-			msg = msg + "\nCapTone: " + ((RemoteOrderDisplay) service).getCapTone();
-			msg = msg + "\nCapTouch: " + ((RemoteOrderDisplay) service).getCapTouch();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
+		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
 					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);

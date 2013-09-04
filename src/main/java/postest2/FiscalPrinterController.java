@@ -1464,8 +1464,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper fpcm = new FiscalPrinterConstantMapper();
+			String msg = DeviceProperties.getProperties(service, fpcm);
 			JTextArea jta = new JTextArea(msg);
 			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {

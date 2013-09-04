@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -51,9 +50,9 @@ public class ImageScannerController extends CommonController implements Initiali
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			String msg = DeviceProperties.getProperties(service, null);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {

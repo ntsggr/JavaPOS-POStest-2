@@ -222,8 +222,8 @@ public class PointCardRWController extends CommonController implements Initializ
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper pcrwcm = new PointCardRWConstantMapper();
+			String msg = DeviceProperties.getProperties(service, pcrwcm);
 			JTextArea jta = new JTextArea(msg);
 			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {

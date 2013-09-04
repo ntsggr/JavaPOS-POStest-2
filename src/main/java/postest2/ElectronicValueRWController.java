@@ -122,9 +122,10 @@ public class ElectronicValueRWController extends CommonController implements Ini
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper evrwcm = new ElectronicValueRWConstantMapper();
+			String msg = DeviceProperties.getProperties(service, evrwcm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -134,8 +135,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -188,7 +189,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
 			try {
-				((ElectronicValueRW) service).setAdditionalSecurityInformation(additionalSecurityInformation.getText());
+				((ElectronicValueRW) service).setAdditionalSecurityInformation(additionalSecurityInformation
+						.getText());
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -244,7 +246,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 	@FXML
 	public void handleSetDetectionControl(ActionEvent e) {
 		try {
-			((ElectronicValueRW) service).setDetectionControl(detectionControl.getSelectionModel().getSelectedItem());
+			((ElectronicValueRW) service).setDetectionControl(detectionControl.getSelectionModel()
+					.getSelectedItem());
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 			je.printStackTrace();
@@ -316,8 +319,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
 		} else {
 			try {
-				((ElectronicValueRW) service).addValue(Integer.parseInt(value_sequenceNumber.getText()), Integer
-						.parseInt(value_timeout.getText()));
+				((ElectronicValueRW) service).addValue(Integer.parseInt(value_sequenceNumber.getText()),
+						Integer.parseInt(value_timeout.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -334,8 +337,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
 		} else {
 			try {
-				((ElectronicValueRW) service).cancelValue(Integer.parseInt(value_sequenceNumber.getText()), Integer
-						.parseInt(value_timeout.getText()));
+				((ElectronicValueRW) service).cancelValue(Integer.parseInt(value_sequenceNumber.getText()),
+						Integer.parseInt(value_timeout.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -352,8 +355,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
 		} else {
 			try {
-				((ElectronicValueRW) service).readValue(Integer.parseInt(value_sequenceNumber.getText()), Integer
-						.parseInt(value_timeout.getText()));
+				((ElectronicValueRW) service).readValue(Integer.parseInt(value_sequenceNumber.getText()),
+						Integer.parseInt(value_timeout.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -370,8 +373,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
 		} else {
 			try {
-				((ElectronicValueRW) service).subtractValue(Integer.parseInt(value_sequenceNumber.getText()), Integer
-						.parseInt(value_timeout.getText()));
+				((ElectronicValueRW) service).subtractValue(Integer.parseInt(value_sequenceNumber.getText()),
+						Integer.parseInt(value_timeout.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -388,8 +391,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
 		} else {
 			try {
-				((ElectronicValueRW) service).writeValue(Integer.parseInt(value_sequenceNumber.getText()), Integer
-						.parseInt(value_timeout.getText()));
+				((ElectronicValueRW) service).writeValue(Integer.parseInt(value_sequenceNumber.getText()),
+						Integer.parseInt(value_timeout.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -407,8 +410,9 @@ public class ElectronicValueRWController extends CommonController implements Ini
 		} else {
 			try {
 				((ElectronicValueRW) service).accessLog(Integer.parseInt(accessLog_sequenceNumber.getText()),
-						ElectronicValueRWConstantMapper.getConstantNumberFromString(accessLog_type.getSelectionModel()
-								.getSelectedItem()), Integer.parseInt(accessLog_timeout.getText()));
+						ElectronicValueRWConstantMapper.getConstantNumberFromString(accessLog_type
+								.getSelectionModel().getSelectedItem()), Integer.parseInt(accessLog_timeout
+								.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -451,8 +455,8 @@ public class ElectronicValueRWController extends CommonController implements Ini
 		} else {
 			try {
 				((ElectronicValueRW) service).beginDetection(ElectronicValueRWConstantMapper
-						.getConstantNumberFromString(beginDetection_type.getSelectionModel().getSelectedItem()),
-						Integer.parseInt(beginDetection_timeout.getText()));
+						.getConstantNumberFromString(beginDetection_type.getSelectionModel()
+								.getSelectedItem()), Integer.parseInt(beginDetection_timeout.getText()));
 			} catch (JposException je) {
 				JOptionPane.showMessageDialog(null, je.getMessage());
 				je.printStackTrace();
@@ -536,7 +540,9 @@ public class ElectronicValueRWController extends CommonController implements Ini
 	@FXML
 	public void handleTransactionAccess(ActionEvent e) {
 		try {
-			((ElectronicValueRW) service).transactionAccess(ElectronicValueRWConstantMapper.getConstantNumberFromString(transactionAccess_control.getSelectionModel().getSelectedItem()));
+			((ElectronicValueRW) service).transactionAccess(ElectronicValueRWConstantMapper
+					.getConstantNumberFromString(transactionAccess_control.getSelectionModel()
+							.getSelectedItem()));
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 			je.printStackTrace();
@@ -595,8 +601,10 @@ public class ElectronicValueRWController extends CommonController implements Ini
 
 	private void setUpTransactionAccessControl() {
 		transactionAccess_control.getItems().clear();
-		transactionAccess_control.getItems().add(ElectronicValueRWConstantMapper.EVRW_TA_NORMAL.getConstant());
-		transactionAccess_control.getItems().add(ElectronicValueRWConstantMapper.EVRW_TA_TRANSACTION.getConstant());
+		transactionAccess_control.getItems()
+				.add(ElectronicValueRWConstantMapper.EVRW_TA_NORMAL.getConstant());
+		transactionAccess_control.getItems().add(
+				ElectronicValueRWConstantMapper.EVRW_TA_TRANSACTION.getConstant());
 		transactionAccess_control.setValue(ElectronicValueRWConstantMapper.EVRW_TA_NORMAL.getConstant());
 	}
 

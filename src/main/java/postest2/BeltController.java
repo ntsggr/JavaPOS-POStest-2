@@ -68,7 +68,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		//System.out.println("DevEnable");
+		// System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((Belt) service).setDeviceEnabled(true);
@@ -80,6 +80,7 @@ public class BeltController extends CommonController implements Initializable {
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
+		RequiredStateChecker.invokeThis(this, service);
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAutoStopBackward(ActionEvent e) {
-		//System.out.println("AutoStopBackward");
+		// System.out.println("AutoStopBackward");
 		if (autoStopBackward.getSelectionModel().getSelectedItem() != null) {
 			try {
 				((Belt) service).setAutoStopBackward(autoStopBackward.getSelectionModel().getSelectedItem());
@@ -104,7 +105,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAutoStopBackwardDelayTime(ActionEvent e) {
-		//System.out.println("AutoStopBWDT");
+		// System.out.println("AutoStopBWDT");
 		if (!autoStopBackwardDelayTime.getText().isEmpty()) {
 			try {
 				((Belt) service).setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime
@@ -119,7 +120,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAutoStopForward(ActionEvent e) {
-		//System.out.println("ASW");
+		// System.out.println("ASW");
 		if (autoStopForward.getSelectionModel().getSelectedItem() != null) {
 			try {
 				((Belt) service).setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
@@ -131,7 +132,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAutoStopForwardDelayTime(ActionEvent e) {
-		//System.out.println("ASFDT");
+		// System.out.println("ASFDT");
 		if (!autoStopForwardDelayTime.getText().isEmpty()) {
 			try {
 				((Belt) service).setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime
@@ -146,7 +147,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAdjustItemCount(ActionEvent e) {
-		//System.out.println("AIC");
+		// System.out.println("AIC");
 		if (adjustItemCount_direction.getSelectionModel().getSelectedItem() != null) {
 
 			try {
@@ -163,7 +164,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleMoveBackward(ActionEvent e) {
-		//System.out.println("MB");
+		// System.out.println("MB");
 		if (moveBackward_speed.getSelectionModel().getSelectedItem() != null) {
 			try {
 				((Belt) service).moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
@@ -175,7 +176,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleMoveForward(ActionEvent e) {
-		//System.out.println("MF");
+		// System.out.println("MF");
 		if (moveForward_speed.getSelectionModel().getSelectedItem() != null) {
 			try {
 				((Belt) service).moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
@@ -187,7 +188,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleResetBelt(ActionEvent e) {
-		//System.out.println("RB");
+		// System.out.println("RB");
 		try {
 			((Belt) service).resetBelt();
 		} catch (JposException e1) {
@@ -197,7 +198,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleResetItemCount(ActionEvent e) {
-		//System.out.println("RIC");
+		// System.out.println("RIC");
 		if (resetitemCount_direction.getSelectionModel().getSelectedItem() != null) {
 			try {
 				((Belt) service).resetItemCount(BeltConstantMapper
@@ -211,7 +212,7 @@ public class BeltController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleStopBelt(ActionEvent e) {
-		//System.out.println("SB");
+		// System.out.println("SB");
 		try {
 			((Belt) service).stopBelt();
 		} catch (JposException e1) {
@@ -219,16 +220,15 @@ public class BeltController extends CommonController implements Initializable {
 		}
 	}
 
-
-
 	// Shows statistics of device if they are supported by the device
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper bcm = new BeltConstantMapper();
+			String msg = DeviceProperties.getProperties(service, bcm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -237,7 +237,7 @@ public class BeltController extends CommonController implements Initializable {
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-		} catch (Exception jpe) { 
+		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
 					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
@@ -275,11 +275,10 @@ public class BeltController extends CommonController implements Initializable {
 
 		statistics = "";
 	}
-	
+
 	/*
 	 * Initialize ComboBoxes
 	 */
-
 	private void setUpAutoStopBackward() {
 		autoStopBackward.getItems().clear();
 		autoStopBackward.getItems().add(true);

@@ -123,9 +123,9 @@ public class CashDrawerController extends CommonController implements Initializa
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			String msg = DeviceProperties.getProperties(service, null);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -175,6 +175,7 @@ public class CashDrawerController extends CommonController implements Initializa
 
 	@Override
 	public void statusUpdateOccurred(StatusUpdateEvent sue) {
+		@SuppressWarnings("unused")
 		String msg = "Status Update Event: ";
 		statusLabel.setText("" + sue.getStatus());
 		switch (sue.getStatus()) {
@@ -189,6 +190,5 @@ public class CashDrawerController extends CommonController implements Initializa
 			break;
 		}
 	}
-
-
+	
 }

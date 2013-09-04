@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -11,11 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.POSKeyboard;
 import jpos.POSKeyboardConst;
@@ -82,35 +84,19 @@ public class POSKeyboardController extends CommonController implements Initializ
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String ver = new Integer(((POSKeyboard) service).getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + ((POSKeyboard) service).getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(((POSKeyboard) service).getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + ((POSKeyboard) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + ((POSKeyboard) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + ((POSKeyboard) service).getPhysicalDeviceDescription();
+			IMapWrapper pkcm = new POSKeyboardConstantMapper();
+			String msg = DeviceProperties.getProperties(service, pkcm);
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (((POSKeyboard) service).getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (((POSKeyboard) service).getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (((POSKeyboard) service).getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (((POSKeyboard) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (((POSKeyboard) service).getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapKeyUp: " + ((POSKeyboard) service).getCapKeyUp();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
+		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
 					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);

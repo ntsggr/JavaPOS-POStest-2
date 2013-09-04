@@ -97,9 +97,10 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper ccm = new CATConstantMapper();
+			String msg = DeviceProperties.getProperties(service, ccm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {

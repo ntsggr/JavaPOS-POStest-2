@@ -121,9 +121,10 @@ public class CheckScannerController extends CommonController implements Initiali
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper cscm = new CheckScannerConstantMapper();
+			String msg = DeviceProperties.getProperties(service, cscm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -133,8 +134,8 @@ public class CheckScannerController extends CommonController implements Initiali
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -278,8 +279,8 @@ public class CheckScannerController extends CommonController implements Initiali
 	public void handleSetImageFormat(ActionEvent e) {
 		// System.out.println("imageformat");
 		try {
-			((CheckScanner) service).setImageFormat(CheckScannerConstantMapper.getConstantNumberFromString(imageFormat
-					.getSelectionModel().getSelectedItem()));
+			((CheckScanner) service).setImageFormat(CheckScannerConstantMapper
+					.getConstantNumberFromString(imageFormat.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -305,8 +306,8 @@ public class CheckScannerController extends CommonController implements Initiali
 	public void handleSetMapMode(ActionEvent e) {
 		// System.out.println("MM");
 		try {
-			((CheckScanner) service).setMapMode(CheckScannerConstantMapper.getConstantNumberFromString(mapMode
-					.getSelectionModel().getSelectedItem()));
+			((CheckScanner) service).setMapMode(CheckScannerConstantMapper
+					.getConstantNumberFromString(mapMode.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -317,8 +318,8 @@ public class CheckScannerController extends CommonController implements Initiali
 	public void handleSetQuality(ActionEvent e) {
 		// System.out.println("qual");
 		try {
-			((CheckScanner) service).setQuality(CheckScannerConstantMapper.getConstantNumberFromString(quality
-					.getSelectionModel().getSelectedItem()));
+			((CheckScanner) service).setQuality(CheckScannerConstantMapper
+					.getConstantNumberFromString(quality.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -373,8 +374,8 @@ public class CheckScannerController extends CommonController implements Initiali
 	public void handleClearImage(ActionEvent e) {
 		// System.out.println("clearimg");
 		try {
-			((CheckScanner) service).clearImage(CheckScannerConstantMapper.getConstantNumberFromString(clearImage_by
-					.getSelectionModel().getSelectedItem()));
+			((CheckScanner) service).clearImage(CheckScannerConstantMapper
+					.getConstantNumberFromString(clearImage_by.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -386,7 +387,8 @@ public class CheckScannerController extends CommonController implements Initiali
 		// System.out.println("retrievimg");
 		try {
 			((CheckScanner) service).retrieveImage(CheckScannerConstantMapper
-					.getConstantNumberFromString(retrieveImage_cropAreaID.getSelectionModel().getSelectedItem()));
+					.getConstantNumberFromString(retrieveImage_cropAreaID.getSelectionModel()
+							.getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -403,11 +405,13 @@ public class CheckScannerController extends CommonController implements Initiali
 		} else {
 			try {
 				((CheckScanner) service).defineCropArea(CheckScannerConstantMapper
-						.getConstantNumberFromString(defineCropArea_cropAreaID.getSelectionModel().getSelectedItem()),
-						Integer.parseInt(defineCropArea_x.getText()), Integer.parseInt(defineCropArea_y.getText()),
-						CheckScannerConstantMapper.getConstantNumberFromString(defineCropArea_cx.getSelectionModel()
-								.getSelectedItem()), CheckScannerConstantMapper
-								.getConstantNumberFromString(defineCropArea_cy.getSelectionModel().getSelectedItem()));
+						.getConstantNumberFromString(defineCropArea_cropAreaID.getSelectionModel()
+								.getSelectedItem()), Integer.parseInt(defineCropArea_x.getText()), Integer
+						.parseInt(defineCropArea_y.getText()),
+						CheckScannerConstantMapper.getConstantNumberFromString(defineCropArea_cx
+								.getSelectionModel().getSelectedItem()), CheckScannerConstantMapper
+								.getConstantNumberFromString(defineCropArea_cy.getSelectionModel()
+										.getSelectedItem()));
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -434,8 +438,9 @@ public class CheckScannerController extends CommonController implements Initiali
 	public void handleStoreImage(ActionEvent e) {
 		// System.out.println("storeim");
 		try {
-			((CheckScanner) service).storeImage(CheckScannerConstantMapper
-					.getConstantNumberFromString(storeImage_cropAreaID.getSelectionModel().getSelectedItem()));
+			((CheckScanner) service)
+					.storeImage(CheckScannerConstantMapper.getConstantNumberFromString(storeImage_cropAreaID
+							.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
@@ -517,16 +522,22 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	private void setUpRetrieveImageCropAreaID() {
 		retrieveImage_cropAreaID.getItems().clear();
-		retrieveImage_cropAreaID.getItems().add(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
-		retrieveImage_cropAreaID.getItems().add(CheckScannerConstantMapper.CHK_CROP_AREA_RESET_ALL.getConstant());
-		retrieveImage_cropAreaID.setValue(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
+		retrieveImage_cropAreaID.getItems().add(
+				CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
+		retrieveImage_cropAreaID.getItems().add(
+				CheckScannerConstantMapper.CHK_CROP_AREA_RESET_ALL.getConstant());
+		retrieveImage_cropAreaID
+				.setValue(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
 	}
 
 	private void setUpDefineCropAreaCropAreaID() {
 		defineCropArea_cropAreaID.getItems().clear();
-		defineCropArea_cropAreaID.getItems().add(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
-		defineCropArea_cropAreaID.getItems().add(CheckScannerConstantMapper.CHK_CROP_AREA_RESET_ALL.getConstant());
-		defineCropArea_cropAreaID.setValue(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
+		defineCropArea_cropAreaID.getItems().add(
+				CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
+		defineCropArea_cropAreaID.getItems().add(
+				CheckScannerConstantMapper.CHK_CROP_AREA_RESET_ALL.getConstant());
+		defineCropArea_cropAreaID.setValue(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE
+				.getConstant());
 	}
 
 	private void setUpRetrieveMemoryBy() {
@@ -540,8 +551,10 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	private void setUpStoreImageCropAreaID() {
 		storeImage_cropAreaID.getItems().clear();
-		storeImage_cropAreaID.getItems().add(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
-		storeImage_cropAreaID.getItems().add(CheckScannerConstantMapper.CHK_CROP_AREA_RESET_ALL.getConstant());
+		storeImage_cropAreaID.getItems().add(
+				CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
+		storeImage_cropAreaID.getItems()
+				.add(CheckScannerConstantMapper.CHK_CROP_AREA_RESET_ALL.getConstant());
 		storeImage_cropAreaID.setValue(CheckScannerConstantMapper.CHK_CROP_AREA_ENTIRE_IMAGE.getConstant());
 
 	}

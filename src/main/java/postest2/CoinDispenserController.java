@@ -44,13 +44,12 @@ public class CoinDispenserController extends CommonController implements Initial
 	@FXML
 	public TextField dispenseCash_cashCounts;
 
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CoinDispenser();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("CoinDispenser");
-		
+
 	}
 
 	/* ************************************************************************
@@ -79,15 +78,16 @@ public class CoinDispenserController extends CommonController implements Initial
 		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
-	
+
 	// Shows statistics of device if they are supported by the device
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper cdcm = new CoinDispenserConstantMapper();
+			String msg = DeviceProperties.getProperties(service, cdcm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -96,7 +96,7 @@ public class CoinDispenserController extends CommonController implements Initial
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-		} catch (Exception jpe) { 
+		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
 					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
@@ -134,10 +134,10 @@ public class CoinDispenserController extends CommonController implements Initial
 
 		statistics = "";
 	}
-	
+
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		//System.out.println("adjust");
+		// System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -150,7 +150,7 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
-		//System.out.println("dispenseCash");
+		// System.out.println("dispenseCash");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -163,7 +163,7 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		//System.out.println("readCashCount");
+		// System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {
@@ -180,5 +180,4 @@ public class CoinDispenserController extends CommonController implements Initial
 	 * ComboBoxes
 	 */
 
-	
 }
