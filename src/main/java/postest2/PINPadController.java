@@ -71,6 +71,7 @@ public class PINPadController extends CommonController implements Initializable 
 	@FXML
 	public TextField authenticationCode;
 
+	@SuppressWarnings("unused")
 	private Runnable doDataUpdate;
 
 	@Override
@@ -283,8 +284,8 @@ public class PINPadController extends CommonController implements Initializable 
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper ppcm = new PINPadConstantMapper();
+			String msg = DeviceProperties.getProperties(service, ppcm);
 			JTextArea jta = new JTextArea(msg);
 			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {

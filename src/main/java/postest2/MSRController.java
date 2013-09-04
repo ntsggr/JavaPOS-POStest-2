@@ -121,9 +121,10 @@ public class MSRController extends CommonController implements Initializable {
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper msrcm = new MSRConstantMapper();
+			String msg = DeviceProperties.getProperties(service, msrcm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {

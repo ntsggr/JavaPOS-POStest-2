@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -13,11 +14,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.POSPower;
 import jpos.POSPowerConst;
@@ -118,48 +120,19 @@ public class POSPowerController extends CommonController implements Initializabl
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String ver = new Integer(((POSPower) service).getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + ((POSPower) service).getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(((POSPower) service).getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + ((POSPower) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + ((POSPower) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + ((POSPower) service).getPhysicalDeviceDescription();
+//			String msg = DeviceProperties.getProperties(service, POSPowerConstantMapper.class);
+			String msg = "";
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (((POSPower) service).getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (((POSPower) service).getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (((POSPower) service).getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (((POSPower) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (((POSPower) service).getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapUPSChargeState: " + ((POSPower) service).getCapUPSChargeState();
-			msg = msg + "\nCapBatteryCapacityRemaining: "
-					+ ((POSPower) service).getCapBatteryCapacityRemaining();
-			msg = msg + "\nCapFanAlarm: " + ((POSPower) service).getCapFanAlarm();
-			msg = msg + "\nCapHeatAlarm: " + ((POSPower) service).getCapHeatAlarm();
-			msg = msg + "\nCapQuickCharge: " + ((POSPower) service).getCapQuickCharge();
-			msg = msg + "\nCapRestartPOS: " + ((POSPower) service).getCapRestartPOS();
-			msg = msg + "\nCapShutdownPOS: " + ((POSPower) service).getCapShutdownPOS();
-			msg = msg + "\nCapStandbyPOS: " + ((POSPower) service).getCapStandbyPOS();
-			msg = msg + "\nCapCapSuspendPOS: " + ((POSPower) service).getCapSuspendPOS();
-			msg = msg + "\nCapVariableBatteryCriticallyLowThreshold: "
-					+ ((POSPower) service).getCapVariableBatteryCriticallyLowThreshold();
-			msg = msg + "\nCapVariableBatteryLowThreshold: "
-					+ ((POSPower) service).getCapVariableBatteryLowThreshold();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
+		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
 					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);

@@ -88,9 +88,10 @@ public class CoinAcceptorController extends CommonController implements Initiali
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper cacm = new CoinAcceptorConstantMapper();
+			String msg = DeviceProperties.getProperties(service, cacm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {

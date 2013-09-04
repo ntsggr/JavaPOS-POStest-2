@@ -142,7 +142,7 @@ public class LineDisplayController extends CommonController implements Initializ
 	 * ************************ Action Handler ********************************
 	 * ************************************************************************
 	 */
-
+	
 
 	/**
 	 * Shows statistics of device if they are supported by the device
@@ -151,9 +151,9 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			String msg = DeviceProperties.getProperties(service, null);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -161,13 +161,13 @@ public class LineDisplayController extends CommonController implements Initializ
 				}
 			};
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (Exception jpe) { 
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
+
 
 	/**
 	 * Shows statistics of device if they are supported by the device

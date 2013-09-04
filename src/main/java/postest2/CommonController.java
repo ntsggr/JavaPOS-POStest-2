@@ -59,9 +59,9 @@ public abstract class CommonController implements Initializable {
 	@RequiredState(JposState.ENABLED)
 	public CheckBox freezeEvents;
 	BaseJposControl service;
-	
+
 	static String statistics = "";
-	
+
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		try {
@@ -133,17 +133,14 @@ public abstract class CommonController implements Initializable {
 		handleOpen(e);
 		handleClaim(e);
 	}
-	
-	
-	public void handleInfo(ActionEvent e){
-		
+
+	public void handleInfo(ActionEvent e) {
+
 	}
-	
-	public void handleStatistics(ActionEvent e){
-		
+
+	public void handleStatistics(ActionEvent e) {
+
 	}
-	
-	
 
 	// Method to parse the String XML and print the data for the
 	// handleStatistics function
@@ -208,7 +205,7 @@ public abstract class CommonController implements Initializable {
 			statusLabel.setText("JPOS_S_ERROR");
 		}
 	}
-	
+
 	protected void setUpLogicalNameComboBox(String devCategory) {
 		if (!LogicalNameGetter.getLogicalNamesByCategory(devCategory).isEmpty()) {
 			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory(devCategory));

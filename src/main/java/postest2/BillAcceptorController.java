@@ -69,9 +69,10 @@ public class BillAcceptorController extends CommonController implements Initiali
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper bacm = new BillAcceptorConstantMapper();
+			String msg = DeviceProperties.getProperties(service, bacm);
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {

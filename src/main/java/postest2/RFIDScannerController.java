@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.Dimension;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -19,11 +20,12 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.RFIDScanner;
 
@@ -125,43 +127,21 @@ public class RFIDScannerController extends CommonController implements Initializ
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String ver = new Integer(((RFIDScanner) service).getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + ((RFIDScanner) service).getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(((RFIDScanner) service).getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + ((RFIDScanner) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "." + new Integer(ver.substring(1, 4))
-					+ "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + ((RFIDScanner) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + ((RFIDScanner) service).getPhysicalDeviceDescription();
+			IMapWrapper rfidscm = new RFIDScannerConstantMapper();
+			String msg = DeviceProperties.getProperties(service, rfidscm);
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (((RFIDScanner) service).getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (((RFIDScanner) service).getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (((RFIDScanner) service).getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (((RFIDScanner) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (((RFIDScanner) service).getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapMultipleProtocols: " + ((RFIDScanner) service).getCapMultipleProtocols();
-			msg = msg + "\nCapWriteTag: " + ((RFIDScanner) service).getCapWriteTag();
-			msg = msg + "\nCapContinuousRead: " + ((RFIDScanner) service).getCapContinuousRead();
-			msg = msg + "\nCapDisableTag: " + ((RFIDScanner) service).getCapDisableTag();
-			msg = msg + "\nCapLockTag: " + ((RFIDScanner) service).getCapLockTag();
-			msg = msg + "\nCapReadTimer: " + ((RFIDScanner) service).getCapReadTimer();
-			msg = msg + "\nCapRealTimeData: " + ((RFIDScanner) service).getCapRealTimeData();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
-					JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}

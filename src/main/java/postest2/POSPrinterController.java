@@ -55,7 +55,7 @@ public class POSPrinterController extends CommonController implements Initializa
 	@RequiredState(JposState.ENABLED)
 	public ComboBox<String> mapMode;
 	@FXML
-	@RequiredState(JposState.ENABLED)
+	@RequiredState(JposState.OPENED)
 	public CheckBox asyncMode;
 	@FXML
 	@RequiredState(JposState.ENABLED)
@@ -264,7 +264,7 @@ public class POSPrinterController extends CommonController implements Initializa
 	 * ************************ Action Handler ********************************
 	 * ************************************************************************
 	 */
-
+	
 	/**
 	 * Shows information of device
 	 */
@@ -272,9 +272,11 @@ public class POSPrinterController extends CommonController implements Initializa
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service);
-
+			IMapWrapper ppcm = new POSPrinterConstantMapper();
+			String msg = DeviceProperties.getProperties(service, ppcm);
+			
 			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
 			JScrollPane jsp = new JScrollPane(jta) {
 				@Override
 				public Dimension getPreferredSize() {
@@ -324,6 +326,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		statistics = "";
 	}
+
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {

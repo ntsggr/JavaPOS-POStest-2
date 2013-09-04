@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -15,11 +16,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.ToneIndicator;
 
@@ -35,7 +37,7 @@ public class ToneIndicatorController extends CommonController implements Initial
 	public Pane functionPane;
 	
 	@FXML
-	@RequiredState(JposState.OPENED)
+	@RequiredState(JposState.ENABLED)
 	public CheckBox asyncMode;
 	
 	
@@ -95,39 +97,19 @@ public class ToneIndicatorController extends CommonController implements Initial
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String ver = new Integer(((ToneIndicator) service).getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + ((ToneIndicator) service).getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(((ToneIndicator) service).getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + ((ToneIndicator) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + ((ToneIndicator) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: "
-					+ ((ToneIndicator) service).getPhysicalDeviceDescription();
+			IMapWrapper ticm = new ToneIndicatorConstantMapper();
+			String msg = DeviceProperties.getProperties(service, ticm);
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (((ToneIndicator) service).getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (((ToneIndicator) service).getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: "
-					+ (((ToneIndicator) service).getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (((ToneIndicator) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (((ToneIndicator) service).getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapMelody: " + ((ToneIndicator) service).getCapMelody();
-			msg = msg + "\nCapPitch: " + ((ToneIndicator) service).getCapPitch();
-			msg = msg + "\nCapVolume: " + ((ToneIndicator) service).getCapVolume();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
+		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
 					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);

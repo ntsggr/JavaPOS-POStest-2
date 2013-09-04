@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -13,11 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.SignatureCapture;
 
@@ -79,39 +81,21 @@ public class SignatureCaptureController extends CommonController implements Init
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String ver = new Integer(((SignatureCapture) service).getDeviceServiceVersion()).toString();
-			String msg = "Service Description: " + ((SignatureCapture) service).getDeviceServiceDescription();
-			msg = msg + "\nService Version: v" + new Integer(ver.substring(0, 1)) + "."
-					+ new Integer(ver.substring(1, 4)) + "." + new Integer(ver.substring(4, 7));
-			ver = new Integer(((SignatureCapture) service).getDeviceControlVersion()).toString();
-			msg += "\n\nControl Description: " + ((SignatureCapture) service).getDeviceControlDescription();
-			msg += "\nControl Version: v" + new Integer(ver.substring(0, 1)) + "." + new Integer(ver.substring(1, 4))
-					+ "." + new Integer(ver.substring(4, 7));
-			msg += "\n\nPhysical Device Name: " + ((SignatureCapture) service).getPhysicalDeviceName();
-			msg += "\nPhysical Device Description: " + ((SignatureCapture) service).getPhysicalDeviceDescription();
+//			String msg = DeviceProperties.getProperties(service, SignatureCaptureController.class);
+			String msg = "";
+			JTextArea jta = new JTextArea(msg);
+			@SuppressWarnings("serial")
+			JScrollPane jsp = new JScrollPane(jta) {
+				@Override
+				public Dimension getPreferredSize() {
+					return new Dimension(460, 390);
+				}
+			};
+			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
-			msg += "\n\nProperties:\n------------------------";
-
-			msg += "\nCapStatisticsReporting: " + (((SignatureCapture) service).getCapStatisticsReporting());
-
-			msg += "\nCapUpdateFirmware: " + (((SignatureCapture) service).getCapUpdateFirmware());
-
-			msg += "\nCapCompareFirmwareVersion: " + (((SignatureCapture) service).getCapCompareFirmwareVersion());
-
-			msg += "\nCapPowerReporting: "
-					+ (((SignatureCapture) service).getCapPowerReporting() == JposConst.JPOS_PR_ADVANCED ? "Advanced"
-							: (((SignatureCapture) service).getCapPowerReporting() == JposConst.JPOS_PR_STANDARD ? "Standard"
-									: "None"));
-
-			msg = msg + "\nCapDisplay: " + ((SignatureCapture) service).getCapDisplay();
-			msg = msg + "\nCapRealTimeData: " + ((SignatureCapture) service).getCapRealTimeData();
-			msg = msg + "\nCapUserTerminated: " + ((SignatureCapture) service).getCapUserTerminated();
-
-			JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-		} catch (JposException jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
-					JOptionPane.ERROR_MESSAGE);
+		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
+					"Exception", JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
