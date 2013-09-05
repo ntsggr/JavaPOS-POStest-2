@@ -190,8 +190,8 @@ public class SmartCardRWController extends CommonController implements Initializ
 	@FXML
 	public void handleSetInterfaceMode(ActionEvent e) {
 		try {
-			((SmartCardRW) service).setInterfaceMode(SmartCardRWConstantMapper
-					.getConstantNumberFromString(interfaceMode.getSelectionModel().getSelectedItem()));
+			((SmartCardRW) service).setInterfaceMode(
+					SmartCardRWConstantMapper.getConstantNumberFromString(interfaceMode.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
