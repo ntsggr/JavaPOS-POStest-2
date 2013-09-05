@@ -131,7 +131,8 @@ public class LineDisplayController extends CommonController implements Initializ
 	// Screen Mode
 	@FXML
 	@RequiredState(JposState.CLAIMED)
-	public TabPane setScreenModeTab;
+	public TabPane notEnabledTab;
+	
 	@FXML
 	public ComboBox<String> screenMode;
 

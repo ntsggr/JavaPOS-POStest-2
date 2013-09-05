@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -32,6 +33,7 @@ import org.xml.sax.SAXException;
 public class POSKeyboardController extends CommonController implements Initializable, DataListener {
 
 	@FXML
+	@RequiredState(JposState.ENABLED)
 	public Text keyText;
 
 	@Override
@@ -39,8 +41,10 @@ public class POSKeyboardController extends CommonController implements Initializ
 		service = new POSKeyboard();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("POSKeyboard");
+		//JFrame frame = new JFrame();
+		//frame.addKeyListener(this);
 	}
-
+	
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************

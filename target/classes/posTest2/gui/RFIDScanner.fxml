@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="functionPane" layoutX="32.0" layoutY="66.0" prefHeight="612.0" prefWidth="848.0">
+            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
                 <Button layoutX="315.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleSetProtocolMask" prefWidth="136.0" text="Set ProtocolMask" />
                 <ComboBox fx:id="protocolMask" layoutX="145.0" layoutY="36.0" prefHeight="21.0" prefWidth="159.0" />

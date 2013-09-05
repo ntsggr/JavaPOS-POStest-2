@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="functionPane" layoutX="31.0" layoutY="47.0" prefHeight="638.0" prefWidth="864.0">
+            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
                 <Button layoutX="184.0" layoutY="219.0" mnemonicParsing="false" onAction="#handleSwitchOn" text="Switch On" />
                 <Label alignment="CENTER" layoutX="27.0" layoutY="30.0" prefWidth="224.0" text="Switch On" underline="true">

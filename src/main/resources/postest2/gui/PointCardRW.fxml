@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="pane" layoutX="14.0" layoutY="45.0" prefHeight="450.0" prefWidth="592.0" styleClass="whiteBackground">
+            <Pane fx:id="pane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
                 <TextArea fx:id="textToPrint" layoutX="14.0" layoutY="45.0" prefHeight="100.0" prefWidth="250.0" wrapText="true" />
                 <Text fontSmoothingType="LCD" layoutX="88.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text for write/print:" />

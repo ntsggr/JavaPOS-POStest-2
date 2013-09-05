@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -31,18 +32,18 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class CashDrawerController extends CommonController implements Initializable, StatusUpdateListener {
-
+	
 	@FXML
 	@RequiredState(JposState.ENABLED)
+	public Pane functionPane;
+	
+	@FXML
 	public TextArea textAreaActionLog;
 	@FXML
-	@RequiredState(JposState.ENABLED)
 	public Button buttonOpenCash;
 	@FXML
-	@RequiredState(JposState.ENABLED)
 	public Button buttonGetDrawer;
 	@FXML
-	@RequiredState(JposState.ENABLED)
 	public Button buttonWaitForDrawer;
 
 	@Override
@@ -63,10 +64,8 @@ public class CashDrawerController extends CommonController implements Initializa
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CashDrawer) service).setDeviceEnabled(true);
-				System.out.println("true");
 			} else {
 				((CashDrawer) service).setDeviceEnabled(false);
-				System.out.println("false");
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {

@@ -40,6 +40,10 @@ public class MSRController extends CommonController implements Initializable {
 	@FXML
 	@RequiredState(JposState.ENABLED)
 	public TabPane functionPane;
+	
+	@FXML
+	@RequiredState(JposState.CLAIMED)
+	public TabPane notEnabledTab;
 
 	@FXML
 	public TextField writeCardType;

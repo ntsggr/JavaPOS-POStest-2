@@ -18,7 +18,7 @@
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <Pane fx:id="functionPane" layoutX="41.0" layoutY="61.0" prefHeight="579.0" prefWidth="885.0">
+            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
                 <ComboBox fx:id="currencyCode" layoutX="131.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
                 <Button layoutX="130.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleSetCurrencyCode" text="Set Currency Code" />

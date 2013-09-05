@@ -44,7 +44,12 @@ public class BiometricsController extends CommonController implements Initializa
 	@FXML
 	@RequiredState(JposState.ENABLED)
 	public TabPane functionPane;
-
+	
+	@FXML
+	@RequiredState(JposState.CLAIMED)
+	public TabPane notEnabledTab;
+	
+	
 	@FXML
 	public ComboBox<Integer> algorithm;
 	@FXML

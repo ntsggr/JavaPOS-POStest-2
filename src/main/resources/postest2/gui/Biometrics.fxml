@@ -17,24 +17,18 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <TabPane fx:id="functionPane" layoutX="33.0" layoutY="50.0" prefHeight="618.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
               <tabs>
                 <Tab text="General">
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="892.0">
                       <children>
-                        <Button layoutX="118.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetAlgorithm" prefWidth="100.0" text="Set Algorithm" />
-                        <Label layoutX="33.0" layoutY="49.0" text="Set Algorithm:" />
-                        <ComboBox fx:id="algorithm" layoutX="118.0" layoutY="47.0" prefHeight="21.0" prefWidth="100.0" />
                         <ComboBox id="currencyCode" fx:id="realTimeDataEnabled" layoutX="408.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
                         <Button layoutX="364.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetRealTimeDataEnabled" text="Set Real Time Data Enabled" />
                         <Label layoutX="268.0" layoutY="49.0" text="Real Time Data Enabled:" />
-                        <ComboBox id="currencyCode" fx:id="sensorOrientation" layoutX="698.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
-                        <Button layoutX="680.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetSensorOrientation" text="Set Sensor Orientation" />
-                        <Label layoutX="582.0" layoutY="49.0" text="Sensor Orientation:" />
-                        <ComboBox id="currencyCode" fx:id="sensorType" layoutX="118.0" layoutY="142.0" prefHeight="21.0" prefWidth="122.0" />
-                        <Button layoutX="135.0" layoutY="182.0" mnemonicParsing="false" onAction="#handleSetSensorType" text="Set Sensor Type" />
-                        <Label layoutX="33.0" layoutY="147.0" text="Sensor Type:" />
+                        <ComboBox id="currencyCode" fx:id="sensorType" layoutX="127.0" layoutY="44.0" prefHeight="21.0" prefWidth="122.0" />
+                        <Button layoutX="144.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetSensorType" text="Set Sensor Type" />
+                        <Label layoutX="42.0" layoutY="49.0" text="Sensor Type:" />
                       </children>
                       <stylesheets>
                         <URL value="@win7glass.css" />
@@ -216,6 +210,24 @@
                       <stylesheets>
                         <URL value="@win7glass.css" />
                       </stylesheets>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <TabPane fx:id="notEnabledTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${!deviceEnabled.selected}">
+              <tabs>
+                <Tab text="Misc">
+                  <content>
+                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                        <Button layoutX="118.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetAlgorithm" prefWidth="100.0" text="Set Algorithm" />
+                        <Label layoutX="33.0" layoutY="49.0" text="Set Algorithm:" />
+                        <ComboBox fx:id="algorithm" layoutX="118.0" layoutY="47.0" prefHeight="21.0" prefWidth="100.0" />
+                        <ComboBox id="currencyCode" fx:id="sensorOrientation" layoutX="382.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
+                        <Button layoutX="364.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetSensorOrientation" text="Set Sensor Orientation" />
+                        <Label layoutX="266.0" layoutY="49.0" text="Sensor Orientation:" />
+                      </children>
                     </AnchorPane>
                   </content>
                 </Tab>

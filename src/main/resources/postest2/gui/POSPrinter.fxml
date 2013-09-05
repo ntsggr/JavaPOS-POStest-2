@@ -21,7 +21,7 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
             <CheckBox fx:id="flagWhenIdle" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
-            <ComboBox fx:id="rotationMode" layoutX="23.0" layoutY="145.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
+            <ComboBox fx:id="rotationMode" layoutX="556.0" layoutY="35.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />
@@ -30,7 +30,7 @@
                 </FXCollections>
               </items>
             </ComboBox>
-            <ComboBox fx:id="mapMode" layoutX="23.0" layoutY="190.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
+            <ComboBox fx:id="mapMode" layoutX="712.0" layoutY="35.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />
@@ -42,7 +42,7 @@
             <RadioButton fx:id="rbReceipt" layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
             <RadioButton fx:id="rbJournal" layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
             <RadioButton fx:id="rbSlip" layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
-            <TabPane fx:id="functionTab" layoutX="196.0" layoutY="70.0" prefHeight="496.0" prefWidth="741.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General Printing">
                   <content>
@@ -413,10 +413,10 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Label layoutX="23.0" layoutY="129.0" text="Rotation:" />
-            <Label layoutX="23.0" layoutY="174.0" text="Map Mode:" />
-            <TextArea fx:id="deviceMessages" editable="false" layoutX="196.0" layoutY="594.0" prefHeight="92.0" prefWidth="741.0" wrapText="true" />
-            <Label alignment="CENTER" layoutX="196.0" layoutY="573.0" prefWidth="741.0" text="Device Messages:" />
+            <Label layoutX="556.0" layoutY="19.0" text="Rotation:" />
+            <Label layoutX="712.0" layoutY="19.0" text="Map Mode:" />
+            <TextArea fx:id="deviceMessages" editable="false" layoutX="123.0" layoutY="500.0" prefHeight="137.0" prefWidth="741.0" wrapText="true" />
+            <Label alignment="CENTER" layoutX="123.0" layoutY="479.0" prefWidth="741.0" text="Device Messages:" />
           </children>
         </Pane>
       </center>

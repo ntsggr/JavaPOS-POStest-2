@@ -16,7 +16,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="143.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="44.0" prefHeight="638.0" prefWidth="816.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
+            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
               <tabs>
                 <Tab text="Display Text">
                   <content>
@@ -193,7 +193,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <TabPane fx:id="setScreenModeTab" layoutX="14.0" layoutY="56.0" prefHeight="569.0" prefWidth="721.0" tabClosingPolicy="UNAVAILABLE" visible="${!deviceEnabled.selected}">
+            <TabPane fx:id="notEnabledTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${!deviceEnabled.selected}">
               <tabs>
                 <Tab text="Screen Mode">
                   <content>

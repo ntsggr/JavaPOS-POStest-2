@@ -373,7 +373,7 @@
             <Button fx:id="beginTraining" layoutX="416.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleBeginTraining" text="Begin Training" />
             <Button fx:id="endTraining" layoutX="522.0" layoutY="4.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleEndTraining" text="End Training" />
             <Button fx:id="clearOutput" layoutX="416.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearOutput" text="Clear Output" />
-            <Button fx:id="clearError" layoutX="522.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearError" text="Clear Error" />
+            <Button layoutX="522.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearError" text="Clear Error" />
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>

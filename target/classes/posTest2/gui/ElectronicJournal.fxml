@@ -19,7 +19,7 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
             <CheckBox fx:id="flagWhenIdle" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
-            <TabPane fx:id="functionPane" layoutX="30.0" layoutY="64.0" prefHeight="621.0" prefWidth="845.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
               <stylesheets>
                 <URL value="@win7glass.css" />
               </stylesheets>

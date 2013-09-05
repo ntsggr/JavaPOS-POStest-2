@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
@@ -40,17 +41,32 @@ public class FiscalPrinterController extends CommonController implements Initial
 	public TabPane functionTab;
 	@FXML
 	@RequiredState(JposState.OPENED)
-	private CheckBox asyncMode;
+	public CheckBox asyncMode;
+
 	@FXML
 	@RequiredState(JposState.OPENED)
 	public CheckBox flagWhenIdle;
-	@FXML
-	@RequiredState(JposState.OPENED)
-	private CheckBox duplicateReceipt;
-	@FXML
-	@RequiredState(JposState.OPENED)
-	private CheckBox checkTotal;
 
+	@FXML
+	@RequiredState(JposState.OPENED)
+	public CheckBox duplicateReceipt;
+
+	@FXML
+	@RequiredState(JposState.OPENED)
+	public CheckBox checkTotal;
+
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Button beginTraining;
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Button endTraining;
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Button clearError;
+	@FXML
+	@RequiredState(JposState.ENABLED)
+	public Button clearOutput;
 	// General Printing Settings Tab
 	@FXML
 	public TextField headerLine;
@@ -260,7 +276,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
-	
+
 	/**
 	 * Shows statistics of device if they are supported by the device
 	 */
@@ -281,8 +297,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -415,8 +431,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 			JOptionPane.showMessageDialog(null, "Field should have a value");
 		} else {
 			try {
-				((FiscalPrinter) service).setTrailerLine(trailerLine.getText().length(),
-						trailerLine.getText(), doubleWidthTrailer.isSelected());
+				((FiscalPrinter) service).setTrailerLine(trailerLine.getText().length(), trailerLine.getText(),
+						doubleWidthTrailer.isSelected());
 			} catch (JposException jpe) {
 				JOptionPane.showMessageDialog(null, jpe.getMessage());
 				jpe.printStackTrace();
@@ -507,8 +523,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	public void handleSetCurrency(ActionEvent e) {
 		try {
-			((FiscalPrinter) service).setCurrency(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(cbSetCurrency.getSelectionModel().getSelectedItem()));
+			((FiscalPrinter) service).setCurrency(FiscalPrinterConstantMapper.getConstantNumberFromString(cbSetCurrency
+					.getSelectionModel().getSelectedItem()));
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
@@ -595,6 +611,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints a cash-in or cash-out receipt amount.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -613,6 +630,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints a receipt item for a sold item
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -641,8 +659,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 			if (!postLine.getText().isEmpty())
 				((FiscalPrinter) service).setPostLine(postLine.getText());
 
-			((FiscalPrinter) service).printRecItem(description.getText(), lPrice, iQuantity, iVatInfo,
-					lUnitPrice, unitName.getText());
+			((FiscalPrinter) service).printRecItem(description.getText(), lPrice, iQuantity, iVatInfo, lUnitPrice,
+					unitName.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -681,8 +699,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 			if (!postLine.getText().isEmpty())
 				((FiscalPrinter) service).setPostLine(postLine.getText());
 
-			((FiscalPrinter) service).printRecItemVoid(description.getText(), lPrice, iQuantity, iVatInfo,
-					lUnitPrice, unitName.getText());
+			((FiscalPrinter) service).printRecItemVoid(description.getText(), lPrice, iQuantity, iVatInfo, lUnitPrice,
+					unitName.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -691,16 +709,18 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/**
-	 * Applies and prints an adjustment (discount or surcharge) to the last receipt item sold.
+	 * Applies and prints an adjustment (discount or surcharge) to the last
+	 * receipt item sold.
+	 * 
 	 * @param e
 	 */
 	@FXML
 	public void handlePrintRecItemAdjustment(ActionEvent e) {
 		long lAmount = 0;
-		if (adjustmentType.getSelectionModel().getSelectedItem()
-				.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
-				|| adjustmentType.getSelectionModel().getSelectedItem()
-						.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
+		if (adjustmentType.getSelectionModel().getSelectedItem().equals(
+				FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
+				|| adjustmentType.getSelectionModel().getSelectedItem().equals(
+						FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * 1);
 		} else if (!amount.getText().isEmpty()) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * amountFactorDecimal);
@@ -718,8 +738,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 				((FiscalPrinter) service).setPreLine(preLine.getText());
 
 			((FiscalPrinter) service).printRecItemAdjustment(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()),
-					description.getText(), lAmount, iVatInfo);
+					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
+					.getText(), lAmount, iVatInfo);
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -728,17 +748,19 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/**
-	 * Cancels an adjustment that has been added to the fiscal receipt before and prints a cancellation line.
+	 * Cancels an adjustment that has been added to the fiscal receipt before
+	 * and prints a cancellation line.
+	 * 
 	 * @param e
 	 */
 
 	@FXML
 	public void handlePrintRecItemAdjustmentVoid(ActionEvent e) {
 		long lAmount = 0;
-		if (adjustmentType.getSelectionModel().getSelectedItem()
-				.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
-				|| adjustmentType.getSelectionModel().getSelectedItem()
-						.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
+		if (adjustmentType.getSelectionModel().getSelectedItem().equals(
+				FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
+				|| adjustmentType.getSelectionModel().getSelectedItem().equals(
+						FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * 1);
 		} else if (!amount.getText().isEmpty()) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * amountFactorDecimal);
@@ -756,8 +778,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 				((FiscalPrinter) service).setPreLine(preLine.getText());
 
 			((FiscalPrinter) service).printRecItemAdjustmentVoid(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()),
-					description.getText(), lAmount, iVatInfo);
+					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
+					.getText(), lAmount, iVatInfo);
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -792,8 +814,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 			lSpecialTax = (long) (Double.parseDouble(specialTax.getText()) * amountFactorDecimal);
 
 		try {
-			((FiscalPrinter) service).printRecItemFuel(description.getText(), lPrice, iQuantity, iVatInfo,
-					iUnitPrice, unitName.getText(), lSpecialTax, specialTaxName.getText());
+			((FiscalPrinter) service).printRecItemFuel(description.getText(), lPrice, iQuantity, iVatInfo, iUnitPrice,
+					unitName.getText(), lSpecialTax, specialTaxName.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -803,6 +825,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Called to void a fuel item
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -821,8 +844,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			lSpecialTax = (long) (Double.parseDouble(specialTax.getText()) * amountFactorDecimal);
 
 		try {
-			((FiscalPrinter) service).printRecItemFuelVoid(description.getText(), lPrice, iVatInfo,
-					lSpecialTax);
+			((FiscalPrinter) service).printRecItemFuelVoid(description.getText(), lPrice, iVatInfo, lSpecialTax);
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -832,6 +854,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Process one or more item refunds.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -870,6 +893,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Processes a void of one or more item refunds.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -894,8 +918,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 			lUnitAmount = (long) (Double.parseDouble(unitAmount.getText()) * amountFactorDecimal);
 
 		try {
-			((FiscalPrinter) service).printRecItemRefundVoid(description.getText(), lAmount, iQuantity,
-					iVatInfo, lUnitAmount, unitName.getText());
+			((FiscalPrinter) service).printRecItemRefundVoid(description.getText(), lAmount, iQuantity, iVatInfo,
+					lUnitAmount, unitName.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -904,15 +928,17 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/**
-	 * Called to give an adjustment(discount or surcharge) for a package of some item booked before.
+	 * Called to give an adjustment(discount or surcharge) for a package of some
+	 * item booked before.
+	 * 
 	 * @param e
 	 */
 	@FXML
 	public void handlePrintRecPackageAdjustment(ActionEvent e) {
 		try {
 			((FiscalPrinter) service).printRecPackageAdjustment(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()),
-					description.getText(), vatAdjustment.getText());
+					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
+					.getText(), vatAdjustment.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -921,7 +947,9 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/**
-	 * Called to void the adjustment(discount or surcharge) for a package of some items.
+	 * Called to void the adjustment(discount or surcharge) for a package of
+	 * some items.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -931,8 +959,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 				((FiscalPrinter) service).setPreLine(preLine.getText());
 
 			((FiscalPrinter) service).printRecPackageAdjustVoid(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()),
-					vatAdjustment.getText());
+					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), vatAdjustment
+					.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -942,6 +970,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Processes a refund.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -971,6 +1000,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Called to process a void of a refund.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -997,6 +1027,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Checks and prints the current receipt subtotal.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1018,16 +1049,18 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/**
-	 * Applies and prints an adjustment (discount or surcharge) to the current receipt subtotal.
+	 * Applies and prints an adjustment (discount or surcharge) to the current
+	 * receipt subtotal.
+	 * 
 	 * @param e
 	 */
 	@FXML
 	public void handlePrintRecSubtotalAdjustment(ActionEvent e) {
 		long lAmount = 0;
-		if (adjustmentType.getSelectionModel().getSelectedItem()
-				.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
-				|| adjustmentType.getSelectionModel().getSelectedItem()
-						.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
+		if (adjustmentType.getSelectionModel().getSelectedItem().equals(
+				FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
+				|| adjustmentType.getSelectionModel().getSelectedItem().equals(
+						FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * 1);
 		} else if (!amount.getText().isEmpty()) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * amountFactorDecimal);
@@ -1038,8 +1071,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 				((FiscalPrinter) service).setPreLine(preLine.getText());
 
 			((FiscalPrinter) service).printRecSubtotalAdjustment(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()),
-					description.getText(), lAmount);
+					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
+					.getText(), lAmount);
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -1049,15 +1082,16 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Called to void the adjustment for a package os some items.
+	 * 
 	 * @param e
 	 */
 	@FXML
 	public void handlePrintRecSubtotalAdjustmentVoid(ActionEvent e) {
 		long lAmount = 0;
-		if (adjustmentType.getSelectionModel().getSelectedItem()
-				.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
-				|| adjustmentType.getSelectionModel().getSelectedItem()
-						.equals(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
+		if (adjustmentType.getSelectionModel().getSelectedItem().equals(
+				FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant())
+				|| adjustmentType.getSelectionModel().getSelectedItem().equals(
+						FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant())) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * 1);
 		} else if (!amount.getText().isEmpty()) {
 			lAmount = (long) (Double.parseDouble(amount.getText()) * amountFactorDecimal);
@@ -1065,8 +1099,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 		try {
 			((FiscalPrinter) service).printRecSubtotalAdjustVoid(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()),
-					lAmount);
+					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), lAmount);
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -1076,6 +1109,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Cancels the current receipt.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1090,7 +1124,9 @@ public class FiscalPrinterController extends CommonController implements Initial
 	}
 
 	/**
-	 * Cancels an item that has been added to the receipt and prints a void description.
+	 * Cancels an item that has been added to the receipt and prints a void
+	 * description.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1114,8 +1150,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 		try {
 			((FiscalPrinter) service).printRecVoidItem(description.getText(), lPrice, iQuantity,
-					FiscalPrinterConstantMapper.getConstantNumberFromString(adjustmentType
-							.getSelectionModel().getSelectedItem()), lAmount, iVatInfo);
+					FiscalPrinterConstantMapper.getConstantNumberFromString(adjustmentType.getSelectionModel()
+							.getSelectedItem()), lAmount, iVatInfo);
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -1125,6 +1161,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints the customer tax identification
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1140,6 +1177,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints the current receipt total
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1229,6 +1267,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints a line of fiscal text to the slip station.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1243,14 +1282,14 @@ public class FiscalPrinterController extends CommonController implements Initial
 	/* ********** Fiscal Report - Methods ********** */
 	/**
 	 * Prints a report of the fiscal.
+	 * 
 	 * @param e
 	 */
 	@FXML
 	public void handlePrintReport(ActionEvent e) {
 		try {
-			((FiscalPrinter) service).printReport(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(reportType.getSelectionModel().getSelectedItem()),
-					reportFrom.getText(), reportTo.getText());
+			((FiscalPrinter) service).printReport(FiscalPrinterConstantMapper.getConstantNumberFromString(reportType
+					.getSelectionModel().getSelectedItem()), reportFrom.getText(), reportTo.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -1259,6 +1298,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	/**
 	 * Prints a report of all the daily fiscal activities on the receipt. No
 	 * data will be written to the fiscal EPROM.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1273,6 +1313,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	/**
 	 * Prints a report of all the daily fiscal activities on the receipt. Data
 	 * will be written to the fiscal EPROM.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1286,6 +1327,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints a report of totals for a range of dates on the receipt.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1309,14 +1351,14 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 	/**
 	 * Prints data on the Fiscal Printer station.
+	 * 
 	 * @param e
 	 */
 	@FXML
 	public void handlePrintNormal(ActionEvent e) {
 		try {
-			((FiscalPrinter) service).printNormal(FiscalPrinterConstantMapper
-					.getConstantNumberFromString(station.getSelectionModel().getSelectedItem()), data
-					.getText());
+			((FiscalPrinter) service).printNormal(FiscalPrinterConstantMapper.getConstantNumberFromString(station
+					.getSelectionModel().getSelectedItem()), data.getText());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -1376,6 +1418,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	/**
 	 * Forces the Fiscal Printer to return to Monitor state. It also cancels and
 	 * closes any operations.
+	 * 
 	 * @param e
 	 */
 	@FXML
@@ -1504,10 +1547,8 @@ public class FiscalPrinterController extends CommonController implements Initial
 		adjustmentType.getItems().add(FiscalPrinterConstantMapper.FPTR_AT_AMOUNT_SURCHARGE.getConstant());
 		adjustmentType.getItems().add(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_DISCOUNT.getConstant());
 		adjustmentType.getItems().add(FiscalPrinterConstantMapper.FPTR_AT_PERCENTAGE_SURCHARGE.getConstant());
-		adjustmentType.getItems().add(
-				FiscalPrinterConstantMapper.FPTR_AT_COUPON_AMOUNT_DISCOUNT.getConstant());
-		adjustmentType.getItems().add(
-				FiscalPrinterConstantMapper.FPTR_AT_COUPON_PERCENTAGE_DISCOUNT.getConstant());
+		adjustmentType.getItems().add(FiscalPrinterConstantMapper.FPTR_AT_COUPON_AMOUNT_DISCOUNT.getConstant());
+		adjustmentType.getItems().add(FiscalPrinterConstantMapper.FPTR_AT_COUPON_PERCENTAGE_DISCOUNT.getConstant());
 		adjustmentType.setValue(FiscalPrinterConstantMapper.FPTR_AT_AMOUNT_DISCOUNT.getConstant());
 	}
 
@@ -1553,11 +1594,9 @@ public class FiscalPrinterController extends CommonController implements Initial
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_REFUND.getConstant());
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_REFUND_VOID.getConstant());
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_SUBTOTAL_DISCOUNT.getConstant());
-		itemTotalizer.getItems()
-				.add(FiscalPrinterConstantMapper.FPTR_GT_SUBTOTAL_DISCOUNT_VOID.getConstant());
+		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_SUBTOTAL_DISCOUNT_VOID.getConstant());
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_SUBTOTAL_SURCHARGES.getConstant());
-		itemTotalizer.getItems().add(
-				FiscalPrinterConstantMapper.FPTR_GT_SUBTOTAL_SURCHARGES_VOID.getConstant());
+		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_SUBTOTAL_SURCHARGES_VOID.getConstant());
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_SURCHARGE.getConstant());
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_SURCHARGE_VOID.getConstant());
 		itemTotalizer.getItems().add(FiscalPrinterConstantMapper.FPTR_GT_VAT.getConstant());
@@ -1585,6 +1624,5 @@ public class FiscalPrinterController extends CommonController implements Initial
 		grandTotalizer.setToggleGroup(groupTotalizer);
 		dailyTotalizer.setSelected(true);
 	}
-
 
 }
