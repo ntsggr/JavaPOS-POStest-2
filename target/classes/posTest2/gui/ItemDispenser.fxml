@@ -19,15 +19,19 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
+                <Label layoutX="376.0" layoutY="247.0" text="Command:" />
+                <Label layoutX="376.0" layoutY="270.0" text="Data:" />
+                <Label layoutX="376.0" layoutY="294.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="449.0" layoutY="244.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="449.0" layoutY="267.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="449.0" layoutY="291.0" prefWidth="199.0" />
+                <Button layoutX="647.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="647.0" layoutY="289.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="584.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Label layoutX="47.0" layoutY="84.0" text="ItemCount:" />
                 <Label layoutX="47.0" layoutY="116.0" text="SlotNumber:" />
                 <TextField fx:id="adjustItemCount_itemCount" layoutX="151.0" layoutY="81.0" prefWidth="137.0" />
-                <ComboBox fx:id="adjustItemCount_slotNumber" layoutX="150.0" layoutY="113.0" prefHeight="21.0" prefWidth="137.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                  </items>
-                </ComboBox>
+                <ComboBox fx:id="adjustItemCount_slotNumber" layoutX="150.0" layoutY="113.0" prefHeight="21.0" prefWidth="137.0" />
                 <Button layoutX="177.0" layoutY="143.0" mnemonicParsing="false" onAction="#handleAdjustItemCount" text="AdjustItemCount" />
                 <Label alignment="CENTER" layoutX="34.0" layoutY="44.0" prefWidth="254.0" text="Adjust Item Count" underline="true">
                   <font>
@@ -37,25 +41,16 @@
                 <Label layoutX="376.0" layoutY="84.0" text="NumItem:" />
                 <Label layoutX="376.0" layoutY="116.0" text="SlotNumber:" />
                 <TextField fx:id="dispenseItem_numItem" layoutX="480.0" layoutY="81.0" prefWidth="137.0" />
-                <ComboBox fx:id="dispenseItem_slotNumber" layoutX="479.0" layoutY="113.0" prefHeight="21.0" prefWidth="137.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                  </items>
-                </ComboBox>
+                <ComboBox fx:id="dispenseItem_slotNumber" layoutX="479.0" layoutY="113.0" prefHeight="21.0" prefWidth="137.0" />
                 <Button layoutX="524.0" layoutY="143.0" mnemonicParsing="false" onAction="#handleDispenseItem" text="DispenseItem" />
                 <Label alignment="CENTER" font="$x1" layoutX="363.0" layoutY="44.0" prefWidth="254.0" text="Dispense Item" underline="true" />
                 <Label layoutX="47.0" layoutY="247.0" text="ItemCount" />
                 <Label layoutX="47.0" layoutY="279.0" text="SlotNumber:" />
                 <TextField fx:id="readItemCount_itemCount" layoutX="151.0" layoutY="244.0" prefWidth="137.0" />
-                <ComboBox fx:id="readItemCount_slotNumber" layoutX="150.0" layoutY="276.0" prefHeight="21.0" prefWidth="137.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                  </items>
-                </ComboBox>
+                <ComboBox fx:id="readItemCount_slotNumber" layoutX="150.0" layoutY="276.0" prefHeight="21.0" prefWidth="137.0" />
                 <Button layoutX="195.0" layoutY="306.0" mnemonicParsing="false" onAction="#handleReadItemCount" text="ReadItemCount" />
                 <Label alignment="CENTER" font="$x1" layoutX="34.0" layoutY="207.0" prefWidth="254.0" text="Read Item Count" underline="true" />
+                <Label alignment="CENTER" font="$x1" layoutX="376.0" layoutY="207.0" prefWidth="271.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />

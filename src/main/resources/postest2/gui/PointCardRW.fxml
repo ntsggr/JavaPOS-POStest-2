@@ -19,6 +19,15 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <Pane fx:id="pane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
+                <Label layoutX="296.0" layoutY="316.0" text="Command:" />
+                <Label layoutX="296.0" layoutY="339.0" text="Data:" />
+                <Label layoutX="296.0" layoutY="363.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="369.0" layoutY="313.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="369.0" layoutY="336.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="369.0" layoutY="360.0" prefWidth="199.0" />
+                <Button layoutX="567.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="567.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="504.0" layoutY="386.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <TextArea fx:id="textToPrint" layoutX="14.0" layoutY="45.0" prefHeight="100.0" prefWidth="250.0" wrapText="true" />
                 <Text fontSmoothingType="LCD" layoutX="88.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text for write/print:" />
                 <Button layoutX="296.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleBeginInsertion" prefWidth="110.0" text="Begin Insertion" />
@@ -78,6 +87,11 @@
                   </items>
                 </ComboBox>
                 <Button layoutX="363.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleSetCharacterSet" text="Set CharacterSet" />
+                <Label alignment="CENTER" layoutX="296.0" layoutY="286.0" prefWidth="272.0" text="DirectIO" underline="true">
+                  <font>
+                    <Font size="14.0" />
+                  </font>
+                </Label>
               </children>
             </Pane>
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />

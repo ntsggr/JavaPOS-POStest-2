@@ -27,6 +27,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
+                        <Label layoutX="457.0" layoutY="241.0" text="Command:" />
+                        <Label layoutX="457.0" layoutY="264.0" text="Data:" />
+                        <Label layoutX="457.0" layoutY="288.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="530.0" layoutY="238.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="530.0" layoutY="261.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="530.0" layoutY="285.0" prefWidth="199.0" />
+                        <Button layoutX="728.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="728.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="665.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Button layoutX="438.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleSetAdditionalSecurityInformation" prefWidth="210.0" text="Set AdditionalSecurityInformation" />
                         <Label layoutX="28.0" layoutY="49.0" text="Set AdditionalSecurityInformation:" />
                         <TextField fx:id="additionalSecurityInformation" layoutX="220.0" layoutY="46.0" prefWidth="200.0" />
@@ -40,7 +49,7 @@
                         <TextField id="additionalSecurityInformation" fx:id="accessDailyLog_sequenceNumber" layoutX="220.0" layoutY="241.0" prefWidth="200.0" />
                         <Label layoutX="28.0" layoutY="280.0" text="Type:" />
                         <ComboBox id="paymentMedia" fx:id="accessDailyLog_type" layoutX="220.0" layoutY="277.0" prefHeight="21.0" prefWidth="200.0" />
-                        <Label layoutX="28.0" layoutY="203.0" prefWidth="210.0" text="Access Daily Log" underline="true">
+                        <Label alignment="CENTER" layoutX="28.0" layoutY="203.0" prefWidth="392.0" text="Access Daily Log" underline="true">
                           <font>
                             <Font size="14.0" fx:id="x1" />
                           </font>
@@ -48,6 +57,7 @@
                         <Label layoutX="28.0" layoutY="317.0" text="Timeout" />
                         <TextField id="additionalSecurityInformation" fx:id="accessDailyLog_timeout" layoutX="220.0" layoutY="314.0" prefWidth="200.0" />
                         <Button layoutX="312.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleAccessDailyLog" text="Access Daily Log" />
+                        <Label alignment="CENTER" font="$x1" layoutX="457.0" layoutY="203.0" prefWidth="272.0" text="DirectIO" underline="true" />
                       </children>
                     </AnchorPane>
                   </content>

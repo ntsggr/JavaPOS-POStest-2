@@ -26,6 +26,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="199.9998779296875">
                       <children>
+                        <Label layoutX="556.0" layoutY="53.0" text="Command:" />
+                        <Label layoutX="556.0" layoutY="76.0" text="Data:" />
+                        <Label layoutX="556.0" layoutY="100.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="629.0" layoutY="50.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="629.0" layoutY="73.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="629.0" layoutY="97.0" prefWidth="199.0" />
+                        <Button layoutX="827.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="827.0" layoutY="95.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="764.0" layoutY="123.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label alignment="CENTER" layoutX="22.0" layoutY="21.0" prefWidth="274.0" text="Claim File" underline="true">
                           <font>
                             <Font size="14.0" fx:id="x1" />
@@ -70,6 +79,7 @@
                         <Label layoutX="302.0" layoutY="500.0" text="FileName:" />
                         <TextField fx:id="rename_filename" layoutX="376.0" layoutY="497.0" prefWidth="140.0" />
                         <Button layoutX="445.0" layoutY="524.0" mnemonicParsing="false" onAction="#handleRename" text="Rename" />
+                        <Label alignment="CENTER" font="$x1" layoutX="556.0" layoutY="25.0" prefWidth="274.0" text="DirectIO" underline="true" />
                       </children>
                     </AnchorPane>
                   </content>

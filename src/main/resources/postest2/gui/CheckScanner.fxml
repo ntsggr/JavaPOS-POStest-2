@@ -26,6 +26,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="257.0">
                       <children>
+                        <Label layoutX="536.0" layoutY="54.0" text="Command:" />
+                        <Label layoutX="536.0" layoutY="77.0" text="Data:" />
+                        <Label layoutX="536.0" layoutY="101.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="609.0" layoutY="51.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="609.0" layoutY="74.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="609.0" layoutY="98.0" prefWidth="199.0" />
+                        <Button layoutX="807.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="807.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="744.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Button layoutX="325.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleSetColor" prefWidth="135.0" text="Set Color" />
                         <Label layoutX="30.0" layoutY="25.0" text="Set Color:" />
                         <ComboBox fx:id="color" layoutX="165.0" layoutY="23.0" prefHeight="21.0" prefWidth="142.0" />
@@ -59,6 +68,11 @@
                         <Label layoutX="30.0" layoutY="563.0" text="Set Quality" />
                         <ComboBox id="color" fx:id="quality" layoutX="165.0" layoutY="561.0" prefHeight="21.0" prefWidth="142.0" />
                         <Button layoutX="325.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleSetQuality" prefWidth="135.0" text="Set Quality" />
+                        <Label alignment="CENTER" layoutX="536.0" layoutY="31.0" prefWidth="271.0" text="DirectIO" underline="true">
+                          <font>
+                            <Font size="14.0" fx:id="x1" />
+                          </font>
+                        </Label>
                       </children>
                     </AnchorPane>
                   </content>
@@ -67,11 +81,7 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                        <Label alignment="CENTER" layoutX="30.0" layoutY="38.0" prefWidth="227.0" text="Begin Insertion" underline="true">
-                          <font>
-                            <Font size="14.0" fx:id="x1" />
-                          </font>
-                        </Label>
+                        <Label alignment="CENTER" font="$x1" layoutX="30.0" layoutY="38.0" prefWidth="227.0" text="Begin Insertion" underline="true" />
                         <Button layoutX="90.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleBeginInsertion" prefWidth="100.0" text="Begin Insertion" />
                         <Label alignment="CENTER" font="$x1" layoutX="188.0" layoutY="38.0" prefWidth="227.0" text="Begin Removal" underline="true" />
                         <Button layoutX="248.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleBeginRemoval" prefWidth="100.0" text="Begin Removal" />

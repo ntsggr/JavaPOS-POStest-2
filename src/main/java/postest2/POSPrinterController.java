@@ -3,17 +3,10 @@ package postest2;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -194,14 +187,6 @@ public class POSPrinterController extends CommonController implements Initializa
 	public TextField lineSpacing;
 	@FXML
 	public ComboBox<String> cartridgeNotify;
-
-	// DirectIO
-	@FXML
-	public TextField directIO_command;
-	@FXML
-	public TextField directIO_data;
-	@FXML
-	public TextField directIO_object;
 
 	// Holds position of ESC-Characters.
 	// Need because Textarea delete ESC everytime it changes
@@ -1032,70 +1017,6 @@ public class POSPrinterController extends CommonController implements Initializa
 		}
 	}
 	
-	
-	@FXML
-	public void handleBrowseDirectIOData(ActionEvent e) {
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("Choose DirectIOData");
-		File f = chooser.showOpenDialog(null);
-		if (f != null) {
-			directIO_data.setText(f.getAbsolutePath());
-		}
-	}
-	
-	@FXML
-	public void handleBrowseDirectIOObject(ActionEvent e) {
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("Choose DirectIOObject");
-		File f = chooser.showOpenDialog(null);
-		if (f != null) {
-			directIO_object.setText(f.getAbsolutePath());
-		}
-	}
-	
-	@FXML
-	public void handleDirectIO(ActionEvent e) {
-		if (directIO_command.getText().isEmpty() || directIO_data.getText().isEmpty()
-				|| directIO_object.getText().isEmpty()) {
-
-			JOptionPane.showMessageDialog(null, "One of the Parameter is not specified!");
-		} else {
-			try {
-				//Reads content from File
-				byte[] dataArrByte = readBytesFromFile(directIO_data.getText());
-				int[] dataArrInt = new int[dataArrByte.length];
-				for(int i = 0; i < dataArrByte.length; i++){
-					dataArrInt[i] = dataArrByte[i];
-				}
-				
-				byte[] objectArr = readBytesFromFile(directIO_object.getText());
-				
-				//Execute DirectIO
-				((POSPrinter) service).directIO(Integer.parseInt(directIO_command.getText()), dataArrInt, objectArr);
-				
-				//Write changes to the files
-				dataArrByte = new byte[dataArrInt.length];
-				for(int i = 0; i < dataArrByte.length; i++){
-					dataArrByte[i] = (byte) dataArrInt[i];
-				}
-				if(dataArrByte != null){
-					writeBytesToFile(dataArrByte, directIO_data.getText());
-				}
-				
-				if(objectArr != null){
-					writeBytesToFile(objectArr, directIO_object.getText());
-				}
-				
-			} catch (JposException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				e1.printStackTrace();
-			} catch (NumberFormatException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage());
-				e1.printStackTrace();
-			}
-		}
-	}
-	
 
 	/**
 	 * This Method gets a Byte Array from a File to print it with
@@ -1141,70 +1062,14 @@ public class POSPrinterController extends CommonController implements Initializa
 		return bytes;
 	}
 	
-	/**
-	 * Read the given binary file, and return its contents as a byte array.
-	 * 
-	 */
-	private static byte[] readBytesFromFile(String aInputFileName) {
-		File file = new File(aInputFileName);
-		byte[] result = new byte[(int) file.length()];
-		try {
-			InputStream input = null;
-			try {
-				int totalBytesRead = 0;
-				input = new BufferedInputStream(new FileInputStream(file));
-				while (totalBytesRead < result.length) {
-					int bytesRemaining = result.length - totalBytesRead;
-					// input.read() returns -1, 0, or more :
-					int bytesRead = input.read(result, totalBytesRead, bytesRemaining);
-					if (bytesRead > 0) {
-						totalBytesRead = totalBytesRead + bytesRead;
-					}
-				}
-			} finally {
-				input.close();
-			}
-		} catch (FileNotFoundException ex) {
-
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-			ex.printStackTrace();
-
-		}
-		return result;
-	}
-
-	/**
-	 * Write a byte array to the given file. Writing binary data is
-	 * significantly simpler than reading it.
-	 */
-	private static void writeBytesToFile(byte[] aInput, String aOutputFileName) {
-		try {
-			OutputStream output = null;
-			try {
-				output = new BufferedOutputStream(new FileOutputStream(aOutputFileName));
-				output.write(aInput);
-			} finally {
-				output.close();
-			}
-		} catch (FileNotFoundException ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-			ex.printStackTrace();
-		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(null, ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+	
 
 
 	/**
 	 * This Method returns the Type of the selected file and returns it, if it
 	 * is a valid type. Otherwise an Exception is thrown
 	 * 
-	 * @param path
-	 *            to File
+	 * @param path to File
 	 * @return
 	 * @throws IOException
 	 */

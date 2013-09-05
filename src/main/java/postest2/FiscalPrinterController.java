@@ -195,14 +195,6 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	public TextArea output;
 
-	// Direct IO Tab
-	@FXML
-	public TextField directNumber;
-	@FXML
-	public TextField directData;
-	@FXML
-	public TextField directString;
-
 	// Variables used for fiscal receipt printing
 	private long TOTAL = 0;
 	private long amountFactorDecimal = 1;
@@ -1501,26 +1493,11 @@ public class FiscalPrinterController extends CommonController implements Initial
 		}
 	}
 
-	/* ********** Direct IO - Methods ********** */
-	@FXML
-	public void handleDirectIO(ActionEvent e) {
-		try {
-			int directCommand = Integer.parseInt(directNumber.getText());
-			int[] data = { 0 };
-			data[0] = Integer.parseInt(directData.getText());
-			String object = directString.getText();
-			StringBuffer sb = new StringBuffer(object);
-			((FiscalPrinter) service).directIO(directCommand, data, sb);
-		} catch (JposException jpe) {
-			jpe.printStackTrace();
-		}
-	}
-
 	@FXML
 	public void handleClearFields(ActionEvent e) {
-		directData.clear();
-		directNumber.clear();
-		directString.clear();
+		directIO_command.clear();
+		directIO_data.clear();
+		directIO_object.clear();
 	}
 
 	// ///////////////////////////////////////

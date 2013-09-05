@@ -71,6 +71,7 @@ public class CashChangerController extends CommonController implements Initializ
 	@FXML
 	public TextField dispenseCash_cashCounts;
 
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CashChanger();

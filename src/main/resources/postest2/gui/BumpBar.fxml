@@ -27,6 +27,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
+                        <Label layoutX="24.0" layoutY="390.0" text="Command:" />
+                        <Label layoutX="24.0" layoutY="413.0" text="Data:" />
+                        <Label layoutX="24.0" layoutY="437.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="97.0" layoutY="387.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="97.0" layoutY="410.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="97.0" layoutY="434.0" prefWidth="199.0" />
+                        <Button layoutX="295.0" layoutY="407.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="295.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="232.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label layoutX="34.0" layoutY="41.0" text="Set AutoToneDuration:" />
                         <TextField fx:id="autoToneDuration" layoutX="165.0" layoutY="38.0" prefWidth="200.0" />
                         <Button layoutX="380.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleSetAutoToneDuration" prefWidth="155.0" text="Set AutoToneDuration" />
@@ -51,6 +60,7 @@
                         <Label alignment="CENTER" font="$x1" layoutX="252.0" layoutY="275.0" prefWidth="189.0" text="Clear Output" underline="true" />
                         <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#handleClearOutput" prefWidth="155.0" text="Clear Output" />
                         <ComboBox fx:id="checkHealth_level" layoutX="165.0" layoutY="230.0" prefHeight="21.0" prefWidth="200.0" />
+                        <Label alignment="CENTER" font="$x1" layoutX="23.0" layoutY="358.0" prefWidth="272.0" text="DirectIO" underline="true" />
                       </children>
                     </AnchorPane>
                   </content>

@@ -28,6 +28,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
+                        <Label layoutX="25.0" layoutY="299.0" text="Command:" />
+                        <Label layoutX="25.0" layoutY="322.0" text="Data:" />
+                        <Label layoutX="25.0" layoutY="346.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="98.0" layoutY="296.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="98.0" layoutY="319.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="98.0" layoutY="343.0" prefWidth="199.0" />
+                        <Button layoutX="296.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="296.0" layoutY="341.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="233.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Button layoutX="273.0" layoutY="37.0" mnemonicParsing="false" onAction="#handleSetStation" prefWidth="140.0" text="Set Station" />
                         <Label layoutX="26.0" layoutY="111.0" text="Set Water Mark:" />
                         <Button layoutX="273.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleSetWaterMark" prefWidth="140.0" text="Set WaterMark" />
@@ -47,6 +56,7 @@
                         <Label layoutX="277.0" layoutY="198.0" text="MediumID:" />
                         <TextField id="addMarker_marker" fx:id="initializeMedium_mediumID" layoutX="340.0" layoutY="195.0" prefWidth="177.0" />
                         <Button layoutX="377.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleInitializeMedium" prefWidth="140.0" text="Initialize Medium" />
+                        <Label alignment="CENTER" font="$x1" layoutX="25.0" layoutY="271.0" prefWidth="271.0" text="DirectIO" underline="true" />
                       </children>
                     </AnchorPane>
                   </content>

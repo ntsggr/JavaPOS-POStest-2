@@ -19,26 +19,35 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <Pane fx:id="pane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
+                <Label layoutX="15.0" layoutY="253.0" text="Command:" />
+                <Label layoutX="15.0" layoutY="276.0" text="Data:" />
+                <Label layoutX="15.0" layoutY="300.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="88.0" layoutY="250.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="88.0" layoutY="273.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="88.0" layoutY="297.0" prefWidth="199.0" />
+                <Button layoutX="286.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="286.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="223.0" layoutY="323.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Button layoutX="14.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleRestartPOS" prefWidth="100.0" text="Restart POS" />
                 <Button layoutX="14.0" layoutY="64.0" mnemonicParsing="false" onAction="#handleShutdownPOS" text="Shutdown POS" />
                 <Button layoutX="14.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleStandbyPOS" prefWidth="100.0" text="Standby POS" />
                 <Button layoutX="14.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleSuspendPOS" prefWidth="100.0" text="Suspend POS" />
-                <ComboBox fx:id="reason" layoutX="145.0" layoutY="146.0" prefHeight="21.0" prefWidth="123.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                  </items>
-                </ComboBox>
+                <ComboBox fx:id="reason" layoutX="145.0" layoutY="146.0" prefHeight="21.0" prefWidth="123.0" />
                 <Text fontSmoothingType="LCD" layoutX="187.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reason" />
                 <Text fx:id="state" fontSmoothingType="LCD" layoutX="279.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State">
                   <font>
                     <Font name="System Bold" size="14.0" />
                   </font>
                 </Text>
+                <Label alignment="CENTER" layoutX="15.0" layoutY="226.0" prefWidth="271.0" text="DirectIO" underline="true">
+                  <font>
+                    <Font size="14.0" />
+                  </font>
+                </Label>
               </children>
             </Pane>
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
-           </children>
+          </children>
         </Pane>
       </center>
       <top>

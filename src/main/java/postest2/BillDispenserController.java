@@ -56,6 +56,7 @@ public class BillDispenserController extends CommonController implements Initial
 	@FXML
 	public TextField dispenseCash_cashCounts;
 
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.service = new BillDispenser();

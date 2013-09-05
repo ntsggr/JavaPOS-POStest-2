@@ -52,6 +52,7 @@ public class SmartCardRWController extends CommonController implements Initializ
 	@FXML
 	public ComboBox<String> writeData_action;
 
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new SmartCardRW();

@@ -27,6 +27,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
+                        <Label layoutX="499.0" layoutY="139.0" text="Command:" />
+                        <Label layoutX="499.0" layoutY="162.0" text="Data:" />
+                        <Label layoutX="499.0" layoutY="186.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="572.0" layoutY="136.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="572.0" layoutY="159.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="572.0" layoutY="183.0" prefWidth="199.0" />
+                        <Button layoutX="770.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="770.0" layoutY="181.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="707.0" layoutY="209.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label layoutX="14.0" layoutY="33.0" text="Set AutoToneDuration:" />
                         <TextField fx:id="autoToneDuration" layoutX="150.0" layoutY="30.0" prefWidth="129.0" />
                         <Button layoutX="289.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleSetAutoToneDuration" text="Set AutoToneDuration" />
@@ -86,6 +95,7 @@
                         <Button layoutX="649.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleSelectCharacterSet" text="SelectCharacterSet" />
                         <TextField fx:id="clearVideoRegion_attribute" layoutX="348.0" layoutY="448.0" prefWidth="129.0" />
                         <TextField fx:id="clearVideo_attribute" layoutX="73.0" layoutY="448.0" prefWidth="129.0" />
+                        <Label alignment="CENTER" font="$x1" layoutX="499.0" layoutY="107.0" prefWidth="269.0" text="DirectIO" underline="true" />
                       </children>
                     </AnchorPane>
                   </content>

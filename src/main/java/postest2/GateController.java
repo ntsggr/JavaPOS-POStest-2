@@ -31,7 +31,7 @@ public class GateController extends CommonController implements Initializable {
 
 	@FXML @RequiredState(JposState.ENABLED)
 	public Pane functionPane;
-	
+
 	@FXML 
 	public TextField waitForGateClose_timeout;
 	

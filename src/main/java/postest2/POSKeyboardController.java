@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.text.Text;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -41,15 +40,14 @@ public class POSKeyboardController extends CommonController implements Initializ
 		service = new POSKeyboard();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("POSKeyboard");
-		//JFrame frame = new JFrame();
-		//frame.addKeyListener(this);
+		
 	}
 	
 	/* ************************************************************************
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
-
+	
 	@Override
 	public void dataOccurred(DataEvent e) {
 		try {
@@ -61,7 +59,7 @@ public class POSKeyboardController extends CommonController implements Initializ
 					"Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 		try {

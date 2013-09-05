@@ -27,6 +27,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
+                        <Label layoutX="18.0" layoutY="379.0" text="Command:" />
+                        <Label layoutX="18.0" layoutY="402.0" text="Data:" />
+                        <Label layoutX="18.0" layoutY="426.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="91.0" layoutY="376.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="91.0" layoutY="399.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="91.0" layoutY="423.0" prefWidth="199.0" />
+                        <Button layoutX="289.0" layoutY="396.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="289.0" layoutY="421.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="226.0" layoutY="449.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Button layoutX="422.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleSetAdditionalSecurityInformation" prefWidth="200.0" text="Set AdditionalSecurityInformation" />
                         <Label layoutX="18.0" layoutY="36.0" text="Set AdditionalSecurityInformation:" />
                         <TextField id="" fx:id="additionalSecurityInformation" layoutX="212.0" layoutY="33.0" prefWidth="200.0" />
@@ -54,6 +63,11 @@
                         <Button layoutX="422.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleSetVoucherIDList" prefWidth="200.0" text="Set VoucherIDList" />
                         <Label layoutX="18.0" layoutY="308.0" text="Set VoucherIDList" />
                         <TextField id="" fx:id="voucherIDList" layoutX="212.0" layoutY="305.0" prefWidth="200.0" />
+                        <Label alignment="CENTER" layoutX="18.0" layoutY="353.0" prefWidth="272.0" text="DirectIO" underline="true">
+                          <font>
+                            <Font size="14.0" fx:id="x1" />
+                          </font>
+                        </Label>
                       </children>
                     </AnchorPane>
                   </content>
@@ -65,11 +79,7 @@
                         <Button layoutX="387.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleAddValue" prefWidth="100.0" text="Add Value" />
                         <Label layoutX="28.0" layoutY="106.0" text="Sequence Number:" />
                         <TextField fx:id="value_sequenceNumber" layoutX="142.0" layoutY="103.0" prefWidth="200.0" />
-                        <Label alignment="CENTER" layoutX="28.0" layoutY="74.0" prefWidth="314.0" text="Modify Value" underline="true">
-                          <font>
-                            <Font size="14.0" fx:id="x1" />
-                          </font>
-                        </Label>
+                        <Label alignment="CENTER" font="$x1" layoutX="28.0" layoutY="74.0" prefWidth="314.0" text="Modify Value" underline="true" />
                         <Label layoutX="28.0" layoutY="142.0" text="Timeout:" />
                         <TextField fx:id="value_timeout" layoutX="142.0" layoutY="139.0" prefWidth="200.0" />
                         <Button layoutX="387.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleCancelValue" prefWidth="100.0" text="Cancel Value" />

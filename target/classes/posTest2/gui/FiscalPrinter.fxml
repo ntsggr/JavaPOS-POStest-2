@@ -58,9 +58,6 @@
                         <ComboBox fx:id="cbSetCurrency" layoutX="133.0" layoutY="317.0" prefHeight="21.0" prefWidth="168.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -82,9 +79,6 @@
                         <ComboBox fx:id="adjustmentType" layoutX="116.0" layoutY="12.0" prefHeight="21.0" prefWidth="173.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -199,9 +193,6 @@
                         <ComboBox id="vatID" fx:id="cbVatID" layoutX="116.0" layoutY="248.0" prefHeight="21.0" prefWidth="173.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -256,9 +247,6 @@
                         <ComboBox fx:id="reportType" layoutX="53.0" layoutY="166.0" prefHeight="21.0" prefWidth="146.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -282,9 +270,6 @@
                         <ComboBox fx:id="station" layoutX="370.0" layoutY="53.0" prefHeight="21.0" prefWidth="155.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -320,9 +305,6 @@
                         <ComboBox fx:id="itemTotalizer" layoutX="462.0" layoutY="59.0" prefHeight="21.0" prefWidth="178.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -330,9 +312,6 @@
                         <ComboBox id="cbVatID" fx:id="cbStatusVatID" layoutX="462.0" layoutY="93.0" prefHeight="21.0" prefWidth="178.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -353,14 +332,16 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                        <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number:" />
-                        <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data:" />
-                        <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="String:" />
-                        <TextField fx:id="directNumber" layoutX="70.0" layoutY="44.0" prefWidth="300.0" />
-                        <TextField fx:id="directData" layoutX="70.0" layoutY="84.0" prefWidth="300.0" />
-                        <TextField fx:id="directString" layoutX="70.0" layoutY="124.0" prefWidth="300.0" />
-                        <Button layoutX="402.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleDirectIO" prefWidth="81.0" text="Direct IO" />
-                        <Button layoutX="491.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleClearFields" text="Clear Fields" />
+                        
+		               	<Label layoutX="23.0" layoutY="51.0" text="Command:" />
+		                <Label layoutX="23.0" layoutY="74.0" text="Data:" />
+		                <Label layoutX="23.0" layoutY="98.0" text="Object:" />
+		                <TextField fx:id="directIO_command" layoutX="96.0" layoutY="48.0" prefWidth="199.0" />
+		                <TextField fx:id="directIO_data" layoutX="96.0" layoutY="71.0" prefWidth="199.0" />
+		                <TextField fx:id="directIO_object" layoutX="96.0" layoutY="95.0" prefWidth="199.0" />
+		                <Button layoutX="294.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+		                <Button layoutX="294.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+		                <Button layoutX="231.0" layoutY="121.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                       </children>
                     </AnchorPane>
                   </content>

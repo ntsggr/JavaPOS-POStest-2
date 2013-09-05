@@ -31,22 +31,30 @@ import org.xml.sax.SAXException;
 
 public class ScaleController extends CommonController implements Initializable {
 
-	@FXML @RequiredState(JposState.ENABLED)
+	@FXML
+	@RequiredState(JposState.ENABLED)
 	public Pane functionPane;
-	
-	 @FXML @RequiredState(JposState.OPENED)
-	 public CheckBox asyncMode;
-	
-	 @FXML public TextField tareWeight;
-	 @FXML public TextField unitPrice;
-	 @FXML public TextField displayText_data;
-	 @FXML public TextField readWeight_weightData;
-	 @FXML public TextField readWeight_timeout;
-	 
-	 @FXML public ComboBox<String> statusNotify;
-	 @FXML public ComboBox<Boolean> zeroValid;
-	
-	
+
+	@FXML
+	@RequiredState(JposState.OPENED)
+	public CheckBox asyncMode;
+
+	@FXML
+	public TextField tareWeight;
+	@FXML
+	public TextField unitPrice;
+	@FXML
+	public TextField displayText_data;
+	@FXML
+	public TextField readWeight_weightData;
+	@FXML
+	public TextField readWeight_timeout;
+
+	@FXML
+	public ComboBox<String> statusNotify;
+	@FXML
+	public ComboBox<Boolean> zeroValid;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new Scale();
@@ -102,8 +110,8 @@ public class ScaleController extends CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
+					JOptionPane.ERROR_MESSAGE);
 			System.err.println("Jpos exception " + jpe);
 		}
 	}
@@ -141,7 +149,7 @@ public class ScaleController extends CommonController implements Initializable {
 
 		statistics = "";
 	}
-	
+
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
 		try {
@@ -151,24 +159,25 @@ public class ScaleController extends CommonController implements Initializable {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void handleSetStatusNotify(ActionEvent e) {
 		try {
-			((Scale)service).setStatusNotify(ScaleConstantMapper.getConstantNumberFromString(statusNotify.getSelectionModel().getSelectedItem()));
+			((Scale) service).setStatusNotify(ScaleConstantMapper.getConstantNumberFromString(statusNotify
+					.getSelectionModel().getSelectedItem()));
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void handleSetTareWeight(ActionEvent e) {
-		if(tareWeight.getText().isEmpty()){
+		if (tareWeight.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Parameter is not specified");
 		} else {
 			try {
-				((Scale)service).setTareWeight(Integer.parseInt(tareWeight.getText()));
+				((Scale) service).setTareWeight(Integer.parseInt(tareWeight.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -178,14 +187,14 @@ public class ScaleController extends CommonController implements Initializable {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleSetUnitPrice(ActionEvent e) {
-		if(unitPrice.getText().isEmpty()){
+		if (unitPrice.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Parameter is not specified");
 		} else {
 			try {
-				((Scale)service).setUnitPrice(Long.parseLong(unitPrice.getText()));
+				((Scale) service).setUnitPrice(Long.parseLong(unitPrice.getText()));
 			} catch (NumberFormatException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
@@ -195,39 +204,39 @@ public class ScaleController extends CommonController implements Initializable {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleSetZeroValid(ActionEvent e) {
 		try {
-			((Scale)service).setZeroValid(zeroValid.getSelectionModel().getSelectedItem());
+			((Scale) service).setZeroValid(zeroValid.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
 	}
-	
+
 	@FXML
 	public void handleDisplayText(ActionEvent e) {
-		if(displayText_data.getText().isEmpty()){
+		if (displayText_data.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Parameter is not specified");
 		} else {
 			try {
-				((Scale)service).displayText(displayText_data.getText());
+				((Scale) service).displayText(displayText_data.getText());
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 				e1.printStackTrace();
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleReadWeight(ActionEvent e) {
-		if(readWeight_timeout.getText().isEmpty()){
+		if (readWeight_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Parameter is not specified");
 		} else {
 			int[] weightData = new int[1];
 			try {
-				((Scale)service).readWeight(weightData, Integer.parseInt(readWeight_timeout.getText()));
+				((Scale) service).readWeight(weightData, Integer.parseInt(readWeight_timeout.getText()));
 				readWeight_weightData.setText("" + weightData[0]);
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -238,39 +247,38 @@ public class ScaleController extends CommonController implements Initializable {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void handleZeroScale(ActionEvent e) {
 		try {
-			((Scale)service).zeroScale();
+			((Scale) service).zeroScale();
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * Set up ComboBoxes
 	 */
-	
-	private void setUpStatusNotify(){
+
+	private void setUpStatusNotify() {
 		statusNotify.getItems().clear();
 		statusNotify.getItems().add(ScaleConstantMapper.SCAL_SN_DISABLED.getConstant());
 		statusNotify.getItems().add(ScaleConstantMapper.SCAL_SN_ENABLED.getConstant());
 		statusNotify.setValue(ScaleConstantMapper.SCAL_SN_DISABLED.getConstant());
 	}
 
-	private void setUpZeroValid(){
+	private void setUpZeroValid() {
 		zeroValid.getItems().clear();
 		zeroValid.getItems().add(true);
 		zeroValid.getItems().add(false);
 		zeroValid.setValue(true);
 	}
 
-	private void setUpComboBoxes(){
+	private void setUpComboBoxes() {
 		setUpZeroValid();
 		setUpStatusNotify();
 	}
-	
 
 }

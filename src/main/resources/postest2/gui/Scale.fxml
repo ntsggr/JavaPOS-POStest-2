@@ -20,24 +20,23 @@
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
             <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
-                <ComboBox fx:id="statusNotify" layoutX="130.0" layoutY="45.0" prefHeight="21.0" prefWidth="113.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                  </items>
-                </ComboBox>
+                <Label layoutX="358.0" layoutY="376.0" text="Command:" />
+                <Label layoutX="358.0" layoutY="399.0" text="Data:" />
+                <Label layoutX="358.0" layoutY="423.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="431.0" layoutY="373.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="431.0" layoutY="396.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="431.0" layoutY="420.0" prefWidth="199.0" />
+                <Button layoutX="629.0" layoutY="393.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="629.0" layoutY="418.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="566.0" layoutY="446.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                <ComboBox fx:id="statusNotify" layoutX="130.0" layoutY="45.0" prefHeight="21.0" prefWidth="113.0" />
                 <Label layoutX="25.0" layoutY="48.0" text="Set StatusNotify:" />
                 <Button layoutX="252.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleSetStatusNotify" prefWidth="105.0" text="SetStatusNotify" />
                 <Label layoutX="25.0" layoutY="83.0" text="Set TareWeight:" />
                 <Button layoutX="252.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleSetTareWeight" prefWidth="105.0" text="SetTareWeight" />
                 <Label layoutX="25.0" layoutY="120.0" text="Set UnitPrice:" />
                 <Button layoutX="252.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleSetUnitPrice" prefWidth="105.0" text="SetUnitPrice" />
-                <ComboBox fx:id="zeroValid" layoutX="130.0" layoutY="152.0" prefHeight="21.0" prefWidth="113.0">
-                  <items>
-                    <FXCollections fx:factory="observableArrayList">
-                    </FXCollections>
-                  </items>
-                </ComboBox>
+                <ComboBox fx:id="zeroValid" layoutX="130.0" layoutY="152.0" prefHeight="21.0" prefWidth="113.0" />
                 <Label layoutX="25.0" layoutY="155.0" text="Set ZeroValid:" />
                 <Button layoutX="252.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleSetZeroValid" prefWidth="105.0" text="SetZeroValid" />
                 <TextField fx:id="tareWeight" layoutX="130.0" layoutY="80.0" prefWidth="113.0" />
@@ -58,6 +57,7 @@
                 <TextField id="tareWeight" fx:id="readWeight_timeout" layoutX="462.0" layoutY="270.0" prefWidth="113.0" />
                 <Label alignment="CENTER" font="$x1" layoutX="25.0" layoutY="347.0" prefWidth="218.00009999999747" text="Zero Scale" underline="true" />
                 <Button layoutX="86.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleZeroScale" prefWidth="105.0" text="ZeroScale" />
+                <Label alignment="CENTER" font="$x1" layoutX="358.0" layoutY="347.0" prefWidth="271.999977929685" text="DirectIO" underline="true" />
               </children>
             </Pane>
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />

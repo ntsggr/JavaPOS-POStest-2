@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import javax.swing.JOptionPane;
@@ -32,6 +33,7 @@ public class MICRController extends CommonController implements Initializable {
 	@FXML
 	@RequiredState(JposState.ENABLED)
 	public Pane functionPane;
+
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

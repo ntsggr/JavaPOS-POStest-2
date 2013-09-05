@@ -19,6 +19,15 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
               <children>
+                <Label layoutX="607.0" layoutY="140.0" text="Command:" />
+                <Label layoutX="607.0" layoutY="163.0" text="Data:" />
+                <Label layoutX="607.0" layoutY="187.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="680.0" layoutY="137.0" prefWidth="159.0001220703125" />
+                <TextField fx:id="directIO_data" layoutX="680.0" layoutY="160.0" prefWidth="159.0" />
+                <TextField fx:id="directIO_object" layoutX="680.0" layoutY="184.0" prefWidth="159.0" />
+                <Button layoutX="838.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="838.0" layoutY="182.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="775.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Button layoutX="315.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleSetProtocolMask" prefWidth="136.0" text="Set ProtocolMask" />
                 <ComboBox fx:id="protocolMask" layoutX="145.0" layoutY="36.0" prefHeight="21.0" prefWidth="159.0" />
                 <Label layoutX="18.0" layoutY="38.0" text="Set ProtocolMask:" />
@@ -66,39 +75,40 @@
                 <Label layoutX="18.0" layoutY="483.0" text="Password:" />
                 <TextField id="readTimerInterval" fx:id="readStartReadTags_password" layoutX="80.0" layoutY="480.0" prefWidth="159.0" />
                 <Button layoutX="240.0" layoutY="478.0" mnemonicParsing="false" onAction="#handleBrowseReadStartReadTagsPassword" text="Browse" />
-                <Label alignment="CENTER" font="$x1" layoutX="339.0" layoutY="107.0" prefWidth="221.0" text="Stop Read Tags" underline="true" />
-                <Button layoutX="561.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleBrowseStopReadTagsPassword" text="Browse" />
-                <Label layoutX="339.0" layoutY="140.0" text="Password:" />
-                <TextField id="readTimerInterval" fx:id="stopReadTags_password" layoutX="401.0" layoutY="137.0" prefWidth="159.0" />
-                <Button layoutX="463.0" layoutY="167.0" mnemonicParsing="false" onAction="#handleStopReadTag" text="StopReadTag" />
-                <Button layoutX="561.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagDataTagID" text="Browse" />
-                <Label layoutX="339.0" layoutY="237.0" text="TagID:" />
-                <TextField id="readTimerInterval" fx:id="writeTagData_tagID" layoutX="401.0" layoutY="234.0" prefWidth="159.0" />
-                <Label alignment="CENTER" font="$x1" layoutX="339.0" layoutY="206.0" prefWidth="221.0" text="Write Tag Data" underline="true" />
-                <Label layoutX="339.0" layoutY="264.0" text="Userdata:" />
-                <TextField id="readTimerInterval" fx:id="writeTagData_userdata" layoutX="401.0" layoutY="261.0" prefWidth="159.0" />
-                <Label layoutX="339.0" layoutY="291.0" text="Start:" />
-                <TextField id="readTimerInterval" fx:id="writeTagData_start" layoutX="401.0" layoutY="288.0" prefWidth="159.0" />
-                <Button layoutX="467.0" layoutY="368.0" mnemonicParsing="false" onAction="#handleWriteTagData" text="WriteTagData" />
-                <Button layoutX="561.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagDataUserdata" text="Browse" />
-                <Label layoutX="339.0" layoutY="317.0" text="Timeout:" />
-                <TextField id="readTimerInterval" fx:id="writeTagData_timeout" layoutX="401.0" layoutY="314.0" prefWidth="159.0" />
-                <Label layoutX="339.0" layoutY="344.0" text="Password:" />
-                <TextField id="readTimerInterval" fx:id="writeTagData_password" layoutX="401.0" layoutY="341.0" prefWidth="159.0" />
-                <Button layoutX="561.0" layoutY="339.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagDataPassword" text="Browse" />
-                <Button layoutX="561.0" layoutY="428.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagIDSourceID" text="Browse" />
-                <Label layoutX="339.0" layoutY="433.0" text="SourceID:" />
-                <TextField id="readTimerInterval" fx:id="writeTagID_sourceID" layoutX="401.0" layoutY="430.0" prefWidth="159.0" />
-                <Label alignment="CENTER" font="$x1" layoutX="339.0" layoutY="403.0" prefWidth="221.0" text="WriteTagID" underline="true" />
-                <Label layoutX="339.0" layoutY="460.0" text="DestID:" />
-                <TextField id="readTimerInterval" fx:id="writeTagID_destID" layoutX="401.0" layoutY="457.0" prefWidth="159.0" />
-                <Label layoutX="339.0" layoutY="487.0" text="Timeout:" />
-                <TextField id="readTimerInterval" fx:id="writeTagID_timeout" layoutX="402.0" layoutY="484.0" prefWidth="159.0" />
-                <Button layoutX="481.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleWriteTagID" text="WriteTagID" />
-                <Button layoutX="561.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagIDDestID" text="Browse" />
-                <Label layoutX="339.0" layoutY="516.0" text="Password:" />
-                <TextField id="readTimerInterval" fx:id="writeTagID_password" layoutX="401.0" layoutY="513.0" prefWidth="159.0" />
-                <Button layoutX="561.0" layoutY="511.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagIDPassword" text="Browse" />
+                <Label alignment="CENTER" font="$x1" layoutX="318.0" layoutY="107.0" prefWidth="221.0" text="Stop Read Tags" underline="true" />
+                <Button layoutX="540.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleBrowseStopReadTagsPassword" text="Browse" />
+                <Label layoutX="318.0" layoutY="140.0" text="Password:" />
+                <TextField id="readTimerInterval" fx:id="stopReadTags_password" layoutX="380.0" layoutY="137.0" prefWidth="159.0" />
+                <Button layoutX="442.0" layoutY="167.0" mnemonicParsing="false" onAction="#handleStopReadTag" text="StopReadTag" />
+                <Button layoutX="540.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagDataTagID" text="Browse" />
+                <Label layoutX="318.0" layoutY="237.0" text="TagID:" />
+                <TextField id="readTimerInterval" fx:id="writeTagData_tagID" layoutX="380.0" layoutY="234.0" prefWidth="159.0" />
+                <Label alignment="CENTER" font="$x1" layoutX="318.0" layoutY="206.0" prefWidth="221.0" text="Write Tag Data" underline="true" />
+                <Label layoutX="318.0" layoutY="264.0" text="Userdata:" />
+                <TextField id="readTimerInterval" fx:id="writeTagData_userdata" layoutX="380.0" layoutY="261.0" prefWidth="159.0" />
+                <Label layoutX="318.0" layoutY="291.0" text="Start:" />
+                <TextField id="readTimerInterval" fx:id="writeTagData_start" layoutX="380.0" layoutY="288.0" prefWidth="159.0" />
+                <Button layoutX="446.0" layoutY="368.0" mnemonicParsing="false" onAction="#handleWriteTagData" text="WriteTagData" />
+                <Button layoutX="540.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagDataUserdata" text="Browse" />
+                <Label layoutX="318.0" layoutY="317.0" text="Timeout:" />
+                <TextField id="readTimerInterval" fx:id="writeTagData_timeout" layoutX="380.0" layoutY="314.0" prefWidth="159.0" />
+                <Label layoutX="318.0" layoutY="344.0" text="Password:" />
+                <TextField id="readTimerInterval" fx:id="writeTagData_password" layoutX="380.0" layoutY="341.0" prefWidth="159.0" />
+                <Button layoutX="540.0" layoutY="339.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagDataPassword" text="Browse" />
+                <Button layoutX="540.0" layoutY="428.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagIDSourceID" text="Browse" />
+                <Label layoutX="318.0" layoutY="433.0" text="SourceID:" />
+                <TextField id="readTimerInterval" fx:id="writeTagID_sourceID" layoutX="380.0" layoutY="430.0" prefWidth="159.0" />
+                <Label alignment="CENTER" font="$x1" layoutX="318.0" layoutY="403.0" prefWidth="221.0" text="WriteTagID" underline="true" />
+                <Label layoutX="318.0" layoutY="460.0" text="DestID:" />
+                <TextField id="readTimerInterval" fx:id="writeTagID_destID" layoutX="380.0" layoutY="457.0" prefWidth="159.0" />
+                <Label layoutX="318.0" layoutY="487.0" text="Timeout:" />
+                <TextField id="readTimerInterval" fx:id="writeTagID_timeout" layoutX="381.0" layoutY="484.0" prefWidth="159.0" />
+                <Button layoutX="460.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleWriteTagID" text="WriteTagID" />
+                <Button layoutX="540.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagIDDestID" text="Browse" />
+                <Label layoutX="318.0" layoutY="516.0" text="Password:" />
+                <TextField id="readTimerInterval" fx:id="writeTagID_password" layoutX="380.0" layoutY="513.0" prefWidth="159.0" />
+                <Button layoutX="540.0" layoutY="511.0" mnemonicParsing="false" onAction="#handleBrowseWriteTagIDPassword" text="Browse" />
+                <Label alignment="CENTER" font="$x1" layoutX="607.0" layoutY="111.0" prefWidth="231.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
             <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
