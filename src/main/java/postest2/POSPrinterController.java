@@ -302,6 +302,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		} catch (Exception jpe) {
 			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(), "Exception",
 					JOptionPane.ERROR_MESSAGE);
+
 			System.err.println("Jpos exception " + jpe);
 		}
 	}

@@ -241,7 +241,8 @@ public class RemoteOrderDisplayController extends CommonController implements In
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service, null);
+			IMapWrapper rodcm = new RemoteOrderDisplayConstantMapper();
+			String msg = DeviceProperties.getProperties(service, rodcm);
 
 			JTextArea jta = new JTextArea(msg);
 			@SuppressWarnings("serial")
