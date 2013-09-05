@@ -1,7 +1,7 @@
 package postest2;
 
 
-public class RemoteOrderDisplayConstantMapper {
+public class RemoteOrderDisplayConstantMapper implements IMapWrapper {
 
 	
 	 /////////////////////////////////////////////////////////////////////
@@ -114,9 +114,11 @@ public class RemoteOrderDisplayConstantMapper {
     /////////////////////////////////////////////////////////////////////
     // "SelectCharacterSet" Method: "CharacterSet" Parameter Constants
     /////////////////////////////////////////////////////////////////////
-
+    @BelongingProperty(PropertyNames.getCharacterSet)
     public static final ConstantConverter ROD_CS_UNICODE       = new ConstantConverter( 997, "ROD_CS_UNICODE");
+    @BelongingProperty(PropertyNames.getCharacterSet)
     public static final ConstantConverter ROD_CS_ASCII         = new ConstantConverter( 998, "ROD_CS_ASCII");
+    @BelongingProperty(PropertyNames.getCharacterSet)
     public static final ConstantConverter ROD_CS_ANSI          = new ConstantConverter( 999, "ROD_CS_ANSI");
 
 
@@ -480,5 +482,10 @@ public class RemoteOrderDisplayConstantMapper {
 		}
 
 		return Integer.parseInt(constant);
+	}
+
+	@Override
+	public IMapWrapper getTheClass() {
+		return this;
 	}
 }

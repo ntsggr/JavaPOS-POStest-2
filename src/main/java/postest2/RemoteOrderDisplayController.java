@@ -21,7 +21,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jpos.JposConst;
 import jpos.JposException;
 import jpos.RemoteOrderDisplay;
 
@@ -163,7 +162,8 @@ public class RemoteOrderDisplayController extends CommonController implements In
 	@FXML
 	public void handleInfo(ActionEvent e) {
 		try {
-			String msg = DeviceProperties.getProperties(service, null);
+			IMapWrapper rodcm = new RemoteOrderDisplayConstantMapper();
+			String msg = DeviceProperties.getProperties(service, rodcm);
 
 			JTextArea jta = new JTextArea(msg);
 			@SuppressWarnings("serial")
