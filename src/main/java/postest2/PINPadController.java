@@ -125,7 +125,10 @@ public class PINPadController extends CommonController implements Initializable 
 		handleDeviceEnable(e);
 	}
 	
-	// Initialize the beginning of an EFT Transaction.
+	/**
+	 * Initialize the beginning of an EFT Transaction.
+	 * @param e
+	 */
 	@FXML
 	public void handleBeginEFTTransaction(ActionEvent e) {
 		try {

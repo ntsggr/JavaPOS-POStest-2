@@ -178,7 +178,6 @@ public class ElectronicValueRWController extends CommonController implements Ini
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		// System.out.println("asyncMode");
 		try {
 			((ElectronicValueRW) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException je) {

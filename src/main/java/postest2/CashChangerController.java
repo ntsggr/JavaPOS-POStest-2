@@ -90,7 +90,9 @@ public class CashChangerController extends CommonController implements Initializ
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -114,7 +116,9 @@ public class CashChangerController extends CommonController implements Initializ
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -148,7 +152,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		//System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CashChanger) service).setDeviceEnabled(true);
@@ -166,7 +169,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		//System.out.println("asyncMode");
 		try {
 			((CashChanger) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException je) {
@@ -176,7 +178,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
-		//System.out.println("currencyCode");
 		try {
 			((CashChanger) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -187,7 +188,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
-		//System.out.println("realtimedataenabled");
 		try {
 			((CashChanger) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -198,7 +198,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		//System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CashChanger) service).adjustCashCounts(adjustCashCounts.getText());
@@ -211,7 +210,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleBeginDeposit(ActionEvent e) {
-		//System.out.println("begin");
 		try {
 			((CashChanger) service).beginDeposit();
 		} catch (JposException e1) {
@@ -222,7 +220,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleEndDeposit(ActionEvent e) {
-		//System.out.println("end");
 		try {
 			((CashChanger) service).endDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
@@ -234,7 +231,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleFixDeposit(ActionEvent e) {
-		//System.out.println("fix");
 		try {
 			((CashChanger) service).fixDeposit();
 		} catch (JposException e1) {
@@ -245,7 +241,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handlePauseDeposit(ActionEvent e) {
-		//System.out.println("pause");
 		try {
 			((CashChanger) service).pauseDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
@@ -257,7 +252,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		//System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {
@@ -272,7 +266,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetCurrentExit(ActionEvent e) {
-		//System.out.println("currenctExit");
 		try {
 			((CashChanger) service).setCurrentExit(currentExit.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -283,7 +276,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
-		//System.out.println("dispenseCash");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CashChanger) service).adjustCashCounts(adjustCashCounts.getText());
@@ -296,7 +288,6 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@FXML
 	public void handleSetCurrentService(ActionEvent e) {
-		//System.out.println("currentservice");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CashChanger) service).setCurrentService(currentService.getSelectionModel().getSelectedItem());

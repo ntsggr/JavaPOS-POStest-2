@@ -4,8 +4,12 @@ import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -53,10 +57,36 @@ public class PointCardRWController extends CommonController implements Initializ
 	@FXML
 	public TextField height;
 
+	// Holds position of ESC-Characters.
+	// Need because Textarea delete ESC everytime it changes
+	private ArrayList<Integer> printEscapeSequenceList;
+	
+	// Escape-Character
+	final char ESC = (char) 0x1B;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new PointCardRW();
 		RequiredStateChecker.invokeThis(this, service);
+		setUpLogicalNameComboBox("PointCardRW");
+		printEscapeSequenceList = new ArrayList<Integer>();
+		
+		/*
+		 * Add ChangeListener to update EscCharacterPosititon List
+		 */
+		textToPrint.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+
+				if (arg2.length() > arg1.length()) {
+					updateInsertsEscSequencesToPrintData((arg2.length() - arg1.length()));
+
+				} else {
+					updateDeletesEscSequencesToPrintData(arg1.length() - arg2.length());
+				}
+			}
+		});
+		
 	}
 
 	/* ************************************************************************
@@ -131,7 +161,7 @@ public class PointCardRWController extends CommonController implements Initializ
 	@FXML
 	public void handleValidateData(ActionEvent e) {
 		try {
-			((PointCardRW) service).validateData(textToPrint.getText());
+			((PointCardRW) service).validateData(addEscSequencesToPrintData());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 		}
@@ -139,13 +169,20 @@ public class PointCardRWController extends CommonController implements Initializ
 
 	@FXML
 	public void handleAddEscSec(ActionEvent e) {
+		printEscapeSequenceList.add(textToPrint.getCaretPosition());
 		String text = textToPrint.getText();
 		String first = text.substring(0, textToPrint.getCaretPosition());
-		String second = text.substring(textToPrint.getCaretPosition(), textToPrint.lengthProperty()
-				.getValue());
+		String second = text.substring(textToPrint.getCaretPosition(), textToPrint.lengthProperty().getValue());
 
-		textToPrint.setText(first + "|" + second);
-		textToPrint.positionCaret(textToPrint.getLength() - 1);
+		textToPrint.setText(first + "|" + second);	
+		textToPrint.positionCaret(textToPrint.getLength());
+
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -154,7 +191,7 @@ public class PointCardRWController extends CommonController implements Initializ
 			int tKind = kind.getSelectionModel().getSelectedIndex();
 			if (tKind > -1) {
 				((PointCardRW) service).printWrite(tKind + 1, Integer.parseInt(hpos.getText()),
-						Integer.parseInt(vpos.getText()), textToPrint.getText());
+						Integer.parseInt(vpos.getText()), addEscSequencesToPrintData());
 			} else {
 				JOptionPane.showMessageDialog(null, "Choose a Map mode.", "Map mode!",
 						JOptionPane.WARNING_MESSAGE);
@@ -328,5 +365,84 @@ public class PointCardRWController extends CommonController implements Initializ
 					"Error occured!", JOptionPane.WARNING_MESSAGE);
 		}
 	}
+	
+	/**
+	 * Adds the ESC-Character to the printNormal-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * 
+	 * @return the Correct String containing the ESC-characters
+	 */
+	private String addEscSequencesToPrintData() {
+		String ret = textToPrint.getText();
+		synchronized (printEscapeSequenceList) {
+			if (!printEscapeSequenceList.isEmpty()) {
+				int i = 0;
+				for (int num : printEscapeSequenceList) {
+					if(num < ret.length()){
+						num += i;
+						ret = ret.substring(0, num) + ESC + ret.substring(num, ret.length());
+						i++;
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
+	 * something was added to printNormalData
+	 */
+	private void updateInsertsEscSequencesToPrintData(int diff) {
+		int cursorPos = textToPrint.getCaretPosition();
+		ListIterator<Integer> pos =	 printEscapeSequenceList.listIterator();
+		
+		while(pos.hasNext()){
+			int i = pos.next();
+			if (i > cursorPos) {
+				pos.remove();
+				pos.add((i + diff));
+			}
+			if (printEscapeSequenceList.isEmpty()) {
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
+	 * something was deleted from printNormalData
+	 */
+	private void updateDeletesEscSequencesToPrintData(int diff) {
+		// Compare Length with ArrayList pos
+		// Decrement Index -1 > Cursor Pos
+		int cursorPos = textToPrint.getCaretPosition();
+		
+		ListIterator<Integer> pos =	 printEscapeSequenceList.listIterator();
+		while(pos.hasNext()){
+			int i= pos.next();
+			if (i > textToPrint.getText().length()) {
+				pos.remove();
+				if (printEscapeSequenceList.isEmpty()) {
+					break;
+				}
+				continue;
+			}
+			if (i == cursorPos - 1) {
+				pos.remove();
+				if (printEscapeSequenceList.isEmpty()) {
+					break;
+				}
+			}
+			if (i > cursorPos) {
+				pos.remove();
+				pos.add(i-diff);
+			}
+			if (printEscapeSequenceList.isEmpty()) {
+				break;
+			}
+		}
+	}
+	
 
 }

@@ -8,8 +8,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +23,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -52,7 +57,7 @@ public class LineDisplayController extends CommonController implements Initializ
 	@FXML
 	public ComboBox<String> attribute;
 	@FXML
-	public TextField displayText;
+	public TextArea displayText;
 
 	@FXML
 	public TextField blinkRate;
@@ -135,12 +140,37 @@ public class LineDisplayController extends CommonController implements Initializ
 
 	// List for ListView openWindowsListView
 	private ObservableList<String> windowList = FXCollections.observableArrayList();
+	
+	// Holds position of ESC-Characters.
+	// Need because Textarea delete ESC everytime it changes
+	private ArrayList<Integer> displayTextEscapeSequenceList;
+
+	// Escape-Character
+	final char ESC = (char) 0x1B;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpLogicalNameComboBox("LineDisplay");
 		service = new LineDisplay();
 		RequiredStateChecker.invokeThis(this, service);
+		displayTextEscapeSequenceList = new ArrayList<Integer>();
+		
+		/*
+		 * Add ChangeListener to update EscCharacterPosititon List
+		 */
+		displayText.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+
+				if (arg2.length() > arg1.length()) {
+					updateInsertsEscSequencesToDisplayTextData((arg2.length() - arg1.length()));
+
+				} else {
+					updateDeletesEscSequencesToDisplayTextData(arg1.length() - arg2.length());
+				}
+			}
+		});
+		
 	}
 
 
@@ -252,14 +282,14 @@ public class LineDisplayController extends CommonController implements Initializ
 	}
 
 	@FXML
-	public void handleDisplayTextAt(ActionEvent e) {
+	public void handleDisplayTextAt(ActionEvent e) {		
 		if (row.getSelectionModel().getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(null, "Row is not selected!", "Logical name is empty",
 					JOptionPane.WARNING_MESSAGE);
 		}
 		try {
 			((LineDisplay) service).displayTextAt(row.getSelectionModel().getSelectedItem(), 
-					column.getSelectionModel().getSelectedItem(), displayText.getText(), 
+					column.getSelectionModel().getSelectedItem(), addEscSequencesToDisplayTextData(), 
 					LineDisplayConstantMapper.getConstantNumberFromString(attribute.getSelectionModel().getSelectedItem()));
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
@@ -268,13 +298,13 @@ public class LineDisplayController extends CommonController implements Initializ
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
+	
 	}
 
 	@FXML
 	public void handleDisplayText(ActionEvent e) {
 		try {
-			((LineDisplay) service).displayText(displayText.getText(), 
+			((LineDisplay) service).displayText(addEscSequencesToDisplayTextData(), 
 					LineDisplayConstantMapper.getConstantNumberFromString(attribute.getSelectionModel().getSelectedItem()));
 		} catch (NumberFormatException e1) {
 			e1.printStackTrace();
@@ -283,7 +313,6 @@ public class LineDisplayController extends CommonController implements Initializ
 			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
-
 	}
 
 	@FXML
@@ -344,6 +373,24 @@ public class LineDisplayController extends CommonController implements Initializ
 				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
+		}
+	}
+	
+	@FXML
+	public void handleAddEscapeSequence(ActionEvent e) {
+		displayTextEscapeSequenceList.add(displayText.getCaretPosition());
+		String text = displayText.getText();
+		String first = text.substring(0, displayText.getCaretPosition());
+		String second = text.substring(displayText.getCaretPosition(), displayText.lengthProperty().getValue());
+
+		displayText.setText(first + "|" + second);	
+		displayText.positionCaret(displayText.getLength());
+
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 
@@ -942,5 +989,86 @@ public class LineDisplayController extends CommonController implements Initializ
 
 		return bytes;
 	}
+	
+	/**
+	 * Adds the ESC-Character to the printNormal-String and returns it.
+	 * Necessary because TextField deletes all ESC-Characters on a change
+	 * 
+	 * @return the Correct String containing the ESC-characters
+	 */
+	private String addEscSequencesToDisplayTextData() {
+		String ret = displayText.getText();
+		synchronized (displayTextEscapeSequenceList) {
+			if (!displayTextEscapeSequenceList.isEmpty()) {
+				int i = 0;
+				for (int num : displayTextEscapeSequenceList) {
+					if(num < ret.length()){
+						num += i;
+						ret = ret.substring(0, num) + ESC + ret.substring(num, ret.length());
+						i++;
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
+	/**
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
+	 * something was added to printNormalData
+	 */
+	private void updateInsertsEscSequencesToDisplayTextData(int diff) {
+		int cursorPos = displayText.getCaretPosition();
+		ListIterator<Integer> pos =	 displayTextEscapeSequenceList.listIterator();
+		
+		while(pos.hasNext()){
+			int i = pos.next();
+			if (i > cursorPos) {
+				pos.remove();
+				pos.add((i + diff));
+			}
+			if (displayTextEscapeSequenceList.isEmpty()) {
+				break;
+			}
+		}
+		
+	}
+
+	/**
+	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
+	 * something was deleted from printNormalData
+	 */
+	private void updateDeletesEscSequencesToDisplayTextData(int diff) {
+		// Compare Length with ArrayList pos
+		// Decrement Index -1 > Cursor Pos
+		int cursorPos = displayText.getCaretPosition();
+		
+		ListIterator<Integer> pos =	 displayTextEscapeSequenceList.listIterator();
+		while(pos.hasNext()){
+			int i= pos.next();
+			if (i > displayText.getText().length()) {
+				pos.remove();
+				if (displayTextEscapeSequenceList.isEmpty()) {
+					break;
+				}
+				continue;
+			}
+			if (i == cursorPos - 1) {
+				pos.remove();
+				if (displayTextEscapeSequenceList.isEmpty()) {
+					break;
+				}
+			}
+			if (i > cursorPos) {
+				pos.remove();
+				pos.add(i-diff);
+			}
+			if (displayTextEscapeSequenceList.isEmpty()) {
+				break;
+			}
+		}
+	}
+
+	
 	
 }

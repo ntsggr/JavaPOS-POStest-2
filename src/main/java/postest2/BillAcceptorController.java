@@ -64,7 +64,9 @@ public class BillAcceptorController extends CommonController implements Initiali
 	 * ************************ Action Handler *********************************
 	 * ***********************************************************************
 	 */
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -88,7 +90,9 @@ public class BillAcceptorController extends CommonController implements Initiali
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -122,7 +126,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		//System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((BillAcceptor) service).setDeviceEnabled(true);
@@ -148,7 +151,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
-		//System.out.println("currencyCode");
 		try {
 			((BillAcceptor) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -159,7 +161,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetRealTimeDataEnabled(ActionEvent e) {
-		//System.out.println("realtimedataenabled");
 		try {
 			((BillAcceptor) service).setRealTimeDataEnabled(realTimeDataEnabled.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -170,7 +171,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		//System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillAcceptor) service).adjustCashCounts(adjustCashCounts.getText());
@@ -183,7 +183,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleBeginDeposit(ActionEvent e) {
-		//System.out.println("begin");
 		try {
 			((BillAcceptor) service).beginDeposit();
 		} catch (JposException e1) {
@@ -194,7 +193,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleEndDeposit(ActionEvent e) {
-		//System.out.println("end");
 		try {
 			((BillAcceptor) service).endDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
@@ -206,7 +204,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleFixDeposit(ActionEvent e) {
-		//System.out.println("fix");
 		try {
 			((BillAcceptor) service).fixDeposit();
 		} catch (JposException e1) {
@@ -217,7 +214,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handlePauseDeposit(ActionEvent e) {
-		//System.out.println("pause");
 		try {
 			((BillAcceptor) service).pauseDeposit(BillAcceptorConstantMapper
 					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
@@ -229,7 +225,6 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		//System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {

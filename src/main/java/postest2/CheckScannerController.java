@@ -84,7 +84,7 @@ public class CheckScannerController extends CommonController implements Initiali
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		service = new CheckScanner();
 		RequiredStateChecker.invokeThis(this, service);
-		setUpLogicalNameComboBox();
+		setUpLogicalNameComboBox("CheckScanner");
 	}
 
 	/* ************************************************************************
@@ -115,7 +115,9 @@ public class CheckScannerController extends CommonController implements Initiali
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -139,7 +141,9 @@ public class CheckScannerController extends CommonController implements Initiali
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -429,12 +433,6 @@ public class CheckScannerController extends CommonController implements Initiali
 	/*
 	 * Set Up Combo Boxes
 	 */
-
-	private void setUpLogicalNameComboBox() {
-		if (!LogicalNameGetter.getLogicalNamesByCategory("CheckScanner").isEmpty()) {
-			logicalName.setItems(LogicalNameGetter.getLogicalNamesByCategory("CheckScanner"));
-		}
-	}
 
 	private void setUpColor() {
 		color.getItems().clear();

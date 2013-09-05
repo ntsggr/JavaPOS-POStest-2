@@ -84,7 +84,9 @@ public class CoinAcceptorController extends CommonController implements Initiali
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -108,7 +110,9 @@ public class CoinAcceptorController extends CommonController implements Initiali
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -142,7 +146,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
-		//System.out.println("currencyCode");
 		try {
 			((CoinAcceptor) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -153,7 +156,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		//System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinAcceptor) service).adjustCashCounts(adjustCashCounts.getText());
@@ -166,7 +168,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleBeginDeposit(ActionEvent e) {
-		//System.out.println("begin");
 		try {
 			((CoinAcceptor) service).beginDeposit();
 		} catch (JposException e1) {
@@ -177,7 +178,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleEndDeposit(ActionEvent e) {
-		//System.out.println("end");
 		try {
 			((CoinAcceptor) service).endDeposit(CoinAcceptorConstantMapper
 					.getConstantNumberFromString(endDeposit_success.getSelectionModel().getSelectedItem()));
@@ -189,7 +189,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleFixDeposit(ActionEvent e) {
-		//System.out.println("fix");
 		try {
 			((CoinAcceptor) service).fixDeposit();
 		} catch (JposException e1) {
@@ -200,7 +199,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handlePauseDeposit(ActionEvent e) {
-		//System.out.println("pause");
 		try {
 			((CoinAcceptor) service).pauseDeposit(CoinAcceptorConstantMapper
 					.getConstantNumberFromString(pauseDeposit_control.getSelectionModel().getSelectedItem()));
@@ -212,7 +210,6 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		//System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {

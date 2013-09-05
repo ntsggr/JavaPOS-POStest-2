@@ -68,8 +68,6 @@ public abstract class CommonController implements Initializable {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				service.open(logicalName.getValue());
 				RequiredStateChecker.invokeThis(this, service);
-				// buttonClaim.setDisable(false);
-				System.out.println(service.getState());
 				setStatusLabel();
 			} else {
 				JOptionPane.showMessageDialog(null, "Choose a device!", "Logical name is empty",

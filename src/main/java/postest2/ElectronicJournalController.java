@@ -124,7 +124,9 @@ public class ElectronicJournalController extends CommonController implements Ini
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -148,7 +150,9 @@ public class ElectronicJournalController extends CommonController implements Ini
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -182,7 +186,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		// System.out.println("async");
 		try {
 			((ElectronicJournal) service).setAsyncMode(asyncMode.selectedProperty().getValue());
 		} catch (JposException e1) {
@@ -193,7 +196,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleFlagWhenIdle(ActionEvent e) {
-		// System.out.println("flag");
 		try {
 			((ElectronicJournal) service).setFlagWhenIdle(flagWhenIdle.selectedProperty().getValue());
 		} catch (JposException e1) {
@@ -204,7 +206,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleSetStation(ActionEvent e) {
-		// System.out.println("stati");
 		try {
 			((ElectronicJournal) service).setStation(ElectronicJournalConstantMapper
 					.getConstantNumberFromString(station.getSelectionModel().getSelectedItem()));
@@ -216,7 +217,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleSetWaterMark(ActionEvent e) {
-		// System.out.println("warter");
 		try {
 			((ElectronicJournal) service).setWaterMark(waterMark.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -227,7 +227,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleSetStorageEnabled(ActionEvent e) {
-		// System.out.println("stor");
 		try {
 			((ElectronicJournal) service).setStorageEnabled(storageEnabled.getSelectionModel()
 					.getSelectedItem());
@@ -239,7 +238,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleEraseMedium(ActionEvent e) {
-		// System.out.println("erase");
 		try {
 			((ElectronicJournal) service).eraseMedium();
 		} catch (JposException e1) {
@@ -250,7 +248,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleInitializeMedium(ActionEvent e) {
-		// System.out.println("init");
 		if (initializeMedium_mediumID.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -265,7 +262,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleCancelPrintContent(ActionEvent e) {
-		// System.out.println("canprint");
 		try {
 			((ElectronicJournal) service).cancelPrintContent();
 		} catch (JposException e1) {
@@ -276,7 +272,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handlePrintContent(ActionEvent e) {
-		// System.out.println("printCon");
 		if (printContent_fromMarker.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -292,7 +287,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handlePrintContentFile(ActionEvent e) {
-		// System.out.println("printConFile");
 		if (printContentFile_fileName.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -307,7 +301,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleSuspendPrintContent(ActionEvent e) {
-		// System.out.println("suspendPrint");
 		try {
 			((ElectronicJournal) service).suspendPrintContent();
 		} catch (JposException e1) {
@@ -318,7 +311,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleResumePrintContent(ActionEvent e) {
-		// System.out.println("resumePrint");
 		try {
 			((ElectronicJournal) service).resumePrintContent();
 		} catch (JposException e1) {
@@ -329,7 +321,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleQueryContent(ActionEvent e) {
-		// System.out.println("queryCon");
 		if (queryContent_fileName.getText().isEmpty() || queryContent_fromMarker.getText().isEmpty()
 				|| queryContent_toMarker.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
@@ -346,7 +337,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleSuspendQueryContent(ActionEvent e) {
-		// System.out.println("suspendquery");
 		try {
 			((ElectronicJournal) service).suspendQueryContent();
 		} catch (JposException e1) {
@@ -357,7 +347,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleResumeQueryContent(ActionEvent e) {
-		// System.out.println("resumequery");
 		try {
 			((ElectronicJournal) service).resumeQueryContent();
 		} catch (JposException e1) {
@@ -368,7 +357,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleCancelQueryContent(ActionEvent e) {
-		// System.out.println("cancelQuery");
 		try {
 			((ElectronicJournal) service).cancelQueryContent();
 		} catch (JposException e1) {
@@ -379,7 +367,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleAddMarker(ActionEvent e) {
-		// System.out.println("addmarker");
 		if (addMarker_marker.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {
@@ -394,7 +381,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleRetrieveCurrentMarker(ActionEvent e) {
-		// System.out.println("retcurmarker");
 		String[] marker = new String[1];
 		try {
 			((ElectronicJournal) service).retrieveCurrentMarker(ElectronicJournalConstantMapper
@@ -409,7 +395,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleRetrieveMarker(ActionEvent e) {
-		// System.out.println("retmark");
 		if (retrieveMarker_sessionNumber.getText().isEmpty()
 				|| retrieveMarker_documentNumber.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
@@ -434,7 +419,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleRetrieveMarkerByDateTime(ActionEvent e) {
-		// System.out.println("retmarkbydt");
 		if (retrieveMarkerByDateTime_dateTime.getText().isEmpty()
 				|| retrieveMarkerByDateTime_markerNumber.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value!");
@@ -455,7 +439,6 @@ public class ElectronicJournalController extends CommonController implements Ini
 
 	@FXML
 	public void handleRetrieveMarkersDateTime(ActionEvent e) {
-		// System.out.println("retdt");
 		if (retrieveMarkersDateTime_marker.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value!");
 		} else {

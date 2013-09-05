@@ -17,6 +17,6 @@
         <TableColumn prefWidth="160.0" text="Product Name" fx:id="productName" />
       </columns>
     </TableView>
-    <Text fontSmoothingType="LCD" layoutX="54.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Below is a list of the devices found in zour jpos.xml file." />
+    <Text fontSmoothingType="LCD" layoutX="54.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Below is a list of the devices found in your jpos.xml file." />
   </children>
 </AnchorPane>

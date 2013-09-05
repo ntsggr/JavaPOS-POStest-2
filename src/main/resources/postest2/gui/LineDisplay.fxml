@@ -40,14 +40,15 @@
                         <Button layoutX="357.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleDisplayText" prefWidth="100.0" text="DisplayText" />
                         <Button layoutX="469.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleClearText" prefWidth="100.0" text="Clear Text" />
                         <Button layoutX="357.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleMoveCursor" prefWidth="100.0" text="Move Cursor" />
-                        <TextField fx:id="displayText" layoutX="90.0" layoutY="290.0" prefWidth="386.0" />
-                        <Label layoutX="90.0" layoutY="274.0" text="Send Text to Line Display:" />
+                        <Label layoutX="90.0" layoutY="242.0" text="Send Text to Line Display:" />
                         <Label layoutX="38.0" layoutY="129.0" text="Blink Rate:" />
                         <TextField fx:id="blinkRate" layoutX="96.0" layoutY="126.0" prefWidth="135.0" />
                         <Button layoutX="245.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleSetBlinkRate" prefWidth="100.0" text="Set BlinkRate" />
                         <TextField fx:id="intercharacterWait" layoutX="96.0" layoutY="157.0" prefWidth="135.0" />
                         <Label layoutX="38.0" layoutY="160.0" text="ICharWait:" />
                         <Button layoutX="245.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleSetICharWait" prefWidth="100.0" text="Set ICharWait" />
+                        <Button layoutX="436.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleAddEscapeSequence" text="Add EscapeSequence" />
+                        <TextArea fx:id="displayText" layoutX="90.0" layoutY="260.0" prefWidth="479.0" wrapText="true" />
                       </children>
                     </AnchorPane>
                   </content>
@@ -185,15 +186,7 @@
                         </ComboBox>
                         <Button layoutX="253.0" layoutY="153.0" mnemonicParsing="false" onAction="#handleSetCursorUpdate" prefWidth="120.0" text="Set CursorUpdate" />
                         <Label layoutX="41.0" layoutY="158.0" text="CursorUpdate" />
-                        <ComboBox fx:id="cursorUpdate" layoutX="131.0" layoutY="156.0" prefHeight="21.0" prefWidth="116.00009999999747">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="Item 1" />
-                              <String fx:value="Item 2" />
-                              <String fx:value="Item 3" />
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="cursorUpdate" layoutX="131.0" layoutY="156.0" prefHeight="21.0" prefWidth="116.00009999999747" />
                       </children>
                     </AnchorPane>
                   </content>

@@ -70,7 +70,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-		// System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((BillDispenser) service).setDeviceEnabled(true);
@@ -95,7 +94,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		// System.out.println("asyncMode");
 		try {
 			((BillDispenser) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException je) {
@@ -105,7 +103,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleSetCurrencyCode(ActionEvent e) {
-		// System.out.println("currencyCode");
 		try {
 			((BillDispenser) service).setCurrencyCode(currencyCode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -116,7 +113,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleSetCurrentExit(ActionEvent e) {
-		// System.out.println("currenctExit");
 		try {
 			((BillDispenser) service).setCurrentExit(currentExit.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -127,7 +123,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		// System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -140,7 +135,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
-		// System.out.println("dispenseCash");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((BillDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -153,7 +147,6 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		// System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {
@@ -166,7 +159,9 @@ public class BillDispenserController extends CommonController implements Initial
 		this.readCashCount_discrepancy.setText("" + discrepancy[0]);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -190,7 +185,9 @@ public class BillDispenserController extends CommonController implements Initial
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {

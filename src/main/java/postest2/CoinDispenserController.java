@@ -79,7 +79,9 @@ public class CoinDispenserController extends CommonController implements Initial
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -103,7 +105,9 @@ public class CoinDispenserController extends CommonController implements Initial
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -137,7 +141,6 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleAdjustCashCounts(ActionEvent e) {
-		// System.out.println("adjust");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -150,7 +153,6 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleDispenseCash(ActionEvent e) {
-		// System.out.println("dispenseCash");
 		if (!adjustCashCounts.getText().isEmpty()) {
 			try {
 				((CoinDispenser) service).adjustCashCounts(adjustCashCounts.getText());
@@ -163,7 +165,6 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@FXML
 	public void handleReadCashCount(ActionEvent e) {
-		// System.out.println("readCashCount");
 		String[] cashCounts = new String[1];
 		boolean[] discrepancy = new boolean[1];
 		try {

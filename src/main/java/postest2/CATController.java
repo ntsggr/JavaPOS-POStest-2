@@ -92,7 +92,9 @@ public class CATController extends CommonController implements Initializable {
 		handleDeviceEnable(e);
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -116,7 +118,9 @@ public class CATController extends CommonController implements Initializable {
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -151,7 +155,6 @@ public class CATController extends CommonController implements Initializable {
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
 
-		//System.out.println("DevEnable");
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CAT) service).setDeviceEnabled(true);
@@ -169,7 +172,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAsyncMode(ActionEvent e) {
-		//System.out.println("async");
 		try {
 			((CAT) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException e1) {
@@ -180,7 +182,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleSetAdditionalSecurityInformation(ActionEvent e) {
-		//System.out.println("setaddit");
 		if (additionalSecurityInformation.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Field should have a value");
 		} else {
@@ -195,7 +196,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleSetPaymentMedia(ActionEvent e) {
-		//System.out.println("setpaymes");
 		try {
 			((CAT) service).setPaymentMedia(CATConstantMapper.getConstantNumberFromString(paymentMedia
 					.getSelectionModel().getSelectedItem()));
@@ -207,7 +207,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleSetTrainingMode(ActionEvent e) {
-		//System.out.println("settraining");
 		try {
 			((CAT) service).setTrainingMode(trainingMode.getSelectionModel().getSelectedItem());
 		} catch (JposException e1) {
@@ -218,7 +217,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAccessDailyLog(ActionEvent e) {
-		//System.out.println("dailylog");
 		if (accessDailyLog_sequenceNumber.getText().isEmpty() || accessDailyLog_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
@@ -239,7 +237,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAuthorizeCompletion(ActionEvent e) {
-		//System.out.println("authComp");
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 
@@ -261,7 +258,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAuthorizePreSales(ActionEvent e) {
-		//System.out.println("authpresal");
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 
@@ -283,7 +279,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAuthorizeVoid(ActionEvent e) {
-		//System.out.println("authVoid");
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
 
@@ -307,7 +302,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAuthorizeSales(ActionEvent e) {
-		//System.out.println("authsale");
 
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
@@ -332,7 +326,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAuthorizeRefund(ActionEvent e) {
-		//System.out.println("authRef");
 
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
@@ -357,7 +350,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleAuthorizeVoidPreSales(ActionEvent e) {
-		//System.out.println("authVoidPresal");
 
 		if (authorize_amount.getText().isEmpty() || authorize_sequenceNumber.getText().isEmpty()
 				|| authorize_taxOthers.getText().isEmpty() || authorize_timeout.getText().isEmpty()) {
@@ -380,7 +372,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleCashDeposit(ActionEvent e) {
-		//System.out.println("cashDepo");
 		if (cashDeposit_amount.getText().isEmpty() || cashDeposit_sequenceNumber.getText().isEmpty()
 				|| cashDeposit_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
@@ -400,7 +391,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleCheckCard(ActionEvent e) {
-		//System.out.println("checkcard");
 		if (checkCard_sequenceNumber.getText().isEmpty() || checkCard_timeout.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Every Field should have a value");
 		} else {
@@ -420,7 +410,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleLockTerminal(ActionEvent e) {
-		//System.out.println("lock");
 		try {
 			((CAT) service).lockTerminal();
 
@@ -432,7 +421,6 @@ public class CATController extends CommonController implements Initializable {
 
 	@FXML
 	public void handleUnlockTerminal(ActionEvent e) {
-		//System.out.println("unlock");
 		try {
 			((CAT) service).unlockTerminal();
 		} catch (JposException e1) {

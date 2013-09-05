@@ -149,7 +149,9 @@ public class BiometricsController extends CommonController implements Initializa
 	 * ***********************************************************************
 	 */
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleInfo(ActionEvent e) {
@@ -173,7 +175,9 @@ public class BiometricsController extends CommonController implements Initializa
 		}
 	}
 
-	// Shows statistics of device if they are supported by the device
+	/**
+	 * Shows statistics of device if they are supported by the device
+	 */
 	@Override
 	@FXML
 	public void handleStatistics(ActionEvent e) {
@@ -425,12 +429,10 @@ public class BiometricsController extends CommonController implements Initializa
 				int maxFARRequested = Integer.parseInt(identifyMatch_maxFARRequested.getText());
 				int maxFRRRequested = Integer.parseInt(identifyMatch_maxFRRRequested.getText());
 				boolean FARPrecedence = identifyMatch_FARPrecedence.getSelectionModel().getSelectedItem();
-				byte[][] referenceBIRPopulation = new byte[identifyMatch_referenceBIRPopulation.getItems()
-						.size()][];
+				byte[][] referenceBIRPopulation = new byte[identifyMatch_referenceBIRPopulation.getItems().size()][];
 
 				for (int i = 0; i < identifyMatch_referenceBIRPopulation.getItems().size(); i++) {
-					referenceBIRPopulation[i] = readBytesFromFile(identifyMatch_referenceBIRPopulation
-							.getItems().get(i));
+					referenceBIRPopulation[i] = readBytesFromFile(identifyMatch_referenceBIRPopulation.getItems().get(i));
 				}
 				int[][] candidateRanking = null;
 				byte[] sampleBIR = readBytesFromFile(identifyMatch_sampleBIR.getText());

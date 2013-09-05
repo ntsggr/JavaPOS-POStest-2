@@ -110,6 +110,7 @@ public class POSPowerController extends CommonController implements Initializabl
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
+		deviceEnabled.setSelected(true);
 		handleDeviceEnable(e);
 	}
 
@@ -178,6 +179,7 @@ public class POSPowerController extends CommonController implements Initializabl
 		reason.getItems().add(POSPowerConstantMapper.PWR_REASON_REQUEST.getConstant());
 		reason.getItems().add(POSPowerConstantMapper.PWR_REASON_ALLOW.getConstant());
 		reason.getItems().add(POSPowerConstantMapper.PWR_REASON_DENY.getConstant());
+		reason.setValue(POSPowerConstantMapper.PWR_REASON_REQUEST.getConstant());
 	}
 
 	@Override
