@@ -14,7 +14,7 @@
       <center>
         <Pane prefHeight="637.0" prefWidth="853.0" styleClass="root">
           <children>
-            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${!deviceEnabled.selected}">
+            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
               <tabs>
                 <Tab text="Display Text">
                   <content>
@@ -203,7 +203,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <TabPane fx:id="notEnabledTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
+            <TabPane fx:id="notEnabledTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${!deviceEnabled.selected}">
               <tabs>
                 <Tab text="Screen Mode">
                   <content>

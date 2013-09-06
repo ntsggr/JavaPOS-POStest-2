@@ -23,7 +23,7 @@ public class POSTest2 extends Application {
 	@Override
 	public void stop() throws Exception {
 		// TODO Close Connections
-
+		
 	}
 
 	public static void main(String[] args) {
