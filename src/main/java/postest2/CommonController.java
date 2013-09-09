@@ -100,6 +100,7 @@ public abstract class CommonController implements Initializable {
 			}
 
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null,
 					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
 							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
@@ -112,6 +113,7 @@ public abstract class CommonController implements Initializable {
 			service.claim(0);
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null,
 					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
 							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
@@ -128,6 +130,7 @@ public abstract class CommonController implements Initializable {
 
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null,
 					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
 							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
@@ -145,6 +148,7 @@ public abstract class CommonController implements Initializable {
 			RequiredStateChecker.invokeThis(this, service);
 			setStatusLabel();
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null,
 					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem()
 							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
@@ -194,6 +198,7 @@ public abstract class CommonController implements Initializable {
 			FirmwareUpdateDlg dlg = new FirmwareUpdateDlg(service);
 			dlg.setVisible(true);
 		} catch (Exception e2) {
+			e2.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -204,6 +209,7 @@ public abstract class CommonController implements Initializable {
 		try {
 			service.setFreezeEvents(freezeEvents.selectedProperty().getValue());
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
