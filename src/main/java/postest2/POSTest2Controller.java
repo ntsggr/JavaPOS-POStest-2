@@ -116,7 +116,6 @@ public class POSTest2Controller implements Initializable {
 		listAllDevices.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-				//System.out.println(old_val + ", " + new_val);
 				setPanel(new_val);
 			}
 		});
@@ -125,7 +124,6 @@ public class POSTest2Controller implements Initializable {
 		listFavorites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-				//System.out.println(old_val + ", " + new_val);
 				if (new_val != null)
 					setPanel(new_val);
 				else
@@ -166,7 +164,6 @@ public class POSTest2Controller implements Initializable {
 			checkBox.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					//System.out.println(favoriteDevices.size());
 					if (favoriteDevices.contains(lastItem)) {
 						favoriteDevices.remove(lastItem);
 						listFavorites.setItems(favoriteDevices);
@@ -174,7 +171,6 @@ public class POSTest2Controller implements Initializable {
 						favoriteDevices.add(lastItem);
 						listFavorites.setItems(favoriteDevices);
 					}
-					//System.out.println(lastItem + " : " + event);
 				}
 			});
 		}
