@@ -50,16 +50,16 @@ public abstract class CommonController implements Initializable {
 	@RequiredState(JposState.OPENED)
 	public Button buttonClaim;
 	@FXML
-	@RequiredState(JposState.OPENED)
+	@RequiredState(JposState.CLAIMED)
 	public Button buttonRelease;
 	@FXML
-	@RequiredState(JposState.OPENED)
+	@RequiredState(JposState.ENABLED)
 	public Button buttonStatistics;
 	@FXML
 	@RequiredState(JposState.OPENED)
 	public Button buttonClose;
 	@FXML
-	@RequiredState(JposState.OPENED)
+	@RequiredState(JposState.ENABLED)
 	public Button buttonFirmware;
 	@FXML
 	@RequiredState(JposState.CLOSED)
