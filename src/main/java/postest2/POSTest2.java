@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 public class POSTest2 extends Application {
 	
+	static Stage stage;
+	
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		
@@ -18,12 +20,7 @@ public class POSTest2 extends Application {
 		primaryStage.setTitle("JavaPOS POStest 2");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
-
-	@Override
-	public void stop() throws Exception {
-		// TODO Close Connections
-		
+		stage = primaryStage;
 	}
 
 	public static void main(String[] args) {

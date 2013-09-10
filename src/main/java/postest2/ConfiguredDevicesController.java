@@ -43,6 +43,7 @@ public class ConfiguredDevicesController implements Initializable {
 	private void setUpLists() {
 		SimpleXmlRegPopulator pop = new SimpleXmlRegPopulator("jpos.xml");
 		pop.load();
+		@SuppressWarnings("unchecked")
 		Enumeration<JposEntry> enu = pop.getEntries();
 
 		ArrayList<Device> devices = new ArrayList<Device>();

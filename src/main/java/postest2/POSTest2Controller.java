@@ -1,7 +1,14 @@
 package postest2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -68,31 +75,46 @@ public class POSTest2Controller implements Initializable {
 	private Parent SignatureCapture = null;
 	private Parent SmartCardRW = null;
 	private Parent ToneIndicator = null;
-	
-	@FXML // contains and shows the available devices
-	private ListView<String> listAllDevices; 
-	
-	@FXML // using the "favoriteDevices" it contains and shows the favorite devices
-	transient private ListView<String> listFavorites; 
 
-	@FXML // button to select All Devices list
+	@FXML
+	// contains and shows the available devices
+	private ListView<String> listAllDevices;
+
+	@FXML
+	// using the "favoriteDevices" it contains and shows the favorite devices
+	transient private ListView<String> listFavorites;
+
+	@FXML
+	// button to select All Devices list
 	private ToggleButton toggleButtonAllDevices;
-	
-	@FXML // button to select Favorite Devices list
-	private ToggleButton toggleButtonFavorites; 
 
-	@FXML // the main window is divided into two panels. The right panel holds the panel of each clicked device
-	private AnchorPane anchorPaneRight; 
+	@FXML
+	// button to select Favorite Devices list
+	private ToggleButton toggleButtonFavorites;
 
-	@FXML // contains and shows the available devices
+	@FXML
+	// the main window is divided into two panels. The right panel holds the panel of each clicked device
+	private AnchorPane anchorPaneRight;
+
+	@FXML
+	// contains and shows the available devices
 	private ObservableList<String> favoriteDevices;
-	
+
+	public List<String> storeFavorites;
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		loadDevicePanels();
 		favoriteDevices = FXCollections.observableArrayList();
-		
+
+		File f = new File("listOfFavoriteDevices.dat");
+		if (f.exists()) {
+			storeFavorites = retrieveFavorites();
+		} else {
+			storeFavorites = new ArrayList<String>();
+		}
+
 		// group for the toggles buttons
 		final ToggleGroup toggleGroup = new ToggleGroup();
 		// set user data to compare which togglebutton is selected
@@ -103,7 +125,7 @@ public class POSTest2Controller implements Initializable {
 		toggleButtonFavorites.setToggleGroup(toggleGroup);
 		toggleButtonAllDevices.setSelected(true);
 		setPanel("About");
-		
+
 		// The setCellFactory method redefines the implementation of the list cell
 		listAllDevices.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
@@ -119,7 +141,7 @@ public class POSTest2Controller implements Initializable {
 				setPanel(new_val);
 			}
 		});
-		
+
 		// Show the respective device panel for each selected item from the list "Favorites"
 		listFavorites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -130,7 +152,7 @@ public class POSTest2Controller implements Initializable {
 					setPanel(old_val);
 			}
 		});
-		
+
 		// Show "All devices" or "Favorites"
 		toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			@Override
@@ -146,39 +168,46 @@ public class POSTest2Controller implements Initializable {
 				}
 			}
 		});
+
 	}
 	
 	// Add a checkbox for each ListView item.
 	class XCell extends ListCell<String> {
-		
+
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
 		CheckBox checkBox = new CheckBox();
 		String lastItem;
-		
+
 		public XCell() {
 			super();
 			hbox.getChildren().addAll(label, pane, checkBox);
 			HBox.setHgrow(pane, Priority.ALWAYS);
+
 			checkBox.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					if (favoriteDevices.contains(lastItem)) {
 						favoriteDevices.remove(lastItem);
 						listFavorites.setItems(favoriteDevices);
+						storeFavorites.remove(lastItem);
+						saveFavorites();
 					} else {
 						favoriteDevices.add(lastItem);
 						listFavorites.setItems(favoriteDevices);
+						storeFavorites.add(lastItem);
+						saveFavorites();
 					}
 				}
 			});
+
 		}
-		
+
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
-			setText(null); // No text in label of super class
+			// setText(null); // No text in label of super class
 			if (empty) {
 				lastItem = null;
 				setGraphic(null);
@@ -186,11 +215,42 @@ public class POSTest2Controller implements Initializable {
 				lastItem = item;
 				label.setText(item != null ? item : "<null>");
 				setGraphic(hbox);
+				if (!storeFavorites.isEmpty() && storeFavorites.contains(item)) {
+					checkBox.setSelected(true);
+					favoriteDevices.add(lastItem);
+					listFavorites.setItems(favoriteDevices);
+				}
 			}
 		}
-		
+
 	} // end of XCell class
 	
+	public void saveFavorites() {
+		try {
+			FileOutputStream fout = new FileOutputStream("listOfFavoriteDevices.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(storeFavorites);
+			oos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List retrieveFavorites() {
+		List<String> list = null;
+		try {
+			FileInputStream fin = new FileInputStream("listOfFavoriteDevices.dat");
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			list = (ArrayList<String>) ois.readObject();
+
+			ois.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	private void loadDevicePanels() {
 		try {
 			About = FXMLLoader.load(getClass().getResource("gui/About.fxml"));
@@ -235,7 +295,7 @@ public class POSTest2Controller implements Initializable {
 			ioe.printStackTrace();
 		}
 	}
-	
+
 	// Set the panel for each clicked device
 	private void setPanel(String panel) {
 		if (panel.equals("About")) {
@@ -247,113 +307,112 @@ public class POSTest2Controller implements Initializable {
 		} else if (panel.equals("Belt")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Belt);
-		}  else if (panel.equals("BillAcceptor")) {
+		} else if (panel.equals("BillAcceptor")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(BillAcceptor);
-		}  else if (panel.equals("BillDispenser")) {
+		} else if (panel.equals("BillDispenser")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(BillDispenser);
-		}  else if (panel.equals("Biometrics")) {
+		} else if (panel.equals("Biometrics")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Biometrics);
-		}  else if (panel.equals("BumpBar")) {
+		} else if (panel.equals("BumpBar")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(BumpBar);
-		}  else if (panel.equals("CashChanger")) {
+		} else if (panel.equals("CashChanger")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(CashChanger);
-		}  else if (panel.equals("CashDrawer")) {
+		} else if (panel.equals("CashDrawer")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(CashDrawer);
-		}  else if (panel.equals("CAT")) {
+		} else if (panel.equals("CAT")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(CAT);
-		}  else if (panel.equals("CheckScanner")) {
+		} else if (panel.equals("CheckScanner")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(CheckScanner);
-		}  else if (panel.equals("CoinAcceptor")) {
+		} else if (panel.equals("CoinAcceptor")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(CoinAcceptor);
-		}  else if (panel.equals("CoinDispenser")) {
+		} else if (panel.equals("CoinDispenser")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(CoinDispenser);
-		}  else if (panel.equals("ElectronicJournal")) {
+		} else if (panel.equals("ElectronicJournal")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(ElectronicJournal);
-		}  else if (panel.equals("ElectronicValueRW")) {
+		} else if (panel.equals("ElectronicValueRW")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(ElectronicValueRW);
-		}  else if (panel.equals("FiscalPrinter")) {
+		} else if (panel.equals("FiscalPrinter")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(FiscalPrinter);
-		}  else if (panel.equals("Gate")) {
+		} else if (panel.equals("Gate")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Gate);
-		}  else if (panel.equals("HardTotals")) {
+		} else if (panel.equals("HardTotals")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(HardTotals);
-		}  else if (panel.equals("ImageScanner")) {
+		} else if (panel.equals("ImageScanner")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(ImageScanner);
-		}  else if (panel.equals("ItemDispenser")) {
+		} else if (panel.equals("ItemDispenser")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(ItemDispenser);
-		}  else if (panel.equals("Keylock")) {
+		} else if (panel.equals("Keylock")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Keylock);
-		}  else if (panel.equals("Lights")) {
+		} else if (panel.equals("Lights")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Lights);
-		}  else if (panel.equals("LineDisplay")) {
+		} else if (panel.equals("LineDisplay")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(LineDisplay);
-		}  else if (panel.equals("MICR")) {
+		} else if (panel.equals("MICR")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(MICR);
-		}  else if (panel.equals("MotionSensor")) {
+		} else if (panel.equals("MotionSensor")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(MotionSensor);
-		}  else if (panel.equals("MSR")) {
+		} else if (panel.equals("MSR")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(MSR);
-		}  else if (panel.equals("PINPad")) {
+		} else if (panel.equals("PINPad")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(PINPad);
-		}  else if (panel.equals("PointCardRW")) {
+		} else if (panel.equals("PointCardRW")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(PointCardRW);
-		}  else if (panel.equals("POSKeyboard")) {
+		} else if (panel.equals("POSKeyboard")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(POSKeyboard);
-		}  else if (panel.equals("POSPower")) {
+		} else if (panel.equals("POSPower")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(POSPower);
-		}  else if (panel.equals("POSPrinter")) {
+		} else if (panel.equals("POSPrinter")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(POSPrinter);
-		}  else if (panel.equals("RemoteOrderDisplay")) {
+		} else if (panel.equals("RemoteOrderDisplay")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(RemoteOrderDisplay);
-		}  else if (panel.equals("RFIDScanner")) {
+		} else if (panel.equals("RFIDScanner")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(RFIDScanner);
-		}  else if (panel.equals("Scale")) {
+		} else if (panel.equals("Scale")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Scale);
-		}  else if (panel.equals("Scanner")) {
+		} else if (panel.equals("Scanner")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Scanner);
-		}  else if (panel.equals("SignatureCapture")) {
+		} else if (panel.equals("SignatureCapture")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(SignatureCapture);
-		}  else if (panel.equals("SmartCardRW")) {
+		} else if (panel.equals("SmartCardRW")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(SmartCardRW);
-		}  else if (panel.equals("ToneIndicator")) {
+		} else if (panel.equals("ToneIndicator")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(ToneIndicator);
-		}  
+		}
 	}
-		
-}
 
+}
