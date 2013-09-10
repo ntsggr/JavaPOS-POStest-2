@@ -154,7 +154,6 @@ public class CATController extends CommonController implements Initializable {
 	
 	@FXML
 	public void handleDeviceEnable(ActionEvent e) {
-
 		try {
 			if (deviceEnabled.isSelected()) {
 				((CAT) service).setDeviceEnabled(true);
