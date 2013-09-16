@@ -21,18 +21,8 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
             <CheckBox fx:id="flagWhenIdle" layoutX="155.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleFlagWhenIdle" text="Flag when idle" />
-            <ComboBox fx:id="rotationMode" layoutX="556.0" layoutY="35.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <ComboBox fx:id="mapMode" layoutX="712.0" layoutY="35.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                </FXCollections>
-              </items>
-            </ComboBox>
+            <ComboBox fx:id="rotationMode" layoutX="556.0" layoutY="35.0" onAction="#handleRotatePrint" prefHeight="21.0" prefWidth="129.0" />
+            <ComboBox fx:id="mapMode" layoutX="712.0" layoutY="35.0" onAction="#handleSetMapMode" prefHeight="21.0" prefWidth="129.0" />
             <RadioButton fx:id="rbReceipt" layoutX="300.0" layoutY="23.0" mnemonicParsing="false" text="Receipt" />
             <RadioButton fx:id="rbJournal" layoutX="400.0" layoutY="23.0" mnemonicParsing="false" text="Journal" />
             <RadioButton fx:id="rbSlip" layoutX="500.0" layoutY="23.0" mnemonicParsing="false" text="Slip" />
@@ -43,7 +33,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="741.0">
                       <children>
                         <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send to printer:" />
-                        <TextArea fx:id="printNormalData" layoutX="14.0" layoutY="22.0" prefHeight="181.0" prefWidth="209.0" wrapText="true" />
+                        <TextArea fx:id="printNormalData" layoutX="14.0" layoutY="22.0" prefHeight="181.0" prefWidth="209.0" text="0x190" wrapText="true" />
                         <Button layoutX="232.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleBeginInsertion" prefWidth="110.0" text="Begin Insertion" />
                         <Button layoutX="353.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleEndInsertion" prefWidth="110.0" text="End Insertion" />
                         <Button layoutX="232.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleBeginRemoval" prefWidth="110.0" text="Begin Removal" />
@@ -57,14 +47,9 @@
                         <Button layoutX="475.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleCutPaper" prefWidth="110.0" text="Cut Paper" />
                         <Button layoutX="232.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleValidateData" prefWidth="110.0" text="Validate Data" />
                         <Label layoutX="232.0" layoutY="178.0" text="Transaction Print:" />
-                        <ComboBox fx:id="transactionPrint" layoutX="353.0" layoutY="176.0" prefHeight="21.0" prefWidth="110.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="transactionPrint" layoutX="353.0" layoutY="176.0" prefHeight="21.0" prefWidth="110.0" />
                         <Button layoutX="475.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleTransactionPrint" prefWidth="110.0" text="Transaction Print" />
-                        <Slider fx:id="cutPaperPercentage" layoutX="354.0" layoutY="214.0" prefWidth="110.0" value="100" />
+                        <Slider fx:id="cutPaperPercentage" layoutX="354.0" layoutY="214.0" prefWidth="110.0" value="100.0" />
                       </children>
                     </AnchorPane>
                   </content>
@@ -78,12 +63,7 @@
                         <TextArea fx:id="print2NormalSecondData" layoutX="268.0" layoutY="121.0" prefWidth="200.0" wrapText="true" />
                         <Text layoutX="268.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send to second station:" />
                         <Label layoutX="47.0" layoutY="57.0" text="Select Station:" />
-                        <ComboBox fx:id="print2NormalStation" layoutX="137.0" layoutY="55.0" prefHeight="21.0" prefWidth="145.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="print2NormalStation" layoutX="137.0" layoutY="55.0" prefHeight="21.0" prefWidth="145.0" />
                         <Button layoutX="47.0" layoutY="333.0" mnemonicParsing="false" onAction="#handlePrint2Normal" prefWidth="115.0" text="Print Two Normal" />
                         <Button layoutX="47.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleAddEscapeSequence2NormalFirst" prefWidth="115.0" text="Add Escape Seq." />
                         <Button layoutX="268.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleAddEscapeSequence2NormalSecond" prefWidth="115.0" text="Add Escape Seq." />
@@ -104,24 +84,9 @@
                         <TextField fx:id="barcodeHeight" layoutX="132.0" layoutY="78.0" prefWidth="135.0" />
                         <TextField fx:id="barcodeWidth" layoutX="132.0" layoutY="101.0" prefWidth="135.0" />
                         <TextField fx:id="barcodeData" layoutX="132.0" layoutY="196.0" prefWidth="135.0" />
-                        <ComboBox id="symbologyCheckbox" fx:id="barcodeSymbology" layoutX="132.0" layoutY="126.0" prefHeight="21.0" prefWidth="135.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <ComboBox id="textPositionCheckbox" fx:id="barcodeTextPosition" layoutX="132.0" layoutY="173.0" prefHeight="21.0" prefWidth="135.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <ComboBox id="alignmentCheckbox" fx:id="barcodeAlignment" layoutX="132.0" layoutY="150.0" prefHeight="21.0" prefWidth="135.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="symbologyCheckbox" fx:id="barcodeSymbology" layoutX="132.0" layoutY="126.0" prefHeight="21.0" prefWidth="135.0" />
+                        <ComboBox id="textPositionCheckbox" fx:id="barcodeTextPosition" layoutX="132.0" layoutY="173.0" prefHeight="21.0" prefWidth="135.0" />
+                        <ComboBox id="alignmentCheckbox" fx:id="barcodeAlignment" layoutX="132.0" layoutY="150.0" prefHeight="21.0" prefWidth="135.0" />
                         <Button layoutX="132.0" layoutY="232.0" mnemonicParsing="false" onAction="#handlePrintBarcode" prefWidth="135.0" text="Print Barcode" />
                         <Button layoutX="285.0" layoutY="173.0" mnemonicParsing="false" onAction="#handleRotateSpecial" text="Rotate Special" />
                       </children>
@@ -136,26 +101,11 @@
                         <TextField fx:id="bitmapPath" layoutX="41.0" layoutY="146.0" prefWidth="200.0" />
                         <Label alignment="CENTER" layoutX="41.0" layoutY="126.0" prefWidth="273.0" text="Image to Print:" />
                         <Label layoutX="140.0" layoutY="196.0" text="Bitmap Width:" />
-                        <ComboBox fx:id="bitmapWidth" editable="true" layoutX="113.0" layoutY="217.0" prefHeight="21.0" prefWidth="156.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="bitmapWidth" editable="true" layoutX="113.0" layoutY="217.0" prefHeight="21.0" prefWidth="156.0" />
                         <Label layoutX="140.0" layoutY="255.0" text="Bitmap Alignment:" />
-                        <ComboBox fx:id="bitmapAlignment" layoutX="113.0" layoutY="276.0" prefHeight="21.0" prefWidth="156.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="bitmapAlignment" layoutX="113.0" layoutY="276.0" prefHeight="21.0" prefWidth="156.0" />
                         <Label layoutX="140.0" layoutY="320.0" text="Bitmap Number:" />
-                        <ComboBox fx:id="bitmapNumber" layoutX="113.0" layoutY="341.0" prefHeight="21.0" prefWidth="156.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="bitmapNumber" layoutX="113.0" layoutY="341.0" prefHeight="21.0" prefWidth="156.0" />
                         <Button layoutX="381.0" layoutY="131.0" mnemonicParsing="false" onAction="#handlePrintBitmap" prefWidth="135.0" text="Print Bitmap" />
                         <Button layoutX="381.0" layoutY="163.0" mnemonicParsing="false" onAction="#handlePrintMemoryBitmap" prefWidth="135.0" text="Print Memory Bitmap" />
                         <Button layoutX="381.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleSetBitmap" prefWidth="135.0" text="Set Bitmap" />
@@ -182,28 +132,13 @@
                           </font>
                         </Label>
                         <Label layoutX="26.0" layoutY="218.0" text="Line Direction:" />
-                        <ComboBox id="lineDirection" fx:id="drawLineDirection" layoutX="114.0" layoutY="216.0" prefHeight="21.0" prefWidth="200.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="lineDirection" fx:id="drawLineDirection" layoutX="114.0" layoutY="216.0" prefHeight="21.0" prefWidth="200.0" />
                         <TextField id="lineWidth" fx:id="drawLineWidth" layoutX="114.0" layoutY="250.0" prefWidth="200.0" />
                         <Label layoutX="26.0" layoutY="253.0" text="Line Width:" />
                         <Label layoutX="26.0" layoutY="288.0" text="Line Style:" />
-                        <ComboBox id="lineStyle" fx:id="drawLineStyle" layoutX="114.0" layoutY="286.0" prefHeight="21.0" prefWidth="200.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="lineStyle" fx:id="drawLineStyle" layoutX="114.0" layoutY="286.0" prefHeight="21.0" prefWidth="200.0" />
                         <Label layoutX="26.0" layoutY="322.0" text="Line Color:" />
-                        <ComboBox id="lineColor" fx:id="drawLineColor" layoutX="114.0" layoutY="320.0" prefHeight="21.0" prefWidth="200.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="lineColor" fx:id="drawLineColor" layoutX="114.0" layoutY="320.0" prefHeight="21.0" prefWidth="200.0" />
                         <Button layoutX="114.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleDrawRuledLine" prefWidth="200.0" text="Draw Ruled Line" />
                       </children>
                     </AnchorPane>
@@ -228,18 +163,8 @@
                         <Label layoutX="26.0" layoutY="274.0" text="Page Mode Print Direction:" />
                         <TextField fx:id="pageModeHorizontalPosition" layoutX="202.0" layoutY="70.0" prefWidth="119.0" />
                         <TextField fx:id="pageModeVerticalPosition" layoutX="202.0" layoutY="98.0" prefWidth="119.0" />
-                        <ComboBox fx:id="pageModePrintDirection" layoutX="202.0" layoutY="272.0" prefHeight="21.0" prefWidth="119.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
-                        <ComboBox fx:id="pageModePrintStation" layoutX="202.0" layoutY="299.0" prefHeight="21.0" prefWidth="119.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="pageModePrintDirection" layoutX="202.0" layoutY="272.0" prefHeight="21.0" prefWidth="119.0" />
+                        <ComboBox fx:id="pageModePrintStation" layoutX="202.0" layoutY="299.0" prefHeight="21.0" prefWidth="119.0" />
                         <Label fx:id="pageModeArea" layoutX="202.0" layoutY="95.0" prefWidth="119.0" />
                         <Label fx:id="pageModeDescriptor" layoutX="202.0" layoutY="123.0" prefWidth="119.0" />
                         <Button layoutX="333.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleSetHorizontalPosition" prefWidth="150.0" text="Set Horizontal Position" />
@@ -249,12 +174,7 @@
                         <Button layoutX="333.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleSetPrintDirection" prefWidth="150.0" text="Set Print Direction" />
                         <Button layoutX="214.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleClearPrintArea" prefWidth="150.0" text="Clear Print Area" />
                         <Label layoutX="26.0" layoutY="351.0" text="Page Mode Print Command:" />
-                        <ComboBox fx:id="pageModePrint" layoutX="202.0" layoutY="349.0" prefHeight="21.0" prefWidth="119.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="pageModePrint" layoutX="202.0" layoutY="349.0" prefHeight="21.0" prefWidth="119.0" />
                         <Button layoutX="333.0" layoutY="349.0" mnemonicParsing="false" onAction="#handlePageModePrint" prefWidth="150.0" text="Page Mode Print" />
                         <Label layoutX="46.0" layoutY="155.0" text="Start Position X:" />
                         <Label layoutX="355.0" layoutY="155.0" text="End Position X:" />
@@ -266,39 +186,19 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                        <ComboBox fx:id="printSide" layoutX="107.0" layoutY="66.0" prefWidth="110.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="printSide" layoutX="107.0" layoutY="66.0" prefWidth="110.0" />
                         <Button layoutX="27.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleChangePrintSide" text="Change Print Side" />
                         <Label layoutX="27.0" layoutY="68.0" text="Print Side:" />
                         <Label layoutX="27.0" layoutY="39.0" text="Change Print Side" underline="true" />
-                        <ComboBox fx:id="markFeed" layoutX="354.0" layoutY="66.0" prefWidth="110.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="markFeed" layoutX="354.0" layoutY="66.0" prefWidth="110.0" />
                         <Button layoutX="278.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleMarkFeed" text="Mark Feed" />
                         <Label layoutX="278.0" layoutY="68.0" text="Mark Feed:" />
                         <Label layoutX="278.0" layoutY="39.0" text="Mark Feed" underline="true" />
-                        <ComboBox fx:id="characterSet" layoutX="585.0" layoutY="66.0" prefWidth="110.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="characterSet" layoutX="585.0" layoutY="66.0" prefWidth="110.0" />
                         <Button layoutX="505.0" layoutY="97.0" mnemonicParsing="false" onAction="#handleSetCharacterSet" text="Set Character Set" />
                         <Label layoutX="505.0" layoutY="67.0" text="Character Set:" />
                         <Label layoutX="505.0" layoutY="38.0" text="Set Character Set" underline="true" />
-                        <ComboBox fx:id="mapCharacterSet" layoutX="137.0" layoutY="318.0" prefWidth="110.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="mapCharacterSet" layoutX="137.0" layoutY="318.0" prefWidth="110.0" />
                         <Button layoutX="27.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleSetMapCharacterSet" text="Set Map Character Set" />
                         <Label layoutX="27.0" layoutY="320.0" text="Map Character Set:" />
                         <Label layoutX="27.0" layoutY="291.0" text="Set Map Character Set" underline="true" />
@@ -317,12 +217,7 @@
                         <Button layoutX="278.0" layoutY="349.0" mnemonicParsing="false" text="Set Cartridge" />
                         <Label layoutX="278.0" layoutY="320.0" text="Cartridge:" />
                         <Label layoutX="278.0" layoutY="291.0" text="Set Current Cartridge for selected Device" underline="true" />
-                        <ComboBox fx:id="currentCartridge" layoutX="354.0" layoutY="318.0" prefHeight="21.0" prefWidth="110.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="currentCartridge" layoutX="354.0" layoutY="318.0" prefHeight="21.0" prefWidth="110.0" />
                         <ComboBox fx:id="cartridgeNotify" layoutX="594.0" layoutY="318.0" prefWidth="110.0" />
                         <Button layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleMarkFeed" text="Set CartridgeNotify" />
                         <Label layoutX="505.0" layoutY="320.0" text="CartridgeNotify:" />

@@ -67,6 +67,7 @@ public class ToneIndicatorController extends CommonController implements Initial
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new ToneIndicator();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("ToneIndicator");

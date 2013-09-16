@@ -84,6 +84,7 @@ public class HardTotalsController extends CommonController implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new HardTotals();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("HardTotals");

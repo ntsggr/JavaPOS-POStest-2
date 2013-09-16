@@ -82,6 +82,7 @@ public class CheckScannerController extends CommonController implements Initiali
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new CheckScanner();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("CheckScanner");

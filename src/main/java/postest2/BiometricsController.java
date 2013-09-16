@@ -141,6 +141,7 @@ public class BiometricsController extends CommonController implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new Biometrics();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("Biometrics");

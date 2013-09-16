@@ -55,6 +55,7 @@ public class SmartCardRWController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new SmartCardRW();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("SmartCardRW");

@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class POSTest2 extends Application {
@@ -18,6 +19,7 @@ public class POSTest2 extends Application {
 		Parent root = FXMLLoader.load(getClass().getResource("gui/MainWindow.fxml"));
 		Scene scene = new Scene(root, 1300, 800);
 		primaryStage.setTitle("JavaPOS POStest 2");
+		primaryStage.getIcons().add(new Image("postest2/logo.png"));
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		stage = primaryStage;

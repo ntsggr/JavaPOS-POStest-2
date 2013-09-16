@@ -51,6 +51,7 @@ public class ItemDispenserController extends CommonController implements Initial
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new ItemDispenser();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("ItemDispenser");

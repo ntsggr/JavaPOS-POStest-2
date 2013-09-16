@@ -196,6 +196,7 @@ public class POSPrinterController extends CommonController implements Initializa
 
 	// Escape-Character
 	final char ESC = (char) 0x1B;
+	final char EPSILON = (char) 0x190;
 
 	// Letter Quality
 	private boolean jrnLetterQuality = false;
@@ -204,10 +205,13 @@ public class POSPrinterController extends CommonController implements Initializa
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new POSPrinter();
 
 		RequiredStateChecker.invokeThis(this, service);
-
+		
+		//printNormalData.setText(ESC + "asdfasdf" + EPSILON + "ZZZ" + ESC + EPSILON + "AAAA");
+		
 		printNormalEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
 		print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();

@@ -51,6 +51,7 @@ public class CoinAcceptorController extends CommonController implements Initiali
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new CoinAcceptor();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("CoinAcceptor");

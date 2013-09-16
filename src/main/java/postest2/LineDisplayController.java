@@ -156,6 +156,7 @@ public class LineDisplayController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		setUpLogicalNameComboBox("LineDisplay");
 		service = new LineDisplay();
 		RequiredStateChecker.invokeThis(this, service);

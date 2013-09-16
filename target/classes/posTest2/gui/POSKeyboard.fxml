@@ -22,8 +22,12 @@
                 <Font name="System Bold" size="22.0" />
               </font>
             </Text>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
-            </children>
+            <Text fill="RED" layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite.">
+              <font>
+                <Font size="16.0" />
+              </font>
+            </Text>
+          </children>
         </Pane>
       </center>
       <top>

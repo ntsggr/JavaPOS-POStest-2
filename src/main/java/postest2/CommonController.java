@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
@@ -84,6 +85,7 @@ public abstract class CommonController implements Initializable {
 	BaseJposControl service;
 	
 	static String statistics = "";
+	
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		POSTest2.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -368,6 +370,20 @@ public abstract class CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 			ex.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Sets the tooltips for the common buttons (Open, Claim, Release, Close, ..)
+	 */
+	protected void setUpTooltips(){
+		buttonClaim.setTooltip(new Tooltip("Claims the Device"));
+		buttonClose.setTooltip(new Tooltip("Closes the connection to the Device"));
+		buttonFirmware.setTooltip(new Tooltip("Update or view the Firmware Version of the Device"));
+		buttonInfo.setTooltip(new Tooltip("Shows Information about the Device"));
+		buttonOCE.setTooltip(new Tooltip("Open, Claims and Enables the Device"));
+		buttonOpen.setTooltip(new Tooltip("Opens the Device"));
+		buttonRelease.setTooltip(new Tooltip("Releases the Device"));
+		buttonStatistics.setTooltip(new Tooltip("View, reset or update Device Statistics"));
 	}
 
 }

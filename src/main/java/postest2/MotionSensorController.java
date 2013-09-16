@@ -41,6 +41,7 @@ public class MotionSensorController extends CommonController implements Initiali
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new MotionSensor();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("MotionSensor");

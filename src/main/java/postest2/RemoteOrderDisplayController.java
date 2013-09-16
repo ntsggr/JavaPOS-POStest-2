@@ -201,6 +201,7 @@ public class RemoteOrderDisplayController extends CommonController implements In
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new RemoteOrderDisplay();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("RemoteOrderDisplay");

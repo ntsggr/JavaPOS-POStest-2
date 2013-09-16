@@ -46,6 +46,7 @@ public class CoinDispenserController extends CommonController implements Initial
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new CoinDispenser();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("CoinDispenser");

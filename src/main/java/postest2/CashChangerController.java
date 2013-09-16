@@ -74,6 +74,7 @@ public class CashChangerController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new CashChanger();
 		setUpLogicalNameComboBox("CashChanger");
 		RequiredStateChecker.invokeThis(this, service);

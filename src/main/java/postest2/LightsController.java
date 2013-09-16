@@ -50,6 +50,7 @@ public class LightsController extends CommonController implements Initializable 
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new Lights();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("Lights");

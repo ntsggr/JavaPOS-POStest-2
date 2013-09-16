@@ -52,7 +52,11 @@
                 <Label alignment="CENTER" font="$x1" layoutX="23.0" layoutY="240.0" prefWidth="271.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fill="RED" layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite.">
+              <font>
+                <Font size="16.0" />
+              </font>
+            </Text>
           </children>
         </Pane>
       </center>

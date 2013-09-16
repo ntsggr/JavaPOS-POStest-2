@@ -41,6 +41,7 @@ public class KeylockController extends CommonController implements Initializable
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new Keylock();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("Keylock");

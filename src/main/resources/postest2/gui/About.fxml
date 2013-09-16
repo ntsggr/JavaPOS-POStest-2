@@ -2,27 +2,34 @@
 
 <?import java.lang.*?>
 <?import java.net.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane >
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" >
-  <children>
-    <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POSTest 2">
-      <font>
-        <Font name="System Bold" size="32.0" />
-      </font>
-    </Text>
-    <Text fontSmoothingType="LCD" layoutX="184.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The JavaPOS Device Tester 2">
-      <font>
-        <Font name="System Bold" size="20.0" />
-      </font>
-    </Text>
-    <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JavaPOS POStest 2 is an Open Source Project and can be used by everyone." />
-  </children>
-  <stylesheets>
-    <URL value="@win7glass.css" />
-  </stylesheets>
-</AnchorPane>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.AboutController">
+  <AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="root">
+    <children>
+      <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POSTest 2">
+        <font>
+          <Font name="System Bold" size="32.0" />
+        </font>
+      </Text>
+      <Text fontSmoothingType="LCD" layoutX="184.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The JavaPOS Device Tester 2">
+        <font>
+          <Font name="System Bold" size="20.0" />
+        </font>
+      </Text>
+      <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JavaPOS POStest 2 is an open source project and developers are welcome to add new features or to change the devices corresponding to the UnifiedPOS version!" />
+      <Text layoutX="92.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contributors:" />
+      <Hyperlink fx:id="hyperlinkNewVersion" layoutX="211.0" layoutY="261.0" onAction="#handleHyperlinkNewVersion" text="https://sourceforge.net/projects/javapospostest2/" />
+      <Label layoutX="92.0" layoutY="264.0" text="Homepage:" />
+      <Hyperlink fx:id="hyperlinkOldVersion" layoutX="211.0" layoutY="297.0" onAction="#handleHyperlinkOldVersion" text="https://sourceforge.net/projects/postest/" />
+      <Label layoutX="92.0" layoutY="300.0" text="POStest (old version):" />
+      <TextArea layoutX="211.0" layoutY="333.0" prefHeight="243.0" prefWidth="569.0" styleClass="scroll-arrow, root" text="Grill Günther - NTS New Technology Systems GmbH &#10;Stehrer Jakob - NTS New Technology Systems GmbH &#10;Weißenbek Markus&#10;Tsepas Ioannis&#10;" wrapText="true" />
+    </children>
+    <stylesheets>
+      <URL value="@win7glass.css" />
+    </stylesheets>
+  </AnchorPane>
 </AnchorPane>

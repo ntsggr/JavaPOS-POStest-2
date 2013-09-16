@@ -42,6 +42,7 @@ public class SignatureCaptureController extends CommonController implements Init
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new SignatureCapture();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("SignatureCapture");

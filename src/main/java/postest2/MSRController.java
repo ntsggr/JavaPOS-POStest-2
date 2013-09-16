@@ -82,6 +82,7 @@ public class MSRController extends CommonController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new MSR();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("MSR");

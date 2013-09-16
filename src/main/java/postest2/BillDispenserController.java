@@ -59,6 +59,7 @@ public class BillDispenserController extends CommonController implements Initial
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		this.service = new BillDispenser();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("BillDispenser");

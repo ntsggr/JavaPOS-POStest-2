@@ -43,6 +43,7 @@ public class POSPowerController extends CommonController implements Initializabl
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new POSPower();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("POSPower");

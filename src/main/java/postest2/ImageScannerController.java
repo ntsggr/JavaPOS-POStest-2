@@ -19,6 +19,7 @@ public class ImageScannerController extends CommonController implements Initiali
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new ImageScanner();
 		//RequiredStateChecker.invokeThis(this, service);
 	}

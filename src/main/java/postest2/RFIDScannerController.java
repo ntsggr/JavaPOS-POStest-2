@@ -84,6 +84,7 @@ public class RFIDScannerController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new RFIDScanner();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("RFIDScanner");

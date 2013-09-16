@@ -66,6 +66,7 @@ public class PointCardRWController extends CommonController implements Initializ
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		service = new PointCardRW();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("PointCardRW");

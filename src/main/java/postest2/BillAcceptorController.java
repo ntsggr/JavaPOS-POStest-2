@@ -55,6 +55,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		setUpTooltips();
 		this.service = new BillAcceptor();
 		RequiredStateChecker.invokeThis(this, service);
 		setUpLogicalNameComboBox("BillAcceptor");
