@@ -68,8 +68,9 @@ public class CashDrawerController extends CommonController implements Initializa
 				((CashDrawer) service).setDeviceEnabled(false);
 			}
 			RequiredStateChecker.invokeThis(this, service);
-		} catch (JposException je) {
-			System.err.println("CashDrawerPanel: CheckBoxListener: Jpos Exception" + je);
+		} catch (JposException je) {   
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -86,6 +87,7 @@ public class CashDrawerController extends CommonController implements Initializa
 		try {
 			((CashDrawer) service).openDrawer();
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Exception in openDrawer: " + je.getMessage(), "Exception",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -100,8 +102,8 @@ public class CashDrawerController extends CommonController implements Initializa
 				textAreaActionLog.appendText("Cash drawer is closed.\n");
 			}
 		} catch (JposException je) {
-			JOptionPane.showMessageDialog(null, "Exception in getDrawerOpened: " + je.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -111,9 +113,8 @@ public class CashDrawerController extends CommonController implements Initializa
 			((CashDrawer) service).waitForDrawerClose(100, 500, 100, 200);
 			textAreaActionLog.appendText("Cash drawer is closed.\n");
 		} catch (JposException je) {
-			textAreaActionLog.appendText("Jpos exception " + je + "\n");
-			JOptionPane.showMessageDialog(null, "Exception in waitForDrawerClose: " + je.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -162,10 +163,13 @@ public class CashDrawerController extends CommonController implements Initializa
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();

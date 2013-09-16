@@ -88,7 +88,8 @@ public class ToneIndicatorController extends CommonController implements Initial
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
-			System.err.println("ToneIndicatorPanel: CheckBoxListener: Jpos Exception" + je);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -146,10 +147,13 @@ public class ToneIndicatorController extends CommonController implements Initial
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
@@ -166,6 +170,7 @@ public class ToneIndicatorController extends CommonController implements Initial
 			((ToneIndicator) service).setAsyncMode(asyncMode.selectedProperty().getValue());
 		} catch (JposException e1) {
 			JOptionPane.showMessageDialog(null, e1.getMessage());
+			e1.printStackTrace();
 		}
 	}
 

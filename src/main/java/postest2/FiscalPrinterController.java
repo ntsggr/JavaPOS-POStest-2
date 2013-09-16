@@ -257,6 +257,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			}
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 		RequiredStateChecker.invokeThis(this, service);
 	}
@@ -315,10 +316,13 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException pce) {
+			JOptionPane.showMessageDialog(null, pce.getMessage());
 			pce.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
@@ -335,6 +339,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).setAsyncMode(asyncMode.selectedProperty().getValue());
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -343,6 +348,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).setDuplicateReceipt(duplicateReceipt.isSelected());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -352,6 +358,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).setCheckTotal(checkTotal.isSelected());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -362,6 +369,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).setFlagWhenIdle(flagWhenIdle.selectedProperty().getValue());
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -371,6 +379,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).beginTraining();
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -380,6 +389,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).clearOutput();
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -389,6 +399,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).clearError();
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -398,6 +409,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).endTraining();
 		} catch (JposException jpe) {
 			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -528,6 +540,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).beginItemList(Integer.parseInt(vatID.getText()));
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -540,6 +553,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			try {
 				((FiscalPrinter) service).verifyItem(itemName.getText(), Integer.parseInt(vatID.getText()));
 			} catch (JposException jpe) {
+				JOptionPane.showMessageDialog(null, jpe.getMessage());
 				jpe.printStackTrace();
 			}
 		}
@@ -550,6 +564,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).endItemList();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -561,6 +576,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			TOTAL = 0;
 			((FiscalPrinter) service).beginFiscalReceipt(true);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -570,6 +586,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).endFiscalReceipt(true);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 		clearFields();
@@ -581,6 +598,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecMessage(receiptMessage.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 		clearFields();
@@ -596,6 +614,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecNotPaid(description.getText(), lAmount);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 		clearFields();
@@ -615,6 +634,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecCash(lAmount);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 		clearFields();
@@ -654,6 +674,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printRecItem(description.getText(), lPrice, iQuantity, iVatInfo, lUnitPrice,
 					unitName.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -694,6 +715,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printRecItemVoid(description.getText(), lPrice, iQuantity, iVatInfo, lUnitPrice,
 					unitName.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -733,6 +755,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
 					.getText(), lAmount, iVatInfo);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -773,6 +796,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
 					.getText(), lAmount, iVatInfo);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -809,6 +833,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printRecItemFuel(description.getText(), lPrice, iQuantity, iVatInfo, iUnitPrice,
 					unitName.getText(), lSpecialTax, specialTaxName.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -838,6 +863,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecItemFuelVoid(description.getText(), lPrice, iVatInfo, lSpecialTax);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -877,6 +903,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printRecItemRefund(description.getText(), lAmount, iQuantity, iVatInfo,
 					lUnitAmount, unitName.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -913,6 +940,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printRecItemRefundVoid(description.getText(), lAmount, iQuantity, iVatInfo,
 					lUnitAmount, unitName.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -932,6 +960,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
 					.getText(), vatAdjustment.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -954,6 +983,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), vatAdjustment
 					.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -984,6 +1014,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 			((FiscalPrinter) service).printRecRefund(description.getText(), lAmount, iVatInfo);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1011,6 +1042,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecRefundVoid(description.getText(), lAmount, iVatInfo);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1034,6 +1066,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 			((FiscalPrinter) service).printRecSubtotal(lAmount);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1066,6 +1099,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), description
 					.getText(), lAmount);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1093,6 +1127,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printRecSubtotalAdjustVoid(FiscalPrinterConstantMapper
 					.getConstantNumberFromString(adjustmentType.getSelectionModel().getSelectedItem()), lAmount);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1109,6 +1144,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecVoid(description.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1145,6 +1181,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					FiscalPrinterConstantMapper.getConstantNumberFromString(adjustmentType.getSelectionModel()
 							.getSelectedItem()), lAmount, iVatInfo);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1161,6 +1198,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printRecTaxID(taxID.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1194,6 +1232,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 
 			((FiscalPrinter) service).printRecTotal(_TOTAL, lPrice, description.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 
@@ -1215,6 +1254,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).endFiscalDocument();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1226,6 +1266,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			// status immediately.
 			((FiscalPrinter) service).beginInsertion(0);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1235,6 +1276,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).endInsertion();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1244,6 +1286,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).beginRemoval(0);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1253,6 +1296,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).endRemoval();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1267,6 +1311,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printFiscalDocumentLine(documentText.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1283,6 +1328,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printReport(FiscalPrinterConstantMapper.getConstantNumberFromString(reportType
 					.getSelectionModel().getSelectedItem()), reportFrom.getText(), reportTo.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1298,6 +1344,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printXReport();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1313,6 +1360,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printZReport();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1327,6 +1375,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).printPeriodicTotalsReport(reportFrom.getText(), reportTo.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1337,6 +1386,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).beginNonFiscal();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1352,6 +1402,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 			((FiscalPrinter) service).printNormal(FiscalPrinterConstantMapper.getConstantNumberFromString(station
 					.getSelectionModel().getSelectedItem()), data.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1361,6 +1412,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).endNonFiscal();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1418,6 +1470,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			((FiscalPrinter) service).resetPrinter();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1431,6 +1484,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					FiscalPrinterConstantMapper.getConstantNumberFromString(itemTotalizer.getSelectionModel()
 							.getSelectedItem()), data);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1440,6 +1494,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			output.setText("" + ((FiscalPrinter) service).getTrainingModeActive());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1453,6 +1508,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 					+ ((FiscalPrinter) service).getErrorStation() + "\nerror: "
 					+ ((FiscalPrinter) service).getErrorString());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1462,6 +1518,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			output.setText("" + ((FiscalPrinter) service).getOutputID());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1471,6 +1528,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			output.setText("" + ((FiscalPrinter) service).getPrinterState());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1480,6 +1538,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			output.setText("" + ((FiscalPrinter) service).getDayOpened());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -1489,6 +1548,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 		try {
 			output.setText("" + ((FiscalPrinter) service).getRemainingFiscalMemory());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}

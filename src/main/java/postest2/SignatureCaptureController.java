@@ -63,7 +63,8 @@ public class SignatureCaptureController extends CommonController implements Init
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
-			System.err.println("SignatureCapturePanel: CheckBoxListener: Jpos Exception" + je);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -121,10 +122,13 @@ public class SignatureCaptureController extends CommonController implements Init
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();

@@ -108,8 +108,10 @@ public class BeltController extends CommonController implements Initializable {
 				((Belt) service).setAutoStopBackwardDelayTime(Integer.parseInt(autoStopBackwardDelayTime
 						.getText()));
 			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -121,6 +123,7 @@ public class BeltController extends CommonController implements Initializable {
 			try {
 				((Belt) service).setAutoStopForward(autoStopForward.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -133,8 +136,10 @@ public class BeltController extends CommonController implements Initializable {
 				((Belt) service).setAutoStopForwardDelayTime(Integer.parseInt(autoStopForwardDelayTime
 						.getText()));
 			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -149,8 +154,10 @@ public class BeltController extends CommonController implements Initializable {
 						.getConstantNumberFromString(adjustItemCount_direction.getSelectionModel()
 								.getSelectedItem()), Integer.parseInt(adjustItemCount_Count.getText()));
 			} catch (NumberFormatException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -162,6 +169,7 @@ public class BeltController extends CommonController implements Initializable {
 			try {
 				((Belt) service).moveBackward(moveBackward_speed.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -173,6 +181,7 @@ public class BeltController extends CommonController implements Initializable {
 			try {
 				((Belt) service).moveForward(moveForward_speed.getSelectionModel().getSelectedItem());
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -183,6 +192,7 @@ public class BeltController extends CommonController implements Initializable {
 		try {
 			((Belt) service).resetBelt();
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
@@ -195,6 +205,7 @@ public class BeltController extends CommonController implements Initializable {
 						.getConstantNumberFromString(resetitemCount_direction.getSelectionModel()
 								.getSelectedItem()));
 			} catch (JposException e1) {
+				e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
@@ -205,6 +216,7 @@ public class BeltController extends CommonController implements Initializable {
 		try {
 			((Belt) service).stopBelt();
 		} catch (JposException e1) {
+			e1.printStackTrace();
 			JOptionPane.showMessageDialog(null, e1.getMessage());
 		}
 	}
@@ -256,10 +268,13 @@ public class BeltController extends CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 		} catch (SAXException saxe) {
 			saxe.printStackTrace();
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 		} catch (ParserConfigurationException e1) {
 			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",

@@ -80,6 +80,7 @@ public class BillDispenserController extends CommonController implements Initial
 				((BillDispenser) service).setDeviceEnabled(false);
 			}
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 		RequiredStateChecker.invokeThis(this, service);
@@ -98,6 +99,7 @@ public class BillDispenserController extends CommonController implements Initial
 		try {
 			((BillDispenser) service).setAsyncMode(asyncMode.isSelected());
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 	}
@@ -207,10 +209,13 @@ public class BillDispenserController extends CommonController implements Initial
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 		} catch (SAXException saxe) {
 			saxe.printStackTrace();
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 		} catch (ParserConfigurationException e1) {
 			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",

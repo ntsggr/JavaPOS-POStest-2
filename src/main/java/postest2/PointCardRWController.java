@@ -115,6 +115,7 @@ public class PointCardRWController extends CommonController implements Initializ
 			// or an error occurs.
 			((PointCardRW) service).beginInsertion(-1);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -124,6 +125,7 @@ public class PointCardRWController extends CommonController implements Initializ
 		try {
 			((PointCardRW) service).endInsertion();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -139,6 +141,7 @@ public class PointCardRWController extends CommonController implements Initializ
 			// removed or an error occurs.
 			((PointCardRW) service).beginRemoval(-1);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -148,6 +151,7 @@ public class PointCardRWController extends CommonController implements Initializ
 		try {
 			((PointCardRW) service).endRemoval();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -163,6 +167,7 @@ public class PointCardRWController extends CommonController implements Initializ
 		try {
 			((PointCardRW) service).validateData(addEscSequencesToPrintData());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -197,6 +202,7 @@ public class PointCardRWController extends CommonController implements Initializ
 						JOptionPane.WARNING_MESSAGE);
 			}
 		} catch (Exception jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -207,6 +213,7 @@ public class PointCardRWController extends CommonController implements Initializ
 			((PointCardRW) service).rotatePrint(PointCardRWConstantMapper
 					.getConstantNumberFromString(rotationMode.getSelectionModel().getSelectedItem()));
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -216,6 +223,7 @@ public class PointCardRWController extends CommonController implements Initializ
 		try {
 			((PointCardRW) service).cleanCard();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -233,6 +241,7 @@ public class PointCardRWController extends CommonController implements Initializ
 						JOptionPane.WARNING_MESSAGE);
 			}
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -251,7 +260,8 @@ public class PointCardRWController extends CommonController implements Initializ
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
-			System.err.println("PointCardRWPanel: CheckBoxListener: Jpos Exception" + je);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -309,10 +319,13 @@ public class PointCardRWController extends CommonController implements Initializ
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();

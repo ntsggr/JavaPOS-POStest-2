@@ -135,6 +135,7 @@ public class BillAcceptorController extends CommonController implements Initiali
 				((BillAcceptor) service).setDeviceEnabled(false);
 			}
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 

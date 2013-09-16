@@ -318,10 +318,13 @@ public class POSPrinterController extends CommonController implements Initializa
 			printStatistics(doc.getDocumentElement(), "");
 
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
 
@@ -343,6 +346,7 @@ public class POSPrinterController extends CommonController implements Initializa
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 
 	}
@@ -1138,7 +1142,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		transactionPrint.getItems().clear();
 		transactionPrint.getItems().add(POSPrinterConstantMapper.PTR_TP_NORMAL.getConstant());
 		transactionPrint.getItems().add(POSPrinterConstantMapper.PTR_TP_TRANSACTION.getConstant());
-		transactionPrint.setValue(POSPrinterConstantMapper.PTR_TP_NORMAL.getConstant());
+		transactionPrint.setValue(POSPrinterConstantMapper.PTR_TP_TRANSACTION.getConstant());
 	}
 
 	private void setUpBarcodeSymbology() {

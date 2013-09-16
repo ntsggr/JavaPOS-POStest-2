@@ -33,7 +33,8 @@ public class ImageScannerController extends CommonController implements Initiali
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
-			System.err.println("ItemDispenserPanel: CheckBoxListener: Jpos Exception" + je);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 

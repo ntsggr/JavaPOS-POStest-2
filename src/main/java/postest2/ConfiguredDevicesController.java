@@ -59,7 +59,7 @@ public class ConfiguredDevicesController implements Initializable {
 			Device device = new Device(devCat, devLogName, devVendor, devProductName);
 			devices.add(device);
 		}
-
+		
 		devicesList = FXCollections.observableList(devices);
 	}
 	

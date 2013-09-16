@@ -8,19 +8,18 @@
 
 <AnchorPane >
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="root" xmlns:fx="http://javafx.com/fxml" >
-  <!-- TODO Add Nodes -->
   <children>
-    <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POSTest">
+    <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POSTest 2">
       <font>
         <Font name="System Bold" size="32.0" />
       </font>
     </Text>
-    <Text fontSmoothingType="LCD" layoutX="184.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The JavaPOS Device Tester">
+    <Text fontSmoothingType="LCD" layoutX="184.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The JavaPOS Device Tester 2">
       <font>
         <Font name="System Bold" size="20.0" />
       </font>
     </Text>
-    <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="POStest is a community project under the direction of the JavaPOS working group." />
+    <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JavaPOS POStest 2 is an Open Source Project and can be used by everyone." />
   </children>
   <stylesheets>
     <URL value="@win7glass.css" />

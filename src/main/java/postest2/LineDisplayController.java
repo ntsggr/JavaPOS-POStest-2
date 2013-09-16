@@ -228,10 +228,13 @@ public class LineDisplayController extends CommonController implements Initializ
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
@@ -250,7 +253,6 @@ public class LineDisplayController extends CommonController implements Initializ
 	@Override
 	public void handleClaim(ActionEvent e) {
 		setUpScreenMode();
-		deviceEnabled.setSelected(true);
 		super.handleClaim(e);
 	}
 
@@ -272,6 +274,7 @@ public class LineDisplayController extends CommonController implements Initializ
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 

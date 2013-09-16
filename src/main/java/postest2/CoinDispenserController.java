@@ -99,9 +99,8 @@ public class CoinDispenserController extends CommonController implements Initial
 			JOptionPane.showMessageDialog(null, jsp, "Information", JOptionPane.INFORMATION_MESSAGE);
 
 		} catch (Exception jpe) {
-			JOptionPane.showMessageDialog(null, "Exception in Info\nException: " + jpe.getMessage(),
-					"Exception", JOptionPane.ERROR_MESSAGE);
-			System.err.println("Jpos exception " + jpe);
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
+			jpe.printStackTrace();
 		}
 	}
 
@@ -125,10 +124,13 @@ public class CoinDispenserController extends CommonController implements Initial
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();

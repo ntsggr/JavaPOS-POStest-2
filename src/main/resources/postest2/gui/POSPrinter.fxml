@@ -64,7 +64,7 @@
                           </items>
                         </ComboBox>
                         <Button layoutX="475.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleTransactionPrint" prefWidth="110.0" text="Transaction Print" />
-                        <Slider fx:id="cutPaperPercentage" layoutX="354.0" layoutY="214.0" prefWidth="110.0" />
+                        <Slider fx:id="cutPaperPercentage" layoutX="354.0" layoutY="214.0" prefWidth="110.0" value="100" />
                       </children>
                     </AnchorPane>
                   </content>

@@ -82,9 +82,8 @@ public abstract class CommonController implements Initializable {
 	public TextField directIO_object;
 
 	BaseJposControl service;
-
+	
 	static String statistics = "";
-
 	@FXML
 	public void handleOpen(ActionEvent e) {
 		POSTest2.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -93,6 +92,7 @@ public abstract class CommonController implements Initializable {
 				try {
 					service.close();
 				} catch (JposException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -111,7 +111,7 @@ public abstract class CommonController implements Initializable {
 		} catch (JposException je) {
 			je.printStackTrace();
 			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
+					"Failed to open \"" + logicalName.getSelectionModel().getSelectedItem()
 							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}

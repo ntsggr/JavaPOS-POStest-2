@@ -59,6 +59,7 @@ public class POSPowerController extends CommonController implements Initializabl
 		try {
 			((POSPower) service).restartPOS();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -68,6 +69,7 @@ public class POSPowerController extends CommonController implements Initializabl
 		try {
 			((POSPower) service).shutdownPOS();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -88,6 +90,7 @@ public class POSPowerController extends CommonController implements Initializabl
 			((POSPower) service).suspendPOS(POSPowerConstantMapper.getConstantNumberFromString(reason
 					.getSelectionModel().getSelectedItem()));
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -102,7 +105,8 @@ public class POSPowerController extends CommonController implements Initializabl
 			}
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
-			System.err.println("POSPowerPanel: CheckBoxListener: Jpos Exception" + je);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 	}
 
@@ -160,10 +164,13 @@ public class POSPowerController extends CommonController implements Initializabl
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
@@ -224,6 +231,7 @@ public class POSPowerController extends CommonController implements Initializabl
 				state.setText("USER_SUSPEND");
 			}
 		} catch (JposException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		}
 	}

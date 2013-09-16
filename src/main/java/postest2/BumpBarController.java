@@ -125,10 +125,13 @@ public class BumpBarController extends CommonController implements Initializable
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 		} catch (SAXException saxe) {
 			saxe.printStackTrace();
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 		} catch (ParserConfigurationException e1) {
 			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Statistics are not supported!", "Statistics",
@@ -142,6 +145,7 @@ public class BumpBarController extends CommonController implements Initializable
 		try {
 			((BumpBar) service).setDeviceEnabled(deviceEnabled.isSelected());
 		} catch (JposException je) {
+			je.printStackTrace();
 			JOptionPane.showMessageDialog(null, je.getMessage());
 		}
 		setUpCheckHealthLevel();

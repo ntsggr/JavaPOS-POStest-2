@@ -14,6 +14,8 @@
       <center>
         <Pane prefHeight="637.0" prefWidth="853.0" styleClass="root">
           <children>
+            <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
+            <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <TabPane fx:id="functionTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE" visible="${deviceEnabled.selected}">
               <tabs>
                 <Tab text="Display Text">
@@ -25,9 +27,6 @@
                         <ComboBox fx:id="attribute" layoutX="96.0" layoutY="98.0" prefHeight="21.0" prefWidth="135.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
-                              <String fx:value="0" />
-                              <String fx:value="1" />
-                              <String fx:value="2" />
                             </FXCollections>
                           </items>
                         </ComboBox>
@@ -87,8 +86,6 @@
                         <Button layoutX="797.0" layoutY="431.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
                         <Button layoutX="797.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
                         <Button layoutX="734.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
-                        <CheckBox fx:id="deviceEnabled" layoutX="-441.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
-                        <CheckBox fx:id="freezeEvents" layoutX="-312.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
                         <Label layoutX="526.0" layoutY="414.0" text="Command:" />
                         <TextField fx:id="scrollText_Units" layoutX="105.0" layoutY="117.0" prefWidth="115.0" />
                         <Label layoutX="42.0" layoutY="117.0" prefHeight="21.0" text="Units:" />

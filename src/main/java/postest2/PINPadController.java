@@ -71,7 +71,6 @@ public class PINPadController extends CommonController implements Initializable 
 	@FXML
 	public TextField authenticationCode;
 
-	@SuppressWarnings("unused")
 	private Runnable doDataUpdate;
 
 	@Override
@@ -85,6 +84,7 @@ public class PINPadController extends CommonController implements Initializable 
 				try {
 					((PINPad) service).setDataEventEnabled(new_val);
 				} catch (JposException jpe) {
+					JOptionPane.showMessageDialog(null, jpe.getMessage());
 					jpe.printStackTrace();
 				}
 			}
@@ -112,7 +112,8 @@ public class PINPadController extends CommonController implements Initializable 
 			}
 			setUpTransactionType();
 		} catch (JposException je) {
-			System.err.println("PINPadPanel: CheckBoxListener: Jpos Exception" + je);
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 		RequiredStateChecker.invokeThis(this, service);
 	}
@@ -157,8 +158,10 @@ public class PINPadController extends CommonController implements Initializable 
 		try {
 			((PINPad) service).endEFTTransaction(Integer.parseInt(completionCode.getText()));
 		} catch (NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(null, nfe.getMessage());
 			nfe.printStackTrace();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -172,6 +175,7 @@ public class PINPadController extends CommonController implements Initializable 
 			String[] outMsg = { "" };
 			((PINPad) service).computeMAC(authenticationCode.getText(), outMsg);
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -185,6 +189,7 @@ public class PINPadController extends CommonController implements Initializable 
 		try {
 			((PINPad) service).verifyMAC(transactionHost.getText());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -198,8 +203,10 @@ public class PINPadController extends CommonController implements Initializable 
 		try {
 			((PINPad) service).updateKey(Integer.parseInt(keyNumber.getText()), key.getText());
 		} catch (NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(null, nfe.getMessage());
 			nfe.printStackTrace();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -209,6 +216,7 @@ public class PINPadController extends CommonController implements Initializable 
 		try {
 			((PINPad) service).clearInput();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -218,6 +226,7 @@ public class PINPadController extends CommonController implements Initializable 
 		try {
 			((PINPad) service).clearInputProperties();
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -253,6 +262,7 @@ public class PINPadController extends CommonController implements Initializable 
 			track4Data.setText(String.valueOf(((PINPad) service).getTrack1Data()));
 			encryptedPIN.setText(((PINPad) service).getEncryptedPIN());
 		} catch (JposException jpe) {
+			JOptionPane.showMessageDialog(null, jpe.getMessage());
 			jpe.printStackTrace();
 		}
 	}
@@ -262,12 +272,14 @@ public class PINPadController extends CommonController implements Initializable 
 			encryptedPIN.setText(new String(((PINPad) service).getEncryptedPIN()));
 			((PINPad) service).setDataEventEnabled(true);
 		} catch (JposException je) {
-			System.err.println("PINPadPanel: dataOccurred 1: Jpos Exception");
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 		try {
 			dataEvent.setSelected(((PINPad) service).getDataEventEnabled());
 		} catch (JposException je) {
-			System.err.println("PINPadPanel: dataOccurred 2: JposException");
+			JOptionPane.showMessageDialog(null, je.getMessage());
+			je.printStackTrace();
 		}
 
 	}
@@ -327,10 +339,13 @@ public class PINPadController extends CommonController implements Initializable 
 
 			JOptionPane.showMessageDialog(null, statistics, "Statistics", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, ioe.getMessage());
 			ioe.printStackTrace();
 		} catch (SAXException saxe) {
+			JOptionPane.showMessageDialog(null, saxe.getMessage());
 			saxe.printStackTrace();
 		} catch (ParserConfigurationException e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());
 			e1.printStackTrace();
 		} catch (JposException jpe) {
 			jpe.printStackTrace();
