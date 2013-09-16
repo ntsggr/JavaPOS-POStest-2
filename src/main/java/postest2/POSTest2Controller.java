@@ -235,7 +235,7 @@ public class POSTest2Controller implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List retrieveFavorites() {
 		List<String> list = null;
