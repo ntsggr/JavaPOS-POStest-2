@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.FiscalPrinterController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.FiscalPrinterController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -18,7 +18,7 @@
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="14.0" layoutY="38.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="140.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <TabPane fx:id="functionTab" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionTab" layoutX="14.0" layoutY="70.0" prefHeight="550.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="General Print Settings">
                   <content>
@@ -55,12 +55,7 @@
                           </font>
                         </Text>
                         <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Set Currency:" />
-                        <ComboBox fx:id="cbSetCurrency" layoutX="133.0" layoutY="317.0" prefHeight="21.0" prefWidth="168.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="cbSetCurrency" layoutX="133.0" layoutY="317.0" prefHeight="21.0" prefWidth="168.0" />
                         <Button layoutX="320.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleSetCurrency" prefWidth="134.0" text="Set Currency" />
                         <Button layoutX="320.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleSetVatTable" prefWidth="134.0" text="Set VatTable" />
                         <Button layoutX="480.0" layoutY="92.0" mnemonicParsing="false" onAction="#handleBeginItemList" text="Begin Item List" />
@@ -76,12 +71,7 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="469.0" prefWidth="700.0">
                       <children>
-                        <ComboBox fx:id="adjustmentType" layoutX="116.0" layoutY="12.0" prefHeight="21.0" prefWidth="173.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="adjustmentType" layoutX="116.0" layoutY="12.0" prefHeight="21.0" prefWidth="173.0" />
                         <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Receipt Message:" />
                         <TextField fx:id="receiptMessage" layoutX="116.0" layoutY="44.0" prefWidth="173.0" />
                         <TextField fx:id="description" layoutX="116.0" layoutY="73.0" prefWidth="173.0">
@@ -190,12 +180,7 @@
                         <Button layoutX="320.0" layoutY="11.0" minWidth="147.0" mnemonicParsing="false" onAction="#handleBeginFiscalReceipt" text="Begin Fiscal Receipt" />
                         <Button layoutX="483.0" layoutY="12.0" minWidth="147.0" mnemonicParsing="false" onAction="#handleEndFiscalReceipt" text="End Fiscal Receipt" />
                         <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vat ID:" />
-                        <ComboBox id="vatID" fx:id="cbVatID" layoutX="116.0" layoutY="248.0" prefHeight="21.0" prefWidth="173.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="vatID" fx:id="cbVatID" layoutX="116.0" layoutY="248.0" prefHeight="21.0" prefWidth="173.0" />
                         <Button layoutX="320.0" layoutY="53.0" minWidth="147.0" mnemonicParsing="false" onAction="#handlePrintRecMessage" text="Print Rec Message" />
                         <Button layoutX="483.0" layoutY="53.0" minWidth="147.0" mnemonicParsing="false" onAction="#handlePrintRecNotPaid" text="Print Rec Not Paid" />
                         <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="484.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TaxID:" />
@@ -244,12 +229,7 @@
                         <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report to:" />
                         <TextField fx:id="reportTo" layoutX="14.0" layoutY="121.0" prefWidth="185.0" />
                         <Text font="$x2" fontSmoothingType="LCD" layoutX="14.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" />
-                        <ComboBox fx:id="reportType" layoutX="53.0" layoutY="166.0" prefHeight="21.0" prefWidth="146.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="reportType" layoutX="53.0" layoutY="166.0" prefHeight="21.0" prefWidth="146.0" />
                         <Button layoutX="315.0" layoutY="51.0" mnemonicParsing="false" onAction="#handlePrintReport" prefWidth="130.0" text="Print Report" />
                         <Button layoutX="315.0" layoutY="89.0" mnemonicParsing="false" onAction="#handlePrintXReport" prefWidth="130.0" text="Print X Report" />
                         <Button layoutX="315.0" layoutY="127.0" mnemonicParsing="false" onAction="#handlePrintZReport" prefWidth="130.0" text="Print Y Report" />
@@ -267,12 +247,7 @@
                         <Button layoutX="370.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleBeginNonFiscal" text="Begin Non Fiscal" />
                         <Button layoutX="370.0" layoutY="149.0" mnemonicParsing="false" onAction="#handlePrintNormal" prefWidth="108.0" text="Print Normal" />
                         <Button layoutX="370.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleEndNonFiscal" prefWidth="108.0" text="End Non Fiscal" />
-                        <ComboBox fx:id="station" layoutX="370.0" layoutY="53.0" prefHeight="21.0" prefWidth="155.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="station" layoutX="370.0" layoutY="53.0" prefHeight="21.0" prefWidth="155.0" />
                         <Text fontSmoothingType="LCD" layoutX="323.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Station:" />
                       </children>
                     </AnchorPane>
@@ -302,19 +277,9 @@
                         <RadioButton fx:id="dailyTotalizer" layoutX="381.0" layoutY="20.0" mnemonicParsing="false" text="Daily Totalizer" />
                         <RadioButton fx:id="grandTotalizer" layoutX="521.0" layoutY="20.0" mnemonicParsing="false" text="Grand Totalizer" />
                         <Text fontSmoothingType="LCD" layoutX="381.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Totalizer: " />
-                        <ComboBox fx:id="itemTotalizer" layoutX="462.0" layoutY="59.0" prefHeight="21.0" prefWidth="178.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox fx:id="itemTotalizer" layoutX="462.0" layoutY="59.0" prefHeight="21.0" prefWidth="178.0" />
                         <Text fontSmoothingType="LCD" layoutX="381.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VatdID:" />
-                        <ComboBox id="cbVatID" fx:id="cbStatusVatID" layoutX="462.0" layoutY="93.0" prefHeight="21.0" prefWidth="178.0">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList">
-                            </FXCollections>
-                          </items>
-                        </ComboBox>
+                        <ComboBox id="cbVatID" fx:id="cbStatusVatID" layoutX="462.0" layoutY="93.0" prefHeight="21.0" prefWidth="178.0" />
                         <Button layoutX="462.0" layoutY="132.0" mnemonicParsing="false" onAction="#handleGetTotalizer" text="Get Totalizer" />
                         <TextArea fx:id="output" layoutX="382.0" layoutY="195.0" prefHeight="116.0" prefWidth="258.0" wrapText="true" />
                         <Text font="$x2" fontSmoothingType="LCD" layoutX="491.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output" />
@@ -332,16 +297,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                        
-		               	<Label layoutX="23.0" layoutY="51.0" text="Command:" />
-		                <Label layoutX="23.0" layoutY="74.0" text="Data:" />
-		                <Label layoutX="23.0" layoutY="98.0" text="Object:" />
-		                <TextField fx:id="directIO_command" layoutX="96.0" layoutY="48.0" prefWidth="199.0" />
-		                <TextField fx:id="directIO_data" layoutX="96.0" layoutY="71.0" prefWidth="199.0" />
-		                <TextField fx:id="directIO_object" layoutX="96.0" layoutY="95.0" prefWidth="199.0" />
-		                <Button layoutX="294.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-		                <Button layoutX="294.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
-		                <Button layoutX="231.0" layoutY="121.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                        <Label layoutX="23.0" layoutY="51.0" text="Command:" />
+                        <Label layoutX="23.0" layoutY="74.0" text="Data:" />
+                        <Label layoutX="23.0" layoutY="98.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="96.0" layoutY="48.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="96.0" layoutY="71.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="96.0" layoutY="95.0" prefWidth="199.0" />
+                        <Button layoutX="294.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="294.0" layoutY="93.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="231.0" layoutY="121.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                       </children>
                     </AnchorPane>
                   </content>
@@ -355,7 +319,7 @@
             <Button fx:id="endTraining" layoutX="522.0" layoutY="4.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleEndTraining" text="End Training" />
             <Button fx:id="clearOutput" layoutX="416.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearOutput" text="Clear Output" />
             <Button fx:id="clearError" layoutX="522.0" layoutY="36.0" minWidth="97.0" mnemonicParsing="false" onAction="#handleClearError" text="Clear Error" />
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fontSmoothingType="LCD" layoutX="50.0" layoutY="650.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

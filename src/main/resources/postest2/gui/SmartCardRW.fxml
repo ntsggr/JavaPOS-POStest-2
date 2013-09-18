@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.SmartCardRWController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.SmartCardRWController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
+            <Pane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="550.0" prefWidth="800.0" styleClass="whiteBackground">
               <children>
                 <Label layoutX="436.0" layoutY="312.0" text="Command:" />
                 <Label layoutX="436.0" layoutY="335.0" text="Data:" />
@@ -29,15 +29,15 @@
                 <Button layoutX="707.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
                 <Button layoutX="644.0" layoutY="382.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Label layoutX="27.0" layoutY="39.0" text="Set InterfaceMode:" />
-                <ComboBox fx:id="interfaceMode" layoutX="141.0" layoutY="36.0" prefHeight="21.0" prefWidth="148.77734375" />
+                <ComboBox fx:id="interfaceMode" layoutX="141.0" layoutY="36.0" prefHeight="21.0" prefWidth="148.778" />
                 <Button layoutX="317.0" layoutY="34.0" mnemonicParsing="false" onAction="#handleSetInterfaceMode" prefWidth="124.0" text="Set InterfaceMode" />
                 <Label layoutX="27.0" layoutY="71.0" text="Set SCSlot:" />
                 <Button layoutX="317.0" layoutY="66.0" mnemonicParsing="false" onAction="#handleSetSCSlot" prefWidth="124.0" text="Set SCSlot" />
-                <TextField fx:id="SCSlot" layoutX="141.0" layoutY="68.0" prefWidth="148.77734375" />
+                <TextField fx:id="SCSlot" layoutX="141.0" layoutY="68.0" prefWidth="148.778" />
                 <Label layoutX="28.0" layoutY="178.0" text="Count:" />
-                <TextField id="value_sequenceNumber" fx:id="readData_count" layoutX="140.0" layoutY="175.0" prefWidth="148.77734375" />
+                <TextField id="value_sequenceNumber" fx:id="readData_count" layoutX="140.0" layoutY="175.0" prefWidth="148.778" />
                 <Label layoutX="28.0" layoutY="211.0" text="Data:" />
-                <TextField id="value_timeout" fx:id="readData_data" layoutX="140.0" layoutY="208.0" prefWidth="148.77734375" />
+                <TextField id="value_timeout" fx:id="readData_data" layoutX="140.0" layoutY="208.0" prefWidth="148.778" />
                 <Button layoutX="189.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleReadData" prefWidth="100.0" text="Read Data" />
                 <Button layoutX="597.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleWriteData" prefWidth="100.0" text="Write Data" />
                 <Button layoutX="30.0" layoutY="337.0" mnemonicParsing="false" onAction="#handleBeginInsertion" prefWidth="110.0" text="Begin Insertion" />
@@ -53,19 +53,19 @@
                 <Label alignment="CENTER" font="$x1" layoutX="29.0" layoutY="404.0" prefWidth="110.0" text="Begin Removal" underline="true" />
                 <Label alignment="CENTER" font="$x1" layoutX="197.0" layoutY="404.0" prefWidth="110.0" text="End Removal" underline="true" />
                 <Label layoutX="29.0" layoutY="146.0" text="Action:" />
-                <ComboBox id="data_action" fx:id="readData_action" layoutX="140.0" layoutY="143.0" prefHeight="21.0" prefWidth="148.77734375" />
+                <ComboBox id="data_action" fx:id="readData_action" layoutX="140.0" layoutY="143.0" prefHeight="21.0" prefWidth="148.778" />
                 <Label alignment="CENTER" font="$x1" layoutX="27.0" layoutY="116.0" prefWidth="265.0" text="Read Data" underline="true" />
                 <Label layoutX="436.0" layoutY="178.0" text="Count:" />
-                <TextField id="value_sequenceNumber" fx:id="writeData_count" layoutX="548.0" layoutY="175.0" prefWidth="148.77734375" />
+                <TextField id="value_sequenceNumber" fx:id="writeData_count" layoutX="548.0" layoutY="175.0" prefWidth="148.778" />
                 <Label layoutX="436.0" layoutY="211.0" text="Data:" />
-                <TextField id="value_timeout" fx:id="writeData_data" layoutX="548.0" layoutY="208.0" prefWidth="148.77734375" />
+                <TextField id="value_timeout" fx:id="writeData_data" layoutX="548.0" layoutY="208.0" prefWidth="148.778" />
                 <Label layoutX="437.0" layoutY="146.0" text="Action:" />
-                <ComboBox id="data_action" fx:id="writeData_action" layoutX="548.0" layoutY="143.0" prefHeight="21.0" prefWidth="148.77734375" />
+                <ComboBox id="data_action" fx:id="writeData_action" layoutX="548.0" layoutY="143.0" prefHeight="21.0" prefWidth="148.778" />
                 <Label alignment="CENTER" font="$x1" layoutX="435.0" layoutY="116.0" prefWidth="265.0" text="Write Data" underline="true" />
                 <Label alignment="CENTER" font="$x1" layoutX="436.0" layoutY="281.0" prefWidth="265.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.0775106634388123" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fontSmoothingType="LCD" layoutX="50.0" layoutY="650.0" scaleX="1.0775" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

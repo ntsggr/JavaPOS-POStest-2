@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.BillDispenserController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.BillDispenserController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -17,8 +17,8 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
+            <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
+            <Pane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="550.0" prefWidth="800.0" styleClass="whiteBackground">
               <children>
                 <Label layoutX="35.0" layoutY="312.0" text="Command:" />
                 <Label layoutX="35.0" layoutY="335.0" text="Data:" />
@@ -56,7 +56,7 @@
                 <Label alignment="CENTER" font="$x1" layoutX="35.0" layoutY="287.0" prefWidth="326.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fontSmoothingType="LCD" layoutX="50.0" layoutY="650.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

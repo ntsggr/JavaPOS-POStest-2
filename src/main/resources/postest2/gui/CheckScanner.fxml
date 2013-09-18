@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CheckScannerController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CheckScannerController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <TabPane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="595.0" prefWidth="860.0" tabClosingPolicy="UNAVAILABLE">
               <stylesheets>
                 <URL value="@win7glass.css" />
               </stylesheets>
@@ -26,15 +26,15 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="219.0" prefWidth="257.0">
                       <children>
-                        <Label layoutX="536.0" layoutY="54.0" text="Command:" />
-                        <Label layoutX="536.0" layoutY="77.0" text="Data:" />
-                        <Label layoutX="536.0" layoutY="101.0" text="Object:" />
-                        <TextField fx:id="directIO_command" layoutX="609.0" layoutY="51.0" prefWidth="199.0" />
-                        <TextField fx:id="directIO_data" layoutX="609.0" layoutY="74.0" prefWidth="199.0" />
-                        <TextField fx:id="directIO_object" layoutX="609.0" layoutY="98.0" prefWidth="199.0" />
-                        <Button layoutX="807.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <Button layoutX="807.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
-                        <Button layoutX="744.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                        <Label layoutX="517.0" layoutY="47.0" text="Command:" />
+                        <Label layoutX="517.0" layoutY="70.0" text="Data:" />
+                        <Label layoutX="517.0" layoutY="94.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="590.0" layoutY="44.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="590.0" layoutY="67.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="590.0" layoutY="91.0" prefWidth="199.0" />
+                        <Button layoutX="788.0" layoutY="64.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="788.0" layoutY="89.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <Button layoutX="725.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Button layoutX="325.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleSetColor" prefWidth="135.0" text="Set Color" />
                         <Label layoutX="30.0" layoutY="25.0" text="Set Color:" />
                         <ComboBox fx:id="color" layoutX="165.0" layoutY="23.0" prefHeight="21.0" prefWidth="142.0" />
@@ -60,15 +60,15 @@
                         <ComboBox id="color" fx:id="imageFormat" layoutX="165.0" layoutY="276.0" prefHeight="21.0" prefWidth="142.0" />
                         <Button layoutX="325.0" layoutY="273.0" mnemonicParsing="false" onAction="#handleSetImageFormat" prefWidth="135.0" text="Set ImageFormat" />
                         <Label layoutX="30.0" layoutY="308.0" text="Set ImageTagData:" />
-                        <TextArea fx:id="imageTagData" layoutX="165.0" layoutY="308.0" prefWidth="409.0" wrapText="true" />
-                        <Button layoutX="439.0" layoutY="486.0" mnemonicParsing="false" onAction="#handleSetImageTagData" prefWidth="135.0" text="Set ImageTagData" />
-                        <Label layoutX="30.0" layoutY="526.0" text="Set MapMode" />
-                        <ComboBox id="color" fx:id="mapMode" layoutX="165.0" layoutY="524.0" prefHeight="21.0" prefWidth="142.0" />
-                        <Button layoutX="325.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleSetMapMode" prefWidth="135.0" text="Set MapMode" />
-                        <Label layoutX="30.0" layoutY="563.0" text="Set Quality" />
-                        <ComboBox id="color" fx:id="quality" layoutX="165.0" layoutY="561.0" prefHeight="21.0" prefWidth="142.0" />
-                        <Button layoutX="325.0" layoutY="558.0" mnemonicParsing="false" onAction="#handleSetQuality" prefWidth="135.0" text="Set Quality" />
-                        <Label alignment="CENTER" layoutX="536.0" layoutY="31.0" prefWidth="271.0" text="DirectIO" underline="true">
+                        <TextArea fx:id="imageTagData" layoutX="165.0" layoutY="308.0" prefHeight="130.0" prefWidth="409.0" wrapText="true" />
+                        <Button layoutX="439.0" layoutY="445.0" mnemonicParsing="false" onAction="#handleSetImageTagData" prefWidth="135.0" text="Set ImageTagData" />
+                        <Label layoutX="30.0" layoutY="489.0" text="Set MapMode" />
+                        <ComboBox id="color" fx:id="mapMode" layoutX="165.0" layoutY="487.0" prefHeight="21.0" prefWidth="142.0" />
+                        <Button layoutX="325.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleSetMapMode" prefWidth="135.0" text="Set MapMode" />
+                        <Label layoutX="30.0" layoutY="526.0" text="Set Quality" />
+                        <ComboBox id="color" fx:id="quality" layoutX="165.0" layoutY="524.0" prefHeight="21.0" prefWidth="142.0" />
+                        <Button layoutX="325.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleSetQuality" prefWidth="135.0" text="Set Quality" />
+                        <Label alignment="CENTER" layoutX="517.0" layoutY="24.0" prefWidth="271.0" text="DirectIO" underline="true">
                           <font>
                             <Font size="14.0" fx:id="x1" />
                           </font>
@@ -123,7 +123,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text fontSmoothingType="LCD" layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fontSmoothingType="LCD" layoutX="50.0" layoutY="685.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

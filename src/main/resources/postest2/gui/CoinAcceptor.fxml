@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CoinAcceptorController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CoinAcceptorController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -17,50 +17,50 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
+            <Pane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="550.0" prefWidth="800.0" styleClass="whiteBackground">
               <children>
-                <Label layoutX="35.0" layoutY="425.0" text="Command:" />
-                <Label layoutX="35.0" layoutY="448.0" text="Data:" />
-                <Label layoutX="35.0" layoutY="472.0" text="Object:" />
-                <TextField fx:id="directIO_command" layoutX="108.0" layoutY="422.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_data" layoutX="108.0" layoutY="445.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_object" layoutX="108.0" layoutY="469.0" prefWidth="199.0" />
-                <Button layoutX="306.0" layoutY="442.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="306.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
-                <Button layoutX="243.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
-                <ComboBox fx:id="currencyCode" layoutX="131.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
-                <Button layoutX="131.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleSetCurrencyCode" text="Set Currency Code" />
-                <Label layoutX="35.0" layoutY="50.0" text="Currency Code:" />
-                <Button layoutX="131.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleAdjustCashCounts" text="AdjustCashCounts" />
-                <Label layoutX="35.0" layoutY="188.0" text="Cash Counts:" />
-                <Label alignment="CENTER" layoutX="35.0" layoutY="163.0" prefWidth="215.0" text="Adjust Cash Counts" underline="true">
+                <Label layoutX="34.0" layoutY="413.0" text="Command:" />
+                <Label layoutX="34.0" layoutY="436.0" text="Data:" />
+                <Label layoutX="34.0" layoutY="460.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="107.0" layoutY="410.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="107.0" layoutY="433.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="107.0" layoutY="457.0" prefWidth="199.0" />
+                <Button layoutX="305.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="305.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="242.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                <ComboBox fx:id="currencyCode" layoutX="130.0" layoutY="34.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="130.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleSetCurrencyCode" text="Set Currency Code" />
+                <Label layoutX="34.0" layoutY="38.0" text="Currency Code:" />
+                <Button layoutX="130.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleAdjustCashCounts" text="AdjustCashCounts" />
+                <Label layoutX="34.0" layoutY="176.0" text="Cash Counts:" />
+                <Label alignment="CENTER" layoutX="34.0" layoutY="151.0" prefWidth="215.0" text="Adjust Cash Counts" underline="true">
                   <font>
                     <Font size="14.0" fx:id="x1" />
                   </font>
                 </Label>
-                <TextField fx:id="adjustCashCounts" layoutX="131.0" layoutY="188.0" prefWidth="119.0" />
-                <Button layoutX="364.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleBeginDeposit" text="Begin Deposit" />
-                <Label alignment="CENTER" font="$x1" layoutX="306.0" layoutY="163.0" prefWidth="215.0" text="Begin Deposit" underline="true" />
-                <Button layoutX="619.0" layoutY="223.0" mnemonicParsing="false" onAction="#handleEndDeposit" prefWidth="122.0" text="End Deposit" />
-                <Label layoutX="558.0" layoutY="188.0" text="Success:" />
-                <Label alignment="CENTER" font="$x1" layoutX="558.0" layoutY="163.0" prefWidth="215.0" text="End Deposit" underline="true" />
-                <ComboBox id="endDeposit_Success" fx:id="endDeposit_success" layoutX="619.0" layoutY="185.0" prefHeight="21.0" prefWidth="122.0" />
-                <Button layoutX="100.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleFixDeposit" text="Fix Deposit" />
-                <Label alignment="CENTER" font="$x1" layoutX="35.0" layoutY="288.0" prefWidth="215.0" text="Fix Deposit" underline="true" />
-                <Button layoutX="367.0" layoutY="347.0" mnemonicParsing="false" onAction="#handlePauseDeposit" prefWidth="122.0" text="Pause Deposit" />
-                <Label layoutX="306.0" layoutY="312.0" text="Control:" />
-                <Label alignment="CENTER" font="$x1" layoutX="306.0" layoutY="287.0" prefWidth="215.0" text="Pause Deposit" underline="true" />
-                <ComboBox id="endDeposit_Success" fx:id="pauseDeposit_control" layoutX="367.0" layoutY="309.0" prefHeight="21.0" prefWidth="122.0" />
-                <Button layoutX="611.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleReadCashCount" prefWidth="122.0" text="Read Cash Count" />
-                <Label alignment="CENTER" font="$x1" layoutX="558.0" layoutY="287.0" prefWidth="215.0" text="Read Cash Count" underline="true" />
-                <Label layoutX="558.0" layoutY="313.0" text="Cash Count:" />
-                <Label layoutX="558.0" layoutY="337.0" text="Discrepancy:" />
-                <Label fx:id="readCashCount_cashCount" layoutX="644.0" layoutY="312.0" prefWidth="91.0" />
-                <Label fx:id="readCashCount_discrepancy" layoutX="644.0" layoutY="337.0" prefWidth="91.0" />
-                <Label alignment="CENTER" font="$x1" layoutX="35.0" layoutY="398.0" prefWidth="272.0" text="DirectIO" underline="true" />
+                <TextField fx:id="adjustCashCounts" layoutX="130.0" layoutY="176.0" prefWidth="119.0" />
+                <Button layoutX="363.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleBeginDeposit" text="Begin Deposit" />
+                <Label alignment="CENTER" font="$x1" layoutX="305.0" layoutY="151.0" prefWidth="215.0" text="Begin Deposit" underline="true" />
+                <Button layoutX="618.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleEndDeposit" prefWidth="122.0" text="End Deposit" />
+                <Label layoutX="557.0" layoutY="176.0" text="Success:" />
+                <Label alignment="CENTER" font="$x1" layoutX="557.0" layoutY="151.0" prefWidth="215.0" text="End Deposit" underline="true" />
+                <ComboBox id="endDeposit_Success" fx:id="endDeposit_success" layoutX="618.0" layoutY="173.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="99.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleFixDeposit" text="Fix Deposit" />
+                <Label alignment="CENTER" font="$x1" layoutX="34.0" layoutY="276.0" prefWidth="215.0" text="Fix Deposit" underline="true" />
+                <Button layoutX="366.0" layoutY="335.0" mnemonicParsing="false" onAction="#handlePauseDeposit" prefWidth="122.0" text="Pause Deposit" />
+                <Label layoutX="305.0" layoutY="300.0" text="Control:" />
+                <Label alignment="CENTER" font="$x1" layoutX="305.0" layoutY="275.0" prefWidth="215.0" text="Pause Deposit" underline="true" />
+                <ComboBox id="endDeposit_Success" fx:id="pauseDeposit_control" layoutX="366.0" layoutY="297.0" prefHeight="21.0" prefWidth="122.0" />
+                <Button layoutX="610.0" layoutY="355.0" mnemonicParsing="false" onAction="#handleReadCashCount" prefWidth="122.0" text="Read Cash Count" />
+                <Label alignment="CENTER" font="$x1" layoutX="557.0" layoutY="275.0" prefWidth="215.0" text="Read Cash Count" underline="true" />
+                <Label layoutX="557.0" layoutY="301.0" text="Cash Count:" />
+                <Label layoutX="557.0" layoutY="325.0" text="Discrepancy:" />
+                <Label fx:id="readCashCount_cashCount" layoutX="643.0" layoutY="300.0" prefWidth="91.0" />
+                <Label fx:id="readCashCount_discrepancy" layoutX="643.0" layoutY="325.0" prefWidth="91.0" />
+                <Label alignment="CENTER" font="$x1" layoutX="34.0" layoutY="386.0" prefWidth="272.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
-            <Text layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
+            <Text fontSmoothingType="LCD" layoutX="50.0" layoutY="650.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite." />
           </children>
         </Pane>
       </center>

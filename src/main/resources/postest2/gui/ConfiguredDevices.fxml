@@ -9,12 +9,12 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ConfiguredDevicesController">
   <children>
-    <TableView fx:id="tableConfiguredDevices" editable="true" layoutX="50.0" layoutY="85.0" prefHeight="200.0" prefWidth="607.0">
+    <TableView fx:id="tableConfiguredDevices" editable="true" layoutX="50.0" layoutY="85.0" prefHeight="200.0" prefWidth="721.0">
       <columns>
-        <TableColumn prefWidth="105.0" resizable="false" text="Category" fx:id="category" />
-        <TableColumn prefWidth="155.0" text="Logical Name" fx:id="logicalName" />
-        <TableColumn prefWidth="185.0" text="Vendor" fx:id="vendor" />
-        <TableColumn prefWidth="160.0" text="Product Name" fx:id="productName" />
+        <TableColumn prefWidth="180.0" resizable="false" text="Category" fx:id="category" />
+        <TableColumn prefWidth="180.0" text="Logical Name" fx:id="logicalName" />
+        <TableColumn prefWidth="180.0" text="Vendor" fx:id="vendor" />
+        <TableColumn prefWidth="180.0" text="Product Name" fx:id="productName" />
       </columns>
     </TableView>
     <Text fontSmoothingType="LCD" layoutX="54.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Below is a list of the devices found in your jpos.xml file." />

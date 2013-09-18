@@ -10,7 +10,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CashDrawerController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.CashDrawerController">
   <children>
     <BorderPane prefHeight="488.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -18,23 +18,23 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
+            <Pane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="550.0" prefWidth="800.0" styleClass="whiteBackground">
               <children>
-                <Label layoutX="106.0" layoutY="435.0" text="Command:" />
-                <Label layoutX="106.0" layoutY="458.0" text="Data:" />
-                <Label layoutX="106.0" layoutY="482.0" text="Object:" />
-                <TextField fx:id="directIO_command" layoutX="179.0" layoutY="432.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_data" layoutX="179.0" layoutY="455.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_object" layoutX="179.0" layoutY="479.0" prefWidth="199.0" />
-                <Button layoutX="377.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="377.0" layoutY="477.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
-                <Button layoutX="314.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
-                <Button fx:id="buttonGetDrawer" layoutX="248.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleGetDrawer" text="Get Drawer Opened" />
-                <Button fx:id="buttonWaitForDrawer" layoutX="398.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleWaitForDrawer" text="Wait For Drawer Close" />
-                <Button fx:id="buttonOpenCash" layoutX="106.0" layoutY="78.0" mnemonicParsing="false" onAction="#handleOpenCash" text="Open Cash Drawer" />
-                <Text layoutX="282.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" />
-                <TextArea fx:id="textAreaActionLog" layoutX="106.0" layoutY="160.0" prefHeight="214.0" prefWidth="430.0" wrapText="true" />
-                <Label alignment="CENTER" layoutX="106.0" layoutY="408.0" prefWidth="270.912109375" text="DirectIO" underline="true">
+                <Label layoutX="108.0" layoutY="406.0" text="Command:" />
+                <Label layoutX="108.0" layoutY="429.0" text="Data:" />
+                <Label layoutX="108.0" layoutY="453.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="181.0" layoutY="403.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="181.0" layoutY="426.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="181.0" layoutY="450.0" prefWidth="199.0" />
+                <Button layoutX="379.0" layoutY="423.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="379.0" layoutY="448.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="316.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                <Button fx:id="buttonGetDrawer" layoutX="250.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleGetDrawer" text="Get Drawer Opened" />
+                <Button fx:id="buttonWaitForDrawer" layoutX="400.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleWaitForDrawer" text="Wait For Drawer Close" />
+                <Button fx:id="buttonOpenCash" layoutX="108.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleOpenCash" text="Open Cash Drawer" />
+                <Text layoutX="284.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Action Log" />
+                <TextArea fx:id="textAreaActionLog" layoutX="108.0" layoutY="131.0" prefHeight="214.0" prefWidth="430.0" wrapText="true" />
+                <Label alignment="CENTER" layoutX="108.0" layoutY="379.0" prefWidth="270.912109375" text="DirectIO" underline="true">
                   <font>
                     <Font size="14.0" />
                   </font>
