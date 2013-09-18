@@ -231,7 +231,7 @@ public abstract class CommonController implements Initializable {
 		chooser.setTitle("Choose DirectIOData");
 		File f = chooser.showOpenDialog(null);
 		if (f != null) {
-			directIO_data.setText(f.getAbsolutePath());
+			directIO_data.setText(convertBytesToString(readBytesFromFile(f.getAbsolutePath())));
 		}
 	}
 
@@ -241,7 +241,7 @@ public abstract class CommonController implements Initializable {
 		chooser.setTitle("Choose DirectIOObject");
 		File f = chooser.showOpenDialog(null);
 		if (f != null) {
-			directIO_object.setText(f.getAbsolutePath());
+			directIO_object.setText(convertBytesToString(readBytesFromFile(f.getAbsolutePath())));
 		}
 	}
 
@@ -253,30 +253,21 @@ public abstract class CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, "One of the Parameter is not specified!");
 		} else {
 			try {
-				// Reads content from File
-				byte[] dataArrByte = readBytesFromFile(directIO_data.getText());
-				int[] dataArrInt = new int[dataArrByte.length];
-				for (int i = 0; i < dataArrByte.length; i++) {
-					dataArrInt[i] = dataArrByte[i];
+				
+				String[] dataArrString= directIO_data.getText().split(",");
+				int[] dataArrInt = new int[dataArrString.length];
+				for (int i = 0; i < dataArrString.length; i++) {
+					dataArrInt[i] = Integer.parseInt(dataArrString[i]);
 				}
-
-				byte[] objectArr = readBytesFromFile(directIO_object.getText());
-
+				
+				String[] objArrString= directIO_object.getText().split(",");
+				int[] objectArr = new int[objArrString.length];
+				for (int i = 0; i < objArrString.length; i++) {
+					objectArr[i] = (byte) Integer.parseInt(objArrString[i]);
+				}
+				
 				// Execute DirectIO
 				service.directIO(Integer.parseInt(directIO_command.getText()), dataArrInt, objectArr);
-
-				// Write changes to the files
-				dataArrByte = new byte[dataArrInt.length];
-				for (int i = 0; i < dataArrByte.length; i++) {
-					dataArrByte[i] = (byte) dataArrInt[i];
-				}
-				if (dataArrByte != null) {
-					writeBytesToFile(dataArrByte, directIO_data.getText());
-				}
-
-				if (objectArr != null) {
-					writeBytesToFile(objectArr, directIO_object.getText());
-				}
 
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -348,6 +339,23 @@ public abstract class CommonController implements Initializable {
 
 		}
 		return result;
+	}
+	
+	/**
+	 * Converty a byte[] to a String
+	 * 
+	 */
+	protected static String convertBytesToString(byte[] bytesFromFile) {
+		String ret = "";
+		
+		for(int i = 0; i < bytesFromFile.length; i++){
+			if(i != 0){
+				ret += ",";
+			}
+			ret += (int) bytesFromFile[i];
+		}
+		
+		return ret;
 	}
 
 	/**

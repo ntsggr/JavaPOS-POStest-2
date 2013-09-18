@@ -8,13 +8,14 @@
 	<artifactId>POStest2</artifactId>
 	<version>1.0</version>
 
-
 	<dependencies>
 
 		<dependency>
 			<groupId>javapos</groupId>
 			<artifactId>jpos</artifactId>
 			<version>1.13.0</version>
+			<scope>system</scope>
+		    <systemPath>${project.basedir}/lib/jpos-1.13.0.jar</systemPath>
 		</dependency>
 		
 		<dependency>
@@ -23,13 +24,15 @@
 			<version>2.4.0</version>
 		</dependency>
 		
+		
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
-			<version>2.0</version>
+		  <groupId>com.oracle</groupId>
+		  <artifactId>javafx</artifactId>
+		  <version>2.0</version>
+		  <scope>system</scope>
+		  <systemPath>${project.basedir}/lib/jfxrt.jar</systemPath>
 		</dependency>
 
 	</dependencies>
-
 
 </project>

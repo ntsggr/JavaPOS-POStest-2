@@ -35,8 +35,8 @@ public class ConfiguredDevicesController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpLists();
 		setUpTable();
-	}
-
+	}	
+	
 	/**
 	 * Sets the DevicesList and the LogicalNamesList
 	 */

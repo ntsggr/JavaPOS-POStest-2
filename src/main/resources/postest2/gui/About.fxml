@@ -20,13 +20,18 @@
           <Font name="System Bold" size="20.0" />
         </font>
       </Text>
-      <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JavaPOS POStest 2 is an open source project and developers are welcome to add new features or to change the devices corresponding to the UnifiedPOS version!" />
+      <Text fontSmoothingType="LCD" layoutX="92.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JavaPOS POStest 2 is an open source project and currently supports UnifiedPOS Version 1.13.">
+        <font>
+          <Font size="13.0" fx:id="x1" />
+        </font>
+      </Text>
       <Text layoutX="92.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contributors:" />
-      <Hyperlink fx:id="hyperlinkNewVersion" layoutX="211.0" layoutY="261.0" onAction="#handleHyperlinkNewVersion" text="https://sourceforge.net/projects/javapospostest2/" />
+      <Hyperlink fx:id="hyperlinkNewVersion" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="211.0" layoutY="261.0" onAction="#handleHyperlinkNewVersion" text="https://sourceforge.net/projects/javapospostest2/" textFill="#0021cc" textOverrun="CLIP" underline="true" />
       <Label layoutX="92.0" layoutY="264.0" text="Homepage:" />
-      <Hyperlink fx:id="hyperlinkOldVersion" layoutX="211.0" layoutY="297.0" onAction="#handleHyperlinkOldVersion" text="https://sourceforge.net/projects/postest/" />
+      <Hyperlink fx:id="hyperlinkOldVersion" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="211.0" layoutY="297.0" onAction="#handleHyperlinkOldVersion" text="https://sourceforge.net/projects/postest/" textFill="#1000cc" underline="true" />
       <Label layoutX="92.0" layoutY="300.0" text="POStest (old version):" />
       <TextArea layoutX="211.0" layoutY="333.0" prefHeight="243.0" prefWidth="569.0" styleClass="scroll-arrow, root" text="Grill Günther - NTS New Technology Systems GmbH &#10;Stehrer Jakob - NTS New Technology Systems GmbH &#10;Weißenbek Markus&#10;Tsepas Ioannis&#10;" wrapText="true" />
+      <Text font="$x1" fontSmoothingType="LCD" layoutX="92.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developers are welcome to help in this open source project." />
     </children>
     <stylesheets>
       <URL value="@win7glass.css" />

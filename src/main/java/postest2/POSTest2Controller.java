@@ -297,7 +297,7 @@ public class POSTest2Controller implements Initializable {
 	}
 
 	// Set the panel for each clicked device
-	private void setPanel(String panel) {
+	protected void setPanel(String panel) {
 		if (panel.equals("About")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(About);

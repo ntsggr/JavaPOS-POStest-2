@@ -190,9 +190,9 @@ public class POSPrinterController extends CommonController implements Initializa
 
 	// Holds position of ESC-Characters.
 	// Need because Textarea delete ESC everytime it changes
-	private ArrayList<Integer> printNormalEscapeSequenceList;
-	private ArrayList<Integer> print2NormalFirstEscapeSequenceList;
-	private ArrayList<Integer> print2NormalSecondEscapeSequenceList;
+	//private ArrayList<Integer> printNormalEscapeSequenceList;
+	//private ArrayList<Integer> print2NormalFirstEscapeSequenceList;
+	//private ArrayList<Integer> print2NormalSecondEscapeSequenceList;
 
 	// Escape-Character
 	final char ESC = (char) 0x1B;
@@ -212,9 +212,9 @@ public class POSPrinterController extends CommonController implements Initializa
 		
 		//printNormalData.setText(ESC + "asdfasdf" + EPSILON + "ZZZ" + ESC + EPSILON + "AAAA");
 		
-		printNormalEscapeSequenceList = new ArrayList<Integer>();
-		print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
-		print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();
+		//printNormalEscapeSequenceList = new ArrayList<Integer>();
+		//print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
+		//print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();
 
 		setUpLogicalNameComboBox("POSPrinter");
 		// Group the Radiobuttons
@@ -226,6 +226,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		/*
 		 * Add ChangeListener to update EscCharacterPosititon List
 		 */
+		/*
 		printNormalData.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -262,6 +263,7 @@ public class POSPrinterController extends CommonController implements Initializa
 				}
 			}
 		});
+		*/
 
 	}
 
@@ -504,6 +506,7 @@ public class POSPrinterController extends CommonController implements Initializa
 
 	@FXML
 	public void handleAddEscapeSequenceNormal(ActionEvent e) {
+		/*
 		printNormalEscapeSequenceList.add(printNormalData.getCaretPosition());
 		String text = printNormalData.getText();
 		String first = text.substring(0, printNormalData.getCaretPosition());
@@ -512,7 +515,16 @@ public class POSPrinterController extends CommonController implements Initializa
 
 		printNormalData.setText(first + "|" + second);
 		printNormalData.positionCaret(printNormalData.getLength());
+		*/
+		String text = printNormalData.getText();
+		String first = text.substring(0, printNormalData.getCaretPosition());
+		String second = text.substring(printNormalData.getCaretPosition(), printNormalData.lengthProperty()
+				.getValue());
 
+		printNormalData.setText(first + EPSILON + "|" + second);
+		printNormalData.positionCaret(printNormalData.getLength());
+		
+		
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e1) {
@@ -585,6 +597,7 @@ public class POSPrinterController extends CommonController implements Initializa
 
 	@FXML
 	public void handleAddEscapeSequence2NormalFirst(ActionEvent e) {
+		/*
 		print2NormalFirstEscapeSequenceList.add(print2NormalFirstData.getCaretPosition());
 		String text = print2NormalFirstData.getText();
 		String first = text.substring(0, print2NormalFirstData.getCaretPosition());
@@ -593,10 +606,19 @@ public class POSPrinterController extends CommonController implements Initializa
 
 		print2NormalFirstData.setText(first + "|" + second);
 		print2NormalFirstData.positionCaret(print2NormalFirstData.getLength());
+		*/
+		String text = print2NormalFirstData.getText();
+		String first = text.substring(0, print2NormalFirstData.getCaretPosition());
+		String second = text.substring(print2NormalFirstData.getCaretPosition(), print2NormalFirstData
+				.lengthProperty().getValue());
+
+		print2NormalFirstData.setText(first + EPSILON + "|" + second);
+		print2NormalFirstData.positionCaret(print2NormalFirstData.getLength());
 	}
 
 	@FXML
 	public void handleAddEscapeSequence2NormalSecond(ActionEvent e) {
+		/*
 		print2NormalSecondEscapeSequenceList.add(print2NormalSecondData.getCaretPosition());
 		String text = print2NormalSecondData.getText();
 		String first = text.substring(0, print2NormalSecondData.getCaretPosition());
@@ -605,7 +627,15 @@ public class POSPrinterController extends CommonController implements Initializa
 
 		print2NormalSecondData.setText(first + "|" + second);
 		print2NormalSecondData.positionCaret(print2NormalSecondData.getLength());
+		*/
+		String text = print2NormalSecondData.getText();
+		String first = text.substring(0, print2NormalSecondData.getCaretPosition());
+		String second = text.substring(print2NormalSecondData.getCaretPosition(), print2NormalSecondData
+				.lengthProperty().getValue());
 
+		print2NormalSecondData.setText(first + EPSILON + "|" + second);
+		print2NormalSecondData.positionCaret(print2NormalSecondData.getLength());
+		
 	}
 
 	@FXML
@@ -1433,6 +1463,7 @@ public class POSPrinterController extends CommonController implements Initializa
 	 * @return the Correct String containing the ESC-characters
 	 */
 	private String addEscSequencesToPrintNormalData() {
+		/*
 		String ret = printNormalData.getText();
 		synchronized (printNormalEscapeSequenceList) {
 			if (!printNormalEscapeSequenceList.isEmpty()) {
@@ -1447,63 +1478,69 @@ public class POSPrinterController extends CommonController implements Initializa
 			}
 		}
 		return ret;
+		*/
+		
+		String ret = printNormalData.getText();
+		ret.replace(EPSILON, ESC);
+		return ret;
+	
 	}
 
-	/**
-	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
-	 * something was added to printNormalData
-	 */
-	private void updateInsertsEscSequencesToPrintNormalData(int diff) {
-		int cursorPos = printNormalData.getCaretPosition();
-		ListIterator<Integer> pos = printNormalEscapeSequenceList.listIterator();
+//	/**
+//	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
+//	 * something was added to printNormalData
+//	 */
+//	private void updateInsertsEscSequencesToPrintNormalData(int diff) {
+//		int cursorPos = printNormalData.getCaretPosition();
+//		ListIterator<Integer> pos = printNormalEscapeSequenceList.listIterator();
+//
+//		while (pos.hasNext()) {
+//			int i = pos.next();
+//			if (i > cursorPos) {
+//				pos.remove();
+//				pos.add((i + diff));
+//			}
+//			if (printNormalEscapeSequenceList.isEmpty()) {
+//				break;
+//			}
+//		}
+//
+//	}
 
-		while (pos.hasNext()) {
-			int i = pos.next();
-			if (i > cursorPos) {
-				pos.remove();
-				pos.add((i + diff));
-			}
-			if (printNormalEscapeSequenceList.isEmpty()) {
-				break;
-			}
-		}
-
-	}
-
-	/**
-	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
-	 * something was deleted from printNormalData
-	 */
-	private void updateDeletesEscSequencesToPrintNormalData(int diff) {
-		// Compare Length with ArrayList pos
-		// Decrement Index -1 > Cursor Pos
-		int cursorPos = printNormalData.getCaretPosition();
-
-		ListIterator<Integer> pos = printNormalEscapeSequenceList.listIterator();
-		while (pos.hasNext()) {
-			int i = pos.next();
-			if (i > printNormalData.getText().length()) {
-				pos.remove();
-				if (printNormalEscapeSequenceList.isEmpty()) {
-					break;
-				}
-				continue;
-			}
-			if (i == cursorPos - 1) {
-				pos.remove();
-				if (printNormalEscapeSequenceList.isEmpty()) {
-					break;
-				}
-			}
-			if (i > cursorPos) {
-				pos.remove();
-				pos.add(i - diff);
-			}
-			if (printNormalEscapeSequenceList.isEmpty()) {
-				break;
-			}
-		}
-	}
+//	/**
+//	 * Updates the Positions in the EscapeCharacterList of PrintNormal if
+//	 * something was deleted from printNormalData
+//	 */
+//	private void updateDeletesEscSequencesToPrintNormalData(int diff) {
+//		// Compare Length with ArrayList pos
+//		// Decrement Index -1 > Cursor Pos
+//		int cursorPos = printNormalData.getCaretPosition();
+//
+//		ListIterator<Integer> pos = printNormalEscapeSequenceList.listIterator();
+//		while (pos.hasNext()) {
+//			int i = pos.next();
+//			if (i > printNormalData.getText().length()) {
+//				pos.remove();
+//				if (printNormalEscapeSequenceList.isEmpty()) {
+//					break;
+//				}
+//				continue;
+//			}
+//			if (i == cursorPos - 1) {
+//				pos.remove();
+//				if (printNormalEscapeSequenceList.isEmpty()) {
+//					break;
+//				}
+//			}
+//			if (i > cursorPos) {
+//				pos.remove();
+//				pos.add(i - diff);
+//			}
+//			if (printNormalEscapeSequenceList.isEmpty()) {
+//				break;
+//			}
+//		}
+//	}
 
 	/* Print 2 Normal First */
 	/**
@@ -1514,73 +1551,79 @@ public class POSPrinterController extends CommonController implements Initializa
 	 */
 	private String addEscSequencesToPrint2NormalDataFirst() {
 
+//		String ret = print2NormalFirstData.getText();
+//
+//		if (!print2NormalFirstEscapeSequenceList.isEmpty()) {
+//			int i = 0;
+//			for (int num : print2NormalFirstEscapeSequenceList) {
+//				num += i;
+//				ret = ret.substring(0, num) + ESC + ret.substring(num, ret.length());
+//				i++;
+//			}
+//		}
+//		return ret;
+
 		String ret = print2NormalFirstData.getText();
-
-		if (!print2NormalFirstEscapeSequenceList.isEmpty()) {
-			int i = 0;
-			for (int num : print2NormalFirstEscapeSequenceList) {
-				num += i;
-				ret = ret.substring(0, num) + ESC + ret.substring(num, ret.length());
-				i++;
-			}
-		}
+		ret.replace(EPSILON, ESC);
 		return ret;
+	
+		
 	}
 
-	/**
-	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if
-	 * something was added to print2NormalDataFirst
-	 */
-	private void updateInsertsEscSequencesToPrint2NormalDataFirst(int diff) {
-		int cursorPos = print2NormalFirstData.getCaretPosition();
-		ListIterator<Integer> pos = print2NormalFirstEscapeSequenceList.listIterator();
-
-		while (pos.hasNext()) {
-			int i = pos.next();
-			if (i > cursorPos) {
-				pos.remove();
-				pos.add((i + diff));
-			}
-			if (print2NormalFirstEscapeSequenceList.isEmpty()) {
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if
-	 * something was deleted from print2NormalDataFirst
-	 */
-	private void updateDeletesEscSequencesToPrint2NormalDataFirst(int diff) {
-		// Compare Length with ArrayList pos
-		// Decrement Index -1 > Cursor Pos
-		int cursorPos = print2NormalFirstData.getCaretPosition();
-
-		ListIterator<Integer> pos = print2NormalFirstEscapeSequenceList.listIterator();
-		while (pos.hasNext()) {
-			int i = pos.next();
-			if (i > print2NormalFirstData.getText().length()) {
-				pos.remove();
-				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
-					break;
-				}
-				continue;
-			}
-			if (i == cursorPos - 1) {
-				pos.remove();
-				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
-					break;
-				}
-			}
-			if (i > cursorPos) {
-				pos.remove();
-				pos.add(i - diff);
-			}
-			if (print2NormalFirstEscapeSequenceList.isEmpty()) {
-				break;
-			}
-		}
-	}
+//	/**
+//	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if
+//	 * something was added to print2NormalDataFirst
+//	 */
+//	private void updateInsertsEscSequencesToPrint2NormalDataFirst(int diff) {
+//		int cursorPos = print2NormalFirstData.getCaretPosition();
+//		ListIterator<Integer> pos = print2NormalFirstEscapeSequenceList.listIterator();
+//
+//		while (pos.hasNext()) {
+//			int i = pos.next();
+//			if (i > cursorPos) {
+//				pos.remove();
+//				pos.add((i + diff));
+//			}
+//			if (print2NormalFirstEscapeSequenceList.isEmpty()) {
+//				break;
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * Updates the Positions in the EscapeCharacterList of Print2NormalFirst if
+//	 * something was deleted from print2NormalDataFirst
+//	 */
+//	private void updateDeletesEscSequencesToPrint2NormalDataFirst(int diff) {
+//		// Compare Length with ArrayList pos
+//		// Decrement Index -1 > Cursor Pos
+//		int cursorPos = print2NormalFirstData.getCaretPosition();
+//
+//		ListIterator<Integer> pos = print2NormalFirstEscapeSequenceList.listIterator();
+//		while (pos.hasNext()) {
+//			int i = pos.next();
+//			if (i > print2NormalFirstData.getText().length()) {
+//				pos.remove();
+//				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
+//					break;
+//				}
+//				continue;
+//			}
+//			if (i == cursorPos - 1) {
+//				pos.remove();
+//				if (print2NormalFirstEscapeSequenceList.isEmpty()) {
+//					break;
+//				}
+//			}
+//			if (i > cursorPos) {
+//				pos.remove();
+//				pos.add(i - diff);
+//			}
+//			if (print2NormalFirstEscapeSequenceList.isEmpty()) {
+//				break;
+//			}
+//		}
+//	}
 
 	/* Print 2 Normal Second */
 
@@ -1591,75 +1634,80 @@ public class POSPrinterController extends CommonController implements Initializa
 	 * @return the Correct String containing the ESC-characters
 	 */
 	private String addEscSequencesToPrint2NormalDataSecond() {
+//		String ret = print2NormalSecondData.getText();
+//
+//		if (!print2NormalSecondEscapeSequenceList.isEmpty()) {
+//			int i = 0;
+//			for (int num : print2NormalSecondEscapeSequenceList) {
+//				num += i;
+//				ret = ret.substring(0, num) + ESC + ret.substring(num, ret.length());
+//				i++;
+//			}
+//		}
+//
+//		return ret;
+		
 		String ret = print2NormalSecondData.getText();
-
-		if (!print2NormalSecondEscapeSequenceList.isEmpty()) {
-			int i = 0;
-			for (int num : print2NormalSecondEscapeSequenceList) {
-				num += i;
-				ret = ret.substring(0, num) + ESC + ret.substring(num, ret.length());
-				i++;
-			}
-		}
-
+		ret.replace(EPSILON, ESC);
 		return ret;
+	
 	}
 
-	/**
-	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if
-	 * something was added to print2NormalDataSecond
-	 */
-	private void updateInsertsEscSequencesToPrint2NormalDataSecond(int diff) {
-		int cursorPos = print2NormalSecondData.getCaretPosition();
-
-		ListIterator<Integer> pos = print2NormalSecondEscapeSequenceList.listIterator();
-
-		while (pos.hasNext()) {
-			int i = pos.next();
-			if (i > cursorPos) {
-				pos.remove();
-				pos.add((i + diff));
-			}
-			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if
-	 * something was deleted from print2NormalDataSecond
-	 */
-	private void updateDeletesEscSequencesToPrint2NormalDataSecond(int diff) {
-		// Compare Length with ArrayList pos
-		// Decrement Index -1 > Cursor Pos
-		int cursorPos = print2NormalSecondData.getCaretPosition();
-
-		ListIterator<Integer> pos = print2NormalSecondEscapeSequenceList.listIterator();
-		while (pos.hasNext()) {
-			int i = pos.next();
-			if (i > print2NormalSecondData.getText().length()) {
-				pos.remove();
-				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
-					break;
-				}
-				continue;
-			}
-			if (i == cursorPos - 1) {
-				pos.remove();
-				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
-					break;
-				}
-			}
-			if (i > cursorPos) {
-				pos.remove();
-				pos.add(i - diff);
-			}
-			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
-				break;
-			}
-		}
-
-	}
+//	/**
+//	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if
+//	 * something was added to print2NormalDataSecond
+//	 */
+//	private void updateInsertsEscSequencesToPrint2NormalDataSecond(int diff) {
+//		int cursorPos = print2NormalSecondData.getCaretPosition();
+//
+//		ListIterator<Integer> pos = print2NormalSecondEscapeSequenceList.listIterator();
+//
+//		while (pos.hasNext()) {
+//			int i = pos.next();
+//			if (i > cursorPos) {
+//				pos.remove();
+//				pos.add((i + diff));
+//			}
+//			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
+//				break;
+//			}
+//		}
+//	}
+//
+//	/**
+//	 * Updates the Positions in the EscapeCharacterList of Print2NormalSecond if
+//	 * something was deleted from print2NormalDataSecond
+//	 */
+//	private void updateDeletesEscSequencesToPrint2NormalDataSecond(int diff) {
+//		// Compare Length with ArrayList pos
+//		// Decrement Index -1 > Cursor Pos
+//		int cursorPos = print2NormalSecondData.getCaretPosition();
+//
+//		ListIterator<Integer> pos = print2NormalSecondEscapeSequenceList.listIterator();
+//		while (pos.hasNext()) {
+//			int i = pos.next();
+//			if (i > print2NormalSecondData.getText().length()) {
+//				pos.remove();
+//				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
+//					break;
+//				}
+//				continue;
+//			}
+//			if (i == cursorPos - 1) {
+//				pos.remove();
+//				if (print2NormalSecondEscapeSequenceList.isEmpty()) {
+//					break;
+//				}
+//			}
+//			if (i > cursorPos) {
+//				pos.remove();
+//				pos.add(i - diff);
+//			}
+//			if (print2NormalSecondEscapeSequenceList.isEmpty()) {
+//				break;
+//			}
+//		}
+//
+//	}
 
 }

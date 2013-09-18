@@ -33,7 +33,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="472.0" prefWidth="741.0">
                       <children>
                         <Text layoutX="14.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send to printer:" />
-                        <TextArea fx:id="printNormalData" layoutX="14.0" layoutY="22.0" prefHeight="181.0" prefWidth="209.0" text="0x190" wrapText="true" />
+                        <TextArea fx:id="printNormalData" layoutX="14.0" layoutY="22.0" prefHeight="181.0" prefWidth="209.0" wrapText="true" />
                         <Button layoutX="232.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleBeginInsertion" prefWidth="110.0" text="Begin Insertion" />
                         <Button layoutX="353.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleEndInsertion" prefWidth="110.0" text="End Insertion" />
                         <Button layoutX="232.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleBeginRemoval" prefWidth="110.0" text="Begin Removal" />
