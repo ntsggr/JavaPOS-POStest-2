@@ -31,7 +31,6 @@
       <Hyperlink fx:id="hyperlinkOldVersion" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="211.0" layoutY="297.0" onAction="#handleHyperlinkOldVersion" text="https://sourceforge.net/projects/postest/" textFill="#1000cc" underline="true" />
       <Label layoutX="92.0" layoutY="300.0" text="POStest (old version):" />
       <TextArea layoutX="211.0" layoutY="333.0" prefHeight="243.0" prefWidth="569.0" styleClass="scroll-arrow, root" text="Grill Günther - NTS New Technology Systems GmbH &#10;Stehrer Jakob - NTS New Technology Systems GmbH &#10;Weißenbek Markus&#10;Tsepas Ioannis&#10;" wrapText="true" />
-      <Text font="$x1" fontSmoothingType="LCD" layoutX="92.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developers are welcome to help in this open source project." />
     </children>
     <stylesheets>
       <URL value="@win7glass.css" />

@@ -23,10 +23,10 @@ public class DeviceProperties {
 							if (!al.isEmpty()) {
 								properties += method.getName().substring(3) + ": ";
 								Iterator<String> iterator = al.iterator();
-								int rightValue = (int) method.invoke(object, null);
+								int rightValue = (Integer) method.invoke(object, null);
 								while (iterator.hasNext()) {
 									String value = iterator.next().toString();
-									int temp = (int) Class.forName(objectMap.getClass().getName())
+									int temp = (Integer) Class.forName(objectMap.getClass().getName())
 											.getMethod("getConstantNumberFromString", String.class)
 											.invoke(objectMap, value);
 									if (rightValue == temp)
@@ -34,7 +34,7 @@ public class DeviceProperties {
 								}
 								properties += "\n";
 							} else {
-								properties += method.getName().substring(3) + ": " + (int) method.invoke(object, null);
+								properties += method.getName().substring(3) + ": " + (Integer) method.invoke(object, null);
 								properties += "\n";
 							}
 						}
@@ -45,9 +45,11 @@ public class DeviceProperties {
 				} // end if is getter
 			} // end for
 
-		} catch (SecurityException | ClassNotFoundException e) {
+		} catch (SecurityException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		} catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
