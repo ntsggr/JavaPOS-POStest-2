@@ -25,9 +25,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -37,68 +34,65 @@ import javafx.util.Callback;
 public class POSTest2Controller implements Initializable {
 
 	// Device panels
-	private Parent About = null;
-	private Parent ConfiguredDevices = null;
-	private Parent Belt = null;
-	private Parent BillAcceptor = null;
-	private Parent BillDispenser = null;
-	private Parent Biometrics = null;
-	private Parent BumpBar = null;
-	private Parent CashChanger = null;
-	private Parent CashDrawer = null;
-	private Parent CAT = null;
-	private Parent CheckScanner = null;
-	private Parent CoinAcceptor = null;
-	private Parent CoinDispenser = null;
-	private Parent ElectronicJournal = null;
-	private Parent ElectronicValueRW = null;
-	private Parent FiscalPrinter = null;
-	private Parent Gate = null;
-	private Parent HardTotals = null;
-	private Parent ImageScanner = null;
-	private Parent ItemDispenser = null;
-	private Parent Keylock = null;
-	private Parent Lights = null;
-	private Parent LineDisplay = null;
-	private Parent MICR = null;
-	private Parent MotionSensor = null;
-	private Parent MSR = null;
-	private Parent PINPad = null;
-	private Parent PointCardRW = null;
-	private Parent POSKeyboard = null;
-	private Parent POSPower = null;
-	private Parent POSPrinter = null;
-	private Parent RemoteOrderDisplay = null;
-	private Parent RFIDScanner = null;
-	private Parent Scale = null;
-	private Parent Scanner = null;
-	private Parent SignatureCapture = null;
-	private Parent SmartCardRW = null;
-	private Parent ToneIndicator = null;
+	public Parent About = null;
+	public Parent ConfiguredDevices = null;
+	public Parent Belt = null;
+	public Parent BillAcceptor = null;
+	public Parent BillDispenser = null;
+	public Parent Biometrics = null;
+	public Parent BumpBar = null;
+	public Parent CashChanger = null;
+	public Parent CashDrawer = null;
+	public Parent CAT = null;
+	public Parent CheckScanner = null;
+	public Parent CoinAcceptor = null;
+	public Parent CoinDispenser = null;
+	public Parent ElectronicJournal = null;
+	public Parent ElectronicValueRW = null;
+	public Parent FiscalPrinter = null;
+	public Parent Gate = null;
+	public Parent HardTotals = null;
+	public Parent ImageScanner = null;
+	public Parent ItemDispenser = null;
+	public Parent Keylock = null;
+	public Parent Lights = null;
+	public Parent LineDisplay = null;
+	public Parent MICR = null;
+	public Parent MotionSensor = null;
+	public Parent MSR = null;
+	public Parent PINPad = null;
+	public Parent PointCardRW = null;
+	public Parent POSKeyboard = null;
+	public Parent POSPower = null;
+	public Parent POSPrinter = null;
+	public Parent RemoteOrderDisplay = null;
+	public Parent RFIDScanner = null;
+	public Parent Scale = null;
+	public Parent Scanner = null;
+	public Parent SignatureCapture = null;
+	public Parent SmartCardRW = null;
+	public Parent ToneIndicator = null;
+
+	@FXML
+	// contains "About" and "Configured devices"
+	public ListView<String> listGeneral;
 
 	@FXML
 	// contains and shows the available devices
-	private ListView<String> listAllDevices;
+	public ListView<String> listAllDevices;
 
 	@FXML
 	// using the "favoriteDevices" it contains and shows the favorite devices
-	transient private ListView<String> listFavorites;
+	transient public ListView<String> listFavorites;
 
 	@FXML
-	// button to select All Devices list
-	private ToggleButton toggleButtonAllDevices;
-
-	@FXML
-	// button to select Favorite Devices list
-	private ToggleButton toggleButtonFavorites;
-
-	@FXML
-	// the main window is divided into two panels. The right panel holds the panel of each clicked device
-	private AnchorPane anchorPaneRight;
+	// the main window is divided into two panels. The right panel holds the
+	// panel of each clicked device
+	public AnchorPane anchorPaneRight;
 
 	@FXML
 	// contains and shows the available devices
-	private ObservableList<String> favoriteDevices;
+	public ObservableList<String> favoriteDevices;
 
 	public List<String> storeFavorites;
 
@@ -115,18 +109,25 @@ public class POSTest2Controller implements Initializable {
 			storeFavorites = new ArrayList<String>();
 		}
 
-		// group for the toggles buttons
-		final ToggleGroup toggleGroup = new ToggleGroup();
-		// set user data to compare which togglebutton is selected
-		toggleButtonAllDevices.setUserData("all");
-		toggleButtonAllDevices.setToggleGroup(toggleGroup);
-		// set user data to compare which togglebutton is selected
-		toggleButtonFavorites.setUserData("favorites");
-		toggleButtonFavorites.setToggleGroup(toggleGroup);
-		toggleButtonAllDevices.setSelected(true);
-		setPanel("About");
+		anchorPaneRight.getChildren().clear();
+		anchorPaneRight.getChildren().addAll(About);
 
-		// The setCellFactory method redefines the implementation of the list cell
+		listGeneral.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
+				if (new_val != null && new_val.equals("About")) {
+					anchorPaneRight.getChildren().clear();
+					anchorPaneRight.getChildren().addAll(About);
+				} else if (new_val != null && new_val.equals("ConfiguredDevices")) {
+					anchorPaneRight.getChildren().clear();
+					anchorPaneRight.getChildren().addAll(ConfiguredDevices);
+				}
+				listGeneral.getSelectionModel().clearSelection();
+			}
+		});
+
+		// The setCellFactory method redefines the implementation of the list
+		// cell
 		listAllDevices.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
 			@Override
 			public ListCell<String> call(ListView<String> param) {
@@ -134,43 +135,32 @@ public class POSTest2Controller implements Initializable {
 			}
 		});
 
-		// Show the respective device panel for each selected item from the list "All devices"
+		// Show the respective device panel for each selected item from the list
+		// "All devices"
 		listAllDevices.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-				setPanel(new_val);
+				if (new_val != null) {
+					setPanel(new_val);
+				}
+				listAllDevices.getSelectionModel().clearSelection();
 			}
 		});
 
-		// Show the respective device panel for each selected item from the list "Favorites"
+		// Show the respective device panel for each selected item from the list
+		// "Favorites"
 		listFavorites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-				if (new_val != null)
+				if (new_val != null) {
 					setPanel(new_val);
-				else
-					setPanel(old_val);
-			}
-		});
-
-		// Show "All devices" or "Favorites"
-		toggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-			@Override
-			public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle, Toggle new_toggle) {
-				if (new_toggle != null) {
-					if (new_toggle.getUserData().equals("all")) {
-						listAllDevices.setVisible(true);
-						listFavorites.setVisible(false);
-					} else {
-						listAllDevices.setVisible(false);
-						listFavorites.setVisible(true);
-					}
 				}
+				listFavorites.getSelectionModel().clearSelection();
 			}
 		});
 
 	}
-	
+
 	// Add a checkbox for each ListView item.
 	class XCell extends ListCell<String> {
 
@@ -192,10 +182,12 @@ public class POSTest2Controller implements Initializable {
 						favoriteDevices.remove(lastItem);
 						listFavorites.setItems(favoriteDevices);
 						storeFavorites.remove(lastItem);
+						listFavorites.setPrefHeight(listFavorites.getPrefHeight() - 36.0);
 						saveFavorites();
 					} else {
 						favoriteDevices.add(lastItem);
 						listFavorites.setItems(favoriteDevices);
+						listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
 						storeFavorites.add(lastItem);
 						saveFavorites();
 					}
@@ -218,13 +210,14 @@ public class POSTest2Controller implements Initializable {
 				if (!storeFavorites.isEmpty() && storeFavorites.contains(item)) {
 					checkBox.setSelected(true);
 					favoriteDevices.add(lastItem);
+					listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
 					listFavorites.setItems(favoriteDevices);
 				}
 			}
 		}
 
 	} // end of XCell class
-	
+
 	public void saveFavorites() {
 		try {
 			FileOutputStream fout = new FileOutputStream("listOfFavoriteDevices.dat");
@@ -235,7 +228,7 @@ public class POSTest2Controller implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List retrieveFavorites() {
 		List<String> list = null;
@@ -297,14 +290,9 @@ public class POSTest2Controller implements Initializable {
 	}
 
 	// Set the panel for each clicked device
-	protected void setPanel(String panel) {
-		if (panel.equals("About")) {
-			anchorPaneRight.getChildren().clear();
-			anchorPaneRight.getChildren().addAll(About);
-		} else if (panel.equals("ConfiguredDevices")) {
-			anchorPaneRight.getChildren().clear();
-			anchorPaneRight.getChildren().addAll(ConfiguredDevices);
-		} else if (panel.equals("Belt")) {
+
+	private void setPanel(String panel) {
+		if (panel.equals("Belt")) {
 			anchorPaneRight.getChildren().clear();
 			anchorPaneRight.getChildren().addAll(Belt);
 		} else if (panel.equals("BillAcceptor")) {

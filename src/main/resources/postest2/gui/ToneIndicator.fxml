@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ToneIndicatorController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ToneIndicatorController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -18,20 +18,20 @@
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode:" />
-            <Pane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" styleClass="whiteBackground">
+            <Pane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="590.0" prefWidth="910.0" styleClass="whiteBackground">
               <children>
-                <Label layoutX="25.0" layoutY="459.0" text="Command:" />
-                <Label layoutX="25.0" layoutY="482.0" text="Data:" />
-                <Label layoutX="25.0" layoutY="506.0" text="Object:" />
-                <TextField fx:id="directIO_command" layoutX="98.0" layoutY="456.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_data" layoutX="98.0" layoutY="479.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_object" layoutX="98.0" layoutY="503.0" prefWidth="199.0" />
-                <Button layoutX="296.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="296.0" layoutY="501.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
-                <Button layoutX="233.0" layoutY="529.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
-                <Button layoutX="292.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleSetInterToneWait" prefWidth="150.0" text="Set InterToneWait" />
-                <Label layoutX="25.0" layoutY="31.0" text="Set InterToneWait:" />
-                <ComboBox fx:id="melodyType" layoutX="147.0" layoutY="58.0" prefHeight="21.0" prefWidth="128.99990844726562">
+                <Label layoutX="14.0" layoutY="442.0" text="Command:" />
+                <Label layoutX="14.0" layoutY="465.0" text="Data:" />
+                <Label layoutX="14.0" layoutY="489.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="87.0" layoutY="439.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="87.0" layoutY="462.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="87.0" layoutY="486.0" prefWidth="199.0" />
+                <Button layoutX="285.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="285.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <Button layoutX="222.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                <Button layoutX="281.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleSetInterToneWait" prefWidth="150.0" text="Set InterToneWait" />
+                <Label layoutX="14.0" layoutY="14.0" text="Set InterToneWait:" />
+                <ComboBox fx:id="melodyType" layoutX="136.0" layoutY="41.0" prefHeight="21.0" prefWidth="129.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
                       <String fx:value="Item 1" />
@@ -40,46 +40,46 @@
                     </FXCollections>
                   </items>
                 </ComboBox>
-                <TextField fx:id="interToneWait" layoutX="148.0" layoutY="28.0" prefWidth="128.99997792968497" />
-                <Slider fx:id="melodyVolume" layoutX="146.0" layoutY="93.0" prefWidth="128.9998779296875" />
-                <TextField fx:id="tone1Duration" layoutX="147.0" layoutY="117.0" prefWidth="128.9998779296875" />
-                <TextField fx:id="tone1Pitch" layoutX="147.0" layoutY="147.0" prefWidth="128.9998779296875" />
-                <Slider fx:id="tone1Volume" layoutX="146.0" layoutY="180.0" prefWidth="128.9998779296875" />
-                <TextField fx:id="tone2Duration" layoutX="147.0" layoutY="208.0" prefWidth="128.99997792968497" />
-                <TextField fx:id="tone2Pitch" layoutX="148.0" layoutY="239.0" prefWidth="128.99991689452872" />
-                <Slider fx:id="tone2Volume" layoutX="148.0" layoutY="272.0" prefWidth="128.9998779296875" />
-                <Label layoutX="25.0" layoutY="61.0" text="Set MelodyType:" />
-                <Label layoutX="25.0" layoutY="91.0" text="Set MelodyVolume:" />
-                <Label layoutX="25.0" layoutY="120.0" text="Set Tone1Duration:" />
-                <Label layoutX="25.0" layoutY="150.0" text="Set Tone1Pitch:" />
-                <Label layoutX="25.0" layoutY="177.0" text="Set Tone1Volume" />
-                <Label layoutX="25.0" layoutY="211.0" text="Set Tone2Duration:" />
-                <Label layoutX="25.0" layoutY="242.0" text="Set Tone2Pitch:" />
-                <Label layoutX="25.0" layoutY="271.0" text="Set Tone2Volume:" />
-                <Button layoutX="292.0" layoutY="56.0" mnemonicParsing="false" onAction="#handleSetMelodyType" prefWidth="150.0" text="Set MelodyType" />
-                <Button layoutX="292.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleSetMelodyVolume" prefWidth="150.0" text="Set MelodyVolume" />
-                <Button layoutX="292.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleSetTone1Duration" prefWidth="150.0" text="Set Tone1Duration" />
-                <Button layoutX="292.0" layoutY="145.0" mnemonicParsing="false" onAction="#handleSetTone1Pitch" prefWidth="150.0" text="Set Tone1Pitch" />
-                <Button layoutX="292.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleSetTone1Volume" prefWidth="150.0" text="Set Tone1Volume" />
-                <Button layoutX="292.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleSetTone2Duration" prefWidth="150.0" text="Set Tone2Duration" />
-                <Button layoutX="292.0" layoutY="237.0" mnemonicParsing="false" onAction="#handleSetTone2Pitch" prefWidth="150.0" text="Set Tone2Pitch" />
-                <Button layoutX="292.0" layoutY="266.0" mnemonicParsing="false" onAction="#handleSetTone2Volume" prefWidth="150.0" text="Set Tone2Volume" />
-                <Label alignment="CENTER" layoutX="25.0" layoutY="311.0" prefWidth="252.0" text="Sound" underline="true">
+                <TextField fx:id="interToneWait" layoutX="137.0" layoutY="11.0" prefWidth="129.0" />
+                <Slider fx:id="melodyVolume" layoutX="135.0" layoutY="76.0" prefWidth="129.0" />
+                <TextField fx:id="tone1Duration" layoutX="136.0" layoutY="100.0" prefWidth="129.0" />
+                <TextField fx:id="tone1Pitch" layoutX="136.0" layoutY="130.0" prefWidth="129.0" />
+                <Slider fx:id="tone1Volume" layoutX="135.0" layoutY="163.0" prefWidth="129.0" />
+                <TextField fx:id="tone2Duration" layoutX="136.0" layoutY="191.0" prefWidth="129.0" />
+                <TextField fx:id="tone2Pitch" layoutX="137.0" layoutY="222.0" prefWidth="129.0" />
+                <Slider fx:id="tone2Volume" layoutX="137.0" layoutY="255.0" prefWidth="129.0" />
+                <Label layoutX="14.0" layoutY="44.0" text="Set MelodyType:" />
+                <Label layoutX="14.0" layoutY="74.0" text="Set MelodyVolume:" />
+                <Label layoutX="14.0" layoutY="103.0" text="Set Tone1Duration:" />
+                <Label layoutX="14.0" layoutY="133.0" text="Set Tone1Pitch:" />
+                <Label layoutX="14.0" layoutY="160.0" text="Set Tone1Volume" />
+                <Label layoutX="14.0" layoutY="194.0" text="Set Tone2Duration:" />
+                <Label layoutX="14.0" layoutY="225.0" text="Set Tone2Pitch:" />
+                <Label layoutX="14.0" layoutY="254.0" text="Set Tone2Volume:" />
+                <Button layoutX="281.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleSetMelodyType" prefWidth="150.0" text="Set MelodyType" />
+                <Button layoutX="281.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleSetMelodyVolume" prefWidth="150.0" text="Set MelodyVolume" />
+                <Button layoutX="281.0" layoutY="99.0" mnemonicParsing="false" onAction="#handleSetTone1Duration" prefWidth="150.0" text="Set Tone1Duration" />
+                <Button layoutX="281.0" layoutY="128.0" mnemonicParsing="false" onAction="#handleSetTone1Pitch" prefWidth="150.0" text="Set Tone1Pitch" />
+                <Button layoutX="281.0" layoutY="159.0" mnemonicParsing="false" onAction="#handleSetTone1Volume" prefWidth="150.0" text="Set Tone1Volume" />
+                <Button layoutX="281.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleSetTone2Duration" prefWidth="150.0" text="Set Tone2Duration" />
+                <Button layoutX="281.0" layoutY="220.0" mnemonicParsing="false" onAction="#handleSetTone2Pitch" prefWidth="150.0" text="Set Tone2Pitch" />
+                <Button layoutX="281.0" layoutY="249.0" mnemonicParsing="false" onAction="#handleSetTone2Volume" prefWidth="150.0" text="Set Tone2Volume" />
+                <Label alignment="CENTER" layoutX="14.0" layoutY="294.0" prefWidth="252.0" text="Sound" underline="true">
                   <font>
                     <Font size="14.0" fx:id="x1" />
                   </font>
                 </Label>
-                <Label layoutX="25.0" layoutY="337.0" text="NumberOfCycles:" />
-                <Label layoutX="27.0" layoutY="363.0" text="InterSoundWait:" />
-                <TextField fx:id="sound_numberOfCycles" layoutX="146.0" layoutY="334.0" prefWidth="128.9998779296875" />
-                <TextField fx:id="sound_interSoundWait" layoutX="147.0" layoutY="360.0" prefWidth="128.9998779296875" />
-                <Button layoutX="221.0" layoutY="390.0" mnemonicParsing="false" onAction="#handleSound" text="Sound" />
-                <Label alignment="CENTER" font="$x1" layoutX="375.0" layoutY="311.0" prefWidth="252.0" text="Sound Immediate" underline="true" />
-                <Button layoutX="446.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleSoundImmediate" text="SoundImmediate" />
-                <Label alignment="CENTER" font="$x1" layoutX="27.0" layoutY="431.0" prefWidth="270.0" text="DirectIO" underline="true" />
+                <Label layoutX="14.0" layoutY="320.0" text="NumberOfCycles:" />
+                <Label layoutX="16.0" layoutY="346.0" text="InterSoundWait:" />
+                <TextField fx:id="sound_numberOfCycles" layoutX="135.0" layoutY="317.0" prefWidth="129.0" />
+                <TextField fx:id="sound_interSoundWait" layoutX="136.0" layoutY="343.0" prefWidth="129.0" />
+                <Button layoutX="210.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleSound" text="Sound" />
+                <Label alignment="CENTER" font="$x1" layoutX="364.0" layoutY="294.0" prefWidth="252.0" text="Sound Immediate" underline="true" />
+                <Button layoutX="435.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleSoundImmediate" text="SoundImmediate" />
+                <Label alignment="CENTER" font="$x1" layoutX="16.0" layoutY="414.0" prefWidth="270.0" text="DirectIO" underline="true" />
               </children>
             </Pane>
-            <Text fill="RED" layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite.">
+            <Text fill="RED" layoutX="50.0" layoutY="680.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite.">
               <font>
                 <Font size="16.0" />
               </font>

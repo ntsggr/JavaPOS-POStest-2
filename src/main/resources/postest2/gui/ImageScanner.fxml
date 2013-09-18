@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ImageScannerController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ImageScannerController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -17,7 +17,7 @@
           <children>
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
-            <Text disable="true" layoutX="102.0" layoutY="147.0" scaleX="1.178745405311158" scaleY="1.3196989318824595" strokeType="OUTSIDE" strokeWidth="0.0" text="Cannot be implemented, because JavaPos-Class ImageScanner doesn't implement any specific Methods" underline="true" />
+            <Text disable="true" fontSmoothingType="LCD" layoutX="102.0" layoutY="147.0" scaleX="1.1788" scaleY="1.320" strokeType="OUTSIDE" strokeWidth="0.0" text="Cannot be implemented, because JavaPos-Class ImageScanner doesn't implement any specific Methods" underline="true" />
           </children>
         </Pane>
       </center>

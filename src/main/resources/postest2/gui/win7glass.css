@@ -22,6 +22,11 @@ menu item is being hovered.
     -fx-background-color: #BCC6CC;
 }
 
+.pane {
+    -fx-text-base-color: #000000;
+    -fx-background-color: #6E6E6E;
+}
+
 .topPane {
     -fx-text-base-color: #000000;
     -fx-background-color: #EBF4FA;

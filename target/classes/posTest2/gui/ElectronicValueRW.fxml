@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-stylesheet win7glass.css?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ElectronicValueRWController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1300.0" xmlns:fx="http://javafx.com/fxml" fx:controller="postest2.ElectronicValueRWController">
   <children>
     <BorderPane prefHeight="598.0" prefWidth="621.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <center>
@@ -18,7 +18,7 @@
             <CheckBox fx:id="deviceEnabled" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleDeviceEnable" text="Device enabled" />
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <CheckBox fx:id="asyncMode" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#handleAsyncMode" text="Asynchronous Mode" />
-            <TabPane fx:id="functionPane" layoutX="33.0" layoutY="71.0" prefHeight="600.0" prefWidth="914.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="functionPane" layoutX="14.0" layoutY="70.0" prefHeight="590.0" prefWidth="910.0" tabClosingPolicy="UNAVAILABLE">
               <stylesheets>
                 <URL value="@win7glass.css" />
               </stylesheets>
@@ -102,7 +102,7 @@
                         <Label layoutX="15.0" layoutY="113.0" text="Timeout:" />
                         <TextField fx:id="accessLog_timeout" layoutX="125.0" layoutY="110.0" prefWidth="129.0" />
                         <Button layoutX="175.0" layoutY="137.0" mnemonicParsing="false" onAction="#handleAccessLog" text="Access Log" />
-                        <Label alignment="CENTER" font="$x1" layoutX="281.0" layoutY="30.0" prefWidth="238.9998779296875" text="Activate Service" underline="true" />
+                        <Label alignment="CENTER" font="$x1" layoutX="281.0" layoutY="30.0" prefWidth="239.0" text="Activate Service" underline="true" />
                         <Label layoutX="281.0" layoutY="60.0" text="Data:" />
                         <TextField fx:id="activateService_data" layoutX="326.0" layoutY="57.0" prefWidth="129.0" />
                         <Label layoutX="281.0" layoutY="86.0" text="Obj:" />
@@ -132,7 +132,7 @@
                         <Label layoutX="14.0" layoutY="399.0" text="Control:" />
                         <ComboBox fx:id="transactionAccess_control" layoutX="78.0" layoutY="395.0" prefHeight="21.0" prefWidth="129.0" />
                         <Button layoutX="87.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleTransactionAccess" text="Transaction Access" />
-                        <Label alignment="CENTER" font="$x1" layoutX="245.0" layoutY="363.0" prefWidth="238.9998779296875" text="Update Key" underline="true" />
+                        <Label alignment="CENTER" font="$x1" layoutX="245.0" layoutY="363.0" prefWidth="239.0" text="Update Key" underline="true" />
                         <Label layoutX="245.0" layoutY="393.0" text="Data:" />
                         <TextField fx:id="updateKey_data" layoutX="290.0" layoutY="390.0" prefWidth="129.0" />
                         <Label layoutX="245.0" layoutY="419.0" text="Obj:" />
@@ -144,7 +144,7 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <Text fill="RED" layoutX="61.0" layoutY="699.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite.">
+            <Text fill="RED" layoutX="50.0" layoutY="680.0" scaleX="1.078" strokeType="OUTSIDE" strokeWidth="0.0" text="Not tested with a Device! If any Errors occur, please contact us on our Sourceforge Projectsite.">
               <font>
                 <Font size="16.0" />
               </font>
@@ -158,7 +158,11 @@
             <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logical name: " />
             <ComboBox fx:id="logicalName" layoutX="101.0" layoutY="9.0" prefHeight="21.0" prefWidth="113.0" />
             <Text fontSmoothingType="LCD" layoutX="277.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State: " />
-            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED" />
+            <Text fx:id="statusLabel" fontSmoothingType="LCD" layoutX="320.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JPOS_S_CLOSED">
+              <font>
+                <Font name="System Bold" size="12.0" />
+              </font>
+            </Text>
             <Button fx:id="buttonOpen" layoutX="14.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleOpen" prefWidth="61.0" text="Open" />
             <Button fx:id="buttonClaim" layoutX="83.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleClaim" prefWidth="61.0" text="Claim" />
             <Button fx:id="buttonRelease" layoutX="152.0" layoutY="53.0" mnemonicParsing="false" onAction="#handleRelease" prefWidth="61.0" text="Release" />
