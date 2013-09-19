@@ -26,7 +26,8 @@
                 <TextField fx:id="directIO_data" layoutX="98.0" layoutY="455.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="98.0" layoutY="479.0" prefWidth="199.0" />
                 <Button layoutX="296.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="296.0" layoutY="477.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="296.0" layoutY="477.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="296.0" layoutY="491.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="233.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <ComboBox fx:id="currencyCode" layoutX="129.0" layoutY="34.0" prefHeight="21.0" prefWidth="122.0" />
                 <Button layoutX="129.0" layoutY="73.0" mnemonicParsing="false" onAction="#handleSetCurrencyCode" text="Set Currency Code" />

@@ -27,7 +27,8 @@
                 <TextField fx:id="directIO_data" layoutX="87.0" layoutY="462.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="87.0" layoutY="486.0" prefWidth="199.0" />
                 <Button layoutX="285.0" layoutY="459.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="285.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="286.0" layoutY="484.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="286.0" layoutY="498.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="222.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Button layoutX="281.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleSetInterToneWait" prefWidth="150.0" text="Set InterToneWait" />
                 <Label layoutX="14.0" layoutY="14.0" text="Set InterToneWait:" />

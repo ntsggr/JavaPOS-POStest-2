@@ -5,9 +5,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import jpos.JposException;
+
 public class DeviceProperties {
 
-	public static String getProperties(Object object, IMapWrapper objectMap) {
+	public static String getProperties(Object object, IMapWrapper objectMap) throws JposException {
 
 		String properties = "";
 

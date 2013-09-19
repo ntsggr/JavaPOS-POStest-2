@@ -27,7 +27,8 @@
                 <TextField fx:id="directIO_data" layoutX="181.0" layoutY="426.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="181.0" layoutY="450.0" prefWidth="199.0" />
                 <Button layoutX="379.0" layoutY="423.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="379.0" layoutY="448.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="380.0" layoutY="450.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="380.0" layoutY="464.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="316.0" layoutY="476.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Button fx:id="buttonGetDrawer" layoutX="250.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleGetDrawer" text="Get Drawer Opened" />
                 <Button fx:id="buttonWaitForDrawer" layoutX="400.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleWaitForDrawer" text="Wait For Drawer Close" />

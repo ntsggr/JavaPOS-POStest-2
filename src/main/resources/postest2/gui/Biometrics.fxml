@@ -30,7 +30,8 @@
                         <TextField fx:id="directIO_data" layoutX="96.0" layoutY="175.0" prefWidth="199.0" />
                         <TextField fx:id="directIO_object" layoutX="96.0" layoutY="199.0" prefWidth="199.0" />
                         <Button layoutX="294.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <Button layoutX="294.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <RadioButton fx:id="directIO_datatypeString" layoutX="294.0" layoutY="197.0" mnemonicParsing="false" text="String" />
+                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="294.0" layoutY="211.0" mnemonicParsing="false" text="Byte[]" />
                         <Button layoutX="231.0" layoutY="225.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <ComboBox id="currencyCode" fx:id="realTimeDataEnabled" layoutX="408.0" layoutY="46.0" prefHeight="21.0" prefWidth="122.0" />
                         <Button layoutX="364.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleSetRealTimeDataEnabled" text="Set Real Time Data Enabled" />
@@ -248,8 +249,7 @@
                 <Font size="16.0" />
               </font>
             </Text>
-           </children>
-
+          </children>
         </Pane>
       </center>
       <top>

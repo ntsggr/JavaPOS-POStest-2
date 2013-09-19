@@ -26,7 +26,8 @@
                 <TextField fx:id="directIO_data" layoutX="99.0" layoutY="147.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="99.0" layoutY="171.0" prefWidth="199.0" />
                 <Button layoutX="297.0" layoutY="144.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="297.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="298.0" layoutY="168.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="298.0" layoutY="182.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="234.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Button layoutX="261.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleSetDecodeData" text="Set DecodeData" />
                 <Label layoutX="26.0" layoutY="52.0" text="Set DecodeData:" />
@@ -43,7 +44,7 @@
                 <Font size="16.0" />
               </font>
             </Text>
-           </children>
+          </children>
         </Pane>
       </center>
       <top>

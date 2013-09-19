@@ -79,7 +79,8 @@
                         <TextField fx:id="directIO_data" layoutX="599.0" layoutY="434.0" prefWidth="199.0" />
                         <TextField fx:id="directIO_object" layoutX="599.0" layoutY="458.0" prefWidth="199.0" />
                         <Button layoutX="797.0" layoutY="431.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <Button layoutX="797.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <RadioButton fx:id="directIO_datatypeString" layoutX="798.0" layoutY="455.0" mnemonicParsing="false" text="String" />
+                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="798.0" layoutY="469.0" mnemonicParsing="false" text="Byte[]" />
                         <Button layoutX="734.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label layoutX="526.0" layoutY="414.0" text="Command:" />
                         <TextField fx:id="scrollText_Units" layoutX="105.0" layoutY="117.0" prefWidth="115.0" />

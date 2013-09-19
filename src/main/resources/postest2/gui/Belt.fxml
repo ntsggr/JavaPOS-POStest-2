@@ -26,7 +26,8 @@
                 <TextField fx:id="directIO_data" layoutX="623.0" layoutY="459.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="623.0" layoutY="483.0" prefWidth="199.0" />
                 <Button layoutX="821.0" layoutY="456.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="821.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="821.0" layoutY="480.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="821.0" layoutY="494.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="758.0" layoutY="509.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <TextField id="AutoStopBackwardDelayTime" fx:id="autoStopBackwardDelayTime" layoutX="198.0" layoutY="148.0" prefWidth="100.0" />
                 <Label id="autoStopBackward" layoutX="361.0" layoutY="31.0" prefWidth="157.0" text="AutoStopForward:" />

@@ -232,8 +232,14 @@ public class RemoteOrderDisplayController extends CommonController implements In
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
-		handleDeviceEnable(e);
+		try {
+			if(getDeviceState(service) == JposState.CLAIMED){
+				deviceEnabled.setSelected(true);
+				handleDeviceEnable(e);
+			}
+		} catch (JposException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	/**

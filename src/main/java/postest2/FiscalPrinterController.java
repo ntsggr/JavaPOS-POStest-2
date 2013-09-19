@@ -67,6 +67,7 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	@RequiredState(JposState.ENABLED)
 	public Button clearOutput;
+	
 	// General Printing Settings Tab
 	@FXML
 	public TextField headerLine;
@@ -267,8 +268,14 @@ public class FiscalPrinterController extends CommonController implements Initial
 	@FXML
 	public void handleOCE(ActionEvent e) {
 		super.handleOCE(e);
-		deviceEnabled.setSelected(true);
-		handleDeviceEnable(e);
+		try {
+			if(getDeviceState(service) == JposState.CLAIMED){
+				deviceEnabled.setSelected(true);
+				handleDeviceEnable(e);
+			}
+		} catch (JposException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	/**

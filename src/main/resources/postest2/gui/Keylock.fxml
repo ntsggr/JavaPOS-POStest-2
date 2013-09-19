@@ -26,7 +26,8 @@
                 <TextField fx:id="directIO_data" layoutX="349.0" layoutY="99.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="349.0" layoutY="123.0" prefWidth="199.0" />
                 <Button layoutX="547.0" layoutY="96.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <Button layoutX="547.0" layoutY="121.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="548.0" layoutY="120.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="548.0" layoutY="134.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="484.0" layoutY="149.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Label alignment="CENTER" layoutX="32.0" layoutY="41.0" prefWidth="226.0" text="Wait For Keylock Change" underline="true">
                   <font>

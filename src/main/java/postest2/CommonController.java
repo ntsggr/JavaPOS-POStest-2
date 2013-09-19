@@ -18,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -82,18 +84,31 @@ public abstract class CommonController implements Initializable {
 	public TextField directIO_data;
 	@FXML
 	public TextField directIO_object;
+	@FXML
+	public RadioButton directIO_datatypeString;
+	@FXML
+	public RadioButton directIO_datatypeByteArray;
+	
+	// Group for the radiobuttons
+	@FXML
+	public final ToggleGroup directIO_datatypeGroup = new ToggleGroup();
 
 	BaseJposControl service;
-	
+
 	static String statistics = "";
-	
+
 	@FXML
 	public void handleOpen(ActionEvent e) {
+		directIO_datatypeByteArray.setToggleGroup(directIO_datatypeGroup);
+		directIO_datatypeString.setToggleGroup(directIO_datatypeGroup);
+		directIO_datatypeByteArray.setSelected(true);
+		
+		
 		POSTest2.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent arg0) {
 				try {
-					if(getDeviceState(service) != JposState.CLOSED){
+					if (getDeviceState(service) != JposState.CLOSED) {
 						try {
 							service.close();
 						} catch (JposException e) {
@@ -108,7 +123,7 @@ public abstract class CommonController implements Initializable {
 				}
 			}
 		});
-		
+
 		try {
 			if (logicalName.getValue() != null && !logicalName.getValue().isEmpty()) {
 				service.open(logicalName.getValue());
@@ -121,9 +136,8 @@ public abstract class CommonController implements Initializable {
 
 		} catch (JposException je) {
 			je.printStackTrace();
-			JOptionPane.showMessageDialog(null,
-					"Failed to open \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to open \"" + logicalName.getSelectionModel().getSelectedItem()
+					+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -134,9 +148,9 @@ public abstract class CommonController implements Initializable {
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			je.printStackTrace();
-			JOptionPane.showMessageDialog(null,
-					"Failed to claim \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to claim \""
+					+ logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(),
+					"Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -151,9 +165,9 @@ public abstract class CommonController implements Initializable {
 			RequiredStateChecker.invokeThis(this, service);
 		} catch (JposException je) {
 			je.printStackTrace();
-			JOptionPane.showMessageDialog(null,
-					"Failed to release \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to release \""
+					+ logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(),
+					"Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -169,20 +183,28 @@ public abstract class CommonController implements Initializable {
 			setStatusLabel();
 		} catch (JposException je) {
 			je.printStackTrace();
-			JOptionPane.showMessageDialog(null,
-					"Failed to close \"" + logicalName.getSelectionModel().getSelectedItem()
-							+ "\"\nException: " + je.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Failed to close \""
+					+ logicalName.getSelectionModel().getSelectedItem() + "\"\nException: " + je.getMessage(),
+					"Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	@FXML
 	public void handleOCE(ActionEvent e) {
-		handleOpen(e);
-		handleClaim(e);
+		try {
+			if(getDeviceState(service) == JposState.CLOSED){
+				handleOpen(e);
+			} 
+			if(getDeviceState(service) == JposState.OPENED){
+				handleClaim(e);
+			}
+		} catch (JposException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	public void handleInfo(ActionEvent e) {
-
+		
 	}
 
 	public void handleStatistics(ActionEvent e) {
@@ -197,9 +219,9 @@ public abstract class CommonController implements Initializable {
 			return;
 		}
 
-		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value")
-				|| e.getNodeName().equals("UPOSStat") || e.getNodeName().equals("Event")
-				|| e.getNodeName().equals("Equipment") || e.getNodeName().equals("Parameter")))
+		if (!(e.getNodeName().equals("Name") || e.getNodeName().equals("Value") || e.getNodeName().equals("UPOSStat")
+				|| e.getNodeName().equals("Event") || e.getNodeName().equals("Equipment") || e.getNodeName().equals(
+				"Parameter")))
 			statistics += tab + e.getNodeName();
 
 		if (e.getNodeValue() != null) {
@@ -219,8 +241,7 @@ public abstract class CommonController implements Initializable {
 			dlg.setVisible(true);
 		} catch (Exception e2) {
 			e2.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Exception: " + e2.getMessage(), "Failed", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -245,16 +266,6 @@ public abstract class CommonController implements Initializable {
 	}
 
 	@FXML
-	public void handleBrowseDirectIOObject(ActionEvent e) {
-		FileChooser chooser = new FileChooser();
-		chooser.setTitle("Choose DirectIOObject");
-		File f = chooser.showOpenDialog(null);
-		if (f != null) {
-			directIO_object.setText(convertBytesToString(readBytesFromFile(f.getAbsolutePath())));
-		}
-	}
-
-	@FXML
 	public void handleDirectIO(ActionEvent e) {
 		if (directIO_command.getText().isEmpty() || directIO_data.getText().isEmpty()
 				|| directIO_object.getText().isEmpty()) {
@@ -262,21 +273,27 @@ public abstract class CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, "One of the Parameter is not specified!");
 		} else {
 			try {
-				
-				String[] dataArrString= directIO_data.getText().split(",");
+
+				String[] dataArrString = directIO_data.getText().split(",");
 				int[] dataArrInt = new int[dataArrString.length];
 				for (int i = 0; i < dataArrString.length; i++) {
 					dataArrInt[i] = Integer.parseInt(dataArrString[i]);
 				}
 				
-				String[] objArrString= directIO_object.getText().split(",");
-				int[] objectArr = new int[objArrString.length];
-				for (int i = 0; i < objArrString.length; i++) {
-					objectArr[i] = (byte) Integer.parseInt(objArrString[i]);
-				}
+				Object object = null;
 				
+				if(directIO_datatypeByteArray.isSelected()){
+					String[] objArrString = directIO_object.getText().split(",");
+					byte[] objectArr = new byte[objArrString.length];
+					for (int i = 0; i < objArrString.length; i++) {
+						objectArr[i] = Byte.parseByte(objArrString[i]);
+					}
+					object = objectArr;
+				} else if(directIO_datatypeString.isSelected()){
+					object = directIO_object.getText();
+				}
 				// Execute DirectIO
-				service.directIO(Integer.parseInt(directIO_command.getText()), dataArrInt, objectArr);
+				service.directIO(Integer.parseInt(directIO_command.getText()), dataArrInt, object);
 
 			} catch (JposException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -349,21 +366,21 @@ public abstract class CommonController implements Initializable {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Converty a byte[] to a String
 	 * 
 	 */
 	protected static String convertBytesToString(byte[] bytesFromFile) {
 		String ret = "";
-		
-		for(int i = 0; i < bytesFromFile.length; i++){
-			if(i != 0){
+
+		for (int i = 0; i < bytesFromFile.length; i++) {
+			if (i != 0) {
 				ret += ",";
 			}
 			ret += (int) bytesFromFile[i];
 		}
-		
+
 		return ret;
 	}
 
@@ -388,11 +405,11 @@ public abstract class CommonController implements Initializable {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Sets the tooltips for the common buttons (Open, Claim, Release, Close, ..)
 	 */
-	protected void setUpTooltips(){
+	protected void setUpTooltips() {
 		buttonClaim.setTooltip(new Tooltip("Claims the Device"));
 		buttonClose.setTooltip(new Tooltip("Closes the connection to the Device"));
 		buttonFirmware.setTooltip(new Tooltip("Update or view the Firmware Version of the Device"));
@@ -405,29 +422,30 @@ public abstract class CommonController implements Initializable {
 
 	/**
 	 * Gets the current DeviceState
+	 * 
 	 * @param service
 	 * @return
 	 * @throws JposException
 	 */
-	private static JposState getDeviceState(BaseJposControl service) throws JposException{
+	protected static JposState getDeviceState(BaseJposControl service) throws JposException {
 		JposState deviceState = null;
-		try{
-			if(!service.getClaimed()){
+		try {
+			if (!service.getClaimed()) {
 				deviceState = JposState.OPENED;
 			}
-			if(service.getClaimed()){
-				deviceState= JposState.CLAIMED;
+			if (service.getClaimed()) {
+				deviceState = JposState.CLAIMED;
 			}
-			
-			if(service.getDeviceEnabled()){
+
+			if (service.getDeviceEnabled()) {
 				deviceState = JposState.ENABLED;
 			}
-		}catch(JposException e){
-			if(e.getErrorCode() == JposConst.JPOS_E_CLOSED){
-				deviceState= JposState.CLOSED;
+		} catch (JposException e) {
+			if (e.getErrorCode() == JposConst.JPOS_E_CLOSED) {
+				deviceState = JposState.CLOSED;
 			}
 		}
 		return deviceState;
-		
+
 	}
 }
