@@ -1,5 +1,6 @@
 package postest2;
 
+import java.awt.HeadlessException;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -92,9 +93,17 @@ public abstract class CommonController implements Initializable {
 			@Override
 			public void handle(WindowEvent arg0) {
 				try {
-					service.close();
+					if(getDeviceState(service) != JposState.CLOSED){
+						try {
+							service.close();
+						} catch (JposException e) {
+							JOptionPane.showMessageDialog(null, e.getMessage());
+							e.printStackTrace();
+						}
+					}
+				} catch (HeadlessException e) {
+					e.printStackTrace();
 				} catch (JposException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -394,4 +403,31 @@ public abstract class CommonController implements Initializable {
 		buttonStatistics.setTooltip(new Tooltip("View, reset or update Device Statistics"));
 	}
 
+	/**
+	 * Gets the current DeviceState
+	 * @param service
+	 * @return
+	 * @throws JposException
+	 */
+	private static JposState getDeviceState(BaseJposControl service) throws JposException{
+		JposState deviceState = null;
+		try{
+			if(!service.getClaimed()){
+				deviceState = JposState.OPENED;
+			}
+			if(service.getClaimed()){
+				deviceState= JposState.CLAIMED;
+			}
+			
+			if(service.getDeviceEnabled()){
+				deviceState = JposState.ENABLED;
+			}
+		}catch(JposException e){
+			if(e.getErrorCode() == JposConst.JPOS_E_CLOSED){
+				deviceState= JposState.CLOSED;
+			}
+		}
+		return deviceState;
+		
+	}
 }

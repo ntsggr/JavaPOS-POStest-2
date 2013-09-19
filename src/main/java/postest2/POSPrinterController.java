@@ -1480,9 +1480,7 @@ public class POSPrinterController extends CommonController implements Initializa
 		return ret;
 		*/
 		
-		String ret = printNormalData.getText();
-		ret.replace(EPSILON, ESC);
-		return ret;
+		return replaceEscapeSequence(printNormalData.getText());
 	
 	}
 
@@ -1562,10 +1560,7 @@ public class POSPrinterController extends CommonController implements Initializa
 //			}
 //		}
 //		return ret;
-
-		String ret = print2NormalFirstData.getText();
-		ret.replace(EPSILON, ESC);
-		return ret;
+		return replaceEscapeSequence(print2NormalFirstData.getText());
 	
 		
 	}
@@ -1647,9 +1642,7 @@ public class POSPrinterController extends CommonController implements Initializa
 //
 //		return ret;
 		
-		String ret = print2NormalSecondData.getText();
-		ret.replace(EPSILON, ESC);
-		return ret;
+		return replaceEscapeSequence(print2NormalSecondData.getText());
 	
 	}
 
@@ -1709,5 +1702,21 @@ public class POSPrinterController extends CommonController implements Initializa
 //		}
 //
 //	}
+	
+	private String replaceEscapeSequence(String data) {
+		String ret = "";
+		if(!data.contains("" + EPSILON)){
+			return data;
+		} else {
+			for(int i = 0; i < data.length(); i++){
+				if((data.charAt(i)) == EPSILON){
+					ret += ESC;
+				} else {
+					ret += data.charAt(i);
+				}
+			}
+		}
+		return ret;
+	}
 
 }
