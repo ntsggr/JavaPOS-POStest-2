@@ -8,12 +8,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,6 +36,14 @@ import jpos.JposConst;
 import jpos.JposException;
 import jpos.POSPrinter;
 import jpos.POSPrinterConst;
+import jpos.events.DirectIOEvent;
+import jpos.events.DirectIOListener;
+import jpos.events.ErrorEvent;
+import jpos.events.ErrorListener;
+import jpos.events.OutputCompleteEvent;
+import jpos.events.OutputCompleteListener;
+import jpos.events.StatusUpdateEvent;
+import jpos.events.StatusUpdateListener;
 
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
@@ -203,15 +207,38 @@ public class POSPrinterController extends CommonController implements Initializa
 	private boolean recLetterQuality = false;
 	private boolean slpLetterQuality = false;
 
+    private EventListener eventListener = new EventListener();
+	
+	private class EventListener implements StatusUpdateListener,
+    OutputCompleteListener,
+    DirectIOListener,
+    ErrorListener {
+
+		public void statusUpdateOccurred( StatusUpdateEvent sue ){
+			updateMessages("SUE: " + getSUEMessage(sue.getStatus()));            
+		}
+		
+		public void directIOOccurred( DirectIOEvent dioe){
+			updateMessages("Dir I/O:  Direct I/O Event " + dioe.getEventNumber() + " returned data = " + Integer.toString(dioe.getData()));            
+		}
+		
+		public void outputCompleteOccurred( OutputCompleteEvent oce){
+			updateMessages("OCE: Output Event" + oce.getOutputID() +" completed");            
+		}
+		
+		public void errorOccurred(ErrorEvent ee){
+			updateMessages("Error: Error Event" + ee);            
+		}
+	}
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		setUpTooltips();
 		service = new POSPrinter();
 
 		RequiredStateChecker.invokeThis(this, service);
-		
-		//printNormalData.setText(ESC + "asdfasdf" + EPSILON + "ZZZ" + ESC + EPSILON + "AAAA");
-		
+
 		//printNormalEscapeSequenceList = new ArrayList<Integer>();
 		//print2NormalFirstEscapeSequenceList = new ArrayList<Integer>();
 		//print2NormalSecondEscapeSequenceList = new ArrayList<Integer>();
@@ -346,6 +373,11 @@ public class POSPrinterController extends CommonController implements Initializa
 				service.setDeviceEnabled(true);
 				setUpCheckboxes();
 				setUpPageModeLabels();
+				((POSPrinter)service).addStatusUpdateListener(eventListener);
+				((POSPrinter)service).addOutputCompleteListener(eventListener);
+				((POSPrinter)service).addErrorListener(eventListener);
+				((POSPrinter)service).addDirectIOListener(eventListener);
+				
 			} else {
 				service.setDeviceEnabled(false);
 			}
@@ -1724,5 +1756,88 @@ public class POSPrinterController extends CommonController implements Initializa
 		}
 		return ret;
 	}
+	
+	private String getSUEMessage(int code){
+        String value = "Unknown";
+        switch(code){
+            case POSPrinterConst.PTR_SUE_COVER_OPEN:
+                value = "Cover Open";
+                break;
+            case POSPrinterConst.PTR_SUE_COVER_OK:
+                value = "Cover OK";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_EMPTY:
+                value = "Journal Paper Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_NEAREMPTY:
+                value = "Journal Paper Near Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_PAPEROK:
+                value = "Journal Papey OK";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_EMPTY:
+                value = "Receipt Paper Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_NEAREMPTY:
+                value = "Receipt Paper Near Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_PAPEROK:
+                value = "Receipt Paper OK";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_EMPTY:
+                value = "Slip Paper Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_NEAREMPTY:
+                value = "Slip Paper Near Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_PAPEROK:
+                value = "Slip Paper OK";
+                break;
+            case POSPrinterConst.PTR_SUE_IDLE:
+                value = "Printer Idle";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_CARTRIDGE_EMPTY:
+                value = "Journal Cartridge Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_HEAD_CLEANING:
+                value = "Journal Head Cleaning Started";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_CARTRIDGE_NEAREMPTY:
+                value = "Journal Cartridge Near Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_JRN_CARTDRIGE_OK:
+                value = "Journal Cartridge OK";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_CARTRIDGE_EMPTY:
+                value = "Receipt Cartridge Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_HEAD_CLEANING:
+                value = "Receipt Head Cleaning Started";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_CARTRIDGE_NEAREMPTY:
+                value = "Receipt Cartridge Near Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_REC_CARTDRIGE_OK:
+                value = "Receipt Cartridge OK";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_CARTRIDGE_EMPTY:
+                value = "Slip Cartridge Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_HEAD_CLEANING:
+                value = "Slip Head Cleaning Started";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_CARTRIDGE_NEAREMPTY:
+                value = "Slip Cartridge Near Empty";
+                break;
+            case POSPrinterConst.PTR_SUE_SLP_CARTRIDGE_OK:
+                value = "Slip Cartridge OK";
+                break;
+        }
+        return value;
+    }
+	
+	private void updateMessages(String msg){
+		deviceMessages.appendText(msg + "\n");
+    }
 
 }
