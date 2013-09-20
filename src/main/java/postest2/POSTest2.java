@@ -10,12 +10,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class POSTest2 extends Application {
-	
+
 	static Stage stage;
-	
+
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		
+
 		Parent root = FXMLLoader.load(getClass().getResource("gui/MainWindow.fxml"));
 		Scene scene = new Scene(root, 1200, 790);
 		primaryStage.setTitle("JavaPOS POStest 2");
@@ -28,5 +28,5 @@ public class POSTest2 extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 }

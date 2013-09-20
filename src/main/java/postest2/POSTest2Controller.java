@@ -8,6 +8,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,21 +18,15 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.util.Callback;
 
 public class POSTest2Controller implements Initializable {
 
@@ -83,7 +80,7 @@ public class POSTest2Controller implements Initializable {
 
 	@FXML
 	// using the "favoriteDevices" it contains and shows the favorite devices
-	transient public ListView<String> listFavorites;
+	public ListView<String> listFavorites; // transient
 
 	@FXML
 	// the main window is divided into two panels. The right panel holds the
@@ -94,7 +91,11 @@ public class POSTest2Controller implements Initializable {
 	// contains and shows the available devices
 	public ObservableList<String> favoriteDevices;
 
+	// list is used to save favorite devices when the application terminates
 	public List<String> storeFavorites;
+
+	// keeps the current name of a selected device from any list
+	private static String selectedItem = "";
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -105,6 +106,12 @@ public class POSTest2Controller implements Initializable {
 		File f = new File("listOfFavoriteDevices.dat");
 		if (f.exists()) {
 			storeFavorites = retrieveFavorites();
+			Iterator<String> it = storeFavorites.iterator();
+			while (it.hasNext()) {
+				favoriteDevices.add(it.next());
+				listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
+			}
+			listFavorites.setItems(favoriteDevices);
 		} else {
 			storeFavorites = new ArrayList<String>();
 		}
@@ -126,12 +133,43 @@ public class POSTest2Controller implements Initializable {
 			}
 		});
 
-		// The setCellFactory method redefines the implementation of the list
-		// cell
-		listAllDevices.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+		// if and only if a double click is detected then add the selected
+		// device to the favorites
+		listAllDevices.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
-			public ListCell<String> call(ListView<String> param) {
-				return new XCell();
+			public void handle(MouseEvent me) {
+				if (me.getButton().equals(MouseButton.PRIMARY)) {
+					if (me.getClickCount() == 2) {
+						if (!favoriteDevices.contains(selectedItem)) {
+							favoriteDevices.add(selectedItem);
+							Collections.sort(favoriteDevices, ALPHABETICAL_ORDER);
+							listFavorites.setItems(favoriteDevices);
+							storeFavorites.add(selectedItem);
+							Collections.sort(storeFavorites, ALPHABETICAL_ORDER);
+							listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
+							saveFavorites();
+						}
+					}
+				}
+			}
+		});
+
+		// if and only if a double click is detected then remove the selected
+		// device from the favorites
+		listFavorites.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent me) {
+				if (me.getButton().equals(MouseButton.PRIMARY)) {
+					if (me.getClickCount() == 2) {
+						if (favoriteDevices.contains(selectedItem)) {
+							favoriteDevices.remove(selectedItem);
+							listFavorites.setItems(favoriteDevices);
+							storeFavorites.remove(selectedItem);
+							listFavorites.setPrefHeight(listFavorites.getPrefHeight() - 36.0);
+							saveFavorites();
+						}
+					}
+				}
 			}
 		});
 
@@ -141,6 +179,7 @@ public class POSTest2Controller implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
 				if (new_val != null) {
+					selectedItem = new_val;
 					setPanel(new_val);
 				}
 				listAllDevices.getSelectionModel().clearSelection();
@@ -153,6 +192,7 @@ public class POSTest2Controller implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
 				if (new_val != null) {
+					selectedItem = new_val;
 					setPanel(new_val);
 				}
 				listFavorites.getSelectionModel().clearSelection();
@@ -161,62 +201,13 @@ public class POSTest2Controller implements Initializable {
 
 	}
 
-	// Add a checkbox for each ListView item.
-	class XCell extends ListCell<String> {
-
-		HBox hbox = new HBox();
-		Label label = new Label("(empty)");
-		Pane pane = new Pane();
-		CheckBox checkBox = new CheckBox();
-		String lastItem;
-
-		public XCell() {
-			super();
-			hbox.getChildren().addAll(label, pane, checkBox);
-			HBox.setHgrow(pane, Priority.ALWAYS);
-
-			checkBox.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					if (favoriteDevices.contains(lastItem)) {
-						favoriteDevices.remove(lastItem);
-						listFavorites.setItems(favoriteDevices);
-						storeFavorites.remove(lastItem);
-						listFavorites.setPrefHeight(listFavorites.getPrefHeight() - 36.0);
-						saveFavorites();
-					} else {
-						favoriteDevices.add(lastItem);
-						listFavorites.setItems(favoriteDevices);
-						listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
-						storeFavorites.add(lastItem);
-						saveFavorites();
-					}
-				}
-			});
-
+	// method to sort lists alphabetically
+	private static Comparator<String> ALPHABETICAL_ORDER = new Comparator<String>() {
+		public int compare(String str1, String str2) {
+			int res = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
+			return (res != 0) ? res : str1.compareTo(str2);
 		}
-
-		@Override
-		protected void updateItem(String item, boolean empty) {
-			super.updateItem(item, empty);
-			// setText(null); // No text in label of super class
-			if (empty) {
-				lastItem = null;
-				setGraphic(null);
-			} else {
-				lastItem = item;
-				label.setText(item != null ? item : "<null>");
-				setGraphic(hbox);
-				if (!storeFavorites.isEmpty() && storeFavorites.contains(item)) {
-					checkBox.setSelected(true);
-					favoriteDevices.add(lastItem);
-					listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
-					listFavorites.setItems(favoriteDevices);
-				}
-			}
-		}
-
-	} // end of XCell class
+	};
 
 	public void saveFavorites() {
 		try {
@@ -290,7 +281,6 @@ public class POSTest2Controller implements Initializable {
 	}
 
 	// Set the panel for each clicked device
-
 	private void setPanel(String panel) {
 		if (panel.equals("Belt")) {
 			anchorPaneRight.getChildren().clear();
