@@ -26,8 +26,9 @@
                 <TextField fx:id="directIO_data" layoutX="369.0" layoutY="336.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="369.0" layoutY="360.0" prefWidth="199.0" />
                 <Button layoutX="567.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <RadioButton fx:id="directIO_datatypeString" layoutX="568.0" layoutY="355.0" mnemonicParsing="false" text="String" />
-                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="568.0" layoutY="369.0" mnemonicParsing="false" text="Byte[]" />
+                <Button layoutX="567.0" layoutY="358.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="627.0" layoutY="355.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="627.0" layoutY="369.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="504.0" layoutY="386.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <TextArea fx:id="textToPrint" layoutX="14.0" layoutY="45.0" prefHeight="100.0" prefWidth="250.0" wrapText="true" />
                 <Text fontSmoothingType="LCD" layoutX="88.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text for write/print:" />

@@ -26,8 +26,9 @@
                 <TextField fx:id="directIO_data" layoutX="101.0" layoutY="278.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="101.0" layoutY="302.0" prefWidth="199.0" />
                 <Button layoutX="299.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <RadioButton fx:id="directIO_datatypeString" layoutX="300.0" layoutY="298.0" mnemonicParsing="false" text="String" />
-                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="300.0" layoutY="312.0" mnemonicParsing="false" text="Byte[]" />
+                <Button layoutX="299.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="362.0" layoutY="298.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="362.0" layoutY="312.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="236.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <TextField fx:id="timeout" layoutX="101.0" layoutY="30.0" prefWidth="200.0" />
                 <Label layoutX="28.0" layoutY="33.0" text="Set Timeout:" />

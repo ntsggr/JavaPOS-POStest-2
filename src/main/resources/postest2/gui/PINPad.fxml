@@ -19,16 +19,17 @@
             <CheckBox fx:id="freezeEvents" layoutX="155.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFreezeEvents" text="Freeze events" />
             <AnchorPane fx:id="anchorPane" layoutX="14.0" layoutY="70.0" prefHeight="590.0" prefWidth="910.0" styleClass="whiteBackground">
               <children>
-                <Label layoutX="554.0" layoutY="89.0" text="Command:" />
-                <Label layoutX="554.0" layoutY="112.0" text="Data:" />
-                <Label layoutX="554.0" layoutY="136.0" text="Object:" />
-                <TextField fx:id="directIO_command" layoutX="619.0" layoutY="85.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_data" layoutX="619.0" layoutY="108.0" prefWidth="199.0" />
-                <TextField fx:id="directIO_object" layoutX="619.0" layoutY="132.0" prefWidth="199.0" />
-                <Button layoutX="817.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <RadioButton fx:id="directIO_datatypeString" layoutX="817.0" layoutY="128.0" mnemonicParsing="false" text="String" />
-                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="817.0" layoutY="142.0" mnemonicParsing="false" text="Byte[]" />
-                <Button layoutX="754.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                <Label layoutX="534.0" layoutY="89.0" text="Command:" />
+                <Label layoutX="534.0" layoutY="112.0" text="Data:" />
+                <Label layoutX="534.0" layoutY="136.0" text="Object:" />
+                <TextField fx:id="directIO_command" layoutX="599.0" layoutY="85.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_data" layoutX="599.0" layoutY="108.0" prefWidth="199.0" />
+                <TextField fx:id="directIO_object" layoutX="599.0" layoutY="132.0" prefWidth="199.0" />
+                <Button layoutX="797.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                <Button layoutX="797.0" layoutY="131.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="860.0" layoutY="128.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="860.0" layoutY="142.0" mnemonicParsing="false" text="Byte[]" />
+                <Button layoutX="734.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Key:">
                   <font>
                     <Font name="System Bold" size="12.0" fx:id="x1" />
@@ -62,14 +63,14 @@
                 <TextField fx:id="transactionHost" layoutX="141.0" layoutY="314.0" prefWidth="237.0" />
                 <TextField fx:id="completionCode" layoutX="141.0" layoutY="344.0" prefWidth="237.0" />
                 <Text font="$x1" fontSmoothingType="LCD" layoutX="14.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Key number:" />
-                <Button layoutX="402.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleBeginEFTTransaction" text="Begin EFT Transaction" />
-                <Button layoutX="402.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleEndEFTTransaction" prefWidth="136.0" text="End EFT Transaction" />
-                <Button layoutX="402.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleUpdateKey" prefWidth="136.0" text="Update Key" />
-                <Button layoutX="402.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleClearInput" prefWidth="136.0" text="Clear Input" />
-                <Button layoutX="402.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleClearInputProperties" prefWidth="136.0" text="Clear Input Properties" />
-                <Button layoutX="402.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleClearFields" prefWidth="136.0" text="Clear Fields" />
-                <Button layoutX="402.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleRefreshFields" prefWidth="136.0" text="Refresh Fields" />
-                <CheckBox fx:id="dataEvent" layoutX="402.0" layoutY="17.0" mnemonicParsing="false" text="Data Event Enabled" />
+                <Button layoutX="388.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleBeginEFTTransaction" text="Begin EFT Transaction" />
+                <Button layoutX="388.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleEndEFTTransaction" prefWidth="136.0" text="End EFT Transaction" />
+                <Button layoutX="388.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleUpdateKey" prefWidth="136.0" text="Update Key" />
+                <Button layoutX="388.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleClearInput" prefWidth="136.0" text="Clear Input" />
+                <Button layoutX="388.0" layoutY="334.0" mnemonicParsing="false" onAction="#handleClearInputProperties" prefWidth="136.0" text="Clear Input Properties" />
+                <Button layoutX="388.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleClearFields" prefWidth="136.0" text="Clear Fields" />
+                <Button layoutX="388.0" layoutY="392.0" mnemonicParsing="false" onAction="#handleRefreshFields" prefWidth="136.0" text="Refresh Fields" />
+                <CheckBox fx:id="dataEvent" layoutX="388.0" layoutY="17.0" mnemonicParsing="false" text="Data Event Enabled" />
                 <ComboBox fx:id="transactionType" layoutX="141.0" layoutY="255.0" prefHeight="21.0" prefWidth="237.0">
                   <items>
                     <FXCollections fx:factory="observableArrayList">
@@ -79,11 +80,11 @@
                     </FXCollections>
                   </items>
                 </ComboBox>
-                <Button layoutX="402.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleComputeMAC" prefWidth="136.0" text="Compute MAC" />
-                <Button layoutX="402.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleVerifyMAC" prefWidth="136.0" text="Verify MAC" />
+                <Button layoutX="388.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleComputeMAC" prefWidth="136.0" text="Compute MAC" />
+                <Button layoutX="388.0" layoutY="175.0" mnemonicParsing="false" onAction="#handleVerifyMAC" prefWidth="136.0" text="Verify MAC" />
                 <Text font="$x1" fontSmoothingType="LCD" layoutX="14.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Authentication code:" />
                 <TextField id="encryptedPIN" fx:id="authenticationCode" layoutX="141.0" layoutY="464.0" prefWidth="237.0" />
-                <Label alignment="CENTER" layoutX="554.0" layoutY="65.0" prefWidth="272.0" text="DirectIO" underline="true">
+                <Label alignment="CENTER" layoutX="534.0" layoutY="65.0" prefWidth="272.0" text="DirectIO" underline="true">
                   <font>
                     <Font size="14.0" />
                   </font>

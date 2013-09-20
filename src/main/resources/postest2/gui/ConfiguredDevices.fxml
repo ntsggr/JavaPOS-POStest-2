@@ -18,5 +18,12 @@
       </columns>
     </TableView>
     <Text fontSmoothingType="LCD" layoutX="54.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Below is a list of the devices found in your jpos.xml file." />
+    <Label layoutX="298.0" layoutY="339.0" text="Select another jpos.xml:" />
+    <Button layoutX="639.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleBrowseJposXml" text="Browse" />
+    <TextField fx:id="selectJposPath" layoutX="439.0" layoutY="335.0" prefWidth="200.0" />
+    <Button layoutX="554.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleSetJposXml" text="Set jpos.xml" />
   </children>
+  <stylesheets>
+    <URL value="@win7glass.css" />
+  </stylesheets>
 </AnchorPane>

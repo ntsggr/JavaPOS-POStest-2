@@ -26,16 +26,17 @@
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="200.0">
                       <children>
-                        <Label layoutX="543.0" layoutY="48.0" text="Command:" />
-                        <Label layoutX="543.0" layoutY="71.0" text="Data:" />
-                        <Label layoutX="543.0" layoutY="95.0" text="Object:" />
-                        <TextField fx:id="directIO_command" layoutX="616.0" layoutY="45.0" prefWidth="199.0" />
-                        <TextField fx:id="directIO_data" layoutX="616.0" layoutY="68.0" prefWidth="199.0" />
-                        <TextField fx:id="directIO_object" layoutX="616.0" layoutY="92.0" prefWidth="199.0" />
-                        <Button layoutX="814.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <RadioButton fx:id="directIO_datatypeString" layoutX="815.0" layoutY="89.0" mnemonicParsing="false" text="String" />
-                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="815.0" layoutY="103.0" mnemonicParsing="false" text="Byte[]" />
-                        <Button layoutX="751.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
+                        <Label layoutX="538.0" layoutY="48.0" text="Command:" />
+                        <Label layoutX="538.0" layoutY="71.0" text="Data:" />
+                        <Label layoutX="538.0" layoutY="95.0" text="Object:" />
+                        <TextField fx:id="directIO_command" layoutX="600.0" layoutY="45.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_data" layoutX="599.0" layoutY="68.0" prefWidth="199.0" />
+                        <TextField fx:id="directIO_object" layoutX="599.0" layoutY="92.0" prefWidth="199.0" />
+                        <Button layoutX="797.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
+                        <Button layoutX="797.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <RadioButton fx:id="directIO_datatypeString" layoutX="858.0" layoutY="89.0" mnemonicParsing="false" text="String" />
+                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="858.0" layoutY="103.0" mnemonicParsing="false" text="Byte[]" />
+                        <Button layoutX="734.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label alignment="CENTER" layoutX="14.0" layoutY="17.0" prefWidth="274.0" text="Claim File" underline="true">
                           <font>
                             <Font size="14.0" fx:id="x1" />

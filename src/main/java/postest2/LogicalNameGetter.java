@@ -1,5 +1,13 @@
 package postest2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -25,8 +33,33 @@ public class LogicalNameGetter {
 	}
 
 	private static void setUpList() {
-		SimpleXmlRegPopulator pop = new SimpleXmlRegPopulator("jpos.xml");
-		pop.load();
+		String jpos = null;
+		
+		File f = new File("pathToJposEntries.dat");
+		if(f.exists()){
+			byte[] encoded;
+			try {
+				encoded = Files.readAllBytes(Paths.get("pathToJposEntries.dat"));
+				if(encoded.length != 0){
+					jpos = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
+				} else {
+					jpos = "jpos.xml";
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			jpos = "jpos.xml";
+		}
+		
+		
+		SimpleXmlRegPopulator pop = new SimpleXmlRegPopulator(jpos);
+		pop.load(jpos);
 		@SuppressWarnings("unchecked")
 		Enumeration<JposEntry> enu = pop.getEntries();
 

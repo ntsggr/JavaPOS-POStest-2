@@ -1261,10 +1261,10 @@ public class POSPrinterController extends CommonController implements Initializa
 
 	private void setUpBitmapNumber() {
 		bitmapNumber.getItems().clear();
-		for (int i = 0; i < 100; i++) {
+		for (int i = 1; i <= 20; i++) {
 			bitmapNumber.getItems().add(i);
 		}
-		bitmapNumber.setValue(0);
+		bitmapNumber.setValue(1);
 	}
 
 	private void setUpDrawLineDirection() {

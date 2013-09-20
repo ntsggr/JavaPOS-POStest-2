@@ -26,8 +26,9 @@
                 <TextField fx:id="directIO_data" layoutX="96.0" layoutY="290.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="96.0" layoutY="314.0" prefWidth="199.0" />
                 <Button layoutX="294.0" layoutY="287.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <RadioButton fx:id="directIO_datatypeString" layoutX="296.0" layoutY="312.0" mnemonicParsing="false" text="String" />
-                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="296.0" layoutY="326.0" mnemonicParsing="false" text="Byte[]" />
+                <Button layoutX="294.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="356.0" layoutY="312.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="356.0" layoutY="326.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="231.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Button layoutX="320.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleSetRealTimeDataEnabled" text="Set RealTimeDataEnabled" />
                 <Label layoutX="23.0" layoutY="41.0" text="Set RealTimeDataEnabled:" />

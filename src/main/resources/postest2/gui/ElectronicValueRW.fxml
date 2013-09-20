@@ -34,8 +34,9 @@
                         <TextField fx:id="directIO_data" layoutX="91.0" layoutY="399.0" prefWidth="199.0" />
                         <TextField fx:id="directIO_object" layoutX="91.0" layoutY="423.0" prefWidth="199.0" />
                         <Button layoutX="289.0" layoutY="396.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <RadioButton fx:id="directIO_datatypeString" layoutX="290.0" layoutY="421.0" mnemonicParsing="false" text="String" />
-                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="290.0" layoutY="435.0" mnemonicParsing="false" text="Byte[]" />
+                        <Button layoutX="289.0" layoutY="421.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <RadioButton fx:id="directIO_datatypeString" layoutX="353.0" layoutY="420.0" mnemonicParsing="false" text="String" />
+                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="353.0" layoutY="434.0" mnemonicParsing="false" text="Byte[]" />
                         <Button layoutX="226.0" layoutY="449.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Button layoutX="422.0" layoutY="31.0" mnemonicParsing="false" onAction="#handleSetAdditionalSecurityInformation" prefWidth="200.0" text="Set AdditionalSecurityInformation" />
                         <Label layoutX="18.0" layoutY="36.0" text="Set AdditionalSecurityInformation:" />

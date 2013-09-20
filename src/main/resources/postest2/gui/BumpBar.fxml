@@ -34,8 +34,9 @@
                         <TextField fx:id="directIO_data" layoutX="97.0" layoutY="403.0" prefWidth="199.0" />
                         <TextField fx:id="directIO_object" layoutX="97.0" layoutY="427.0" prefWidth="199.0" />
                         <Button layoutX="295.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <RadioButton fx:id="directIO_datatypeString" layoutX="296.0" layoutY="427.0" mnemonicParsing="false" text="String" />
-                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="296.0" layoutY="441.0" mnemonicParsing="false" text="Byte[]" />
+                        <Button layoutX="296.0" layoutY="427.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <RadioButton fx:id="directIO_datatypeString" layoutX="356.0" layoutY="425.0" mnemonicParsing="false" text="String" />
+                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="356.0" layoutY="439.0" mnemonicParsing="false" text="Byte[]" />
                         <Button layoutX="232.0" layoutY="453.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label layoutX="34.0" layoutY="34.0" text="Set AutoToneDuration:" />
                         <TextField fx:id="autoToneDuration" layoutX="165.0" layoutY="31.0" prefWidth="200.0" />

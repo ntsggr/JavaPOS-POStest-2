@@ -33,8 +33,9 @@
                         <TextField fx:id="directIO_data" layoutX="88.0" layoutY="386.0" prefWidth="199.0" />
                         <TextField fx:id="directIO_object" layoutX="88.0" layoutY="410.0" prefWidth="199.0" />
                         <Button layoutX="286.0" layoutY="383.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                        <RadioButton fx:id="directIO_datatypeString" layoutX="287.0" layoutY="406.0" mnemonicParsing="false" text="String" />
-                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="287.0" layoutY="420.0" mnemonicParsing="false" text="Byte[]" />
+                        <Button layoutX="287.0" layoutY="409.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                        <RadioButton fx:id="directIO_datatypeString" layoutX="349.0" layoutY="407.0" mnemonicParsing="false" text="String" />
+                        <RadioButton fx:id="directIO_datatypeByteArray" layoutX="349.0" layoutY="421.0" mnemonicParsing="false" text="Byte[]" />
                         <Button layoutX="223.0" layoutY="436.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                         <Label layoutX="15.0" layoutY="76.0" text="Set DecodeData:" />
                         <ComboBox fx:id="decodeData" layoutX="188.0" layoutY="74.0" prefHeight="21.0" prefWidth="157.0" />

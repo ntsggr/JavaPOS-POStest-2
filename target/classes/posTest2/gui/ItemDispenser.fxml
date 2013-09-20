@@ -26,8 +26,9 @@
                 <TextField fx:id="directIO_data" layoutX="449.0" layoutY="267.0" prefWidth="199.0" />
                 <TextField fx:id="directIO_object" layoutX="449.0" layoutY="291.0" prefWidth="199.0" />
                 <Button layoutX="647.0" layoutY="264.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOData" text="Browse" />
-                <RadioButton fx:id="directIO_datatypeString" layoutX="648.0" layoutY="288.0" mnemonicParsing="false" text="String" />
-                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="648.0" layoutY="302.0" mnemonicParsing="false" text="Byte[]" />
+                <Button layoutX="647.0" layoutY="289.0" mnemonicParsing="false" onAction="#handleBrowseDirectIOObject" text="Browse" />
+                <RadioButton fx:id="directIO_datatypeString" layoutX="710.0" layoutY="288.0" mnemonicParsing="false" text="String" />
+                <RadioButton fx:id="directIO_datatypeByteArray" layoutX="710.0" layoutY="302.0" mnemonicParsing="false" text="Byte[]" />
                 <Button layoutX="584.0" layoutY="317.0" mnemonicParsing="false" onAction="#handleDirectIO" text="DirectIO" />
                 <Label layoutX="47.0" layoutY="84.0" text="ItemCount:" />
                 <Label layoutX="47.0" layoutY="116.0" text="SlotNumber:" />

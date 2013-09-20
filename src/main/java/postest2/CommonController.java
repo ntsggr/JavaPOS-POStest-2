@@ -261,7 +261,17 @@ public abstract class CommonController implements Initializable {
 		chooser.setTitle("Choose DirectIOData");
 		File f = chooser.showOpenDialog(null);
 		if (f != null) {
-			directIO_data.setText(convertBytesToString(readBytesFromFile(f.getAbsolutePath())));
+			directIO_data.setText(f.getAbsolutePath());
+		}
+	}
+	
+	@FXML
+	public void handleBrowseDirectIOObject(ActionEvent e) {
+		FileChooser chooser = new FileChooser();
+		chooser.setTitle("Choose DirectIOData");
+		File f = chooser.showOpenDialog(null);
+		if (f != null) {
+			directIO_object.setText(f.getAbsolutePath());
 		}
 	}
 
@@ -273,25 +283,40 @@ public abstract class CommonController implements Initializable {
 			JOptionPane.showMessageDialog(null, "One of the Parameter is not specified!");
 		} else {
 			try {
-
-				String[] dataArrString = directIO_data.getText().split(",");
-				int[] dataArrInt = new int[dataArrString.length];
-				for (int i = 0; i < dataArrString.length; i++) {
-					dataArrInt[i] = Integer.parseInt(dataArrString[i]);
+				File fileData = new File(directIO_data.getText());
+				int[] dataArrInt = null;
+				if(fileData.exists()){
+					// Reads content from File
+					dataArrInt = readIntsFromFile(directIO_data.getText());
+				} else {
+					String[] dataArrString = directIO_data.getText().split(",");
+					dataArrInt = new int[dataArrString.length];
+					for (int i = 0; i < dataArrString.length; i++) {
+						dataArrInt[i] = Integer.parseInt(dataArrString[i]);
+					}
 				}
-				
 				Object object = null;
 				
-				if(directIO_datatypeByteArray.isSelected()){
-					String[] objArrString = directIO_object.getText().split(",");
-					byte[] objectArr = new byte[objArrString.length];
-					for (int i = 0; i < objArrString.length; i++) {
-						objectArr[i] = Byte.parseByte(objArrString[i]);
+				File fileObject = new File(directIO_object.getText());
+				if(fileObject.exists()){
+					if(directIO_datatypeByteArray.isSelected()){
+						object = readBytesFromFile(directIO_object.getText());
+					} else if(directIO_datatypeString.isSelected()){
+						object = convertBytesToString(readBytesFromFile(directIO_object.getText()));
 					}
-					object = objectArr;
-				} else if(directIO_datatypeString.isSelected()){
-					object = directIO_object.getText();
+				} else {
+					if(directIO_datatypeByteArray.isSelected()){
+						String[] objArrString = directIO_object.getText().split(",");
+						byte[] objectArr = new byte[objArrString.length];
+						for (int i = 0; i < objArrString.length; i++) {
+							objectArr[i] = Byte.parseByte(objArrString[i]);
+						}
+						object = objectArr;
+					} else if(directIO_datatypeString.isSelected()){
+						object = directIO_object.getText();
+					}
 				}
+				
 				// Execute DirectIO
 				service.directIO(Integer.parseInt(directIO_command.getText()), dataArrInt, object);
 
@@ -357,6 +382,37 @@ public abstract class CommonController implements Initializable {
 			}
 		} catch (FileNotFoundException ex) {
 
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(null, ex.getMessage());
+			ex.printStackTrace();
+
+		}
+		return result;
+	}
+	
+	/**
+	 * Read the given binary file, and return its contents as a byte array.
+	 * 
+	 */
+	protected static int[] readIntsFromFile(String aInputFileName) {
+		File file = new File(aInputFileName);
+		int[] result = new int[(int) file.length()];
+		try {
+			InputStream input = null;
+			try {
+				input = new BufferedInputStream(new FileInputStream(file));
+				int readInt;
+				int num= 0;
+				while ((readInt = input.read()) != -1) {
+					result[num] = readInt;
+					num ++;
+				}
+			} finally {
+				input.close();
+			}
+		} catch (FileNotFoundException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 			ex.printStackTrace();
 		} catch (IOException ex) {
