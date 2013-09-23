@@ -118,7 +118,7 @@ public class POSTest2Controller implements Initializable {
 			Iterator<String> it = storeFavorites.iterator();
 			while (it.hasNext()) {
 				favoriteDevices.add(it.next());
-				listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
+				listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 48.0);
 			}
 			listFavorites.setItems(favoriteDevices);
 		} else {
@@ -155,7 +155,7 @@ public class POSTest2Controller implements Initializable {
 							listFavorites.setItems(favoriteDevices);
 							storeFavorites.add(selectedItem);
 							Collections.sort(storeFavorites, ALPHABETICAL_ORDER);
-							listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 36.0);
+							listFavorites.setPrefHeight(listFavorites.getPrefHeight() + 48.0);
 							saveFavorites();
 						}
 					}
@@ -174,7 +174,7 @@ public class POSTest2Controller implements Initializable {
 							favoriteDevices.remove(selectedItem);
 							listFavorites.setItems(favoriteDevices);
 							storeFavorites.remove(selectedItem);
-							listFavorites.setPrefHeight(listFavorites.getPrefHeight() - 36.0);
+							listFavorites.setPrefHeight(listFavorites.getPrefHeight() - 48.0);
 							saveFavorites();
 						}
 					}

@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
@@ -43,11 +47,10 @@ public class ConfiguredDevicesController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		setUpLists("jpos.xml");
+		setUpLists(getJposPath());
 		setUpTable();
 	}
-	
-	
+
 	@FXML
 	public void handleBrowseJposXml(ActionEvent e) {
 		FileChooser chooser = new FileChooser();
@@ -61,25 +64,31 @@ public class ConfiguredDevicesController implements Initializable {
 	@FXML
 	public void handleSetJposXml(ActionEvent e) {
 		File f = new File("pathToJposEntries.dat");
-		if(!f.exists()){
+		if (!f.exists()) {
 			try {
 				f.createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
-		
-		//Clear file and write new path!
-		try(PrintWriter writer = new PrintWriter(f)){
-			writer.print("");
-			writer.print(this.selectJposPath.getText());
+		String oldPath = getJposPath();
+		try {
+			if (this.selectJposPath.getText().endsWith(".xml")) {
+				PrintWriter writer = new PrintWriter(f);
+				writer.print("");
+				writer.print(this.selectJposPath.getText());
+				writer.close();
+			}
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		setUpLists(this.selectJposPath.getText());
+		if (!this.selectJposPath.getText().endsWith(".xml")) {
+			setUpLists(oldPath);
+		} else {
+			setUpLists(this.selectJposPath.getText());
+		}
 		setUpTable();
 	}
-	
 
 	/**
 	 * Sets the DevicesList and the LogicalNamesList
@@ -114,6 +123,25 @@ public class ConfiguredDevicesController implements Initializable {
 		productName.setCellValueFactory(new PropertyValueFactory<Device, String>("productName"));
 
 		tableConfiguredDevices.setItems(devicesList);
+	}
+
+	private String getJposPath() {
+		String path = "";
+		File f = new File("pathToJposEntries.dat");
+		if (f.exists()) {
+			byte[] encoded;
+			try {
+				encoded = Files.readAllBytes(Paths.get("pathToJposEntries.dat"));
+				if (encoded.length != 0) {
+					path = StandardCharsets.UTF_8.decode(ByteBuffer.wrap(encoded)).toString();
+				} else {
+					path = "jpos.xml";
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return path;
 	}
 
 }
